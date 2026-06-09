@@ -1,1 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>국민경제㊉ - 디지털 아카이브</title>
+    <style>
+        :root { 
+            --p-width: 30vw; 
+            --p-height: 85vh; 
+            --wood-bg: #e6ccb2; 
+        }
+        
+        body { 
+            background: var(--wood-bg) url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            margin: 0; display: flex; height: 100vh; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; 
+            position: relative;
+        }
+        
+        /* 사이드바 */
+        #sidebar { width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; display: flex; flex-direction: column; z-index: 3000; }
+        .toc-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .toc-item { padding: 12px; margin-bottom: 5px; background: #fff; border: 1px solid #ddd; cursor: pointer; font-size: 13px; color: #5d4037; }
+        .toc-item.active { background: #8b4513; color: white; }
 
+        /* 헤더 중앙 검색바 */
+        header { 
+            height: 60px; background: #5d4037; display: flex; justify-content: space-between; 
+            align-items: center; padding: 0 20px; color: white; z-index: 3500; position: relative;
+        }
+        .search-container { 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.15); 
+            padding: 5px 15px; border-radius: 20px;
+        }
+        .search-container input { width: 50px; border: none; border-radius: 4px; padding: 4px; text-align: center; }
+        .search-container button { padding: 4px 12px; background: #ffcc80; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; color: #5d4037; }
+
+        /* 스테이지 및 북 컨테이너 */
+        #main-content { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .stage { flex: 1; display: flex; justify-content: center; align-items: center; perspective: 3000px; position: relative; overflow: hidden; }
+        .book { width: calc(var(--p-width) * 2); height: var(--p-height); position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
+        
+        .page { 
+            width: var(--p-width); height: var(--p-height); position: absolute; 
+            top: 0; right: 0; transform-origin: left; transform-style: preserve-3d; 
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); 
+        }
+        .page.flipped { transform: rotateY(-180deg); }
+        
+        .front, .back { 
+            position: absolute; width: 100%; height: 100%; background: white; 
+            border: 1px solid #bbb; backface-visibility: hidden; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.4s ease;
+        }
+        .back { transform: rotateY(180deg); }
+
+        /* 오버레이 영역 */
+        .zoom-overlay {
+            position: fixed;
+            top: 60px; 
+            left: 220px; 
+            width: calc(100vw - 220px); 
+            height: calc(100vh - 60px);
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 2400; 
+            display: none;
+            justify-content: center;
+            align-items: flex-start; 
+            overflow: hidden;
+            /* [추정] 팝업 자체 상하단에도 최소한의 정서적 여백 확보 */
+            padding-top: 25px; 
+            box-sizing: border-box;
+        }
+        .zoom-overlay.active { display: flex; }
+
+        /* [수정] 양옆에 5~10% 황금 비율 여백을 남기도록 두께 및 제한선 조율 */
+        .zoom-container {
+            width: 80vw; /* 좌우 여백을 자연스럽게 7~8%가량 배정 */
+            height: calc(100vh * 2.3); 
+            max-width: 1100px; /* 고해상도 대형 모니터에서도 여백을 파괴하지 않도록 고정 */
+            background: white;
+            box-shadow: 0 25px 65px rgba(0,0,0,0.45);
+            border: 2px solid #8b4513;
+            transform: translateY(0px) scale(1);
+            transform-origin: top center; 
+            overflow: hidden;
+            cursor: grab;
+        }
+        .zoom-container:active { cursor: grabbing; }
+        .zoom-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+
+        /* 모바일 화면 대응 최적화 (모바일은 가독성을 위해 여백 없이 화면 가득 매칭) */
+        @media (max-width: 768px) {
+            .zoom-overlay { left: 0; width: 100vw; padding-top: 0; }
+            .zoom-container { width: 100vw; height: calc(100vh * 2.5); border: none; max-width: 100%; }
+        }
+
+        /* 가장자리 내비게이션 버튼 */
+        .nav-btn { 
+            position: absolute; top: 0; width: 15vw; height: 100%; z-index: 1500; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            font-size: 60px; color: rgba(0,0,0,0.02); transition: 0.3s; user-select: none;
+        }
+        .nav-btn:hover { color: rgba(139, 69, 19, 0.3); background: rgba(0,0,0,0.02); }
+        .btn-prev { left: 0; } 
+        .btn-next { right: 0; }
+
+        /* 콘텐츠 및 링크 */
+        iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+        .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
+        .static-page { padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #fff; box-sizing: border-box; }
+        
+        .link-btn { 
+            display: block; width: 220px; padding: 15px; margin: 10px 0;
+            background: #138b1d; color: #fff !important; text-decoration: none; 
+            border-radius: 8px; font-weight: bold; font-size: 14px; transition: 0.3s;
+        }
+        .link-btn:hover { background: #5d4037; transform: translateY(-3px); }
+
+        .page-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 7px 20px; border-radius: 25px; font-size: 12px; z-index: 2000; }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <div style="padding: 25px; text-align: center; border-bottom: 2px solid #d2b48c;"><strong>국민경제㊉</strong></div>
+    <div class="toc-list" id="toc-list"></div>
+</div>
+
+<div id="main-content">
+    <header>
+        <div style="font-weight: bold; width:200px;">DIGITAL ARCHIVE</div>
+        <div class="search-container">
+            <span>면 이동:</span>
+            <input type="number" id="page-input" min="1" max="16" placeholder="1">
+            <button onclick="goPage()">이동</button>
+        </div>
+        <div style="width:200px; text-align:right; font-size:12px;">국민경제㊉신문사</div>
+    </header>
+
+    <div class="stage">
+        <div class="nav-btn btn-prev" onclick="movePrev()">❮</div>
+        <div class="nav-btn btn-next" onclick="moveNext()">❯</div>
+
+        <div class="book" id="book">
+            <div class="page flipped" style="z-index: 10;">
+                <div class="front"><div class="static-page"><h3>시작</h3></div></div>
+                <div class="back">
+                    <div class="click-layer" onclick="openZoom(1)"></div>
+                    <iframe src="life-info.pdf#page=1&navpanes=0"></iframe>
+                </div>
+            </div>
+
+            <script>
+                for(let i=2; i<=14; i+=2) {
+                    let z = 9 - (i/2);
+                    document.write(`
+                    <div class="page" style="z-index: ${z};">
+                        <div class="front">
+                            <div class="click-layer" onclick="openZoom(${i})"></div>
+                            <iframe src="life-info.pdf#page=${i}&navpanes=0"></iframe>
+                        </div>
+                        <div class="back">
+                            <div class="click-layer" onclick="openZoom(${i+1})"></div>
+                            <iframe src="life-info.pdf#page=${i+1}&navpanes=0"></iframe>
+                        </div>
+                    </div>
+                    `);
+                }
+            </script>
+
+            <div class="page" style="z-index: 1;">
+                <div class="front">
+                    <div class="click-layer" onclick="openZoom(16)"></div>
+                    <iframe src="life-info.pdf#page=16&navpanes=0"></iframe>
+                </div>
+                <div class="back"></div>
+            </div>
+
+            <div style="position: absolute; top:0; right:0; width:var(--p-width); height:var(--p-height); z-index:0;">
+                <div class="static-page" style="border: 1px solid #bbb; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <h3 style="color:#5d4037;">AI PLATMARKET</h3>
+                    <a href="https://aiplatmarket.com" target="_blank" class="link-btn">AI 플랫마켓 바로가기</a>
+                    <a href="https://chatdoumi.com" target="_blank" class="link-btn">내 사업 내 비서 챗도우미</a>
+                    <p style="font-size:11px; margin-top:20px; color:#888;">© 국민경제㊉신문사</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-info" id="info-text">1면 (표지)</div>
+    </div>
+</div>
+
+<div class="zoom-overlay" id="zoom-overlay" onmousedown="handleOverlayClick(event)" ontouchstart="handleOverlayClick(event)">
+    <div class="zoom-container" id="zoom-container">
+        <iframe id="zoom-iframe" src=""></iframe>
+    </div>
+</div>
+
+<script>
+    let current = 1; 
+    const pages = document.querySelectorAll('.page');
+    const labels = ["1면 (표지)", "2-3면", "4-5면", "6-7면", "8-9면", "10-11면", "12-13면", "14-15면", "16면 (최종)"];
+
+    const toc = document.getElementById('toc-list');
+    labels.forEach((l, i) => {
+        const item = document.createElement('div');
+        item.className = 'toc-item';
+        item.innerText = l;
+        item.onclick = () => jumpTo(i + 1);
+        toc.appendChild(item);
+    });
+
+    function moveNext() { if (current < pages.length) { pages[current].classList.add('flipped'); current++; updateUI(); } }
+    function movePrev() { if (current > 1) { current--; pages[current].classList.remove('flipped'); updateUI(); } }
+
+    function jumpTo(idx) {
+        pages.forEach((p, i) => { if (i < idx) p.classList.add('flipped'); else p.classList.remove('flipped'); });
+        current = idx; updateUI();
+    }
+
+    function goPage() {
+        const v = parseInt(document.getElementById('page-input').value);
+        if(v >= 1 && v <= 16) jumpTo(v === 1 ? 1 : Math.floor(v / 2) + 1);
+    }
+
+    function updateUI() {
+        document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === current - 1));
+        document.getElementById('info-text').innerText = labels[current - 1];
+    }
+
+    // --- 상하 가두기 고해상도 연산 시스템 스크립트 ---
+    const overlay = document.getElementById('zoom-overlay');
+    const container = document.getElementById('zoom-container');
+    const zoomIframe = document.getElementById('zoom-iframe');
+
+    let scale = 1.0;
+    let posY = 0;
+    let startY = 0;
+    let isDragging = false;
+    
+    let clickStartTime = 0;
+    let clickStartY = 0;
+
+    function openZoom(pageNumber) {
+        zoomIframe.src = `life-info.pdf#page=${pageNumber}&navpanes=0`;
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+        
+        scale = 1.4; 
+        posY = 0;
+        updateTransform();
+        
+        window.addEventListener('wheel', handleOverlayWheel, { passive: false });
+    }
+
+    function closeZoom() {
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.display = 'none'; zoomIframe.src = ""; }, 200);
+        window.removeEventListener('wheel', handleOverlayWheel);
+    }
+
+    function handleOverlayWheel(e) {
+        if (overlay.style.display === 'none') return;
+        e.preventDefault();
+
+        if (e.ctrlKey) {
+            scale -= e.deltaY * 0.008;
+            if (scale < 1.0) scale = 1.0;
+            if (scale > 4.0) scale = 4.0;
+        } else {
+            posY -= e.deltaY * 0.85;
+        }
+        updateTransform();
+    }
+
+    container.addEventListener('mousedown', startInteraction);
+    window.addEventListener('mousemove', doInteraction);
+    window.addEventListener('mouseup', endInteraction);
+
+    container.addEventListener('touchstart', (e) => startInteraction(e.touches[0]), { passive: true });
+    window.addEventListener('touchmove', (e) => {
+        if(isDragging && e.touches.length === 1) {
+            e.preventDefault();
+            doInteraction(e.touches[0]);
+        }
+    }, { passive: false });
+    window.addEventListener('touchend', endInteraction);
+
+    function startInteraction(e) {
+        isDragging = true;
+        startY = e.clientY - posY;
+        
+        clickStartTime = new Date().getTime();
+        clickStartY = e.clientY;
+    }
+
+    function doInteraction(e) {
+        if (!isDragging) return;
+        posY = e.clientY - startY;
+        updateTransform();
+    }
+
+    function endInteraction(e) {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const clickEndTime = new Date().getTime();
+        const duration = clickEndTime - clickStartTime;
+        const moveDistance = Math.abs(e.clientY - clickStartY);
+
+        if (duration < 250 && moveDistance < 6) {
+            closeZoom();
+        }
+    }
+
+    function handleOverlayClick(e) {
+        if (e.target === overlay) {
+            closeZoom();
+        }
+    }
+
+    let initTouchDist = 0;
+    let baseScale = 1.0;
+
+    overlay.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            initTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            baseScale = scale;
+        }
+    }, { passive: true });
+
+    overlay.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+            e.preventDefault();
+            const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            const factor = dist / initTouchDist;
+            scale = Math.min(Math.max(baseScale * factor, 1.0), 4.0);
+            updateTransform();
+        }
+    }, { passive: false });
+
+    function updateTransform() {
+        const overlayHeight = overlay.clientHeight; 
+        const containerHeight = container.clientHeight * scale; 
+
+        // 상단 가두기 시 미세 여백(20px) 보정 처리
+        if (posY > 20) posY = 20;
+
+        // 하단 끝 가두기에도 40px의 시각 완충 마진을 추가하여 답답함 해소
+        const maxScrollUp = -(containerHeight - overlayHeight) - 40;
+        
+        if (containerHeight > overlayHeight) {
+            if (posY < maxScrollUp) posY = maxScrollUp;
+        } else {
+            posY = 20;
+        }
+
+        container.style.transform = `translateY(${posY}px) scale(${scale})`;
+    }
+</script>
+</body>
+</html>

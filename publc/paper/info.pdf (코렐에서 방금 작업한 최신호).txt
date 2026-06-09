@@ -1,0 +1,7 @@
+news.pdf (코렐에서 방금 작업한 최신호)
+150~200 DPI, RGB 색상 모드, 텍스트 포함
+설정: 게시용 PDF(PDF for Web)
+나중에 지역별로 신문 내용이 달라질 경우(예: 종로판, 강남판 등),
+저장소 구조를 다음과 같이 확장.
+kookmin-economy-news/seoul/news.pdf
+kookmin-economy-news/busan/news.pdf
