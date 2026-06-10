@@ -43,15 +43,8 @@ console.log(
   fs.existsSync(path.join(__dirname, 'public', 'admin.html'))
 );
 
-console.log(
-  'Firebase ENV:',
-  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-    ? 'FOUND'
-    : 'MISSING'
-);
-
 const app  = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(express.json());
@@ -72,8 +65,7 @@ let db;
 try {
 
   const serviceAccount = JSON.parse(
-    process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-  );
+    const sa = require('./serviceAccountKey.json');
 
   if (!admin.apps.length) {
     admin.initializeApp({
