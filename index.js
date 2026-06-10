@@ -40,63 +40,42 @@ app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'inde
    Firebase Admin SDK
 ───────────────────────────── */
 
-const admin = require('firebase-admin');
-
-let db = null;
+/* ── Firebase ── */
+let db;
 
 try {
-
-  console.log(
-    'Firebase ENV:',
-    process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-      ? 'FOUND'
-      : 'MISSING'
-  );
-
-  if (!process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-    throw new Error(
-      'FIREBASE_SERVICE_ACCOUNT_JSON 환경변수가 없습니다.'
-    );
-  }
 
   const serviceAccount = JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT_JSON
   );
 
   if (!admin.apps.length) {
-
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
-
   }
 
   db = admin.firestore();
 
   console.log(
-    '✅ Firebase 연결 성공 | Project:',
+    '✅ Firebase 연결 | Project:',
     serviceAccount.project_id
   );
 
 } catch (e) {
 
   console.error(
-    '❌ Firebase 초기화 실패:',
+    '❌ Firebase:',
     e.message
   );
 
 }
-
-/* ─────────────────────────────
-   Firestore 사용 확인
-───────────────────────────── */
 
 function requireDB(res) {
 
   if (!db) {
 
     res.status(503).json({
-      success: false,
       error: 'Firebase 연결 안 됨'
     });
 
@@ -107,12 +86,6 @@ function requireDB(res) {
   return true;
 
 }
-
-module.exports = {
-  admin,
-  db,
-  requireDB
-};
 
 /* ── 환경변수 ── */
 const ADMIN_TOKEN  = process.env.ADMIN_TOKEN    || 'dev-token-change-me';
