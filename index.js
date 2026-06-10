@@ -64,8 +64,7 @@ let db;
 
 try {
 
-  const serviceAccount = JSON.parse(
-    const sa = require('./serviceAccountKey.json');
+  const serviceAccount = require('./serviceAccountKey.json');
 
   if (!admin.apps.length) {
     admin.initializeApp({
@@ -81,28 +80,20 @@ try {
   );
 
 } catch (e) {
-
   console.error(
     '❌ Firebase:',
     e.message
   );
-
 }
 
 function requireDB(res) {
-
   if (!db) {
-
     res.status(503).json({
       error: 'Firebase 연결 안 됨'
     });
-
     return false;
-
   }
-
   return true;
-
 }
 
 /* ── 환경변수 ── */
