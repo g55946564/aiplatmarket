@@ -39,7 +39,9 @@ app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'inde
 /* ── Firebase ── */
 let db;
 try {
-  const sa = require('./serviceAccountKey.json');
+  const sa = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+);
   admin.initializeApp({ credential: admin.credential.cert(sa) });
   db = admin.firestore();
   console.log('✅ Firebase 연결 | Project:', sa.project_id);
