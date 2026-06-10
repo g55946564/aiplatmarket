@@ -36,6 +36,13 @@ app.use('/paper', express.static(path.join(__dirname, 'paper')));
 app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
 app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
 
+console.log(
+  'Firebase ENV:',
+  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+    ? 'FOUND'
+    : 'MISSING'
+);
+
 /* ── Firebase ── */
 let db;
 try {
