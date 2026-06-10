@@ -51,9 +51,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 // paper 신문 폴더 (public 안 루트에 위치)
-app.use('/paper', express.static(path.join(__dirname, 'paper')));
-app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'publc', 'paper', 'index.html')));
-app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'publc', 'paper', 'index.html')));
+app.use('/paper', express.static(path.join(__dirname, 'public', 'paper')));
+app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'public', 'paper', 'index.html')));
+app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'public', 'paper', 'index.html')));
 
 /* ─────────────────────────────
    Firebase Admin SDK
@@ -61,19 +61,14 @@ app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'publc', 'pape
 
 /* ── Firebase ── */
 let db;
-
 try {
-
   const serviceAccount = require('./serviceAccountKey.json');
-
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
   }
-
   db = admin.firestore();
-
   console.log(
     '✅ Firebase 연결 | Project:',
     serviceAccount.project_id
