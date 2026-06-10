@@ -36,29 +36,83 @@ app.use('/paper', express.static(path.join(__dirname, 'paper')));
 app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
 app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
 
-console.log(
-  'Firebase ENV:',
-  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-    ? 'FOUND'
-    : 'MISSING'
-);
+/* ─────────────────────────────
+   Firebase Admin SDK
+───────────────────────────── */
 
-/* ── Firebase ── */
-let db;
+const admin = require('firebase-admin');
+
+let db = null;
+
 try {
-  const sa = JSON.parse(
-  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-);
-  admin.initializeApp({ credential: admin.credential.cert(sa) });
+
+  console.log(
+    'Firebase ENV:',
+    process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+      ? 'FOUND'
+      : 'MISSING'
+  );
+
+  if (!process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+    throw new Error(
+      'FIREBASE_SERVICE_ACCOUNT_JSON 환경변수가 없습니다.'
+    );
+  }
+
+  const serviceAccount = JSON.parse(
+    process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+  );
+
+  if (!admin.apps.length) {
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+
+  }
+
   db = admin.firestore();
-  console.log('✅ Firebase 연결 | Project:', sa.project_id);
-} catch(e) {
-  console.error('❌ Firebase:', e.message);
+
+  console.log(
+    '✅ Firebase 연결 성공 | Project:',
+    serviceAccount.project_id
+  );
+
+} catch (e) {
+
+  console.error(
+    '❌ Firebase 초기화 실패:',
+    e.message
+  );
+
 }
+
+/* ─────────────────────────────
+   Firestore 사용 확인
+───────────────────────────── */
+
 function requireDB(res) {
-  if (!db) { res.status(503).json({ error:'Firebase 연결 안 됨' }); return false; }
+
+  if (!db) {
+
+    res.status(503).json({
+      success: false,
+      error: 'Firebase 연결 안 됨'
+    });
+
+    return false;
+
+  }
+
   return true;
+
 }
+
+module.exports = {
+  admin,
+  db,
+  requireDB
+};
 
 /* ── 환경변수 ── */
 const ADMIN_TOKEN  = process.env.ADMIN_TOKEN    || 'dev-token-change-me';
