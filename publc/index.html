@@ -637,7 +637,7 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 
 /* === FOOTER === */
 footer{background:var(--navy);color:rgba(255,255,255,.65)}
- .ft-outer{width: 80%;max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+ .ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
 .ft-copy{font-size:.7rem}
 .ft-links{display:flex;gap:12px;flex-wrap:wrap}
@@ -888,8 +888,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         </div>
       </div><div class="gd"></div>
 
-      <!-- GNB sub 메뉴 -->
-      <div class="gi" onclick="showPage('lifeai')" style="color:#fff;font-weight:900;background:linear-gradient(135deg,#6c1fa8,#9b59b6);border-radius:6px;padding:4px 10px;border:1px solid rgba(255,255,255,.3)">🔮 인생?진로</div><div class="gd"></div>
+      <!-- GNB sub 메뉴 (순서: AI통합홍보센터, AI인생?진로, AI성장+마켓몰, AI지역경제센터, AI영상생성, 지역특산품관, 커뮤니티, 더착한가게, 사업창업, 신상품, 뉴레시피, 판촉물, 여행, 사건사고, 입점신청) -->
+      <div class="gi" onclick="showPage('promo-center')" style="color:var(--gold);font-weight:900;background:rgba(201,168,76,.15);border-radius:6px;padding:3px 9px">🎯 AI통합홍보센터</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('lifemap')" style="color:#fff;font-weight:900;background:linear-gradient(135deg,#6c1fa8,#9b59b6);border-radius:6px;padding:3px 9px">🔮 AI인생?진로</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('growthmall')" style="color:var(--blue);font-weight:800">📈 AI성장+마켓몰</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('localcenter')" style="color:var(--grn);font-weight:800">🏛 AI지역경제센터</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('videocenter')">🎬 AI영상생성</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('local-products')">🌾 지역특산품관</div><div class="gd"></div>
       <div class="gi" onclick="showPage('community')">💬 커뮤니티</div><div class="gd"></div>
       <div class="gi" onclick="showPage('good')">💚 더착한가게</div><div class="gd"></div>
       <div class="gi" onclick="showPage('startup')">🚀 사업창업</div><div class="gd"></div>
@@ -997,7 +1002,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <div class="lmi" onclick="showPage('incident')"><span class="ico">🚨</span>사건/사고</div>
         <div class="lmi" onclick="showPage('newprod')"><span class="ico">🆕</span>신상품</div>
         <div class="lmi" onclick="showPage('bigsale')"><span class="ico">💥</span>빅세일</div>
-        <div class="lmi" onclick="showPage('branch')"><span class="ico">🏢</span>AI지역경제본부/센터</div>
+        <div class="lmi" onclick="showPage('branch')"><span class="ico">🏢</span>지역경제본부·센터</div>
         <div class="lmi" onclick="showPage('reporter')"><span class="ico">📰</span>홍보기자단</div>
         <div class="lmi" onclick="showPage('register')"><span class="ico">✅</span>입점신청</div>
       </div>
@@ -1455,68 +1460,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
   </div><!-- /mgrid -->
 
-      <!-- ===== 지역생활정보 섹션 ===== -->
-      <div style="margin-top:24px;padding-top:18px;border-top:3px solid var(--navy)">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-          <div style="font-family:var(--fs);font-size:.9rem;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:6px">
-            <span style="display:inline-block;width:3px;height:14px;background:var(--red);border-radius:2px"></span>
-            🏠 지역생활정보
-          </div>
-          <button onclick="showPage('localad')" style="font-size:.72rem;color:var(--g4);background:none;border:var(--bd);padding:3px 10px;border-radius:4px;cursor:pointer">전체 보기 →</button>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
-
-          <!-- 국민경제㊉ 신문 홍보 카드 -->
-          <a href="https://aiplatmarket.com/paper/index.html" target="_blank" rel="noopener"
-             style="border:2px solid var(--navy);border-radius:8px;overflow:hidden;text-decoration:none;display:block;background:#fff;transition:box-shadow .2s"
-             onmouseover="this.style.boxShadow='0 4px 16px rgba(13,31,53,.15)'" onmouseout="this.style.boxShadow=''">
-            <div style="position:relative">
-              <img src="/paper/thumb.jpg" alt="국민경제㊉ 신문"
-                   style="width:100%;height:120px;object-fit:cover;display:block"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div style="display:none;width:100%;height:120px;background:linear-gradient(135deg,var(--navy),var(--navy2));align-items:center;justify-content:center;flex-direction:column;gap:6px">
-                <span style="font-size:2rem">📰</span>
-                <span style="color:var(--gold);font-size:.8rem;font-weight:700">국민경제㊉</span>
-              </div>
-              <div style="position:absolute;top:7px;left:7px;background:var(--red);color:#fff;font-size:.6rem;font-weight:900;padding:2px 7px;border-radius:3px">신문보기</div>
-            </div>
-            <div style="padding:10px 12px">
-              <div style="font-size:.8rem;font-weight:800;color:var(--navy);margin-bottom:3px">신문 그대로 보기</div>
-              <div style="font-size:.7rem;color:var(--g4);line-height:1.4">국민경제㊉ 공식 신문. 소상공인·지역경제 뉴스.</div>
-              <div style="margin-top:6px;font-size:.68rem;font-weight:700;color:var(--navy)">📖 aiplatmarket.com/paper →</div>
-            </div>
-          </a>
-
-          <!-- 지역광고 등록 -->
-          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="showPage('localad')">
-            <div style="height:120px;background:linear-gradient(135deg,#fce8e6,#f5c6c2);display:flex;align-items:center;justify-content:center;font-size:2.2rem">📄</div>
-            <div style="padding:10px 12px">
-              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">지역광고 등록</div>
-              <div style="font-size:.7rem;color:var(--g4)">로그인 후 누구나 무료 등록</div>
-            </div>
-          </div>
-
-          <!-- 광고 문의 -->
-          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="showPage('adcontact')">
-            <div style="height:120px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);display:flex;align-items:center;justify-content:center;font-size:2.2rem">📢</div>
-            <div style="padding:10px 12px">
-              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">광고 문의·신청</div>
-              <div style="font-size:.7rem;color:var(--g4)">라이브·배너·AI마케팅 패키지</div>
-            </div>
-          </div>
-
-          <!-- AI지역경제본부 모집 -->
-          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="openBranchPopup()">
-            <div style="height:120px;background:linear-gradient(135deg,#e8f0fe,#c5cae9);display:flex;align-items:center;justify-content:center;font-size:2.2rem">🏢</div>
-            <div style="padding:10px 12px">
-              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">AI지역경제본부·센터 모집</div>
-              <div style="font-size:.7rem;color:var(--g4)">AI경제 시대 함께 성장</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <!-- ===== /지역생활정보 섹션 ===== -->
+      
 </div><!-- /page-home -->
 
 <!-- ==================== NEWS ==================== -->
@@ -1548,7 +1492,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <button class="news-reg-btn" onclick="showPage('welfare')" style="flex-shrink:0;background:#e8f5e9;color:#2e7d32;border-color:#2e7d32;white-space:nowrap">🤝 지역복지</button>
         <button class="news-reg-btn" onclick="showPage('event')" style="flex-shrink:0;background:#fff3e0;color:#e65100;border-color:#e65100;white-space:nowrap">🎉 지역행사</button>
         <button class="news-reg-btn" onclick="showPage('localad')" style="flex-shrink:0;background:#e8f0fe;color:#1a56a0;border-color:#1a56a0;white-space:nowrap">📋 지역광고</button>
-        <button class="news-reg-btn" onclick="showPage('branch')" style="flex-shrink:0;background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">🏢 AI지역경제본부/센터 <span style="font-size:.58rem;background:var(--gold);color:var(--navy);padding:1px 3px;border-radius:2px;margin-left:2px">모집</span></button>
+        <button class="news-reg-btn" onclick="showPage('branch')" style="flex-shrink:0;background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">🏢 지역경제본부·센터 <span style="font-size:.58rem;background:var(--gold);color:var(--navy);padding:1px 3px;border-radius:2px;margin-left:2px">모집</span></button>
         <button class="news-reg-btn" onclick="showPage('reporter')" style="flex-shrink:0;background:var(--navy);color:#fff;border-color:var(--navy);white-space:nowrap">📰 홍보기자단 <span style="font-size:.58rem;background:var(--gold);color:var(--navy);padding:1px 3px;border-radius:2px;margin-left:2px">모집</span></button>
         <button class="news-reg-btn" onclick="showPage('good')" style="flex-shrink:0;white-space:nowrap">🌿 산지직송</button>
         <button class="news-reg-btn" onclick="showPage('good')" style="flex-shrink:0;white-space:nowrap">💚 더착한가게</button>
@@ -1657,7 +1601,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
           <button onclick="showPage('welfare')" style="background:var(--g1);border:var(--bd);color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:600;cursor:pointer;text-align:left">🤝 지역복지 안내</button>
           <button onclick="showPage('event')" style="background:var(--g1);border:var(--bd);color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:600;cursor:pointer;text-align:left">🎉 지역행사 일정</button>
           <button onclick="showPage('localad')" style="background:var(--g1);border:var(--bd);color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:600;cursor:pointer;text-align:left">📋 지역생활광고</button>
-          <button onclick="showPage('branch')" style="background:var(--gold);border:none;color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;text-align:left">🏢 AI지역경제본부/센터 모집</button>
+          <button onclick="showPage('branch')" style="background:var(--gold);border:none;color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;text-align:left">🏢 지역경제본부·센터 모집</button>
           <button onclick="showPage('reporter')" style="background:var(--gold);border:none;color:var(--navy);padding:6px 9px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;text-align:left">📰 홍보기자단 모집</button>
         </div>
       </div>
@@ -1670,6 +1614,70 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       <span id="newsSubTitle" style="font-size:.82rem;color:var(--g4)"></span>
     </div>
     <div id="newsSubOverlay" style="display:none"></div>
+
+    <!-- ===== 지역생활정보 ===== -->
+<!-- ===== 지역생활정보 섹션 ===== -->
+      <div style="margin-top:24px;padding-top:18px;border-top:3px solid var(--navy)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <div style="font-family:var(--fs);font-size:.9rem;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:6px">
+            <span style="display:inline-block;width:3px;height:14px;background:var(--red);border-radius:2px"></span>
+            🏠 지역생활정보
+          </div>
+          <button onclick="showPage('localad')" style="font-size:.72rem;color:var(--g4);background:none;border:var(--bd);padding:3px 10px;border-radius:4px;cursor:pointer">전체 보기 →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
+
+          <!-- 국민경제㊉ 신문 홍보 카드 -->
+          <a href="https://aiplatmarket.com/paper/index.html" target="_blank" rel="noopener"
+             style="border:2px solid var(--navy);border-radius:8px;overflow:hidden;text-decoration:none;display:block;background:#fff;transition:box-shadow .2s"
+             onmouseover="this.style.boxShadow='0 4px 16px rgba(13,31,53,.15)'" onmouseout="this.style.boxShadow=''">
+            <div style="position:relative">
+              <img src="/paper/thumb.jpg" alt="국민경제㊉ 신문"
+                   style="width:100%;height:120px;object-fit:cover;display:block"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div style="display:none;width:100%;height:120px;background:linear-gradient(135deg,var(--navy),var(--navy2));align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <span style="font-size:2rem">📰</span>
+                <span style="color:var(--gold);font-size:.8rem;font-weight:700">국민경제㊉</span>
+              </div>
+              <div style="position:absolute;top:7px;left:7px;background:var(--red);color:#fff;font-size:.6rem;font-weight:900;padding:2px 7px;border-radius:3px">신문보기</div>
+            </div>
+            <div style="padding:10px 12px">
+              <div style="font-size:.8rem;font-weight:800;color:var(--navy);margin-bottom:3px">신문 그대로 보기</div>
+              <div style="font-size:.7rem;color:var(--g4);line-height:1.4">국민경제㊉ 공식 신문. 소상공인·지역경제 뉴스.</div>
+              <div style="margin-top:6px;font-size:.68rem;font-weight:700;color:var(--navy)">📖 aiplatmarket.com/paper →</div>
+            </div>
+          </a>
+
+          <!-- 지역광고 등록 -->
+          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="showPage('localad')">
+            <div style="height:120px;background:linear-gradient(135deg,#fce8e6,#f5c6c2);display:flex;align-items:center;justify-content:center;font-size:2.2rem">📄</div>
+            <div style="padding:10px 12px">
+              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">지역광고 등록</div>
+              <div style="font-size:.7rem;color:var(--g4)">로그인 후 누구나 무료 등록</div>
+            </div>
+          </div>
+
+          <!-- 광고 문의 -->
+          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="showPage('adcontact')">
+            <div style="height:120px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);display:flex;align-items:center;justify-content:center;font-size:2.2rem">📢</div>
+            <div style="padding:10px 12px">
+              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">광고 문의·신청</div>
+              <div style="font-size:.7rem;color:var(--g4)">라이브·배너·AI마케팅 패키지</div>
+            </div>
+          </div>
+
+          <!-- 지역본부 모집 -->
+          <div style="border:var(--bd);border-radius:8px;overflow:hidden;background:#fff;cursor:pointer" onclick="openBranchPopup()">
+            <div style="height:120px;background:linear-gradient(135deg,#e8f0fe,#c5cae9);display:flex;align-items:center;justify-content:center;font-size:2.2rem">🏢</div>
+            <div style="padding:10px 12px">
+              <div style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:3px">지역경제본부·센터 모집</div>
+              <div style="font-size:.7rem;color:var(--g4)">AI경제 시대 함께 성장</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- ===== /지역생활정보 섹션 ===== -->
 
     <!-- 뉴스 상세 모달 -->
     <div id="newsDetailModal" style="display:none;position:fixed;inset:0;background:rgba(13,31,53,.65);z-index:3000;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto">
@@ -1832,7 +1840,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   <div class="sp-page">
     <div class="sh"><div class="sh-t">📰 전국 지역 홍보 기자단 모집</div></div>
     <div style="background:linear-gradient(135deg,#1a3556,#0d1f35);border-radius:var(--r);padding:26px;color:#fff;text-align:center;margin-bottom:20px">
-      <div style="font-size:1.3rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">📰 AI플랫마켓+국민경제㊉ 전국 홍보 기자단 모집</div>
+      <div style="font-size:1.3rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">📰 AI플랫마켓 전국 홍보 기자단 모집</div>
       <div style="font-size:.86rem;color:rgba(255,255,255,.8);margin-bottom:16px">우리 동네 소식을 직접 취재하고 국민경제㊉ 플랫폼에 알려주세요!</div>
       <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:16px">
         <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:10px 18px;text-align:center"><div style="font-size:1rem;font-weight:900;color:var(--gold)">명예기자</div><div style="font-size:.72rem;color:rgba(255,255,255,.7);margin-top:2px">지역 소식 제보</div></div>
@@ -1862,21 +1870,21 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   </div>
 </div>
 
-<!-- ==================== AI지역경제본부/센터 모집 ==================== -->
+<!-- ==================== 지역경제본부·센터 모집 ==================== -->
 <div id="page-branch" class="pg">
   <div class="sp-page">
-    <div class="sh"><div class="sh-t">🏢 전국 AI지역경제본부 · 센터 모집</div></div>
+    <div class="sh"><div class="sh-t">🏢 전국 지역본부 · 지사 모집</div></div>
     <!-- 모집 배너 -->
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:28px;color:#fff;text-align:center;margin-bottom:20px">
-      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓+국민경제㊉ 전국 AI지역경제본부 · 센터 모집</div>
+      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓 전국 지역본부 · 지사 모집</div>
       <div style="font-size:.88rem;color:var(--gold);font-weight:700;margin-bottom:6px">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       <div style="font-size:.86rem;color:rgba(255,255,255,.8);margin-bottom:16px">국민경제㊉ 플랫폼과 함께 지역 경제를 이끌어갈 파트너를 모집합니다</div>
       <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px">
         <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">본부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">광역시·도 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역지부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지사</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
       </div>
-      <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:12px 32px;border-radius:var(--r);font-size:.95rem;font-weight:800;cursor:pointer">📝 AI지역경제본부·센터 신청하기 →</button>
+      <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:12px 32px;border-radius:var(--r);font-size:.95rem;font-weight:800;cursor:pointer">📝 지역경제본부·센터 신청하기 →</button>
     </div>
 
     <!-- 혜택 -->
@@ -1889,12 +1897,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
     <!-- 신청 폼 -->
     <div id="branchFormWrap" style="display:none;border:2px solid var(--gold);border-radius:var(--r);overflow:hidden;max-width:600px;margin:0 auto">
-      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 AI지역경제본부 · 센터 신청서</div>
+      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 지역본부 · 지사 신청서</div>
       <div style="padding:20px;background:#fff;display:grid;gap:12px">
         <input class="fi" placeholder="신청자 성명 *" id="bName">
         <input class="fi" placeholder="연락처 * (010-0000-0000)" id="bPhone" type="tel">
         <input class="fi" placeholder="이메일 *" id="bEmail" type="email">
-        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>AI지역경제본부 (시·도)</option><option>센터 (시·군·구)</option><option>지부 (읍·면·동)</option></select>
+        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>지역본부 (시·도)</option><option>지사 (시·군·구)</option><option>지역지부 (읍·면·동)</option></select>
         <input class="fi" placeholder="희망 지역 (예: 인천광역시 남동구)" id="bRegion">
         <textarea class="fi" rows="3" placeholder="간단한 자기소개 및 지원 동기..." id="bDesc" style="resize:vertical"></textarea>
         <button onclick="submitBranch()" style="background:var(--navy);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:.92rem;font-weight:800;cursor:pointer">신청서 제출하기 →</button>
@@ -2029,7 +2037,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   </div>
 </div>
 
-<div id="page-lifeai" class="pg">
+<div id="page-lifemap" class="pg">
   <div style="max-width:800px;margin:0 auto;padding:0 0 30px">
 
     <!-- 앱 헤더 -->
@@ -2229,7 +2237,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
           <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">📰 지역경제 뉴스</div><div style="font-size:.82rem">네이버·구글·뉴스와이어 실시간 뉴스 및 AI 재편집 기사를 제공합니다.</div></div>
           <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">🏪 소상공인 입점</div><div style="font-size:.82rem">무료 입점 후 AI 홍보문구 자동 생성 및 지역 SEO 랜딩 페이지가 생성됩니다.</div></div>
           <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">🤖 ChatDoumi AI</div><div style="font-size:.82rem">소상공인 전용 AI 비서로 매출 분석, 광고, 마케팅을 자동화합니다.</div></div>
-          <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">🏢 AI지역경제본부·센터</div><div style="font-size:.82rem">전국 광역·지역 파트너 조직을 통해 오프라인 서비스를 연결합니다.</div></div>
+          <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">🏢 지역경제본부·센터</div><div style="font-size:.82rem">전국 광역·지역 파트너 조직을 통해 오프라인 서비스를 연결합니다.</div></div>
           <div style="background:var(--g1);border-radius:var(--r);padding:14px"><div style="font-weight:800;color:var(--navy);margin-bottom:5px">👑 Founder 멤버십</div><div style="font-size:.82rem">선착순 500명 GOLD, 2000명 PRO, 10000명 FREE 멤버십 혜택을 제공합니다.</div></div>
         </div>
       </section>
@@ -2245,7 +2253,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       </section>
       <section style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:18px;color:#fff">
         <div style="font-weight:900;font-size:.95rem;margin-bottom:8px">📞 문의 및 입점 안내</div>
-        <div style="font-size:.84rem;opacity:.85;margin-bottom:12px">소상공인 무료 입점 · 광고 문의 · AI지역경제본부 신청</div>
+        <div style="font-size:.84rem;opacity:.85;margin-bottom:12px">소상공인 무료 입점 · 광고 문의 · 지역본부 신청</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button onclick="showPage('register')" style="background:var(--gold);color:var(--navy);border:none;padding:9px 18px;border-radius:6px;font-size:.84rem;font-weight:800;cursor:pointer">🏪 무료 입점하기</button>
           <button onclick="showPage('adcontact')" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:9px 18px;border-radius:6px;font-size:.84rem;font-weight:700;cursor:pointer">📢 광고 문의</button>
@@ -2288,7 +2296,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
           <tbody>
             <tr style="border-bottom:var(--bd)"><td style="padding:7px 10px">입점 신청</td><td style="padding:7px 10px">업체명·대표자·연락처·이메일·지역·업종</td><td style="padding:7px 10px">탈퇴 후 3년</td></tr>
             <tr style="border-bottom:var(--bd);background:var(--g1)"><td style="padding:7px 10px">광고 문의</td><td style="padding:7px 10px">업체명·담당자·연락처·이메일</td><td style="padding:7px 10px">처리 후 1년</td></tr>
-            <tr style="border-bottom:var(--bd)"><td style="padding:7px 10px">AI지역경제본부·센터 신청</td><td style="padding:7px 10px">신청자명·연락처·이메일·희망지역</td><td style="padding:7px 10px">처리 후 2년</td></tr>
+            <tr style="border-bottom:var(--bd)"><td style="padding:7px 10px">지역경제본부·센터 신청</td><td style="padding:7px 10px">신청자명·연락처·이메일·희망지역</td><td style="padding:7px 10px">처리 후 2년</td></tr>
             <tr style="border-bottom:var(--bd);background:var(--g1)"><td style="padding:7px 10px">홍보기자단 신청</td><td style="padding:7px 10px">신청자명·연락처·이메일·담당지역</td><td style="padding:7px 10px">처리 후 2년</td></tr>
             <tr><td style="padding:7px 10px">뉴스레터 구독</td><td style="padding:7px 10px">이메일 주소</td><td style="padding:7px 10px">해지 후 즉시 삭제</td></tr>
           </tbody>
@@ -2580,7 +2588,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     <div class="lmi" onclick="closeSide();showPage('incident')"><span class="ico">🚨</span>사건/사고</div>
     <div class="lmi" onclick="closeSide();showPage('newprod')"><span class="ico">🆕</span>신상품</div>
     <div class="lmi" onclick="closeSide();showPage('bigsale')"><span class="ico">💥</span>빅세일</div>
-    <div class="lmi" onclick="closeSide();showPage('branch')"><span class="ico">🏢</span>AI지역경제본부/센터</div>
+    <div class="lmi" onclick="closeSide();showPage('branch')"><span class="ico">🏢</span>지역경제본부·센터</div>
     <div class="lmi" onclick="closeSide();showPage('reporter')"><span class="ico">📰</span>홍보기자단</div>
     <div class="lmi" onclick="closeSide();showPage('register')"><span class="ico">✅</span>입점신청</div>
   </div>
@@ -2654,14 +2662,571 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
 <!-- ══ 소상공인상생회 만들기 ══ -->
 
+
+<!-- ══ AI 홍보센터 ══ -->
+
+
+<!-- ══ 지역특산품 ══ -->
+
+<div id="page-promo-center" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+
+    <!-- 히어로 배너 -->
+    <div style="background:linear-gradient(135deg,#0d1f35,#1a3556,#c9a84c22);border-radius:var(--r);padding:30px 24px;margin-bottom:24px;text-align:center;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(201,168,76,.06);border-radius:50%;transform:translate(40%,-40%)"></div>
+      <div style="font-size:.8rem;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:8px">AI PLATMARKET × 국민경제㊉</div>
+      <div style="font-family:var(--fs);font-size:1.3rem;font-weight:900;margin-bottom:8px">🎯 AI 통합홍보센터</div>
+      <div style="font-size:.92rem;color:rgba(255,255,255,.85);font-weight:700;margin-bottom:6px">홍보부터 성장까지, AI가 함께하는 통합 비즈니스 성장센터</div>
+      <div style="font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:16px">소상공인 · 예비창업자 · 중소기업 · 일반인 모두 이용 가능</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button onclick="showPage('adcontact')" style="background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:24px;font-size:.86rem;font-weight:900;cursor:pointer">📞 홍보 상담 신청</button>
+        <button onclick="window.open('https://chatdoumi.com','_blank')" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);padding:10px 22px;border-radius:24px;font-size:.86rem;cursor:pointer">🤖 ChatDoumi AI 비서</button>
+      </div>
+    </div>
+
+    <!-- 서비스 카드 그리드 -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px">
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#c0392b,#e74c3c)">
+          <span class="pcc-ico">📰</span>
+          <div>
+            <div class="pcc-ttl">인터뷰 기사 신청</div>
+            <div class="pcc-price">3~10만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">내 가게 홍보용 인터뷰·기사 작성 및 국민경제㊉ 미디어 게재. 언론 보도자료 제작 포함.</div>
+        <div class="pcc-tags"><span>언론보도</span><span>기사화</span><span>SEO</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#1a5c8a,#2980b9)">
+          <span class="pcc-ico">📢</span>
+          <div>
+            <div class="pcc-ttl">업체 홍보 신청</div>
+            <div class="pcc-price">1~5만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">AI플랫마켓·국민경제㊉ 내 해당 지역 메인 노출. 업체 소개 페이지 자동 생성.</div>
+        <div class="pcc-tags"><span>지역노출</span><span>SEO페이지</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#6c1fa8,#9b59b6)">
+          <span class="pcc-ico">🎬</span>
+          <div>
+            <div class="pcc-ttl">라이브·쇼츠 영상 제작</div>
+            <div class="pcc-price">문의</div>
+          </div>
+        </div>
+        <div class="pcc-body">내 가게 라이브 영상 촬영·편집·AI 쇼츠 제작. AI플랫마켓+국민경제㊉ 유튜브 채널 노출.</div>
+        <div class="pcc-tags"><span>유튜브</span><span>쇼츠</span><span>라이브</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('register')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#1a7a4a,#27ae60)">
+          <span class="pcc-ico">⭐</span>
+          <div>
+            <div class="pcc-ttl">추천업체 등록</div>
+            <div class="pcc-price">월 1~5만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">AI플랫마켓 추천업체 배지 획득. 지역 검색 상단 노출. 카카오 공유 자동화.</div>
+        <div class="pcc-tags"><span>추천배지</span><span>상단노출</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#c9a84c,#e8c440)">
+          <span class="pcc-ico">🏆</span>
+          <div>
+            <div class="pcc-ttl">우수업체 인증</div>
+            <div class="pcc-price">연 10만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">국민경제㊉ 우수업체 인증 마크 발급. 신뢰도 향상 및 홍보 효과 극대화.</div>
+        <div class="pcc-tags"><span>인증마크</span><span>신뢰도</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#0d1f35,#2c4a6e)">
+          <span class="pcc-ico">📄</span>
+          <div>
+            <div class="pcc-ttl">AI 전단지·명함 제작</div>
+            <div class="pcc-price">2~5만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">업종·업체 맞춤 전단지·명함 AI 자동 디자인. 인쇄용 PDF 파일 제공.</div>
+        <div class="pcc-tags"><span>전단지</span><span>명함</span><span>인쇄</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('localad')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#7f8c8d,#95a5a6)">
+          <span class="pcc-ico">📍</span>
+          <div>
+            <div class="pcc-ttl">지역광고 신청</div>
+            <div class="pcc-price">월 1~10만원</div>
+          </div>
+        </div>
+        <div class="pcc-body">지역 주민 대상 타겟 광고. JPG·PDF 전단 업로드. 로그인 후 누구나 이용 가능.</div>
+        <div class="pcc-tags"><span>지역광고</span><span>타겟노출</span></div>
+      </div>
+
+      <div class="pc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#e67e22,#f39c12)">
+          <span class="pcc-ico">🏠</span>
+          <div>
+            <div class="pcc-ttl">인테리어 설계·시공</div>
+            <div class="pcc-price">견적 무료</div>
+          </div>
+        </div>
+        <div class="pcc-body">사업장 내외부 인테리어 설계·견적·시공업체 AI 매칭. 전문가 직접 연결.</div>
+        <div class="pcc-tags"><span>인테리어</span><span>시공</span><span>전문가</span></div>
+      </div>
+
+      <div class="pc-card" onclick="window.open('https://chatdoumi.com','_blank')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#1a3556,#2c5f8a)">
+          <span class="pcc-ico">🤖</span>
+          <div>
+            <div class="pcc-ttl">ChatDoumi AI 비서</div>
+            <div class="pcc-price">무료~</div>
+          </div>
+        </div>
+        <div class="pcc-body">내사업 내비서. 매출 분석·홍보문구 자동생성·고객 응대 자동화. AI플랫마켓 연동.</div>
+        <div class="pcc-tags"><span>AI비서</span><span>자동화</span><span>무료</span></div>
+      </div>
+
+    </div>
+
+    <!-- 요금 안내 -->
+    <div style="background:#fff;border:var(--bd);border-radius:var(--r);padding:18px;margin-bottom:16px">
+      <div style="font-family:var(--fs);font-size:.9rem;font-weight:900;color:var(--navy);margin-bottom:12px">💰 서비스 요금 안내</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>인터뷰 기사</b><br><span style="color:var(--red);font-weight:700">3 ~ 10만원</span></div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>업체 홍보</b><br><span style="color:var(--red);font-weight:700">1 ~ 5만원</span></div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>지역광고</b><br><span style="color:var(--red);font-weight:700">월 1 ~ 10만원</span></div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>추천업체 등록</b><br><span style="color:var(--red);font-weight:700">월 1 ~ 5만원</span></div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>우수업체 인증</b><br><span style="color:var(--red);font-weight:700">연 10만원</span></div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem"><b>AI 전단지·명함</b><br><span style="color:var(--red);font-weight:700">2 ~ 5만원</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center">
+      <button onclick="showPage('adcontact')" style="background:var(--navy);color:#fff;border:none;padding:11px 30px;border-radius:24px;font-size:.9rem;font-weight:900;cursor:pointer;margin-right:8px">📞 상담·문의하기</button>
+      <button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:11px 20px;border-radius:24px;font-size:.86rem;cursor:pointer">← 홈으로</button>
+    </div>
+  </div>
+</div>
+<div id="page-growthmall" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div style="background:linear-gradient(135deg,#0d1f35,#1a3a6e);border-radius:var(--r);padding:28px 22px;margin-bottom:22px;text-align:center;color:#fff">
+      <div style="font-size:2rem;margin-bottom:8px">📈</div>
+      <div style="font-family:var(--fs);font-size:1.2rem;font-weight:900;margin-bottom:6px">AI 성장+ 마켓몰</div>
+      <div style="font-size:.86rem;color:rgba(255,255,255,.8);line-height:1.6">AI를 활용하여 개인과 사업의 성장과 성공을 지원합니다</div>
+    </div>
+
+    <!-- AI 서비스 섹션 -->
+    <div style="font-family:var(--fs);font-size:.86rem;font-weight:900;color:var(--navy);margin-bottom:10px;padding-left:10px;border-left:3px solid var(--red)">🤖 AI 성장 서비스</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px">
+      <div class="gm-card" onclick="showPage('lifemap')">
+        <span class="gm-ico">🔮</span><span class="gm-ttl">AI 라이프맵</span>
+        <span class="gm-sub">인생·진로 분석</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">🚀</span><span class="gm-ttl">AI 창업진단</span>
+        <span class="gm-sub">창업 적합도 AI 분석</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">🏪</span><span class="gm-ttl">AI 사업진단</span>
+        <span class="gm-sub">매출·성장 진단</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">📊</span><span class="gm-ttl">AI 상권분석</span>
+        <span class="gm-sub">지역 상권 AI 분석</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">📈</span><span class="gm-ttl">AI 성장전략</span>
+        <span class="gm-sub">맞춤 성장 로드맵</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">🎓</span><span class="gm-ttl">AI 교육센터</span>
+        <span class="gm-sub">소상공인 AI 교육</span>
+      </div>
+      <div class="gm-card" onclick="showPage('startup')">
+        <span class="gm-ico">🏗</span><span class="gm-ttl">AI 창업센터</span>
+        <span class="gm-sub">창업 지원 패키지</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">💼</span><span class="gm-ttl">AI 부업센터</span>
+        <span class="gm-sub">부수입 AI 추천</span>
+      </div>
+      <div class="gm-card" onclick="showPage('news')">
+        <span class="gm-ico">✨</span><span class="gm-ttl">AI 성공사례</span>
+        <span class="gm-sub">실제 성공 스토리</span>
+      </div>
+      <div class="gm-card" onclick="showPage('adcontact')">
+        <span class="gm-ico">👥</span><span class="gm-ttl">전문가 연결</span>
+        <span class="gm-sub">세무·법무·컨설팅</span>
+      </div>
+    </div>
+
+    <!-- 마켓몰 섹션 -->
+    <div style="font-family:var(--fs);font-size:.86rem;font-weight:900;color:var(--navy);margin-bottom:10px;padding-left:10px;border-left:3px solid var(--gold)">🛒 AI 성장 상품관</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:22px">
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#6c1fa8,#9b59b6)">🔮</div>
+        <div class="gmp-body">
+          <div class="gmp-name">AI 라이프맵 리포트</div>
+          <div class="gmp-desc">20개 학문 융합 분석 상세 리포트</div>
+          <div class="gmp-price">9,900원~</div>
+          <button class="gmp-btn" onclick="showPage('lifemap')">신청하기</button>
+        </div>
+      </div>
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#0d1f35,#1a3556)">📊</div>
+        <div class="gmp-body">
+          <div class="gmp-name">AI 상권분석 리포트</div>
+          <div class="gmp-desc">창업 희망 지역 AI 상권 심층 분석</div>
+          <div class="gmp-price">29,000원~</div>
+          <button class="gmp-btn" onclick="showPage('adcontact')">신청하기</button>
+        </div>
+      </div>
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#c9a84c,#e8c440)">🎫</div>
+        <div class="gmp-body">
+          <div class="gmp-name">지역 쿠폰몰</div>
+          <div class="gmp-desc">인근 제휴 업체 할인 쿠폰 패키지</div>
+          <div class="gmp-price">5,000원~</div>
+          <button class="gmp-btn" onclick="doCoupon()">쿠폰받기</button>
+        </div>
+      </div>
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#1a7a4a,#27ae60)">📦</div>
+        <div class="gmp-body">
+          <div class="gmp-name">창업 지원 패키지</div>
+          <div class="gmp-desc">AI 창업진단 + 상권분석 + 컨설팅</div>
+          <div class="gmp-price">49,000원~</div>
+          <button class="gmp-btn" onclick="showPage('adcontact')">신청하기</button>
+        </div>
+      </div>
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#1a3556,#2c5f8a)">🤖</div>
+        <div class="gmp-body">
+          <div class="gmp-name">ChatDoumi AI 비서</div>
+          <div class="gmp-desc">월정액 AI 매출·마케팅 자동화 구독</div>
+          <div class="gmp-price">월 9,900원~</div>
+          <button class="gmp-btn" onclick="window.open('https://chatdoumi.com','_blank')">구독하기</button>
+        </div>
+      </div>
+
+      <div class="gm-product">
+        <div class="gmp-img" style="background:linear-gradient(135deg,#7f8c8d,#2c3e50)">🎬</div>
+        <div class="gmp-body">
+          <div class="gmp-name">라이브 홈쇼핑 입점</div>
+          <div class="gmp-desc">AI플랫마켓 라이브 방송 입점 패키지</div>
+          <div class="gmp-price">월 29,000원~</div>
+          <button class="gmp-btn" onclick="showPage('register')">입점신청</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center">
+      <button onclick="window.open('https://chatdoumi.com','_blank')" style="background:var(--navy);color:#fff;border:none;padding:11px 28px;border-radius:24px;font-size:.88rem;font-weight:900;cursor:pointer;margin-right:8px">🤖 ChatDoumi 시작</button>
+      <button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:11px 20px;border-radius:24px;cursor:pointer;font-size:.86rem">← 홈으로</button>
+    </div>
+  </div>
+</div>
+<div id="page-localcenter" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div style="background:linear-gradient(135deg,#1a5c3a,#27ae60);border-radius:var(--r);padding:28px 22px;margin-bottom:22px;text-align:center;color:#fff">
+      <div style="font-size:2rem;margin-bottom:8px">🏛</div>
+      <div style="font-family:var(--fs);font-size:1.2rem;font-weight:900;margin-bottom:6px">AI 지역경제센터</div>
+      <div style="font-size:.86rem;color:rgba(255,255,255,.85);margin-bottom:14px">지역경제와 AI를 연결하는 미래형 지역경제 플랫폼</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button onclick="showPage('create-sanglife')" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:700;cursor:pointer">🌱 상생회 만들기</button>
+        <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:900;cursor:pointer">🏢 센터 모집 신청</button>
+      </div>
+    </div>
+
+    <!-- 조직 체계 -->
+    <div style="background:#fff;border:var(--bd);border-radius:var(--r);padding:18px;margin-bottom:18px">
+      <div style="font-family:var(--fs);font-size:.9rem;font-weight:900;color:var(--navy);margin-bottom:14px">🏗 AI 지역경제센터 조직 체계</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        <div style="background:linear-gradient(135deg,#0d1f35,#1a3556);border-radius:8px;padding:14px;text-align:center;color:#fff">
+          <div style="font-size:1.5rem;margin-bottom:6px">🏢</div>
+          <div style="font-size:.84rem;font-weight:900;color:var(--gold)">지역경제본부</div>
+          <div style="font-size:.68rem;color:rgba(255,255,255,.7);margin-top:4px">광역 시도 단위<br>총괄 운영 관리</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#1a5c3a,#27ae60);border-radius:8px;padding:14px;text-align:center;color:#fff">
+          <div style="font-size:1.5rem;margin-bottom:6px">🏬</div>
+          <div style="font-size:.84rem;font-weight:900">지역센터</div>
+          <div style="font-size:.68rem;color:rgba(255,255,255,.7);margin-top:4px">시군구 단위<br>지역 서비스 운영</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#7f8c8d,#95a5a6);border-radius:8px;padding:14px;text-align:center;color:#fff">
+          <div style="font-size:1.5rem;margin-bottom:6px">🏘</div>
+          <div style="font-size:.84rem;font-weight:900">지역지부</div>
+          <div style="font-size:.68rem;color:rgba(255,255,255,.7);margin-top:4px">읍면동 단위<br>현장 밀착 활동</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 사업 소개 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+      <div style="background:#fff;border:var(--bd);border-radius:var(--r);padding:16px">
+        <div style="font-weight:900;color:var(--navy);margin-bottom:10px;font-size:.88rem">📋 비전 및 운영목표</div>
+        <ul style="padding-left:16px;font-size:.78rem;color:var(--g4);line-height:1.8;list-style:disc">
+          <li>지역 소상공인 디지털 전환 지원</li>
+          <li>AI 기술을 활용한 지역경제 활성화</li>
+          <li>소상공인·소비자 상생 생태계 구축</li>
+          <li>전국 지역경제 네트워크 연결</li>
+          <li>AGI 허브 역할의 지역 거점 운영</li>
+        </ul>
+      </div>
+      <div style="background:#fff;border:var(--bd);border-radius:var(--r);padding:16px">
+        <div style="font-weight:900;color:var(--navy);margin-bottom:10px;font-size:.88rem">🎯 주요 사업</div>
+        <ul style="padding-left:16px;font-size:.78rem;color:var(--g4);line-height:1.8;list-style:disc">
+          <li>지역 소상공인 AI 홍보 지원</li>
+          <li>지역 특산품 발굴 및 유통 연결</li>
+          <li>AI 활용 교육 및 컨설팅</li>
+          <li>지역 라이브커머스 운영 지원</li>
+          <li>지역 미디어 콘텐츠 제작 지원</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 메뉴 카드 -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px">
+      <div class="lc-card" onclick="showPage('adcontact')"><span class="lc-ico">🤝</span><span class="lc-ttl">소상공인 지원</span></div>
+      <div class="lc-card" onclick="showPage('adcontact')"><span class="lc-ico">🎓</span><span class="lc-ttl">AI 활용 교육</span></div>
+      <div class="lc-card" onclick="showPage('community')"><span class="lc-ico">💬</span><span class="lc-ttl">지역 커뮤니티</span></div>
+      <div class="lc-card" onclick="openBranchPopup()"><span class="lc-ico">🏢</span><span class="lc-ttl">본부·센터 모집</span></div>
+      <div class="lc-card" onclick="showPage('news')"><span class="lc-ico">📰</span><span class="lc-ttl">활동 사례</span></div>
+      <div class="lc-card" onclick="showPage('adcontact')"><span class="lc-ico">🤝</span><span class="lc-ttl">협력기관 안내</span></div>
+    </div>
+
+    <!-- 모집 배너 -->
+    <div style="background:linear-gradient(135deg,var(--navy),#1a5c3a);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:16px">
+      <div style="font-size:.9rem;font-weight:900;color:var(--gold);margin-bottom:8px">🚀 AI 지역경제센터 전국 모집 중!</div>
+      <div style="font-size:.78rem;color:rgba(255,255,255,.8);margin-bottom:14px;line-height:1.6">
+        지역경제본부(시도) · 지역센터(시군구) · 지역지부(읍면동) 운영자 모집<br>
+        합동사무실·공동운영 가능 / AI플랫마켓 전용 시스템 무료 제공
+      </div>
+      <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:10px 26px;border-radius:20px;font-size:.88rem;font-weight:900;cursor:pointer">📋 센터 모집 신청하기</button>
+    </div>
+
+    <div style="text-align:center"><button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:9px 22px;border-radius:20px;font-size:.84rem;cursor:pointer">← 홈으로</button></div>
+  </div>
+</div>
+<div id="page-videocenter" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a8a);border-radius:var(--r);padding:28px 22px;margin-bottom:22px;text-align:center;color:#fff">
+      <div style="font-size:2rem;margin-bottom:8px">🎬</div>
+      <div style="font-family:var(--fs);font-size:1.2rem;font-weight:900;margin-bottom:6px">AI 영상생성센터</div>
+      <div style="font-size:.86rem;color:rgba(255,255,255,.8)">AI를 활용한 영상 제작과 유튜브 성장 지원</div>
+    </div>
+
+    <!-- AI 영상 툴 -->
+    <div style="font-family:var(--fs);font-size:.86rem;font-weight:900;color:var(--navy);margin-bottom:10px;padding-left:10px;border-left:3px solid #9b59b6">🛠 AI 영상 생성 도구</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:20px">
+      <div class="vc-tool" onclick="window.open('https://runwayml.com','_blank')">
+        <div class="vct-hd" style="background:linear-gradient(135deg,#1a0a2e,#4a1a8a)">🚀 Runway</div>
+        <div class="vct-body">Gen-3 Alpha 영상 생성. 텍스트→영상, 이미지→영상 변환</div>
+        <div class="vct-link">runway.com →</div>
+      </div>
+      <div class="vc-tool" onclick="window.open('https://deepmind.google/veo','_blank')">
+        <div class="vct-hd" style="background:linear-gradient(135deg,#0d47a1,#1976d2)">🎥 Veo (Google)</div>
+        <div class="vct-body">Google DeepMind의 고품질 영상 생성 AI</div>
+        <div class="vct-link">deepmind.google →</div>
+      </div>
+      <div class="vc-tool" onclick="window.open('https://klingai.com','_blank')">
+        <div class="vct-hd" style="background:linear-gradient(135deg,#880e4f,#c2185b)">✨ Kling AI</div>
+        <div class="vct-body">한국어 지원 영상 생성. 사실적 영상·애니 제작</div>
+        <div class="vct-link">klingai.com →</div>
+      </div>
+      <div class="vc-tool" onclick="window.open('https://openai.com/sora','_blank')">
+        <div class="vct-hd" style="background:linear-gradient(135deg,#212121,#424242)">🌀 Sora (OpenAI)</div>
+        <div class="vct-body">OpenAI의 텍스트→영상 생성. 고품질 장편 영상</div>
+        <div class="vct-link">openai.com →</div>
+      </div>
+    </div>
+
+    <!-- 제작 서비스 -->
+    <div style="font-family:var(--fs);font-size:.86rem;font-weight:900;color:var(--navy);margin-bottom:10px;padding-left:10px;border-left:3px solid var(--red)">🎬 영상 제작 대행 서비스</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px">
+      <div class="pcc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#c0392b,#e74c3c)"><span class="pcc-ico">📱</span><div><div class="pcc-ttl">AI 쇼츠 제작</div><div class="pcc-price">5~15만원</div></div></div>
+        <div class="pcc-body">내 가게 15~60초 쇼츠 AI 제작. 유튜브·인스타·틱톡 최적화.</div>
+      </div>
+      <div class="pcc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#1a5c8a,#2980b9)"><span class="pcc-ico">📢</span><div><div class="pcc-ttl">홍보영상 제작</div><div class="pcc-price">10~30만원</div></div></div>
+        <div class="pcc-body">업체 소개·제품 홍보 영상. AI 나레이션·자막 자동 생성.</div>
+      </div>
+      <div class="pcc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#1a7a4a,#27ae60)"><span class="pcc-ico">🎤</span><div><div class="pcc-ttl">인터뷰 영상</div><div class="pcc-price">15~40만원</div></div></div>
+        <div class="pcc-body">사장님 인터뷰 촬영·편집. 국민경제㊉ 유튜브 채널 게재.</div>
+      </div>
+      <div class="pcc-card" onclick="showPage('adcontact')">
+        <div class="pcc-hd" style="background:linear-gradient(135deg,#6c1fa8,#9b59b6)"><span class="pcc-ico">🎵</span><div><div class="pcc-ttl">뮤직비디오</div><div class="pcc-price">문의</div></div></div>
+        <div class="pcc-body">AI 음악+영상 결합 콘텐츠. 브랜드 감성 영상 제작.</div>
+      </div>
+    </div>
+
+    <!-- 프롬프트 라이브러리 -->
+    <div style="background:#fff;border:var(--bd);border-radius:var(--r);padding:16px;margin-bottom:16px">
+      <div style="font-weight:900;color:var(--navy);margin-bottom:10px">📚 영상 생성 프롬프트 라이브러리</div>
+      <div style="display:grid;gap:8px">
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem">
+          <b style="color:#9b59b6">🍕 음식점 홍보:</b> "A warm, welcoming Korean restaurant interior, steaming hot tteokbokki on a plate, customers smiling, cinematic lighting, 4K quality"
+        </div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem">
+          <b style="color:#2980b9">💇 미용실 소개:</b> "Professional hair salon, stylist carefully cutting hair, modern interior, soft natural light, customer satisfaction"
+        </div>
+        <div style="background:var(--g1);border-radius:6px;padding:10px;font-size:.78rem">
+          <b style="color:#27ae60">🌾 특산품 홍보:</b> "Fresh local farm produce, vibrant colors, farmer harvesting, golden hour sunlight, documentary style"
+        </div>
+      </div>
+      <button onclick="showPage('adcontact')" style="margin-top:10px;width:100%;background:var(--navy);color:#fff;border:none;padding:8px;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer">📋 맞춤 프롬프트 요청</button>
+    </div>
+
+    <div style="text-align:center"><button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:9px 22px;border-radius:20px;font-size:.84rem;cursor:pointer">← 홈으로</button></div>
+  </div>
+</div>
+<div id="page-local-products" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div style="background:linear-gradient(135deg,#1a5c3a,#2ecc71);border-radius:var(--r);padding:26px 22px;margin-bottom:20px;text-align:center;color:#fff">
+      <div style="font-size:2rem;margin-bottom:6px">🌾</div>
+      <div style="font-family:var(--fs);font-size:1.2rem;font-weight:900;margin-bottom:6px">지역 특산품관</div>
+      <div style="font-size:.84rem;color:rgba(255,255,255,.85)">전국 지역의 우수 특산품과 소상공인 상품을 한 곳에서</div>
+    </div>
+
+    <!-- 카테고리 탭 -->
+    <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px;margin-bottom:18px">
+      <button class="lp-cat act" onclick="lpFilter(this,'all')">🌟 전체</button>
+      <button class="lp-cat" onclick="lpFilter(this,'farm')">🌾 농산물</button>
+      <button class="lp-cat" onclick="lpFilter(this,'sea')">🐟 수산물</button>
+      <button class="lp-cat" onclick="lpFilter(this,'livestock')">🥩 축산물</button>
+      <button class="lp-cat" onclick="lpFilter(this,'traditional')">🍱 전통식품</button>
+      <button class="lp-cat" onclick="lpFilter(this,'health')">💊 건강식품</button>
+      <button class="lp-cat" onclick="lpFilter(this,'craft')">🏺 공예품</button>
+      <button class="lp-cat" onclick="lpFilter(this,'premium')">🏅 지역명품</button>
+    </div>
+
+    <!-- 상품 그리드 -->
+    <div id="lpGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:22px">
+
+      <div class="lp-card" data-cat="farm">
+        <div class="lp-img" style="background:linear-gradient(135deg,#c8e6c9,#81c784)">🍎</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 경북 청송</div>
+          <div class="lp-name">청송 사과 5kg</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">당도 높은 청송 햇사과, 산지 직송</div>
+          <div class="lp-price">35,000원</div>
+          <button class="lp-buy" onclick="lpBuy('청송 사과 5kg','35000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="sea">
+        <div class="lp-img" style="background:linear-gradient(135deg,#b3e5fc,#4fc3f7)">🦀</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 경남 통영</div>
+          <div class="lp-name">통영 꽃게 2kg</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">통영 앞바다 싱싱한 꽃게, 당일 출고</div>
+          <div class="lp-price">48,000원</div>
+          <button class="lp-buy" onclick="lpBuy('통영 꽃게 2kg','48000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="farm">
+        <div class="lp-img" style="background:linear-gradient(135deg,#fff59d,#ffd54f)">🍊</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 제주</div>
+          <div class="lp-name">제주 한라봉 3kg</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">제주 감귤 농가 직접 재배, 무농약</div>
+          <div class="lp-price">28,000원</div>
+          <button class="lp-buy" onclick="lpBuy('제주 한라봉 3kg','28000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="traditional">
+        <div class="lp-img" style="background:linear-gradient(135deg,#ffccbc,#ff8a65)">🍯</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 전남 보성</div>
+          <div class="lp-name">보성 녹차 꿀 500g</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">녹차밭 꿀벌이 만든 프리미엄 꿀</div>
+          <div class="lp-price">22,000원</div>
+          <button class="lp-buy" onclick="lpBuy('보성 녹차 꿀 500g','22000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="livestock">
+        <div class="lp-img" style="background:linear-gradient(135deg,#f8bbd0,#f06292)">🥩</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 강원 횡성</div>
+          <div class="lp-name">횡성 한우 등심 1kg</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">1++ 등급 횡성 한우 냉장 직배</div>
+          <div class="lp-price">89,000원</div>
+          <button class="lp-buy" onclick="lpBuy('횡성 한우 등심 1kg','89000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="craft">
+        <div class="lp-img" style="background:linear-gradient(135deg,#ffe0b2,#ffb74d)">🏺</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 전북 전주</div>
+          <div class="lp-name">전주 한지 공예품</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">500년 전통 전주 한지 수공예 작품</div>
+          <div class="lp-price">45,000원</div>
+          <button class="lp-buy" onclick="lpBuy('전주 한지 공예품','45000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="health">
+        <div class="lp-img" style="background:linear-gradient(135deg,#c5e1a5,#8bc34a)">🌿</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 충북 제천</div>
+          <div class="lp-name">제천 황기 한방세트</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">제천 약초특구 인증 프리미엄 황기</div>
+          <div class="lp-price">32,000원</div>
+          <button class="lp-buy" onclick="lpBuy('제천 황기 한방세트','32000')">구매하기 →</button>
+        </div>
+      </div>
+
+      <div class="lp-card" data-cat="premium">
+        <div class="lp-img" style="background:linear-gradient(135deg,#c9a84c,#e8c440)">🏅</div>
+        <div class="lp-body">
+          <div class="lp-region">📍 경남 하동</div>
+          <div class="lp-name">하동 녹차 명품 세트</div>
+          <div style="font-size:.7rem;color:var(--g4);margin-bottom:5px">지리산 야생 녹차, 선물 포장 포함</div>
+          <div class="lp-price">58,000원</div>
+          <button class="lp-buy" onclick="lpBuy('하동 녹차 명품 세트','58000')">구매하기 →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 입점 안내 -->
+    <div style="background:linear-gradient(135deg,var(--g1),#f0faf4);border:2px dashed var(--grn);border-radius:var(--r);padding:18px;text-align:center;margin-bottom:16px">
+      <div style="font-size:.9rem;font-weight:900;color:var(--grn);margin-bottom:6px">🌾 지역 특산품 판매자 모집 중</div>
+      <div style="font-size:.78rem;color:var(--g4);margin-bottom:10px">농수산물 · 가공식품 · 공예품 · 특산물 판매자 무료 입점<br>AI 홍보 지원 + 라이브 홈쇼핑 연결 + 지역 SEO 페이지 자동 생성</div>
+      <button onclick="showPage('register')" style="background:var(--grn);color:#fff;border:none;padding:9px 24px;border-radius:20px;font-size:.84rem;font-weight:800;cursor:pointer">무료 입점 신청하기</button>
+    </div>
+
+    <div style="text-align:center"><button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:9px 22px;border-radius:20px;font-size:.84rem;cursor:pointer">← 홈으로</button></div>
+  </div>
+</div>
 <div class="toast" id="toastEl"></div>
 
-<!-- ========== AI지역경제본부/센터 신청 팝업 ========== -->
+<!-- ========== 지역경제본부·센터 신청 팝업 ========== -->
 <div id="branchPopup" style="display:none;position:fixed;inset:0;background:rgba(13,31,53,.65);z-index:4000;align-items:center;justify-content:center;padding:16px;overflow-y:auto">
   <div style="background:#fff;border-radius:12px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:90vh;display:flex;flex-direction:column">
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 20px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
       <div>
-        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 AI지역경제본부 · 센터 신청</div>
+        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 지역경제본부 · 지사 신청</div>
         <div style="font-size:.72rem;color:var(--gold);margin-top:3px;font-weight:700">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       </div>
       <button onclick="closeBranchPopup()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
@@ -2672,16 +3237,16 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       <input class="fi" id="bpEmail" type="email" placeholder="이메일">
       <select class="fi" id="bpType">
         <option value="">신청 유형 *</option>
-        <option>AI지역경제본부 (시·도)</option>
-        <option>센터 (시·군·구)</option>
-        <option>지부 (읍·면·동)</option>
+        <option>지역본부 (시·도)</option>
+        <option>지사 (시·군·구)</option>
+        <option>지역지부 (읍·면·동)</option>
         <option>합동사무실 운영</option>
         <option>지역 공동 운영 매장</option>
       </select>
       <input class="fi" id="bpRegion" placeholder="희망 지역 (예: 인천광역시 남동구 구월동)">
       <textarea class="fi" rows="3" id="bpDesc" placeholder="자기소개 및 지원 동기 (합동사무실·공동매장 운영 경험 포함)" style="resize:vertical"></textarea>
       <div style="background:var(--g1);border-radius:var(--r);padding:10px;font-size:.74rem;color:var(--g4)">
-        📋 심사 후 2~3일 이내 담당자 연락드립니다. AI지역경제본부·센터·합동사무실·공동 운영 매장 모두 문의 가능합니다.
+        📋 심사 후 2~3일 이내 담당자 연락드립니다. 지역경제본부·센터·합동사무실·공동 운영 매장 모두 문의 가능합니다.
       </div>
     </div>
     <div style="padding:14px 20px;border-top:var(--bd);background:var(--g1);border-radius:0 0 12px 12px;display:flex;gap:8px;justify-content:flex-end;flex-shrink:0">
@@ -4162,7 +4727,7 @@ function closeNewsSubPage() {
   document.getElementById('newsGrid').style.display = '';
 }
 
-/* ── AI지역경제본부 팝업 ── */
+/* ── 지역본부 팝업 ── */
 function openBranchPopup() {
   document.getElementById('branchPopup').style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -4547,6 +5112,31 @@ function showLifeAIResult(res,p){
   el.scrollIntoView({behavior:'smooth',block:'start'});
   toast('✅ '+p.name+'님의 AI 융합 분석 완료!');
 }
+
+/* ── 지역특산품관 ── */
+function lpFilter(btn, cat) {
+  document.querySelectorAll('.lp-cat').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  document.querySelectorAll('#lpGrid .lp-card').forEach(card=>{
+    card.style.display = (cat==='all' || card.dataset.cat===cat) ? '' : 'none';
+  });
+}
+function lpBuy(name, price) {
+  const pop = document.createElement('div');
+  pop.style.cssText='position:fixed;inset:0;background:rgba(13,31,53,.7);z-index:5000;display:flex;align-items:center;justify-content:center;padding:20px';
+  pop.innerHTML=`<div style="background:#fff;border-radius:16px;padding:26px;max-width:320px;width:100%;text-align:center">
+    <div style="font-size:2rem;margin-bottom:8px">🛒</div>
+    <div style="font-family:var(--fs);font-size:1rem;font-weight:900;color:var(--navy);margin-bottom:6px">${name}</div>
+    <div style="font-size:1.1rem;font-weight:900;color:var(--red);margin-bottom:14px">${parseInt(price).toLocaleString()}원</div>
+    <div style="font-size:.78rem;color:var(--g4);margin-bottom:16px;line-height:1.6">구매 문의는 아래 버튼으로 연락주세요.<br>담당자가 빠르게 안내드립니다.</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button onclick="showPage('adcontact');this.closest('[style*=fixed]').remove()" style="background:var(--navy);color:#fff;border:none;padding:10px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer">📞 구매 문의하기</button>
+      <button onclick="window.open('https://chatdoumi.com?product='+encodeURIComponent('${name}'),'_blank');this.closest('[style*=fixed]').remove()" style="background:var(--grn);color:#fff;border:none;padding:10px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer">🤖 AI 비서에게 문의</button>
+      <button onclick="this.closest('[style*=fixed]').remove()" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:8px;border-radius:8px;font-size:.8rem;cursor:pointer">취소</button>
+    </div>
+  </div>`;
+  document.body.appendChild(pop);
+}
 /* ─── 토스트 ── */
 function toast(msg) {
   const el=document.getElementById('toastEl');
@@ -4567,7 +5157,7 @@ function initPanelScrolls() {
   });
 }
 
-/* ── AI지역경제본부/센터 신청 폼 ── */
+/* ── 지역경제본부·센터 신청 폼 ── */
 function showBranchForm() {
   const wrap = document.getElementById('branchFormWrap');
   if (!wrap) return;
