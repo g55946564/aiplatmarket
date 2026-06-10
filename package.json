@@ -16,6 +16,7 @@
   "description": "소상공인 상생 플랫폼 - AI 기반 지역 경제 뉴스 포털",
   "dependencies": {
     "cors": "^2.8.6",
+    "node-cron": "^4.0.0",
     "express": "^5.2.1",
     "firebase-admin": "^13.8.0",
     "rss-parser": "^3.13.0",
