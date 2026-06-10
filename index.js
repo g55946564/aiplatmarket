@@ -24,6 +24,32 @@ const path     = require('path');
 const https    = require('https');
 const http     = require('http');
 
+const fs = require('fs');
+
+console.log('__dirname =', __dirname);
+
+console.log(
+  'public exists:',
+  fs.existsSync(path.join(__dirname, 'public'))
+);
+
+console.log(
+  'index exists:',
+  fs.existsSync(path.join(__dirname, 'public', 'index.html'))
+);
+
+console.log(
+  'admin exists:',
+  fs.existsSync(path.join(__dirname, 'public', 'admin.html'))
+);
+
+console.log(
+  'Firebase ENV:',
+  process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+    ? 'FOUND'
+    : 'MISSING'
+);
+
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
@@ -31,10 +57,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-// paper 신문 폴더 (public 밖 루트에 위치)
+// paper 신문 폴더 (public 안 루트에 위치)
 app.use('/paper', express.static(path.join(__dirname, 'paper')));
-app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
-app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'paper', 'index.html')));
+app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'publc', 'paper', 'index.html')));
+app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'publc', 'paper', 'index.html')));
 
 /* ─────────────────────────────
    Firebase Admin SDK
