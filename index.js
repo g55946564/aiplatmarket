@@ -26,6 +26,46 @@ const http     = require('http');
 
 const fs = require('fs');
 
+function loadEnvFile(filePath = path.join(__dirname, '.env')) {
+  if (!fs.existsSync(filePath)) return;
+  const lines = fs.readFileSync(filePath, 'utf8').split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+    const eq = trimmed.indexOf('=');
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (key && process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
+function resolveServiceAccountPath() {
+  const candidates = [
+    process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    process.env.FIREBASE_SERVICE_ACCOUNT,
+    path.join(__dirname, 'serviceAccountKey.json'),
+  ].filter(Boolean);
+
+  try {
+    const autoDetected = fs
+      .readdirSync(__dirname)
+      .find(name => /firebase-adminsdk.*\.json$/i.test(name));
+    if (autoDetected) candidates.push(path.join(__dirname, autoDetected));
+  } catch (e) {
+    // Ignore directory scan errors and let the explicit candidates fail below.
+  }
+
+  return candidates.find(p => fs.existsSync(path.resolve(p)));
+}
+
+loadEnvFile();
+
 console.log('__dirname =', __dirname);
 
 console.log(
@@ -55,6 +95,16 @@ app.use('/paper', express.static(path.join(__dirname, 'public', 'paper')));
 app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'public', 'paper', 'index.html')));
 app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'public', 'paper', 'index.html')));
 
+app.get('/api/health', (req, res) => {
+  res.json({
+    ok: true,
+    service: 'aiplatmarket',
+    firebase: Boolean(db),
+    uptime: Math.round(process.uptime()),
+    checkedAt: new Date().toISOString(),
+  });
+});
+
 /* ─────────────────────────────
    Firebase Admin SDK
 ───────────────────────────── */
@@ -62,7 +112,11 @@ app.get('/paper/', (req,res) => res.sendFile(path.join(__dirname, 'public', 'pap
 /* ── Firebase ── */
 let db;
 try {
-  const serviceAccount = require('./serviceAccountKey.json');
+  const serviceAccountPath = resolveServiceAccountPath();
+  if (!serviceAccountPath) {
+    throw new Error('Firebase service account json not found');
+  }
+  const serviceAccount = require(path.resolve(serviceAccountPath));
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
