@@ -997,42 +997,32 @@ async function loadStats() {
   } catch(e) { console.error(e); }
 }
 
-// showPanel 확장 (기존 함수에 새 패널 추가)
-const _origShowPanel = typeof showPanel === 'function' ? showPanel : null;
 function showPanel(id) {
-  document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('act'));
-  const el = document.getElementById('panel-'+id);
-  if (el) el.style.display='block';
-  // 패널별 데이터 로드
-  if (id==='founder')     loadFounders();
-  if (id==='deploy')      loadStoreSelect(['deployStoreId']);
-  if (id==='seo')         loadStoreSelect(['seoStoreId']);
-  if (id==='qr')          loadStoreSelect(['qrStoreId']);
-  if (id==='stats')       { loadStoreSelect([]); loadStats(); }
-  if (id==='dashboard')   refreshAll();
-  // 기존 패널 처리
-  if (['stores','pending','ads','adreq','branch','reporter','notice','event','settings'].includes(id)) {
-    if(_origShowPanel) _origShowPanel(id);
-  }
-  event?.currentTarget?.classList.add('act');
-}
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('act'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('act'));
   document.getElementById('panel-'+id)?.classList.add('act');
-  document.getElementById('topbarTitle').textContent = panelTitles[id] || id;
-  // nav 활성화
+  const titleEl = document.getElementById('topbarTitle');
+  if (titleEl) titleEl.textContent = panelTitles[id] || id;
   document.querySelectorAll('.nav-item').forEach(n => {
     if (n.getAttribute('onclick')?.includes(`'${id}'`)) n.classList.add('act');
   });
-  // 패널별 데이터 로드
+
   if (id === 'stores' || id === 'pending') loadStores();
   if (id === 'ads') loadAds();
-  if (id === 'dashboard') loadDashboard();
+  if (id === 'adreq') loadAds();
   if (id === 'branch') loadCollection('branches', 'branchTbody', renderBranchRow);
   if (id === 'reporter') loadCollection('reporters', 'reporterTbody', renderReporterRow);
   if (id === 'notice') loadNotices();
   if (id === 'event') loadEvents();
+  if (id === 'dashboard') loadDashboard();
+  if (id === 'founder') loadFounders();
+  if (id === 'deploy') loadStoreSelect(['deployStoreId']);
+  if (id === 'seo') loadStoreSelect(['seoStoreId']);
+  if (id === 'qr') loadStoreSelect(['qrStoreId']);
+  if (id === 'stats') {
+    loadStoreSelect([]);
+    loadStats();
+  }
 }
 
 /* ==============================

@@ -3410,32 +3410,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   </div>
 </div>
 
-<!-- ========== 챗도우미 실시간 팝업 ========== -->
-<div class="cd-popup" id="cdPopup" style="display:none">
-  <div class="cd-popup-hd">
-    <div>
-      <div style="font-size:.72rem;color:rgba(255,255,255,.65);margin-bottom:1px">내 사업 내 비서</div>
-      <div style="font-size:.88rem;font-weight:800">🤖 A(G)I 챗도우미</div>
-    </div>
-    <button class="cd-popup-close" onclick="closeCdPopup()">✕</button>
-  </div>
-  <div class="cd-popup-body">
-    <div style="font-size:.78rem;color:#555;line-height:1.6;margin-bottom:10px">
-      <b style="color:var(--navy);display:block;margin-bottom:4px">✨ AI 광고·마케팅 지원</b>
-      소상공인 맞춤 AI 광고문구 자동 생성, 매출 분석, 마케팅 전략을 ChatDoumi가 도와드립니다.
-    </div>
-    <div style="display:flex;gap:7px;flex-direction:column">
-      <a href="https://chatdoumi.com" target="_blank" rel="noopener"
-         style="background:var(--navy);color:#fff;padding:8px 12px;border-radius:6px;font-size:.8rem;font-weight:700;text-align:center;text-decoration:none;display:block">
-        🚀 챗도우미 시작하기 →
-      </a>
-      <button onclick="closeCdPopup()" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:6px;border-radius:6px;font-size:.76rem;cursor:pointer">
-        오늘 하루 보지 않기
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- FAB 버튼 (챗도우미) -->
 <button class="cd-fab" id="cdFab" onclick="toggleCdPopup()" title="챗도우미 AI 비서">🤖</button>
 
@@ -4389,10 +4363,6 @@ const STATIC_DB = {
   30:{ title:'"지역경제, AI가 살린다" — 소상공인의 디지털 전환', desc:'AI플랫마켓 편집장 칼럼: 소상공인의 디지털 전환은 선택이 아닌 필수입니다. AI 홍보문구 자동생성, 실시간 매출 분석, 지역 기반 마케팅으로 지역 경제를 살릴 수 있습니다.', link:'#', source:'AI플랫마켓 편집국', cat:'오피니언', origin:'dummy' },
 };
 
-function openNewsDetail3(idx, pool) {
-  if (pool) _newsPool = pool;
-  openNewsDetail2(idx);
-}
 /* 고정 HTML 기사 → STATIC_DB만 */
 function openNewsDetail(idx){const n=STATIC_DB[idx];if(!n){toast('기사 없음');return;}_showNewsPopup(n);}
 /* 동적 API 기사 → _newsPool */
@@ -4467,10 +4437,6 @@ function _old_openNewsDetail2(idx){const n=STATIC_DB[idx]||_newsPool[idx];
     </div>`;
   document.getElementById('newsDetailModal').style.display = 'flex';
 }
-
-// 기존 호환성 유지
-function closeNewsDetail() { document.getElementById('newsDetailModal').style.display='none'; }
-function openNewsDetail(idx) { openNewsDetail2(idx); }
 
 /* ══════════════════════════════════════════
    속보 자동 갱신 (30초마다 rotate)
@@ -5086,7 +5052,7 @@ function getJobRecs(p,score){
   if(score>80)return[...DB.IT.slice(0,2),...DB.전문직.slice(0,2)];
   return[...DB.창업.slice(0,2),...DB.서비스.slice(0,2)];
 }
-function showLifeAIResult(res,p){
+function renderLifeAIResultSummary(res,p){
   const el=document.getElementById('lai-result');if(!el)return;
   el.style.display='block';
   el.innerHTML=`
@@ -5234,9 +5200,8 @@ function laiPreviewImg(input, previewId, boxId) {
 }
 
 /* ── submitLifeAI 결과: 탭 자동 전환 ── */
-const _origShowLifeAIResult = typeof showLifeAIResult === 'function' ? showLifeAIResult : null;
 function showLifeAIResult(res, p) {
-  if (_origShowLifeAIResult) _origShowLifeAIResult(res, p);
+  renderLifeAIResultSummary(res, p);
   // 결과 탭으로 이동
   laiSwitchTab('result');
   // 결과를 panel-result 안 lai-result에 표시
