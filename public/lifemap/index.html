@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Life Platform MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #070b16 0%, #0e1630 45%, #171225 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(88, 120, 255, 0.12);
+      filter: blur(80px);
+      z-index: -1;
+    }
+
+    .glow1 {
+      top: -120px;
+      left: -120px;
+    }
+
+    .glow2 {
+      bottom: -180px;
+      right: -150px;
+      background: rgba(255, 190, 80, 0.10);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: #7da4ff;
+    }
+
+    .menu {
+      display: flex;
+      gap: 18px;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 38px;
+    }
+
+    .hero-card,
+    .glass {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+    }
+
+    .hero-card {
+      padding: 52px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(125,164,255,0.12);
+      color: #a6c0ff;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 58px;
+      line-height: 1.08;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .cta-wrap {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 28px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7da4ff, #9f7bff);
+      color: #fff;
+      box-shadow: 0 8px 25px rgba(110,140,255,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .side-panel {
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.07);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .orbit::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #9ec1ff;
+      border-radius: 50%;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 18px #8bb2ff;
+    }
+
+    .stats-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 22px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini-title {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 10px;
+    }
+
+    .mini-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .form-section {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .form-card,
+    .result-card {
+      padding: 30px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .score-ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: conic-gradient(#7da4ff 0deg 320deg, rgba(255,255,255,0.08) 320deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-inner {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #0f1425;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .analysis-box {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .analysis-box h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .analysis-box p {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .loading {
+      margin-top: 24px;
+      display: none;
+    }
+
+    .loading-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .loading-progress {
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, #7da4ff, #b27bff);
+      animation: loading 2s infinite;
+    }
+
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(220%); }
+    }
+
+    .fusion-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .fusion-item {
+      padding: 14px;
+      border-radius: 16px;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .fusion-item.active {
+      background: linear-gradient(135deg, rgba(125,164,255,0.22), rgba(159,123,255,0.22));
+      border-color: rgba(125,164,255,0.35);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(110,140,255,0.18);
+    }
+
+    .fusion-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .upload-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-box input {
+      margin-top: 14px;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .upload-icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .upload-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .upload-desc {
+      color: rgba(255,255,255,0.58);
+      font-size: 12px;
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .form-section {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero-card {
+        padding: 34px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero-card,
+      .form-card,
+      .result-card {
+        padding: 24px;
+      }
+
+      .result-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .fusion-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .upload-box {
+        padding: 16px;
+      }
+
+      .upload-icon {
+        font-size: 28px;
+      }
+
+      .cta-wrap {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<div class="container">
+
+  <div class="topbar">
+    <div class="logo">AI<span>PlatMarket</span></div>
+    <div class="menu">
+      <div>AI 미래 분석</div>
+      <div>직업 Fusion</div>
+      <div>인생 설계</div>
+      <div>사업·성향 분석</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-card glass">
+      <div class="badge">AI Fusion Engine · GPT · Gemini · Life Analytics</div>
+
+      <h1>
+        AI가 분석하는<br>
+        당신의 미래 방향
+      </h1>
+
+      <p>
+        직업 · 성향 · 인생 방향 · 사업 가능성까지<br>
+        챗도우미 AI 엔진 기반으로 통합 분석합니다.
+      </p>
+
+      <div class="cta-wrap">
+        <button class="btn btn-primary" onclick="scrollToForm()">
+          무료 분석 시작
+        </button>
+
+        <button class="btn btn-secondary">
+          결과 미리보기
+        </button>
+      </div>
+    </div>
+
+    <div class="side-panel glass">
+      <div class="orbit"></div>
+
+      <div class="stats-grid">
+        <div class="mini-card">
+          <div class="mini-title">AI Fusion Score</div>
+          <div class="mini-value">92%</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mini-title">직업 매칭</div>
+          <div class="mini-value">50K+</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mini-title">분석 학문</div>
+          <div class="mini-value">18</div>
+        </div>
+
+        <div class="mini-card">
+          <div class="mini-title">AI Models</div>
+          <div class="mini-value">GPT+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" id="analysisForm">
+
+    <div class="form-card glass">
+      <div class="section-title">AI 인생·진로 분석</div>
+
+      <div class="input-group">
+        <label>이름</label>
+        <input type="text" placeholder="홍길동">
+      </div>
+
+      <div class="input-group">
+        <label>생년월일</label>
+        <input type="date">
+      </div>
+
+      <div class="input-group">
+        <label>성별</label>
+        <select>
+          <option>선택하세요</option>
+          <option>남성</option>
+          <option>여성</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>현재 직업</label>
+        <input type="text" placeholder="예: 마케팅, 개발, 자영업">
+      </div>
+
+      <div class="input-group">
+        <label>관심 분야</label>
+        <input type="text" placeholder="예: AI, 창업, 콘텐츠, 투자">
+      </div>
+
+      <div class="input-group">
+        <label>현재 고민 또는 목표</label>
+        <textarea placeholder="직업 전환, 창업, 미래 방향 등"></textarea>
+      </div>
+
+      <div style="margin-top:30px; margin-bottom:18px; font-size:20px; font-weight:700;">
+        학문별 Fusion 분석 선택
+      </div>
+
+      <div class="fusion-grid">
+
+        <div class="fusion-item active">적성검사</div>
+        <div class="fusion-item active">띠별 분석</div>
+        <div class="fusion-item active">별자리</div>
+        <div class="fusion-item active">혈액형</div>
+        <div class="fusion-item active">MBTI</div>
+        <div class="fusion-item active">점성학</div>
+        <div class="fusion-item active">명리학</div>
+        <div class="fusion-item active">타로</div>
+        <div class="fusion-item active">심리학</div>
+        <div class="fusion-item active">조상묘 분석</div>
+        <div class="fusion-item active">환경학</div>
+        <div class="fusion-item active">유전학</div>
+        <div class="fusion-item active">직업 적성</div>
+        <div class="fusion-item active">관상학</div>
+        <div class="fusion-item active">수상학</div>
+        <div class="fusion-item active">족상학</div>
+        <div class="fusion-item active">무속 분석</div>
+        <div class="fusion-item active">체형 분석</div>
+        <div class="fusion-item active">천문 분석</div>
+        <div class="fusion-item active">풍수지리학</div>
+        <div class="fusion-item active">AI Fusion</div>
+
+      </div>
+
+      <div style="margin-top:28px; margin-bottom:16px; font-size:18px; font-weight:700;">
+        이미지 기반 AI 분석
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+
+        <div class="upload-box">
+          <div class="upload-icon">📷</div>
+          <div class="upload-title">관상 분석</div>
+          <div class="upload-desc">얼굴 사진 업로드</div>
+          <input type="file" accept="image/*">
+        </div>
+
+        <div class="upload-box">
+          <div class="upload-icon">✋</div>
+          <div class="upload-title">수상 분석</div>
+          <div class="upload-desc">손바닥 사진 업로드</div>
+          <input type="file" accept="image/*">
+        </div>
+
+        <div class="upload-box">
+          <div class="upload-icon">🦶</div>
+          <div class="upload-title">족상 분석</div>
+          <div class="upload-desc">발 사진 업로드</div>
+          <input type="file" accept="image/*">
+        </div>
+
+        <div class="upload-box">
+          <div class="upload-icon">🧍</div>
+          <div class="upload-title">체형 분석</div>
+          <div class="upload-desc">전신 체형 업로드</div>
+          <input type="file" accept="image/*">
+        </div>
+
+      </div>
+
+      <div style="font-size:12px; line-height:1.7; color:rgba(255,255,255,0.48); margin-bottom:18px;">
+        업로드 이미지는 AI 성향·직업·행동 패턴 참고 분석용이며,
+        의료·질병·법적 판정 용도로 사용되지 않습니다.
+      </div>
+
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="runAnalysis()"> style="width:100%; margin-top:10px;" onclick="runAnalysis()">
+        AI 분석 시작
+      </button>
+
+      <div class="loading" id="loadingBox">
+        <p style="margin-bottom:12px; color: rgba(255,255,255,0.65);">
+          GPT · Gemini · Fusion 분석 중...
+        </p>
+        <div class="loading-bar">
+          <div class="loading-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card glass">
+      <div class="result-top">
+        <div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:8px;">
+            AI Fusion 결과
+          </div>
+          <div style="font-size:28px; font-weight:700;">
+            AI 전략형 창의 리더
+          </div>
+        </div>
+
+        <div class="score-ring">
+          <div class="score-inner">88</div>
+        </div>
+      </div>
+
+      <div style="color: rgba(255,255,255,0.72); line-height:1.9;">
+        창의성과 전략적 사고가 강하며,
+        AI·브랜딩·플랫폼 사업 방향과 높은 적합도를 보입니다.
+      </div>
+
+      <div class="result-grid">
+
+        <div class="analysis-box">
+          <h3>직업 적합도</h3>
+          <p>
+            AI 마케팅 전략가 · 콘텐츠 브랜딩 · 플랫폼 운영 분야와 높은 연관성을 보입니다.
+          </p>
+        </div>
+
+        <div class="analysis-box">
+          <h3>사업·재물 흐름</h3>
+          <p>
+            개인 브랜딩과 플랫폼 기반 수익 구조에 강한 장기 성장 흐름이 있습니다.
+          </p>
+        </div>
+
+        <div class="analysis-box">
+          <h3>성향 분석</h3>
+          <p>
+            독립성과 기획력이 높으며 새로운 구조를 만드는 성향이 강합니다.
+          </p>
+        </div>
+
+        <div class="analysis-box">
+          <h3>Fusion 판단</h3>
+          <p>
+            GPT·Gemini·행동 패턴·직업 ontology 기반 종합 분석 결과입니다.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    AI플랫마켓 × 챗도우미 AI 엔진 기반 MVP UI Preview<br>
+    실제 GPT/Gemini 분석은 챗도우미 API 엔드포인트 연동 예정
+  </div>
+
+</div>
+
+<script>
+  function scrollToForm(){
+    document.getElementById('analysisForm').scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
+
+  async function runAnalysis(){
+    const loading = document.getElementById('loadingBox');
+    loading.style.display = 'block';
+
+    // 추후 챗도우미 API 연동
+    // fetch('https://chatdoumi.onrender.com/api/life-analysis')
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+      alert('MVP UI 데모입니다. 실제 분석 API는 추후 연동됩니다.');
+    }, 2500);
+  }
+</script>
+
+</body>
+</html>
