@@ -1,8 +1,15 @@
 /**
  * ============================================================
- * AI PLATMARKET index.js — 통합 완전판 v3
- * 
- * 신규 기능:
+ * AI PLATMARKET index.js — 통합 완전판 v4
+ *
+ * v4 신규 추가:
+ *   ✅ Firebase ENOENT / JSON 파싱 오류 방어 처리
+ *   ✅ /robots.txt SEO 라우트
+ *   ✅ /sitemap.xml 동적 생성 (DB 업체 포함)
+ *   ✅ POST /api/kakao/verify — 카카오 토큰 서버 검증 + Firestore 저장
+ *   ✅ GET  /api/sports       — 스포츠·건강 뉴스 전용 엔드포인트
+ *
+ * 기존 기능:
  *   ✅ Founder 멤버십 (선착순 500→2000→10000)
  *   ✅ 업체 등록 후 SEO 랜딩 자동 생성 /store/:id
  *   ✅ 지역별 SEO 페이지 /region/:sido-:sigungu
@@ -114,25 +121,25 @@ let db;
 try {
   const serviceAccountPath = resolveServiceAccountPath();
   if (!serviceAccountPath) {
-    throw new Error('Firebase service account json not found');
+    throw new Error('서비스 계정 JSON 파일 없음 (GOOGLE_APPLICATION_CREDENTIALS 환경변수 또는 serviceAccountKey.json 필요)');
   }
-  const serviceAccount = require(path.resolve(serviceAccountPath));
+  // require() 대신 readFileSync + JSON.parse 로 ENOENT / JSON 오류를 명확하게 잡음
+  const raw = fs.readFileSync(path.resolve(serviceAccountPath), 'utf8');
+  const serviceAccount = JSON.parse(raw);
   if (!admin.apps.length) {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
+    admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
   }
   db = admin.firestore();
-  console.log(
-    '✅ Firebase 연결 | Project:',
-    serviceAccount.project_id
-  );
-
+  console.log('✅ Firebase 연결 | Project:', serviceAccount.project_id);
 } catch (e) {
-  console.error(
-    '❌ Firebase:',
-    e.message
-  );
+  if (e.code === 'ENOENT') {
+    console.error('❌ Firebase: 서비스 계정 파일을 찾을 수 없습니다 →', e.path);
+  } else if (e instanceof SyntaxError) {
+    console.error('❌ Firebase: 서비스 계정 JSON 파싱 실패 →', e.message);
+  } else {
+    console.error('❌ Firebase:', e.message);
+  }
+  console.warn('⚠️  Firebase 없이 실행 — DB 기능 비활성화');
 }
 
 function requireDB(res) {
@@ -458,7 +465,7 @@ async function googleNews(keyword) {
   setCache(key,items); return items;
 }
 
-const KEYWORD_MAP={전체:'소상공인',경제:'소상공인 경제 매출',창업:'소상공인 창업 지원',IT:'소상공인 AI IT 디지털',농수산:'로컬푸드 농수산 직거래',지방자치:'지방자치 소상공인',사회:'소상공인 사회 지역',교육:'소상공인 교육','Job뉴스':'소상공인 채용 일자리',부동산:'소상공인 임차료 상가',생활:'지역 생활 소상공인',생활과학:'생활과학 과학향기 kisti'};
+const KEYWORD_MAP={전체:'소상공인',경제:'소상공인 경제 매출',창업:'소상공인 창업 지원',IT:'소상공인 AI IT 디지털',농수산:'로컬푸드 농수산 직거래',지방자치:'지방자치 소상공인',사회:'소상공인 사회 지역',교육:'소상공인 교육','Job뉴스':'소상공인 채용 일자리',부동산:'소상공인 임차료 상가',생활:'지역 생활 소상공인',생활과학:'생활과학 과학향기 kisti',글로벌:'글로벌 경제 국제 비즈니스 소상공인',스포츠:'국내 스포츠 소식',건강:'건강 웰빙 소상공인'};
 
 app.get('/api/news', async (req, res) => {
   const { cat='전체', source='all', display=10 } = req.query;
@@ -676,6 +683,112 @@ app.get('/api/admin/dashboard',adminAuth,async(req,res)=>{
   const[ss,bs,rs,as,fs]=await Promise.all([db.collection('stores').get(),db.collection('branches').get(),db.collection('reporters').get(),db.collection('ad_requests').get(),db.collection('founders').get()]);
   const stores=ss.docs.map(d=>d.data());
   res.json({stores:{total:stores.length,approved:stores.filter(s=>s.approved).length,pending:stores.filter(s=>!s.approved).length,premium:stores.filter(s=>s.premium).length,clicks:stores.reduce((n,s)=>n+(s.clicks||0),0),views:stores.reduce((n,s)=>n+(s.views||0),0)},branches:{total:bs.size,pending:bs.docs.filter(d=>d.data().status==='pending').length},reporters:{total:rs.size,pending:rs.docs.filter(d=>d.data().status==='pending').length},adRequests:{total:as.size,pending:as.docs.filter(d=>d.data().status==='pending').length},founders:{total:fs.size}});
+});
+
+/* ─────── SEO: robots.txt ─────── */
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send([
+    'User-agent: *',
+    'Allow: /',
+    'Disallow: /admin',
+    'Disallow: /api/',
+    '',
+    'Sitemap: https://aiplatmarket.com/sitemap.xml',
+  ].join('\n'));
+});
+
+/* ─────── SEO: sitemap.xml ─────── */
+app.get('/sitemap.xml', async (req, res) => {
+  const BASE = 'https://aiplatmarket.com';
+  const now  = new Date().toISOString().split('T')[0];
+
+  const staticPages = [
+    { loc:'/',          priority:'1.0', freq:'daily'   },
+    { loc:'/register',  priority:'0.9', freq:'monthly' },
+    { loc:'/region/인천-남동구', priority:'0.7', freq:'weekly' },
+    { loc:'/region/서울-강남구', priority:'0.7', freq:'weekly' },
+    { loc:'/region/경기-성남시', priority:'0.7', freq:'weekly' },
+  ];
+
+  let storeUrls = '';
+  if (db) {
+    try {
+      const snap = await db.collection('stores')
+        .where('approved','==',true).limit(500).get();
+      storeUrls = snap.docs.map(d => `
+  <url><loc>${BASE}/store/${d.id}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>`).join('');
+    } catch(e) { /* ignore */ }
+  }
+
+  const staticXml = staticPages.map(p => `
+  <url><loc>${BASE}${p.loc}</loc><lastmod>${now}</lastmod><changefreq>${p.freq}</changefreq><priority>${p.priority}</priority></url>`).join('');
+
+  res.type('application/xml');
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${staticXml}
+${storeUrls}
+</urlset>`);
+});
+
+/* ─────── Kakao 토큰 검증 (로그인 서버사이드) ─────── */
+app.post('/api/kakao/verify', async (req, res) => {
+  const { access_token } = req.body;
+  if (!access_token) return res.status(400).json({ error: 'access_token 필요' });
+  try {
+    const raw  = await fetchUrl('https://kapi.kakao.com/v2/user/me', {
+      'Authorization': `Bearer ${access_token}`,
+      'User-Agent': 'aiplatmarket/1.0',
+    });
+    const user = JSON.parse(raw);
+    const uid  = String(user.id);
+    const name = user.kakao_account?.profile?.nickname || '카카오 사용자';
+    const img  = user.kakao_account?.profile?.profile_image_url || '';
+    // Firestore에 사용자 정보 저장 (선택)
+    if (db) {
+      await db.collection('users').doc(uid).set(
+        { uid, name, img, loginAt: admin.firestore.FieldValue.serverTimestamp(), platform: 'kakao' },
+        { merge: true }
+      ).catch(() => {});
+    }
+    res.json({ ok: true, uid, name, img });
+  } catch(e) {
+    res.status(401).json({ ok: false, error: e.message });
+  }
+});
+
+/* ─────── 스포츠·건강 뉴스 API ─────── */
+app.get('/api/sports', async (req, res) => {
+  const { cat = '스포츠' } = req.query;
+  const kwMap = {
+    스포츠: '국내 스포츠 소식',
+    건강:   '건강 웰빙 소상공인',
+    야구:   'KBO 프로야구',
+    축구:   'K리그 축구',
+    헬스:   '헬스 피트니스 창업',
+  };
+  const keyword = kwMap[cat] || cat;
+  const result  = { cat, items: [], warnings: [] };
+  try {
+    const items = await naverNews(keyword, 8);
+    result.items.push(...items);
+  } catch(e) { result.warnings.push('naver:' + e.message); }
+  try {
+    const g   = await googleNews(keyword);
+    const ex  = new Set(result.items.map(n => n.title));
+    result.items.push(...g.filter(n => !ex.has(n.title)));
+  } catch(e) { result.warnings.push('google:' + e.message); }
+  // fallback
+  if (!result.items.length) {
+    result.items = [
+      { title:'KBO 프로야구 2026 개막 — 지역 소상공인 특수 기대', desc:'야구 시즌 개막에 맞춰 지역 소상공인 매출 증가 전망.', link:'#', date:new Date().toISOString(), source:'AI플랫마켓' },
+      { title:'헬스장·PT 창업 2026년 트렌드', desc:'건강 관심 증가로 피트니스 관련 창업이 늘고 있습니다.', link:'#', date:new Date().toISOString(), source:'AI플랫마켓' },
+      { title:'지역 생활체육 시설 확충 지원 사업 신청 시작', desc:'정부 지역 체육시설 확충 지원 예산 300억 배정.', link:'#', date:new Date().toISOString(), source:'AI플랫마켓' },
+    ];
+  }
+  result.items = result.items.slice(0, 16);
+  res.json(result);
 });
 
 /* ─────── 라우트 ─────── */
