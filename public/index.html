@@ -901,6 +901,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       <div class="gi" onclick="showPage('newprod')">🆕 신상품</div><div class="gd"></div>
       <div class="gi" onclick="showPage('recipe')">👨‍🍳 뉴레시피</div><div class="gd"></div>
       <div class="gi" onclick="showPage('promo')">🎁 판촉물</div><div class="gd"></div>
+      <div class="gi" onclick="showPage('sports')">⚽ 스포츠&amp;건강</div><div class="gd"></div>
       <div class="gi" onclick="showPage('travel')">✈️ 여행</div><div class="gd"></div>
       <div class="gi" onclick="showPage('incident')">🚨 사건사고</div><div class="gd"></div>
       <div class="gi" onclick="showPage('register')">✅ 입점신청</div><div class="gd"></div>
@@ -996,6 +997,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <div class="lmi" onclick="showPage('localad')"><span class="ico">📋</span>지역광고</div>
         <div class="lmi" onclick="showPage('promo')"><span class="ico">🎁</span>판촉물</div>
         <div class="lmi" onclick="showPage('recipe')"><span class="ico">👨‍🍳</span>뉴레시피</div>
+        <div class="lmi" onclick="showPage('sports')"><span class="ico">⚽</span>스포츠&amp;건강</div>
         <div class="lmi" onclick="showPage('travel')"><span class="ico">✈️</span>여행</div>
         <div class="lmi" onclick="showPage('startup')"><span class="ico">🚀</span>사업/창업</div>
         <div class="lmi" onclick="showPage('event')"><span class="ico">🎉</span>지역행사</div>
@@ -1500,6 +1502,43 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       </div>
     </div>
 
+    <!-- ★ 오늘의 주요뉴스 2분할 패널 ★ -->
+    <div style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
+          <span style="font-size:.9rem;font-weight:900;color:var(--navy)">오늘의 주요뉴스</span>
+          <span id="newsTodayTime" style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700"></span>
+        </div>
+        <div style="display:flex;gap:4px">
+          <button id="todayPanelBtn1" onclick="switchTodayPanel('dom')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700">🇰🇷 국내</button>
+          <button id="todayPanelBtn2" onclick="switchTodayPanel('global')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700">🌐 글로벌</button>
+        </div>
+      </div>
+      <div id="todayNewsWrap" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div id="todayDomPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+          <div style="background:var(--navy);padding:7px 12px;display:flex;align-items:center;gap:6px">
+            <span style="font-size:.72rem;font-weight:900;color:#fff">🇰🇷 국내 주요뉴스</span>
+            <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
+          </div>
+          <ul id="todayDomList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
+            <li style="padding:9px 12px;border-bottom:var(--bd);color:var(--g4)">뉴스 불러오는 중...</li>
+          </ul>
+          <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('dom')">🔄 새로고침</div>
+        </div>
+        <div id="todayGlobalPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+          <div style="background:#1565c0;padding:7px 12px;display:flex;align-items:center;gap:6px">
+            <span style="font-size:.72rem;font-weight:900;color:#fff">🌐 글로벌 주요뉴스</span>
+            <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
+          </div>
+          <ul id="todayGlobalList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
+            <li style="padding:9px 12px;border-bottom:var(--bd);color:var(--g4)">뉴스 불러오는 중...</li>
+          </ul>
+          <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('global')">🔄 새로고침</div>
+        </div>
+      </div>
+    </div>
+
     <!-- 카테고리 탭 -->
     <div style="display:flex;gap:0;overflow-x:auto;border-bottom:2px solid var(--g2);margin-bottom:14px;scrollbar-width:none" id="newsCatTabs">
       <div class="news-cat act" onclick="filterNewsCat('전체',this)">전체</div>
@@ -1751,14 +1790,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     </div>
   </div>
 </div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f0fe;color:#1a56a0;margin-right:5px">정보</span>인천 남동구 소상공인 지원금 신청 방법 공유합니다</div><span class="cm-post-meta">04.13 · 조회 1,241</span></div><div class="cm-post-prev">구청 담당자에게 직접 확인한 내용입니다. 신청 기간은 이달 말까지이며...</div><div class="cm-post-ft"><span>👍 38</span><span>💬 12</span><span>by 인천사장님</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fce8e6;color:var(--red);margin-right:5px">Q&A</span>배달앱 수수료 어떻게 줄이고 계신가요?</div><span class="cm-post-meta">04.12 · 조회 892</span></div><div class="cm-post-prev">배달앱 수수료가 너무 부담됩니다. 다른 분들은 어떻게 관리하고 계신지...</div><div class="cm-post-ft"><span>👍 21</span><span>💬 34</span><span>by 치킨사장</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f5e9;color:#2e7d32;margin-right:5px">후기</span>AI플랫마켓 입점 후 한 달 매출 후기 솔직하게 씁니다</div><span class="cm-post-meta">04.11 · 조회 2,103</span></div><div class="cm-post-prev">처음엔 반신반의했는데 입점 후 한달 결과를 공유드립니다. 클릭수가...</div><div class="cm-post-ft"><span>👍 87</span><span>💬 56</span><span>by 미용실원장</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fff3e0;color:#e65100;margin-right:5px">공구</span>매장용 포스기 공동구매 모집합니다 (20대 목표)</div><span class="cm-post-meta">04.10 · 조회 445</span></div><div class="cm-post-prev">현재 8분 참여 중입니다. 개당 15만원 예상, 20대 이상 모이면 진행...</div><div class="cm-post-ft"><span>👍 15</span><span>💬 22</span><span>by 가게주인A</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:var(--g1);color:var(--g4);margin-right:5px">자유</span>오늘 우리 가게 역대 최고 매출 달성! 기쁜 마음에 공유합니다 😊</div><span class="cm-post-meta">04.09 · 조회 678</span></div><div class="cm-post-prev">드디어 일매출 100만원을 넘었습니다! 다들 화이팅하세요...</div><div class="cm-post-ft"><span>👍 142</span><span>💬 48</span><span>by 떡볶이사장</span></div></div>
-    </div>
-  </div>
-</div>
 
 <!-- ==================== 글로벌 경제 ==================== -->
 <div id="page-global" class="pg">
@@ -1800,6 +1831,117 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     </div>
     <div class="sp-card"><div class="sp-thumb" style="background:#e8f0fe">🏃</div><div class="sp-body"><span class="sp-tag" style="background:#e8f0fe;color:#1a56a0">스포츠</span><div class="sp-ttl">인천 마라톤 대회</div><div class="sp-sub">5/25(일) · 인천 아시안게임주경기장</div></div></div>
   </div></div>
+</div>
+
+<!-- ==================== 스포츠&건강 ==================== -->
+<div id="page-sports" class="pg">
+  <div class="sp-page">
+    <!-- 헤더 -->
+    <div class="sh" style="margin-bottom:10px">
+      <div class="sh-t">⚽ 스포츠 &amp; 건강</div>
+    </div>
+
+    <!-- 카테고리 탭 -->
+    <div style="display:flex;gap:0;overflow-x:auto;border-bottom:2px solid var(--g2);margin-bottom:14px;scrollbar-width:none" id="sportsCatTabs">
+      <div class="news-cat act" onclick="filterSportsCat('전체',this)">전체</div>
+      <div class="news-cat" onclick="filterSportsCat('야구',this)">⚾ 야구</div>
+      <div class="news-cat" onclick="filterSportsCat('축구',this)">⚽ 축구</div>
+      <div class="news-cat" onclick="filterSportsCat('농구',this)">🏀 농구</div>
+      <div class="news-cat" onclick="filterSportsCat('헬스',this)">💪 헬스·PT</div>
+      <div class="news-cat" onclick="filterSportsCat('마라톤',this)">🏃 마라톤</div>
+      <div class="news-cat" onclick="filterSportsCat('건강',this)">❤️‍🩹 건강</div>
+      <div class="news-cat" onclick="filterSportsCat('창업',this)">🏋️ 스포츠창업</div>
+    </div>
+
+    <!-- 2분할: 스포츠뉴스 + 지역 체육시설 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <!-- 스포츠 뉴스 -->
+      <div style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+        <div style="background:var(--navy);padding:8px 12px;display:flex;align-items:center;gap:6px">
+          <span style="font-size:.75rem;font-weight:900;color:#fff">🔥 스포츠 뉴스</span>
+          <span id="sportsNewsLoading" style="margin-left:auto;font-size:.65rem;color:#aad4ff">불러오는 중...</span>
+        </div>
+        <ul id="sportsNewsList" style="margin:0;padding:0;list-style:none;font-size:.78rem">
+          <li style="padding:9px 12px;color:var(--g4)">잠시만 기다려 주세요...</li>
+        </ul>
+        <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="loadSportsNews()">🔄 새로고침</div>
+      </div>
+      <!-- 건강 정보 -->
+      <div style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+        <div style="background:#2e7d32;padding:8px 12px;display:flex;align-items:center;gap:6px">
+          <span style="font-size:.75rem;font-weight:900;color:#fff">❤️‍🩹 건강 뉴스</span>
+          <span id="healthNewsLoading" style="margin-left:auto;font-size:.65rem;color:#a5d6a7">불러오는 중...</span>
+        </div>
+        <ul id="healthNewsList" style="margin:0;padding:0;list-style:none;font-size:.78rem">
+          <li style="padding:9px 12px;color:var(--g4)">잠시만 기다려 주세요...</li>
+        </ul>
+        <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="loadHealthNews()">🔄 새로고침</div>
+      </div>
+    </div>
+
+    <!-- 지역 스포츠·체육 행사 -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:.85rem;font-weight:900;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <span style="display:inline-block;width:3px;height:12px;background:var(--red);border-radius:2px"></span> 지역 스포츠·체육 행사
+      </div>
+      <div class="sp-grid">
+        <div class="sp-card"><div class="sp-thumb" style="background:#e8f0fe">🏃</div><div class="sp-body"><span class="sp-tag" style="background:#e8f0fe;color:#1a56a0">마라톤</span><div class="sp-ttl">인천 마라톤 대회</div><div class="sp-sub">5/25(일) · 인천 아시안게임주경기장 · 5·10km 코스</div></div></div>
+        <div class="sp-card"><div class="sp-thumb" style="background:#e8f5e9">⚽</div><div class="sp-body"><span class="sp-tag" style="background:#e8f5e9;color:#2e7d32">축구</span><div class="sp-ttl">K리그 인천 홈경기</div><div class="sp-sub">6/7(토) 인천 축구전용경기장 · 인천 vs 전북</div></div></div>
+        <div class="sp-card"><div class="sp-thumb" style="background:#fff3e0">⚾</div><div class="sp-body"><span class="sp-tag" style="background:#fff3e0;color:#e65100">야구</span><div class="sp-ttl">KBO 인천 SK 홈경기</div><div class="sp-sub">매주 주말 · SSG 랜더스필드</div></div></div>
+        <div class="sp-card"><div class="sp-thumb" style="background:#fce4ec">🏊</div><div class="sp-body"><span class="sp-tag" style="background:#fce4ec;color:#c62828">수영</span><div class="sp-ttl">지역 수영대회</div><div class="sp-sub">6/15(일) · 성남 종합체육관 · 온라인 접수 중</div></div></div>
+        <div class="sp-card"><div class="sp-thumb" style="background:#ede7f6">🥊</div><div class="sp-body"><span class="sp-tag" style="background:#ede7f6;color:#4527a0">격투기</span><div class="sp-ttl">남동구 생활체육 격투기</div><div class="sp-sub">매달 첫째 주 토요일 · 참가비 무료</div></div></div>
+        <div class="sp-card"><div class="sp-thumb" style="background:#e0f7fa">🏓</div><div class="sp-body"><span class="sp-tag" style="background:#e0f7fa;color:#00838f">탁구</span><div class="sp-ttl">전국 탁구 오픈</div><div class="sp-sub">7/12~13 · 수원실내체육관 · 참가신청 진행 중</div></div></div>
+      </div>
+    </div>
+
+    <!-- 소상공인 스포츠 창업 섹션 -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:.85rem;font-weight:900;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <span style="display:inline-block;width:3px;height:12px;background:#2e7d32;border-radius:2px"></span> 스포츠·헬스 소상공인 정보
+      </div>
+      <div class="sp-grid">
+        <div class="sp-card" style="cursor:pointer" onclick="showPage('itemzone')">
+          <div class="sp-thumb" style="background:linear-gradient(135deg,#1565c0,#1a56a0)">💪</div>
+          <div class="sp-body">
+            <span class="sp-tag" style="background:var(--navy);color:#fff">AI 분석</span>
+            <div class="sp-ttl">헬스장 창업 AI 시장 분석</div>
+            <div class="sp-sub">2026년 피트니스 창업 트렌드 · AI아이템존에서 분석</div>
+          </div>
+        </div>
+        <div class="sp-card">
+          <div class="sp-thumb" style="background:#e8f5e9">🏋️</div>
+          <div class="sp-body">
+            <span class="sp-tag" style="background:#e8f5e9;color:#2e7d32">지원사업</span>
+            <div class="sp-ttl">체육시설업 정부지원 총정리</div>
+            <div class="sp-sub">헬스·필라테스·요가 스튜디오 창업지원 현황</div>
+          </div>
+        </div>
+        <div class="sp-card">
+          <div class="sp-thumb" style="background:#fff3e0">🧘</div>
+          <div class="sp-body">
+            <span class="sp-tag" style="background:#fff3e0;color:#e65100">트렌드</span>
+            <div class="sp-ttl">2026 건강·웰빙 소비 트렌드</div>
+            <div class="sp-sub">소상공인을 위한 건강 시장 기회 분석</div>
+          </div>
+        </div>
+        <div class="sp-card">
+          <div class="sp-thumb" style="background:#fce8e6">⚕️</div>
+          <div class="sp-body">
+            <span class="sp-tag" style="background:#fce8e6;color:var(--red)">건강정보</span>
+            <div class="sp-ttl">사업주를 위한 건강관리 가이드</div>
+            <div class="sp-sub">소상공인 번아웃 예방 · 스트레스 관리법</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 업그레이드 예정 기능 안내 -->
+    <div style="border:1.5px dashed var(--g3);border-radius:var(--r);padding:16px;text-align:center;color:var(--g4)">
+      <div style="font-size:1.3rem;margin-bottom:6px">🔧</div>
+      <div style="font-size:.82rem;font-weight:700;color:var(--g4);margin-bottom:4px">업그레이드 중</div>
+      <div style="font-size:.75rem">실시간 경기 스코어 · 선수 통계 · 지역 스포츠팀 커뮤니티<br>기능이 순차적으로 추가됩니다.</div>
+    </div>
+  </div>
 </div>
 
 <!-- ==================== 사건/사고 ==================== -->
@@ -2582,6 +2724,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     <div class="lmi" onclick="closeSide();showPage('localad')"><span class="ico">📋</span>지역생활광고</div>
     <div class="lmi" onclick="closeSide();showPage('promo')"><span class="ico">🎁</span>판촉물</div>
     <div class="lmi" onclick="closeSide();showPage('recipe')"><span class="ico">👨‍🍳</span>뉴레시피</div>
+    <div class="lmi" onclick="closeSide();showPage('sports')"><span class="ico">⚽</span>스포츠&amp;건강</div>
     <div class="lmi" onclick="closeSide();showPage('travel')"><span class="ico">✈️</span>전국·세계여행</div>
     <div class="lmi" onclick="closeSide();showPage('startup')"><span class="ico">🚀</span>사업/창업</div>
     <div class="lmi" onclick="closeSide();showPage('event')"><span class="ico">🎉</span>지역행사</div>
@@ -4046,6 +4189,10 @@ function showPage(id) {
     if (allBtn) allBtn.classList.add('act');
     document.getElementById('newsRegSelLbl') && (document.getElementById('newsRegSelLbl').textContent='');
     renderNewsGrid();
+    setTimeout(() => { initTodayNewsPanel(); }, 100);
+  }
+  if (id === 'sports') {
+    setTimeout(() => { loadSportsNews(); loadHealthNews(); }, 100);
   }
   document.querySelectorAll('.gnb-top .gi, .gnb-sub .gi').forEach(e=>e.classList.remove('act'));
   const gMap={home:0,news:1};
@@ -4218,6 +4365,205 @@ function filterNews(reg, btn, isKw) {
   toast(`📰 ${reg === 'all' ? '전체' : reg} 뉴스`);
 }
 
+/* ══════════════════════════════════════════
+   오늘의 주요뉴스 2분할 패널 (국내 / 글로벌)
+══════════════════════════════════════════ */
+const _todayNewsCache = { dom: null, global: null, ts: 0 };
+
+function initTodayNewsPanel() {
+  // 시간 표시
+  const el = document.getElementById('newsTodayTime');
+  if (el) {
+    const now = new Date();
+    el.textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} 기준`;
+  }
+  // 캐시가 5분 이내면 재활용
+  const age = Date.now() - _todayNewsCache.ts;
+  if (_todayNewsCache.dom && _todayNewsCache.global && age < 300000) {
+    _renderTodayList('dom',    _todayNewsCache.dom);
+    _renderTodayList('global', _todayNewsCache.global);
+    return;
+  }
+  fetchTodayNews('dom');
+  fetchTodayNews('global');
+}
+
+async function fetchTodayNews(panel) {
+  const listId = panel === 'dom' ? 'todayDomList' : 'todayGlobalList';
+  const ul = document.getElementById(listId);
+  if (!ul) return;
+  ul.innerHTML = '<li style="padding:10px 12px;color:var(--g4);font-size:.75rem">⏳ 불러오는 중...</li>';
+
+  const catMap = { dom: '경제', global: '글로벌' };
+  const catKey = catMap[panel] || '전체';
+  try {
+    const r = await fetch(`/api/news?cat=${encodeURIComponent(catKey)}&display=6`);
+    const d = await r.json();
+    const items = d.items || d.rss || [];
+    if (items.length) {
+      _todayNewsCache[panel] = items;
+      _todayNewsCache.ts = Date.now();
+      _renderTodayList(panel, items);
+    } else { _renderTodayFallback(panel); }
+  } catch (e) { _renderTodayFallback(panel); }
+}
+
+function _renderTodayList(panel, items) {
+  const listId = panel === 'dom' ? 'todayDomList' : 'todayGlobalList';
+  const dotColor = panel === 'dom' ? 'var(--red)' : '#1565c0';
+  const ul = document.getElementById(listId);
+  if (!ul) return;
+  ul.innerHTML = items.slice(0, 6).map((item, i) => {
+    const title = (item.title || item.headline || '').replace(/<[^>]+>/g, '').slice(0, 60);
+    const link  = item.link || item.url || '#';
+    const dot   = i < 2 ? dotColor : 'var(--g3)';
+    return `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer;display:flex;gap:6px;align-items:flex-start"
+      onclick="window.open('${link}','_blank')"
+      onmouseover="this.style.background='var(--g1)'"
+      onmouseout="this.style.background=''">
+      <span style="color:${dot};font-size:.6rem;font-weight:700;flex-shrink:0;padding-top:3px">●</span>
+      <span style="line-height:1.5">${title || '기사 제목 없음'}</span>
+    </li>`;
+  }).join('');
+}
+
+function _renderTodayFallback(panel) {
+  const dom = [
+    '소상공인 디지털 전환 지원금 200만원 확대',
+    '2026 최저임금 확정 — 소상공인 대응 방법',
+    '인천 전통시장 활성화 예산 300억 투입',
+    'AI 창업지원센터 전국 25개 시도 동시 개소',
+    '배달앱 수수료 인하 협의 — 중소벤처부 발표',
+    '2026 소상공인 정책자금 금리 1.5%로 인하',
+  ];
+  const global = [
+    'IMF 2026 글로벌 경제성장률 3.2% 전망',
+    '엔비디아·MS·구글 AI 반도체 패권 경쟁 가속',
+    '미·중 무역협상 재개 — 한국 수출 영향 주목',
+    '일본 엔화 약세 지속 — 관광·수출 소상공인 기회',
+    '유럽 SME 디지털 전환 지원 — OECD 권고 발표',
+    '글로벌 배달 플랫폼 시장 2027년 3,000억달러 전망',
+  ];
+  const items = (panel === 'dom' ? dom : global).map(t => ({ title: t, link: '#' }));
+  _todayNewsCache[panel] = items;
+  _renderTodayList(panel, items);
+}
+
+function switchTodayPanel(panel) {
+  const b1 = document.getElementById('todayPanelBtn1');
+  const b2 = document.getElementById('todayPanelBtn2');
+  const domP    = document.getElementById('todayDomPanel');
+  const globalP = document.getElementById('todayGlobalPanel');
+  if (!b1 || !domP) return;
+  const isMobile = window.innerWidth < 700;
+  if (!isMobile) { // 데스크탑: 양쪽 항상 표시, 활성 버튼만 구분
+    b1.style.cssText = panel === 'dom'
+      ? 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700'
+      : 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700';
+    b2.style.cssText = panel === 'global'
+      ? 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid #1565c0;background:#1565c0;color:#fff;cursor:pointer;font-weight:700'
+      : 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700';
+    domP.style.display    = '';
+    globalP.style.display = '';
+    domP.style.outline    = panel === 'dom'    ? '2px solid var(--navy)' : '';
+    globalP.style.outline = panel === 'global' ? '2px solid #1565c0'    : '';
+    return;
+  }
+  // 모바일: 하나만 표시
+  domP.style.display    = panel === 'dom'    ? '' : 'none';
+  globalP.style.display = panel === 'global' ? '' : 'none';
+  b1.style.background = panel === 'dom'    ? 'var(--navy)' : '#fff';
+  b1.style.color      = panel === 'dom'    ? '#fff'        : 'var(--g4)';
+  b2.style.background = panel === 'global' ? '#1565c0'     : '#fff';
+  b2.style.color      = panel === 'global' ? '#fff'        : 'var(--g4)';
+}
+
+/* ══════════════════════════════════════════
+   스포츠 & 건강 뉴스
+══════════════════════════════════════════ */
+let _currentSportsCat = '전체';
+
+function filterSportsCat(cat, el) {
+  _currentSportsCat = cat;
+  document.querySelectorAll('#sportsCatTabs .news-cat').forEach(b => b.classList.remove('act'));
+  if (el) el.classList.add('act');
+  loadSportsNews();
+}
+
+async function loadSportsNews() {
+  const ul = document.getElementById('sportsNewsList');
+  const ld = document.getElementById('sportsNewsLoading');
+  if (!ul) return;
+  if (ld) ld.textContent = '불러오는 중...';
+  ul.innerHTML = '<li style="padding:10px 12px;color:var(--g4);font-size:.75rem">⏳ 불러오는 중...</li>';
+  const cat = _currentSportsCat === '전체' ? '스포츠 소식' : _currentSportsCat + ' 스포츠';
+  try {
+    const r = await fetch(`/api/sports?cat=${encodeURIComponent(_currentSportsCat)}`);
+    const d = await r.json();
+    const items = (d.items || []).slice(0, 8);
+    if (ld) ld.textContent = `${items.length}건`;
+    if (!items.length) throw new Error('empty');
+    ul.innerHTML = items.map(item => {
+      const title = (item.title || '').replace(/<[^>]+>/g, '').slice(0, 55);
+      const desc  = (item.desc || item.description || '').replace(/<[^>]+>/g, '').slice(0, 50);
+      return `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer"
+        onclick="window.open('${item.link||'#'}','_blank')"
+        onmouseover="this.style.background='var(--g1)'"
+        onmouseout="this.style.background=''">
+        <div style="font-weight:700;font-size:.8rem;color:var(--navy);margin-bottom:2px">${title}</div>
+        <div style="font-size:.72rem;color:var(--g4)">${desc}</div>
+      </li>`;
+    }).join('');
+  } catch(e) {
+    if (ld) ld.textContent = '오류';
+    ul.innerHTML = [
+      'KBO 2026 개막 — 지역 소상공인 특수 기대',
+      '헬스장·PT 창업 2026 트렌드 분석',
+      'K리그 2026 관중 역대 최다 기록 경신',
+      '지역 생활체육 시설 확충 지원사업 신청 시작',
+      '2026 피트니스 산업 성장률 12% 전망',
+    ].map(t => `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer;font-size:.8rem;color:var(--navy)"
+      onmouseover="this.style.background='var(--g1)'" onmouseout="this.style.background=''">${t}</li>`).join('');
+  }
+}
+
+async function loadHealthNews() {
+  const ul = document.getElementById('healthNewsList');
+  const ld = document.getElementById('healthNewsLoading');
+  if (!ul) return;
+  if (ld) ld.textContent = '불러오는 중...';
+  ul.innerHTML = '<li style="padding:10px 12px;color:var(--g4);font-size:.75rem">⏳ 불러오는 중...</li>';
+  try {
+    const r = await fetch('/api/sports?cat=건강');
+    const d = await r.json();
+    const items = (d.items || []).slice(0, 8);
+    if (ld) ld.textContent = `${items.length}건`;
+    if (!items.length) throw new Error('empty');
+    ul.innerHTML = items.map(item => {
+      const title = (item.title || '').replace(/<[^>]+>/g, '').slice(0, 55);
+      const desc  = (item.desc || item.description || '').replace(/<[^>]+>/g, '').slice(0, 50);
+      return `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer"
+        onclick="window.open('${item.link||'#'}','_blank')"
+        onmouseover="this.style.background='var(--g1)'"
+        onmouseout="this.style.background=''">
+        <div style="font-weight:700;font-size:.8rem;color:#2e7d32;margin-bottom:2px">${title}</div>
+        <div style="font-size:.72rem;color:var(--g4)">${desc}</div>
+      </li>`;
+    }).join('');
+  } catch(e) {
+    if (ld) ld.textContent = '오류';
+    ul.innerHTML = [
+      '소상공인 번아웃 예방 — 실천 건강관리 5가지',
+      '헬스·필라테스 창업 정부지원금 신청 총정리',
+      '2026 건강기능식품 시장 급성장 — 창업 기회',
+      '사업주를 위한 스트레스 해소법 A-Z',
+      '지역 체육센터 저렴하게 이용하는 방법',
+    ].map(t => `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer;font-size:.8rem;color:#2e7d32"
+      onmouseover="this.style.background='var(--g1)'" onmouseout="this.style.background=''">${t}</li>`).join('');
+  }
+}
+
+/* ══ filterNewsCat ══ */
 function filterNewsCat(cat, el) {
   currentNewsCat = cat;
   document.querySelectorAll('.news-cat').forEach(b => b.classList.remove('act'));
@@ -5421,3 +5767,4 @@ function renderWriteBox(menuId, placeholder='내용을 입력하세요...') {
 }
 </script>
 </body>
+</html>
