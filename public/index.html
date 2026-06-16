@@ -1120,6 +1120,46 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
       </div><!-- /bc-grid -->
 
+
+      <!-- ★ 오늘의 주요뉴스 2분할 패널 (홈 메인) ★ -->
+      <div style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
+            <span style="font-size:.9rem;font-weight:900;color:var(--navy)">오늘의 주요뉴스</span>
+            <span id="newsTodayTime" style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700"></span>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center">
+            <button id="todayPanelBtn1" onclick="switchTodayPanel('dom')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700">🇰🇷 국내</button>
+            <button id="todayPanelBtn2" onclick="switchTodayPanel('global')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700">🌐 글로벌</button>
+            <span class="sh-m" onclick="showPage('news')" style="font-size:.72rem">전체 뉴스 ›</span>
+          </div>
+        </div>
+        <div id="todayNewsWrap" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div id="todayDomPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+            <div style="background:var(--navy);padding:7px 12px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:.72rem;font-weight:900;color:#fff">🇰🇷 국내 주요뉴스</span>
+              <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
+            </div>
+            <ul id="todayDomList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
+              <li style="padding:9px 12px;color:var(--g4)">불러오는 중...</li>
+            </ul>
+            <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('dom')">🔄 새로고침</div>
+          </div>
+          <div id="todayGlobalPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
+            <div style="background:#1565c0;padding:7px 12px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:.72rem;font-weight:900;color:#fff">🌐 글로벌 주요뉴스</span>
+              <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
+            </div>
+            <ul id="todayGlobalList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
+              <li style="padding:9px 12px;color:var(--g4)">불러오는 중...</li>
+            </ul>
+            <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('global')">🔄 새로고침</div>
+          </div>
+        </div>
+      </div>
+
+
       <!-- ★ 4분할 빠른 메뉴 패널 (방송 아래, 업체 위) ★ -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
 
@@ -1203,8 +1243,94 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       </div><!-- /4분할 패널 -->
 
       <!-- ★ 오늘의 혜택 & 이벤트 ★ -->
-      <div style="background:var(--navy);padding:10px 10px 12px;border-top:2px solid var(--gold)">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+      <div style="background:var(--navy);padding:7px 10px 8px;border-top:2px solid var(--gold)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div style="display:flex;align-items:center;gap:5px">
+            <span style="width:3px;height:11px;background:var(--gold);border-radius:2px;display:inline-block"></span>
+            <span style="font-size:.73rem;font-weight:900;color:var(--gold);letter-spacing:.3px">🔥 오늘의 혜택 &amp; 이벤트</span>
+          </div>
+          <span style="font-size:.62rem;color:rgba(255,255,255,.4);animation:blink 1.5s infinite">● LIVE</span>
+        </div>
+        <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.5) rgba(255,255,255,.08);-webkit-overflow-scrolling:touch;padding-bottom:5px;cursor:grab" onmousedown="this._drag=true;this._x=event.clientX;this._sl=this.scrollLeft" onmousemove="if(this._drag){this.scrollLeft=this._sl-(event.clientX-this._x)}" onmouseup="this._drag=false" onmouseleave="this._drag=false" class="benefit-scroll">
+
+          <!-- 행운쿠폰 -->
+          <div onclick="doCoupon()" id="gcCoupon2" style="flex-shrink:0;min-width:66px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s;position:relative" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">🎰</div>
+            <div style="font-size:.63rem;font-weight:700;color:#fff;white-space:nowrap">행운쿠폰</div>
+            <div style="font-size:.54rem;color:var(--gold);margin-top:1px">1일 1회</div>
+            <span style="position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:.5rem;font-weight:900;padding:2px 5px;border-radius:6px">NEW</span>
+          </div>
+
+          <!-- 출석체크 -->
+          <div onclick="doAttend()" id="gcAttend2" style="flex-shrink:0;min-width:66px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">📅</div>
+            <div style="font-size:.63rem;font-weight:700;color:#fff;white-space:nowrap">출석체크</div>
+            <div style="font-size:.54rem;color:var(--gold);margin-top:1px" id="attendPt2">+10P</div>
+          </div>
+
+          <!-- AI추천 -->
+          <div onclick="doFlip()" id="gcFlip2" style="flex-shrink:0;min-width:66px;background:rgba(201,168,76,.15);border:1px solid var(--gold);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(201,168,76,.25)'" onmouseout="this.style.background='rgba(201,168,76,.15)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">🃏</div>
+            <div style="font-size:.63rem;font-weight:700;color:var(--gold);white-space:nowrap">AI 추천</div>
+            <div style="font-size:.54rem;color:rgba(255,255,255,.6);margin-top:1px">클릭 공개</div>
+          </div>
+
+          <!-- 인기투표 -->
+          <div onclick="doVote()" id="gcVote2" style="flex-shrink:0;min-width:66px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">🗳️</div>
+            <div style="font-size:.63rem;font-weight:700;color:#fff;white-space:nowrap">인기투표</div>
+            <div style="font-size:.54rem;color:rgba(255,255,255,.5);margin-top:1px">참여중</div>
+          </div>
+
+          <div style="width:1px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 2px"></div>
+
+          <!-- 지역행사 -->
+          <div onclick="showPage('event')" style="flex-shrink:0;min-width:66px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">🎉</div>
+            <div style="font-size:.63rem;font-weight:700;color:#fff;white-space:nowrap">지역행사</div>
+            <div style="font-size:.54rem;color:rgba(255,255,255,.5);margin-top:1px">이번주</div>
+          </div>
+
+          <!-- 빅세일 -->
+          <div onclick="showPage('bigsale')" style="flex-shrink:0;min-width:66px;background:rgba(192,57,43,.25);border:1px solid rgba(192,57,43,.5);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(192,57,43,.4)'" onmouseout="this.style.background='rgba(192,57,43,.25)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">💥</div>
+            <div style="font-size:.63rem;font-weight:700;color:#ff8a80;white-space:nowrap">빅세일</div>
+            <div style="font-size:.54rem;color:rgba(255,255,255,.5);margin-top:1px">한정특가</div>
+          </div>
+
+          <!-- 무료등록 -->
+          <div onclick="showPage('register')" style="flex-shrink:0;min-width:66px;background:rgba(26,122,74,.25);border:1px solid rgba(46,204,113,.4);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(26,122,74,.4)'" onmouseout="this.style.background='rgba(26,122,74,.25)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">🏪</div>
+            <div style="font-size:.63rem;font-weight:700;color:#69f0ae;white-space:nowrap">무료등록</div>
+            <div style="font-size:.54rem;color:rgba(255,255,255,.5);margin-top:1px">소상공인</div>
+          </div>
+
+          <!-- 내포인트 -->
+          <div onclick="toast('포인트 기능 준비 중입니다!')" style="flex-shrink:0;min-width:66px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 5px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+            <div style="font-size:1.15rem;margin-bottom:2px">💎</div>
+            <div style="font-size:.63rem;font-weight:700;color:#fff;white-space:nowrap">내포인트</div>
+            <div style="font-size:.54rem;color:var(--gold);margin-top:1px" id="myPt2">0P</div>
+          </div>
+
+          <div style="flex-shrink:0;width:66px;background:#f8f9fa;border-radius:7px;padding:6px 5px;border:1px solid #eee;text-align:center">
+            <div style="font-size:.57rem;color:#888">이벤트 1</div>
+            <div style="font-size:.72rem;font-weight:700;margin-top:2px">첫가입 🎁</div>
+          </div>
+          <div style="flex-shrink:0;width:66px;background:#f8f9fa;border-radius:7px;padding:6px 5px;border:1px solid #eee;text-align:center">
+            <div style="font-size:.57rem;color:#888">이벤트 2</div>
+            <div style="font-size:.72rem;font-weight:700;margin-top:2px">스탬프 🏃</div>
+          </div>
+          <div style="flex-shrink:0;width:66px;background:#f8f9fa;border-radius:7px;padding:6px 5px;border:1px solid #eee;text-align:center">
+            <div style="font-size:.57rem;color:#888">이벤트 3</div>
+            <div style="font-size:.72rem;font-weight:700;margin-top:2px">더블적립 🪙</div>
+          </div>
+          <div style="flex-shrink:0;width:66px;background:#f8f9fa;border-radius:7px;padding:6px 5px;border:1px solid #eee;text-align:center">
+            <div style="font-size:.57rem;color:#888">이벤트 4</div>
+            <div style="font-size:.72rem;font-weight:700;margin-top:2px">릴레이 🎫</div>
+          </div>
+
+        </div>
+      </div>
           <div style="display:flex;align-items:center;gap:5px">
             <span style="width:3px;height:12px;background:var(--gold);border-radius:2px;display:inline-block"></span>
             <span style="font-size:.76rem;font-weight:900;color:var(--gold);letter-spacing:.3px">🔥 오늘의 혜택 &amp; 이벤트</span>
@@ -1296,16 +1422,16 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       </div>
 
       <!-- ★ 실시간 인터랙션 & 이벤트 ★ -->
-      <div style="margin-bottom:14px">
-        <div style="font-family:var(--fs);font-size:.82rem;font-weight:900;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="display:inline-block;width:3px;height:12px;background:var(--red);border-radius:2px"></span>
+      <div style="margin-bottom:10px">
+        <div style="font-family:var(--fs);font-size:.78rem;font-weight:900;color:var(--navy);margin-bottom:5px;display:flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:3px;height:11px;background:var(--red);border-radius:2px"></span>
           ✨ 실시간 인터랙션 &amp; 이벤트
         </div>
         <!-- 한 줄 가로 스크롤 메뉴 바 -->
-        <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:4px">
-          <style>.ib-btn{display:inline-flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;background:#fff;border:var(--bd);border-radius:10px;cursor:pointer;flex-shrink:0;min-width:72px;transition:all .2s;position:relative}
-          .ib-btn:hover{border-color:var(--red);background:#fce8e6}.ib-btn .ib-ico{font-size:1.4rem}.ib-btn .ib-lbl{font-size:.66rem;font-weight:700;color:var(--navy);white-space:nowrap}
-          .ib-btn .ib-sub{font-size:.58rem;color:var(--g4)}.ib-done::after{content:'✓';position:absolute;top:3px;right:5px;font-size:.62rem;color:var(--grn);font-weight:900}</style>
+        <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px">
+          <style>.ib-btn{display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:7px 10px;background:#fff;border:var(--bd);border-radius:8px;cursor:pointer;flex-shrink:0;min-width:62px;transition:all .2s;position:relative}
+          .ib-btn:hover{border-color:var(--red);background:#fce8e6}.ib-btn .ib-ico{font-size:1.1rem}.ib-btn .ib-lbl{font-size:.63rem;font-weight:700;color:var(--navy);white-space:nowrap}
+          .ib-btn .ib-sub{font-size:.55rem;color:var(--g4)}.ib-done::after{content:'✓';position:absolute;top:3px;right:5px;font-size:.62rem;color:var(--grn);font-weight:900}</style>
 
           <!-- 출석체크 -->
           <div class="ib-btn" id="ib-attend" onclick="doAttend()">
@@ -1371,7 +1497,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
           </div>
         </div>
       </div>
-
       <!-- 업체 목록 (2컬럼) -->
       <div class="sh" style="margin-top:4px">
         <div class="sh-t">🏪 지역 업체</div>
@@ -1499,43 +1624,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <button class="news-reg-btn" onclick="showPage('good')" style="flex-shrink:0;white-space:nowrap">🌿 산지직송</button>
         <button class="news-reg-btn" onclick="showPage('good')" style="flex-shrink:0;white-space:nowrap">💚 더착한가게</button>
         <button class="news-reg-btn" onclick="filterNews('맛집',this,true)" style="flex-shrink:0;white-space:nowrap">🍽️ 전국맛집</button>
-      </div>
-    </div>
-
-    <!-- ★ 오늘의 주요뉴스 2분할 패널 ★ -->
-    <div style="margin-bottom:14px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:6px">
-          <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
-          <span style="font-size:.9rem;font-weight:900;color:var(--navy)">오늘의 주요뉴스</span>
-          <span id="newsTodayTime" style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700"></span>
-        </div>
-        <div style="display:flex;gap:4px">
-          <button id="todayPanelBtn1" onclick="switchTodayPanel('dom')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700">🇰🇷 국내</button>
-          <button id="todayPanelBtn2" onclick="switchTodayPanel('global')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700">🌐 글로벌</button>
-        </div>
-      </div>
-      <div id="todayNewsWrap" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div id="todayDomPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
-          <div style="background:var(--navy);padding:7px 12px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:.72rem;font-weight:900;color:#fff">🇰🇷 국내 주요뉴스</span>
-            <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
-          </div>
-          <ul id="todayDomList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
-            <li style="padding:9px 12px;border-bottom:var(--bd);color:var(--g4)">뉴스 불러오는 중...</li>
-          </ul>
-          <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('dom')">🔄 새로고침</div>
-        </div>
-        <div id="todayGlobalPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
-          <div style="background:#1565c0;padding:7px 12px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:.72rem;font-weight:900;color:#fff">🌐 글로벌 주요뉴스</span>
-            <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
-          </div>
-          <ul id="todayGlobalList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
-            <li style="padding:9px 12px;border-bottom:var(--bd);color:var(--g4)">뉴스 불러오는 중...</li>
-          </ul>
-          <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('global')">🔄 새로고침</div>
-        </div>
       </div>
     </div>
 
@@ -1728,9 +1816,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         </div>
         <!-- 본문 (스크롤) -->
         <div id="ndBody" style="padding:20px;overflow-y:auto;flex:1;font-size:.88rem;line-height:1.8;color:#333">기사 내용이 여기에 표시됩니다.</div>
-        <!-- 하단 닫기 -->
-        <div style="padding:12px 18px;border-top:var(--bd);background:var(--g1);border-radius:0 0 10px 10px;flex-shrink:0;display:flex;justify-content:flex-end">
-          <button onclick="closeNewsDetail()" style="background:var(--navy);color:#fff;border:none;padding:7px 20px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer">닫기</button>
+        <!-- 하단 버튼 -->
+        <div style="padding:12px 18px;border-top:var(--bd);background:var(--g1);border-radius:0 0 10px 10px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div id="ndSaveRow" style="display:flex;align-items:center;gap:6px;flex:1">
+            <input id="ndSaveFilename" type="text" placeholder="파일명 입력..." style="border:var(--bd);border-radius:5px;padding:5px 9px;font-size:.75rem;width:160px;font-family:inherit">
+            <button onclick="saveNewsAs()" style="background:#2e7d32;color:#fff;border:none;padding:6px 12px;border-radius:5px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap">💾 다른 이름으로 저장</button>
+          </div>
+          <button onclick="closeNewsDetail()" style="background:var(--navy);color:#fff;border:none;padding:7px 18px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer;flex-shrink:0">닫기</button>
         </div>
       </div>
     </div>
@@ -2626,190 +2718,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     </div>
   </div>
 </div>
-<footer>
-  <div class="ft-outer">
-    <div class="ft">
-<!-- 좌: 브랜드 + 사업자 정보 -->
-    <div style="min-width:240px">
-      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
-      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
-      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
-        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
-        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
-        사업자등록번호: 227-18-34338<br>
-        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
-        TEL: 0505-505-9000<br>
-        <!-- 이메일 드롭다운 -->
-        <span style="position:relative;display:inline-block">
-          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
-          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
-            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
-              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
-            </a>
-            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
-              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
-            </a>
-          </div>
-        </span>
-      </div>
-    </div>
-
-    <!-- 우: 링크 + 관리자 -->
-    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
-      <div class="ft-links">
-        <a href="#" onclick="showPage('about');return false">서비스 소개</a>
-        <a href="#" onclick="showPage('terms');return false">이용약관</a>
-        <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
-        <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
-        <a href="#" onclick="showPage('register');return false">입점문의</a>
-        <a href="#" onclick="showPage('community');return false">커뮤니티</a>
-      </div>
-      <!-- 관리자 버튼 (푸터 우측 하단) -->
-      <a href="/admin" target="_blank"
-         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
-         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
-         title="관리자 대시보드">
-        ⚙️ 관리자 대시보드
-      </a>
-      <!-- PC/모바일 버전 전환 (드롭다운) -->
-      <div style="position:relative" id="viewModeDdw">
-        <button onclick="toggleViewModeDd()"
-           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
-           id="viewModeBtn">
-          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
-        </button>
-        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
-          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
-            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
-          </div>
-          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
-            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    </div>
-  </div>
-    
-    </div>
-  </div>
-</footer>
-</div><!-- /shell -->
-
-<!-- ==================== MOBILE SIDEBARS ==================== -->
-<div class="mob-ov" id="mobOv" onclick="closeSide()"></div>
-<div class="mob-panel left" id="mobL">
-  <button class="mob-close" onclick="closeSide()">✕</button>
-  <div class="mob-brand">
-    <small style="display:block;font-size:.62rem;color:var(--g4);font-family:var(--fn);letter-spacing:1px;font-weight:400;margin-bottom:3px">소상공인+소비자 상생 플랫폼</small>
-    AI<em>PLAT</em>MARKET
-  </div>
-  <div style="background:linear-gradient(135deg,#e8f4fd,#ddeeff);border:1px solid #c2dff6;border-radius:var(--r);padding:10px;margin-bottom:12px;text-align:center">
-    <div style="font-size:1.5rem" id="mobIco">⛅</div>
-    <div style="font-size:.73rem;color:#1a56a0;font-weight:700">인천 · 맑음 18°C</div>
-    <div style="font-size:.64rem;color:#5580aa;margin-top:2px" id="mobDt"></div>
-  </div>
-  <div class="lsb-ttl">📌 메뉴</div>
-  <div class="lsb-menu">
-    <div class="lmi" onclick="closeSide();showPage('home')"><span class="ico">🏠</span>종합홈</div>
-    <div class="lmi" onclick="closeSide();showPage('news')"><span class="ico">📰</span>지역경제 뉴스</div>
-    <div class="lmi" onclick="closeSide();showPage('global')"><span class="ico">🌐</span>글로벌경제</div>
-    <div class="lmi" onclick="closeSide();showPage('live')"><span class="ico">📺</span>라이브방송</div>
-    <div class="lmi" onclick="closeSide();showPage('community')"><span class="ico">💬</span>커뮤니티</div>
-    <div class="lmi" onclick="closeSide();showPage('good')"><span class="ico">💚</span>더착한가게</div>
-    <div class="lmi" onclick="closeSide();showPage('welfare')"><span class="ico">🤝</span>지역복지</div>
-    <div class="lmi" onclick="closeSide();showPage('localad')"><span class="ico">📋</span>지역생활광고</div>
-    <div class="lmi" onclick="closeSide();showPage('promo')"><span class="ico">🎁</span>판촉물</div>
-    <div class="lmi" onclick="closeSide();showPage('recipe')"><span class="ico">👨‍🍳</span>뉴레시피</div>
-    <div class="lmi" onclick="closeSide();showPage('sports')"><span class="ico">⚽</span>스포츠&amp;건강</div>
-    <div class="lmi" onclick="closeSide();showPage('travel')"><span class="ico">✈️</span>전국·세계여행</div>
-    <div class="lmi" onclick="closeSide();showPage('startup')"><span class="ico">🚀</span>사업/창업</div>
-    <div class="lmi" onclick="closeSide();showPage('event')"><span class="ico">🎉</span>지역행사</div>
-    <div class="lmi" onclick="closeSide();showPage('incident')"><span class="ico">🚨</span>사건/사고</div>
-    <div class="lmi" onclick="closeSide();showPage('newprod')"><span class="ico">🆕</span>신상품</div>
-    <div class="lmi" onclick="closeSide();showPage('bigsale')"><span class="ico">💥</span>빅세일</div>
-    <div class="lmi" onclick="closeSide();showPage('branch')"><span class="ico">🏢</span>지역경제본부·센터</div>
-    <div class="lmi" onclick="closeSide();showPage('reporter')"><span class="ico">📰</span>홍보기자단</div>
-    <div class="lmi" onclick="closeSide();showPage('register')"><span class="ico">✅</span>입점신청</div>
-  </div>
-  <div class="lsb-div"></div>
-  <div class="lsb-ttl">📍 지역별</div>
-  <div class="lsb-rg">
-    <div class="rgb" onclick="closeSide();quickReg('서울')">서울</div><div class="rgb" onclick="closeSide();quickReg('인천')">인천</div>
-    <div class="rgb" onclick="closeSide();quickReg('경기')">경기</div><div class="rgb" onclick="closeSide();quickReg('부산')">부산</div>
-    <div class="rgb" onclick="closeSide();quickReg('대구')">대구</div><div class="rgb" onclick="closeSide();quickReg('광주')">광주</div>
-    <div class="rgb" onclick="closeSide();quickReg('대전')">대전</div><div class="rgb" onclick="closeSide();quickReg('강원')">강원</div>
-    <div class="rgb" onclick="closeSide();quickReg('충북')">충북</div><div class="rgb" onclick="closeSide();quickReg('충남')">충남</div>
-    <div class="rgb" onclick="closeSide();quickReg('전북')">전북</div><div class="rgb" onclick="closeSide();quickReg('전남')">전남</div>
-    <div class="rgb" onclick="closeSide();quickReg('경북')">경북</div><div class="rgb" onclick="closeSide();quickReg('경남')">경남</div>
-    <div class="rgb" onclick="closeSide();quickReg('세종')">세종</div><div class="rgb" onclick="closeSide();quickReg('제주')">제주</div>
-  </div>
-  <div class="lsb-div"></div>
-  <div class="lsb-ttl">📢 공지사항</div>
-  <div class="ni" onclick="closeSide();openNotice(0)"><div class="ni-t"><span class="ni-b">신규</span>무료 입점 이벤트 5월 연장</div><div class="ni-d">2026.04.13</div></div>
-  <div class="ni" onclick="closeSide();openNotice(1)"><div class="ni-t">AI 홍보문구 자동 생성 업데이트</div><div class="ni-d">2026.04.10</div></div>
-  <div class="lsb-div"></div>
-  <div class="sns-row"><button class="sns-btn sk" onclick="toast('카카오 준비 중')">💬 카카오</button><button class="sns-btn sn" onclick="toast('블로그 준비 중')">N 블로그</button></div>
-</div>
-<div class="mob-panel right" id="mobR">
-  <button class="mob-close" onclick="closeSide()">✕</button>
-  <div class="mob-cd"><small>내 사업 내 비서</small><a href="https://chatdoumi.com" target="_blank">Chat<em>Doumi</em></a></div>
-  <div class="ad-bn" style="margin-bottom:12px"><div class="ad-lbl">AD</div><div class="ad-ttl">무료 입점 신청</div><button class="btn-ad" onclick="closeSide();showPage('register')">신청하기 →</button></div>
-  <div class="ev-card" style="margin-bottom:12px">
-    <div class="ev-hd">🔥 오늘의 특가</div>
-    <div class="ev-item"><div class="ev-ic">🍖</div><div class="ev-nm">인천 족발보쌈 2인 세트</div><div class="ev-dc">30%↓</div></div>
-    <div class="ev-item"><div class="ev-ic">☕</div><div class="ev-nm">연수구 카페 아메리카노</div><div class="ev-dc">1+1</div></div>
-    <div class="ev-item"><div class="ev-ic">💇</div><div class="ev-nm">부평구 컷+염색 패키지</div><div class="ev-dc">25%↓</div></div>
-  </div>
-  <div class="lsb-ttl">📊 인기 업체</div>
-  <div class="rk-list" id="rkListMob"></div>
-  <div class="ai-card" style="margin-top:12px">
-    <div class="ai-ttl">🤖 AI 매출 분석</div>
-    <p>사장님 매장 AI 분석 서비스</p>
-    <a class="btn-ai" href="https://chatdoumi.com" target="_blank" rel="noopener">AI 분석 시작하기 →</a>
-  </div>
-</div>
-
-<!-- STORE MODAL -->
-<div class="mo" id="storeModal" onclick="if(event.target===this)this.classList.remove('op')">
-  <div class="mb">
-    <div class="mh"><div><div id="moName" style="font-family:var(--fs);font-size:1.1rem;font-weight:800;color:var(--navy)"></div><div id="moTags" style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap"></div></div><button class="mc2" onclick="document.getElementById('storeModal').classList.remove('op')">✕</button></div>
-    <div class="mbd" id="moBody"></div>
-    <div class="mf"><button class="btn-ct" style="flex:1" id="moPhoneBtn">📞 전화 연결</button><button class="btn-dt" onclick="document.getElementById('storeModal').classList.remove('op')">닫기</button></div>
-  </div>
-</div>
-
-<!-- NOTICE MODAL -->
-<div class="nm-ov" id="noticeModal" onclick="if(event.target===this)this.classList.remove('op')">
-  <div class="nm-box">
-    <div class="nm-hd"><h3 id="nmTitle">공지사항</h3><button class="nm-cl" onclick="document.getElementById('noticeModal').classList.remove('op')">✕</button></div>
-    <div class="nm-bd"><div class="nm-meta" id="nmMeta"></div><div id="nmBody"></div></div>
-  </div>
-</div>
-
-
-<!-- ══ 개인정보처리방침 ══ -->
-
-<!-- ══ 서비스 소개 ══ -->
-
-
-
-<!-- ══ 이용약관 ══ -->
-
-
-<!-- ══ 🔮 인생?진로 ══ -->
-
-
-<!-- ══ 소상공인상생회 만들기 ══ -->
-
-
-<!-- ══ AI 홍보센터 ══ -->
-
-
-<!-- ══ 지역특산품 ══ -->
 
 <div id="page-promo-center" class="pg">
   <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
@@ -3362,6 +3270,192 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     <div style="text-align:center"><button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:9px 22px;border-radius:20px;font-size:.84rem;cursor:pointer">← 홈으로</button></div>
   </div>
 </div>
+
+<footer>
+  <div class="ft-outer">
+    <div class="ft">
+<!-- 좌: 브랜드 + 사업자 정보 -->
+    <div style="min-width:240px">
+      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+        사업자등록번호: 227-18-34338<br>
+        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+        TEL: 0505-505-9000<br>
+        <!-- 이메일 드롭다운 -->
+        <span style="position:relative;display:inline-block">
+          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
+            </a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
+            </a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- 우: 링크 + 관리자 -->
+    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+      <div class="ft-links">
+        <a href="#" onclick="showPage('about');return false">서비스 소개</a>
+        <a href="#" onclick="showPage('terms');return false">이용약관</a>
+        <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
+        <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
+        <a href="#" onclick="showPage('register');return false">입점문의</a>
+        <a href="#" onclick="showPage('community');return false">커뮤니티</a>
+      </div>
+      <!-- 관리자 버튼 (푸터 우측 하단) -->
+      <a href="/admin" target="_blank"
+         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
+         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
+         title="관리자 대시보드">
+        ⚙️ 관리자 대시보드
+      </a>
+      <!-- PC/모바일 버전 전환 (드롭다운) -->
+      <div style="position:relative" id="viewModeDdw">
+        <button onclick="toggleViewModeDd()"
+           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
+           id="viewModeBtn">
+          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
+        </button>
+        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
+          </div>
+          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    </div>
+  </div>
+    
+    </div>
+  </div>
+</footer>
+</div><!-- /shell -->
+
+<!-- ==================== MOBILE SIDEBARS ==================== -->
+<div class="mob-ov" id="mobOv" onclick="closeSide()"></div>
+<div class="mob-panel left" id="mobL">
+  <button class="mob-close" onclick="closeSide()">✕</button>
+  <div class="mob-brand">
+    <small style="display:block;font-size:.62rem;color:var(--g4);font-family:var(--fn);letter-spacing:1px;font-weight:400;margin-bottom:3px">소상공인+소비자 상생 플랫폼</small>
+    AI<em>PLAT</em>MARKET
+  </div>
+  <div style="background:linear-gradient(135deg,#e8f4fd,#ddeeff);border:1px solid #c2dff6;border-radius:var(--r);padding:10px;margin-bottom:12px;text-align:center">
+    <div style="font-size:1.5rem" id="mobIco">⛅</div>
+    <div style="font-size:.73rem;color:#1a56a0;font-weight:700">인천 · 맑음 18°C</div>
+    <div style="font-size:.64rem;color:#5580aa;margin-top:2px" id="mobDt"></div>
+  </div>
+  <div class="lsb-ttl">📌 메뉴</div>
+  <div class="lsb-menu">
+    <div class="lmi" onclick="closeSide();showPage('home')"><span class="ico">🏠</span>종합홈</div>
+    <div class="lmi" onclick="closeSide();showPage('news')"><span class="ico">📰</span>지역경제 뉴스</div>
+    <div class="lmi" onclick="closeSide();showPage('global')"><span class="ico">🌐</span>글로벌경제</div>
+    <div class="lmi" onclick="closeSide();showPage('live')"><span class="ico">📺</span>라이브방송</div>
+    <div class="lmi" onclick="closeSide();showPage('community')"><span class="ico">💬</span>커뮤니티</div>
+    <div class="lmi" onclick="closeSide();showPage('good')"><span class="ico">💚</span>더착한가게</div>
+    <div class="lmi" onclick="closeSide();showPage('welfare')"><span class="ico">🤝</span>지역복지</div>
+    <div class="lmi" onclick="closeSide();showPage('localad')"><span class="ico">📋</span>지역생활광고</div>
+    <div class="lmi" onclick="closeSide();showPage('promo')"><span class="ico">🎁</span>판촉물</div>
+    <div class="lmi" onclick="closeSide();showPage('recipe')"><span class="ico">👨‍🍳</span>뉴레시피</div>
+    <div class="lmi" onclick="closeSide();showPage('sports')"><span class="ico">⚽</span>스포츠&amp;건강</div>
+    <div class="lmi" onclick="closeSide();showPage('travel')"><span class="ico">✈️</span>전국·세계여행</div>
+    <div class="lmi" onclick="closeSide();showPage('startup')"><span class="ico">🚀</span>사업/창업</div>
+    <div class="lmi" onclick="closeSide();showPage('event')"><span class="ico">🎉</span>지역행사</div>
+    <div class="lmi" onclick="closeSide();showPage('incident')"><span class="ico">🚨</span>사건/사고</div>
+    <div class="lmi" onclick="closeSide();showPage('newprod')"><span class="ico">🆕</span>신상품</div>
+    <div class="lmi" onclick="closeSide();showPage('bigsale')"><span class="ico">💥</span>빅세일</div>
+    <div class="lmi" onclick="closeSide();showPage('branch')"><span class="ico">🏢</span>지역경제본부·센터</div>
+    <div class="lmi" onclick="closeSide();showPage('reporter')"><span class="ico">📰</span>홍보기자단</div>
+    <div class="lmi" onclick="closeSide();showPage('register')"><span class="ico">✅</span>입점신청</div>
+  </div>
+  <div class="lsb-div"></div>
+  <div class="lsb-ttl">📍 지역별</div>
+  <div class="lsb-rg">
+    <div class="rgb" onclick="closeSide();quickReg('서울')">서울</div><div class="rgb" onclick="closeSide();quickReg('인천')">인천</div>
+    <div class="rgb" onclick="closeSide();quickReg('경기')">경기</div><div class="rgb" onclick="closeSide();quickReg('부산')">부산</div>
+    <div class="rgb" onclick="closeSide();quickReg('대구')">대구</div><div class="rgb" onclick="closeSide();quickReg('광주')">광주</div>
+    <div class="rgb" onclick="closeSide();quickReg('대전')">대전</div><div class="rgb" onclick="closeSide();quickReg('강원')">강원</div>
+    <div class="rgb" onclick="closeSide();quickReg('충북')">충북</div><div class="rgb" onclick="closeSide();quickReg('충남')">충남</div>
+    <div class="rgb" onclick="closeSide();quickReg('전북')">전북</div><div class="rgb" onclick="closeSide();quickReg('전남')">전남</div>
+    <div class="rgb" onclick="closeSide();quickReg('경북')">경북</div><div class="rgb" onclick="closeSide();quickReg('경남')">경남</div>
+    <div class="rgb" onclick="closeSide();quickReg('세종')">세종</div><div class="rgb" onclick="closeSide();quickReg('제주')">제주</div>
+  </div>
+  <div class="lsb-div"></div>
+  <div class="lsb-ttl">📢 공지사항</div>
+  <div class="ni" onclick="closeSide();openNotice(0)"><div class="ni-t"><span class="ni-b">신규</span>무료 입점 이벤트 5월 연장</div><div class="ni-d">2026.04.13</div></div>
+  <div class="ni" onclick="closeSide();openNotice(1)"><div class="ni-t">AI 홍보문구 자동 생성 업데이트</div><div class="ni-d">2026.04.10</div></div>
+  <div class="lsb-div"></div>
+  <div class="sns-row"><button class="sns-btn sk" onclick="toast('카카오 준비 중')">💬 카카오</button><button class="sns-btn sn" onclick="toast('블로그 준비 중')">N 블로그</button></div>
+</div>
+<div class="mob-panel right" id="mobR">
+  <button class="mob-close" onclick="closeSide()">✕</button>
+  <div class="mob-cd"><small>내 사업 내 비서</small><a href="https://chatdoumi.com" target="_blank">Chat<em>Doumi</em></a></div>
+  <div class="ad-bn" style="margin-bottom:12px"><div class="ad-lbl">AD</div><div class="ad-ttl">무료 입점 신청</div><button class="btn-ad" onclick="closeSide();showPage('register')">신청하기 →</button></div>
+  <div class="ev-card" style="margin-bottom:12px">
+    <div class="ev-hd">🔥 오늘의 특가</div>
+    <div class="ev-item"><div class="ev-ic">🍖</div><div class="ev-nm">인천 족발보쌈 2인 세트</div><div class="ev-dc">30%↓</div></div>
+    <div class="ev-item"><div class="ev-ic">☕</div><div class="ev-nm">연수구 카페 아메리카노</div><div class="ev-dc">1+1</div></div>
+    <div class="ev-item"><div class="ev-ic">💇</div><div class="ev-nm">부평구 컷+염색 패키지</div><div class="ev-dc">25%↓</div></div>
+  </div>
+  <div class="lsb-ttl">📊 인기 업체</div>
+  <div class="rk-list" id="rkListMob"></div>
+  <div class="ai-card" style="margin-top:12px">
+    <div class="ai-ttl">🤖 AI 매출 분석</div>
+    <p>사장님 매장 AI 분석 서비스</p>
+    <a class="btn-ai" href="https://chatdoumi.com" target="_blank" rel="noopener">AI 분석 시작하기 →</a>
+  </div>
+</div>
+
+<!-- STORE MODAL -->
+<div class="mo" id="storeModal" onclick="if(event.target===this)this.classList.remove('op')">
+  <div class="mb">
+    <div class="mh"><div><div id="moName" style="font-family:var(--fs);font-size:1.1rem;font-weight:800;color:var(--navy)"></div><div id="moTags" style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap"></div></div><button class="mc2" onclick="document.getElementById('storeModal').classList.remove('op')">✕</button></div>
+    <div class="mbd" id="moBody"></div>
+    <div class="mf"><button class="btn-ct" style="flex:1" id="moPhoneBtn">📞 전화 연결</button><button class="btn-dt" onclick="document.getElementById('storeModal').classList.remove('op')">닫기</button></div>
+  </div>
+</div>
+
+<!-- NOTICE MODAL -->
+<div class="nm-ov" id="noticeModal" onclick="if(event.target===this)this.classList.remove('op')">
+  <div class="nm-box">
+    <div class="nm-hd"><h3 id="nmTitle">공지사항</h3><button class="nm-cl" onclick="document.getElementById('noticeModal').classList.remove('op')">✕</button></div>
+    <div class="nm-bd"><div class="nm-meta" id="nmMeta"></div><div id="nmBody"></div></div>
+  </div>
+</div>
+
+
+<!-- ══ 개인정보처리방침 ══ -->
+
+<!-- ══ 서비스 소개 ══ -->
+
+
+
+<!-- ══ 이용약관 ══ -->
+
+
+<!-- ══ 🔮 인생?진로 ══ -->
+
+
+<!-- ══ 소상공인상생회 만들기 ══ -->
+
+
+<!-- ══ AI 홍보센터 ══ -->
+
+
+<!-- ══ 지역특산품 ══ -->
+
 <div class="toast" id="toastEl"></div>
 
 <!-- ========== 지역경제본부·센터 신청 팝업 ========== -->
@@ -3648,7 +3742,7 @@ const LIVE_DATA = [
 ];
 
 /* ── STATE ── */
-const S = { stores:[], filtered:[], page:1, perPage:8, sido:'', gungu:'', cat:'', sort:'clicks', kw:'' };
+const S = { stores:[], filtered:[], page:1, perPage:4, sido:'', gungu:'', cat:'', sort:'clicks', kw:'' };
 let curGenreIdx = 0;
 let _tt;
 
@@ -3908,15 +4002,39 @@ function renderStores() {
 function clearFilters() { S.sido='';S.gungu='';S.cat='';S.kw='';S.sort='clicks'; applyFilters(); updateGnbLabel(); }
 
 function renderPgn() {
-  const el=document.getElementById('pgn');
-  if(!el)return;
-  const total=Math.ceil(S.filtered.length/S.perPage);
-  if(total<=1){el.innerHTML='';return;}
-  let h='';
-  if(S.page>1) h+=`<button class="pb" onclick="goPage(${S.page-1})">‹</button>`;
-  for(let i=1;i<=total;i++) h+=`<button class="pb ${i===S.page?'act':''}" onclick="goPage(${i})">${i}</button>`;
-  if(S.page<total) h+=`<button class="pb" onclick="goPage(${S.page+1})">›</button>`;
-  el.innerHTML=h;
+  const el = document.getElementById('pgn');
+  if (!el) return;
+  const total = Math.ceil(S.filtered.length / S.perPage);
+  if (total <= 1) { el.innerHTML = ''; return; }
+
+  const SHOW = 4; // 한 번에 표시할 페이지 수
+  // 현재 페이지가 속한 슬라이딩 윈도우 계산
+  const winStart = Math.floor((S.page - 1) / SHOW) * SHOW + 1;
+  const winEnd   = Math.min(winStart + SHOW - 1, total);
+
+  let h = '';
+  // 첫 페이지 그룹으로 이동
+  if (winStart > 1) {
+    h += `<button class="pb" onclick="goPage(${winStart - SHOW})" title="이전 ${SHOW}페이지">«</button>`;
+  }
+  // 이전 페이지
+  if (S.page > 1) {
+    h += `<button class="pb" onclick="goPage(${S.page - 1})">‹</button>`;
+  }
+  // 페이지 번호 (최대 4개)
+  for (let i = winStart; i <= winEnd; i++) {
+    h += `<button class="pb ${i === S.page ? 'act' : ''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  // 다음 페이지
+  if (S.page < total) {
+    h += `<button class="pb" onclick="goPage(${S.page + 1})">›</button>`;
+  }
+  // 다음 페이지 그룹으로 이동
+  if (winEnd < total) {
+    h += `<button class="pb" onclick="goPage(${winStart + SHOW})" title="다음 ${SHOW}페이지">»</button>`;
+  }
+
+  el.innerHTML = h;
 }
 function goPage(n){S.page=n;renderStores();window.scrollTo({top:0,behavior:'smooth'});}
 
@@ -4177,6 +4295,9 @@ function showPage(id) {
       document.getElementById('lai-result').style.display='none';
     }, 50);
   }
+  if (id === 'home') {
+    setTimeout(() => { initTodayNewsPanel(); }, 120);
+  }
   if (id === 'news') {
     currentNewsCat = '전체';
     currentNewsReg = 'all';
@@ -4189,7 +4310,6 @@ function showPage(id) {
     if (allBtn) allBtn.classList.add('act');
     document.getElementById('newsRegSelLbl') && (document.getElementById('newsRegSelLbl').textContent='');
     renderNewsGrid();
-    setTimeout(() => { initTodayNewsPanel(); }, 100);
   }
   if (id === 'sports') {
     setTimeout(() => { loadSportsNews(); loadHealthNews(); }, 100);
@@ -4737,6 +4857,24 @@ function _showNewsPopup(n){
   document.getElementById('newsDetailModal').style.display='flex';
 }
 function closeNewsDetail(){document.getElementById('newsDetailModal').style.display='none';}
+
+function saveNewsAs() {
+  const title   = document.getElementById('ndTitle')?.textContent || '기사';
+  const bodyEl  = document.getElementById('ndBody');
+  const bodyTxt = bodyEl?.innerText || bodyEl?.textContent || '';
+  const input   = document.getElementById('ndSaveFilename');
+  const rawName = (input?.value.trim()) || title.slice(0, 30);
+  // 파일명에 사용 불가 문자 제거
+  const safeName = rawName.replace(/[\\/:*?"<>|]/g, '_').replace(/\s+/g, '_');
+  const filename = safeName.endsWith('.txt') ? safeName : safeName + '.txt';
+  const content  = `[${title}]\n\n${bodyTxt}`;
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  toast(`💾 "${filename}" 저장 완료`);
+}
 /* ──── UNUSED 구버전 자리 ──── */
 function _old_openNewsDetail2(idx){const n=STATIC_DB[idx]||_newsPool[idx];
   if (!n) return;
