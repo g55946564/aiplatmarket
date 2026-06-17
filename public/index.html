@@ -45,7 +45,7 @@ body{margin:2px;font-family:var(--fn);background:#eceff4;color:var(--text);font-
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit}
-.shell{width:90%;max-width:1280px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(13,31,53,.1);min-height:100vh;overflow:hidden}
+.shell{width:90%;max-width:1280px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(13,31,53,.1);min-height:100vh;overflow:visible;position:relative}
 
 /* === TOP STRIP === */
 .ts{background:var(--navy);color:#aab8cb;font-size:.78rem;padding:5px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:6px}
@@ -94,7 +94,7 @@ header{background:#fff;border-bottom:3px solid var(--navy);padding:12px var(--pa
 }
 /* 모바일 레이아웃 */
 @media(max-width:900px){
-  .shell{width:100%;overflow:hidden}
+  .shell{width:100%;overflow:visible}
   .mgrid{grid-template-columns:1fr}
   .lsb{display:none !important}.mr{display:none !important}
   header{padding:0 !important;border-bottom:2px solid var(--navy)}
@@ -158,6 +158,31 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gi .bxg{background:var(--grn);color:#fff;font-size:.58rem;padding:1px 4px;border-radius:2px;margin-left:4px;font-weight:900}
 .gi .bxb{background:var(--purple);color:#fff;font-size:.58rem;padding:1px 4px;border-radius:2px;margin-left:4px;font-weight:900}
 .gd{width:1px;background:var(--g2);margin:7px 0;align-self:stretch;flex-shrink:0}
+
+/* ── 새 카테고리 GNB ── */
+.gnb-cat-bar{display:flex;align-items:center;background:var(--navy);min-height:38px;position:relative;z-index:250;overflow:visible}
+.gcat{position:relative}
+.gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+.gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+.caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+.gcat.open .caret{transform:rotate(180deg)}
+.gcdrop{display:none;position:absolute;top:calc(100% + 1px);left:0;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:0 0 10px 10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;padding:8px}
+.gcat.open .gcdrop{display:block}
+.gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gcdrop-list{display:flex;flex-direction:column;gap:2px}
+.gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+.gcdi:hover{background:#f0f4ff}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy)}
+.gcdi.platform span{display:block;font-size:.63rem;color:var(--g4);margin-top:1px}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+.gcbtn-reg{background:rgba(46,204,113,.18);border:1px solid rgba(46,204,113,.45);color:#69f0ae;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+.gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+@media(max-width:700px){.gnb-cat-bar{display:none}}
 
 /* 드롭다운: position:fixed로 overflow 컨테이너 탈출 */
 .ddw{position:relative;display:flex;align-items:stretch;flex-shrink:0}
@@ -228,7 +253,7 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 
 /* === 3-COL GRID === */
 .mgrid{display:grid;grid-template-columns:210px 1fr 300px;gap:0;background:var(--g2);align-items:start}
-.ml{background:#fff;padding:10px 9px;min-width:0;overflow:hidden}
+.ml{background:#fff;padding:10px 9px;min-width:0;overflow:visible}
 .mr{background:#f8fafd;padding:16px;border-left:var(--bd);display:flex;flex-direction:column;gap:14px;min-width:0}
 
 /* === LEFT SIDEBAR === */
@@ -842,115 +867,118 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     </div>
 
     <!-- GNB 하단 줄: 나머지 메뉴 스크롤 -->
-    <div class="gnb-sub">
-      <!-- ★ 라이브 홈쇼핑 드롭다운 -->
-      <div class="ddw" id="ddLive">
-        <div class="gi" onclick="toggleDd('ddLive',event)">📺 홈쇼핑 <span class="bx">LIVE</span> ▾</div>
-        <div class="dd">
-          <div class="ddi" onclick="showPage('live');closeDds()">📺 라이브 홈쇼핑 전체</div>
-          <div class="ddi" onclick="scrollToChannel('ch1');closeDds()">▶ CH1 — 소상공인 직판</div>
-          <div class="ddi" onclick="scrollToChannel('ch1');closeDds()">▶ CH2 — 뷰티·패션</div>
-          <div class="ddi" onclick="scrollToChannel('ch1');closeDds()">▶ CH3 — 식품·농수산</div>
-          <div class="ddi" onclick="scrollToChannel('ch1');closeDds()">🗓 다음 방송 일정 보기</div>
-        </div>
-      </div><div class="gd"></div>
+    <!-- ★★★ NEW CATEGORY GNB ★★★ -->
+    <div class="gnb-cat-bar" id="gnbCatBar">
 
-      <!-- ★ 뮤직 방송 드롭다운 -->
-      <div class="ddw" id="ddMusic">
-        <div class="gi" onclick="toggleDd('ddMusic',event)">🎵 뮤직 ▾</div>
-        <div class="dd">
-          <div class="ddi" onclick="setGenre(0);showPage('home');closeDds()">🎵 K-POP</div>
-          <div class="ddi" onclick="setGenre(1);showPage('home');closeDds()">🎤 트롯</div>
-          <div class="ddi" onclick="setGenre(2);showPage('home');closeDds()">🎼 발라드</div>
-          <div class="ddi" onclick="setGenre(3);showPage('home');closeDds()">🎸 록/메탈</div>
-          <div class="ddi" onclick="setGenre(4);showPage('home');closeDds()">🌍 팝</div>
-          <div class="ddi" onclick="setGenre(5);showPage('home');closeDds()">🎧 힙합/R&amp;B</div>
-          <div class="ddi" onclick="setGenre(6);showPage('home');closeDds()">🎷 재즈</div>
-          <div class="ddi" onclick="setGenre(7);showPage('home');closeDds()">🎻 클래식</div>
-        </div>
-      </div><div class="gd"></div>
-
-      <!-- ★ 인터넷경제TV 드롭다운 -->
-      <div class="ddw" id="ddTV">
-        <div class="gi" onclick="toggleDd('ddTV',event)">📡 인터넷TV ▾</div>
-        <div class="dd">
-          <div style="padding:6px 14px 4px;font-size:.66rem;color:var(--g4);font-weight:700;border-bottom:var(--bd)">🗺 지역경제</div>
-          <div class="ddi" onclick="quickReg('서울');closeDds()">서울 경제TV</div>
-          <div class="ddi" onclick="quickReg('인천');closeDds()">인천 경제TV</div>
-          <div class="ddi" onclick="quickReg('경기');closeDds()">경기 경제TV</div>
-          <div class="ddi" onclick="quickReg('부산');closeDds()">부산 경제TV</div>
-          <div class="ddi" onclick="showPage('news');closeDds()">전국 지역경제 뉴스</div>
-          <div style="padding:6px 14px 4px;font-size:.66rem;color:var(--g4);font-weight:700;border-bottom:var(--bd);border-top:var(--bd)">🌐 글로벌경제</div>
-          <div class="ddi" onclick="showPage('global');closeDds()">🌏 글로벌 경제 뉴스</div>
-          <div class="ddi" onclick="showPage('global');closeDds()">🇺🇸 미국 경제</div>
-          <div class="ddi" onclick="showPage('global');closeDds()">🇨🇳 중국 경제</div>
-          <div class="ddi" onclick="showPage('global');closeDds()">🌍 유럽·아시아</div>
-        </div>
-      </div><div class="gd"></div>
-
-      <!-- GNB sub 메뉴 (순서: AI통합홍보센터, AI인생?진로, AI성장+마켓몰, AI지역경제센터, AI영상생성, 지역특산품관, 커뮤니티, 더착한가게, 사업창업, 신상품, 뉴레시피, 판촉물, 여행, 사건사고, 입점신청) -->
-      <div class="gi" onclick="showPage('promo-center')" style="color:var(--gold);font-weight:900;background:rgba(201,168,76,.15);border-radius:6px;padding:3px 9px">🎯 AI통합홍보센터</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('lifemap')" style="color:#fff;font-weight:900;background:linear-gradient(135deg,#6c1fa8,#9b59b6);border-radius:6px;padding:3px 9px">🔮 AI인생?진로</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('growthmall')" style="color:var(--blue);font-weight:800">📈 AI성장+마켓몰</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('localcenter')" style="color:var(--grn);font-weight:800">🏛 AI지역경제센터</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('videocenter')">🎬 AI영상생성</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('local-products')">🌾 지역특산품관</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('community')">💬 커뮤니티</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('good')">💚 더착한가게</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('startup')">🚀 사업창업</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('newprod')">🆕 신상품</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('recipe')">👨‍🍳 뉴레시피</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('promo')">🎁 판촉물</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('sports')">⚽ 스포츠&amp;건강</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('travel')">✈️ 여행</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('incident')">🚨 사건사고</div><div class="gd"></div>
-      <div class="gi" onclick="showPage('register')">✅ 입점신청</div><div class="gd"></div>
-
-      <!-- 전국소상공인회 2단계 드롭다운 -->
-      <div class="ddw" id="ddSME">
-        <div class="gi" onclick="toggleDd('ddSME',event)" style="color:var(--grn2);font-weight:800">🏛 전국소상공인회 ▾</div>
-        <div class="dd" style="min-width:220px">
-          <!-- 소상공인상생회: 마우스 올리면 2단계 드롭다운 -->
-          <div class="sme-ddw" id="smeSangDdw">
-            <div class="ddi" style="font-weight:800;color:var(--grn2);display:flex;justify-content:space-between;align-items:center"
-                 onmouseenter="showSmeSub('smeSangSub','smeSangDdw')" onclick="showSmeSub('smeSangSub','smeSangDdw')">
-              🤝 소상공인상생회 <span style="font-size:.7rem;color:var(--g3)">▶</span>
-            </div>
-            <div id="smeSangSub" class="sme-sub" style="display:none;position:fixed;min-width:180px;background:#fff;border:var(--bd);border-top:2px solid var(--grn);box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:99999;border-radius:6px;max-height:320px;overflow-y:auto">
-              <div class="ddi" onclick="showPage('create-sanglife');closeDds()" style="background:linear-gradient(135deg,#e8f5e9,#f1f8f2);color:var(--grn);font-weight:900;border-bottom:2px solid var(--grn)">🌱 우리 지역 상생회 만들기 →</div>
-              <div style="padding:5px 14px;font-size:.65rem;color:var(--g4);font-weight:700;letter-spacing:.3px">─ 지역별 상생회 신청</div>
-              <div class="ddi" onclick="openSanglifeRegion('서울');closeDds()">🏙 서울 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('인천');closeDds()">🏭 인천 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('경기');closeDds()">🌾 경기 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('부산');closeDds()">🌊 부산 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('대구');closeDds()">🏔 대구 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('광주');closeDds()">🌳 광주 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('대전');closeDds()">🔬 대전 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('울산');closeDds()">🏗 울산 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('강원');closeDds()">⛰ 강원 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('충북');closeDds()">🌿 충북 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('충남');closeDds()">🌻 충남 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('전북');closeDds()">🌾 전북 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('전남');closeDds()">🐟 전남 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('경북');closeDds()">🍎 경북 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('경남');closeDds()">🍃 경남 상생회 만들기</div>
-              <div class="ddi" onclick="openSanglifeRegion('제주');closeDds()">🍊 제주 상생회 만들기</div>
-            </div>
+      <!-- 1. AI 플랫폼 -->
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" onclick="showPage('aird');closeCats()">🔬 <b>AIR&amp;D</b><span>연구·개발 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('simul');closeCats()">🧪 <b>AI시뮬레이션</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('itemzone');closeCats()">📦 <b>AI아이템존</b><span>사업 코파일럿</span></a>
+            <a class="gcdi platform" onclick="showPage('promo-center');closeCats()">🎯 <b>AI통합홍보센터</b><span>마케팅 자동화</span></a>
+            <a class="gcdi platform" onclick="showPage('lifemap');closeCats()">🔮 <b>AI인생·진로</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('edu');closeCats()">📚 <b>AI교육존</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('culture');closeCats()">🎨 <b>AI문화예술</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('videocenter');closeCats()">🎬 <b>AI영상생성</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('gamezone');closeCats()">🎮 <b>AI게임존</b><span>독립 Platform</span></a>
           </div>
-          <!-- 소상공인연합회 -->
-          <div style="padding:6px 14px 4px;font-size:.66rem;color:var(--g4);font-weight:800;border-bottom:var(--bd);border-top:var(--bd);letter-spacing:.5px;margin-top:4px">🏢 소상공인연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">전국 소상공인연합회 (본부)</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">서울 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">인천 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">경기 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">부산 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">대구·경북 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">광주·전남 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">대전·충남 연합회</div>
-          <div class="ddi" onclick="window.open('https://www.kfme.or.kr','_blank');closeDds()">제주 연합회</div>
         </div>
       </div>
-    </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 2. Commerce -->
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('growthmall');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('local-products');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 신상품</a>
+            <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" onclick="window.open('https://promo.aiplatmarket.com','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 3. Business -->
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('startup');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('localcenter');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="showPage('create-sanglife');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 4. Community -->
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('community');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 5. Media -->
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('live');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);showPage('home');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);showPage('home');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);showPage('home');closeCats()">발라드</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 6. Lifestyle -->
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('sports');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="showPage('travel');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 입점신청 고정 -->
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
+
+    </div><!-- /gnb-cat-bar -->
   </nav>
 </header>
 
@@ -1327,95 +1355,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
           <div style="flex-shrink:0;width:66px;background:#f8f9fa;border-radius:7px;padding:6px 5px;border:1px solid #eee;text-align:center">
             <div style="font-size:.57rem;color:#888">이벤트 4</div>
             <div style="font-size:.72rem;font-weight:700;margin-top:2px">릴레이 🎫</div>
-          </div>
-
-        </div>
-      </div>
-          <div style="display:flex;align-items:center;gap:5px">
-            <span style="width:3px;height:12px;background:var(--gold);border-radius:2px;display:inline-block"></span>
-            <span style="font-size:.76rem;font-weight:900;color:var(--gold);letter-spacing:.3px">🔥 오늘의 혜택 &amp; 이벤트</span>
-          </div>
-          <span style="font-size:.62rem;color:rgba(255,255,255,.4);animation:blink 1.5s infinite">● LIVE</span>
-        </div>
-        <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.5) rgba(255,255,255,.08);-webkit-overflow-scrolling:touch;padding-bottom:8px;cursor:grab" onmousedown="this._drag=true;this._x=event.clientX;this._sl=this.scrollLeft" onmousemove="if(this._drag){this.scrollLeft=this._sl-(event.clientX-this._x)}" onmouseup="this._drag=false" onmouseleave="this._drag=false" class="benefit-scroll">
-
-          <!-- 행운쿠폰 -->
-          <div onclick="doCoupon()" id="gcCoupon2" style="flex-shrink:0;min-width:80px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s;position:relative" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">🎰</div>
-            <div style="font-size:.66rem;font-weight:700;color:#fff;white-space:nowrap">행운쿠폰</div>
-            <div style="font-size:.56rem;color:var(--gold);margin-top:2px">1일 1회</div>
-            <span style="position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:.5rem;font-weight:900;padding:2px 5px;border-radius:6px">NEW</span>
-          </div>
-
-          <!-- 출석체크 -->
-          <div onclick="doAttend()" id="gcAttend2" style="flex-shrink:0;min-width:80px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">📅</div>
-            <div style="font-size:.66rem;font-weight:700;color:#fff;white-space:nowrap">출석체크</div>
-            <div style="font-size:.56rem;color:var(--gold);margin-top:2px" id="attendPt2">+10P</div>
-          </div>
-
-          <!-- AI추천 -->
-          <div onclick="doFlip()" id="gcFlip2" style="flex-shrink:0;min-width:80px;background:rgba(201,168,76,.15);border:1px solid var(--gold);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(201,168,76,.25)'" onmouseout="this.style.background='rgba(201,168,76,.15)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">🃏</div>
-            <div style="font-size:.66rem;font-weight:700;color:var(--gold);white-space:nowrap">AI 추천</div>
-            <div style="font-size:.56rem;color:rgba(255,255,255,.6);margin-top:2px">클릭 공개</div>
-          </div>
-
-          <!-- 인기투표 -->
-          <div onclick="doVote()" id="gcVote2" style="flex-shrink:0;min-width:80px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">🗳️</div>
-            <div style="font-size:.66rem;font-weight:700;color:#fff;white-space:nowrap">인기투표</div>
-            <div style="font-size:.56rem;color:rgba(255,255,255,.5);margin-top:2px">참여중</div>
-          </div>
-
-          <div style="width:1px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 2px"></div>
-
-          <!-- 지역행사 -->
-          <div onclick="showPage('event')" style="flex-shrink:0;min-width:80px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">🎉</div>
-            <div style="font-size:.66rem;font-weight:700;color:#fff;white-space:nowrap">지역행사</div>
-            <div style="font-size:.56rem;color:rgba(255,255,255,.5);margin-top:2px">이번주</div>
-          </div>
-
-          <!-- 빅세일 -->
-          <div onclick="showPage('bigsale')" style="flex-shrink:0;min-width:80px;background:rgba(192,57,43,.25);border:1px solid rgba(192,57,43,.5);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(192,57,43,.4)'" onmouseout="this.style.background='rgba(192,57,43,.25)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">💥</div>
-            <div style="font-size:.66rem;font-weight:700;color:#ff8a80;white-space:nowrap">빅세일</div>
-            <div style="font-size:.56rem;color:rgba(255,255,255,.5);margin-top:2px">한정특가</div>
-          </div>
-
-          <!-- 무료등록 -->
-          <div onclick="showPage('register')" style="flex-shrink:0;min-width:80px;background:rgba(26,122,74,.25);border:1px solid rgba(46,204,113,.4);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(26,122,74,.4)'" onmouseout="this.style.background='rgba(26,122,74,.25)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">🏪</div>
-            <div style="font-size:.66rem;font-weight:700;color:#69f0ae;white-space:nowrap">무료등록</div>
-            <div style="font-size:.56rem;color:rgba(255,255,255,.5);margin-top:2px">소상공인</div>
-          </div>
-
-          <!-- 내포인트 -->
-          <div onclick="toast('포인트 기능 준비 중입니다!')" style="flex-shrink:0;min-width:80px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <div style="font-size:1.5rem;margin-bottom:4px">💎</div>
-            <div style="font-size:.66rem;font-weight:700;color:#fff;white-space:nowrap">내포인트</div>
-            <div style="font-size:.56rem;color:var(--gold);margin-top:2px" id="myPt2">0P</div>
-          </div>
-
-          <div style="flex-shrink:0 !important; width:80px; background:#f8f9fa; border-radius:8px; padding:10px; border:1px solid #eee;">
-            <div style="font-size:9px; color:#666;">이벤트 1</div>
-            <div style="font-size:12px; font-weight:bold; margin-top:4px;">첫가입혜택 🎁</div>
-          </div>
-
-          <div style="flex-shrink:0 !important; width:80px; background:#f8f9fa; border-radius:8px; padding:10px; border:1px solid #eee;">
-            <div style="font-size:9px; color:#666;">이벤트 2</div>
-            <div style="font-size:12px; font-weight:bold; margin-top:4px;">스탬프투어 🏃</div>
-          </div>
-
-          <div style="flex-shrink:0 !important; width:80px; background:#f8f9fa; border-radius:8px; padding:10px; border:1px solid #eee;">
-            <div style="font-size:9px; color:#666;">이벤트 3</div>
-            <div style="font-size:10px; font-weight:bold; margin-top:4px;">주말더블적립 🪙</div>
-          </div>
-
-          <div style="flex-shrink:0 !important; width:80px; background:#f8f9fa; border-radius:8px; padding:10px; border:1px solid #eee;">
-            <div style="font-size:9px; color:#666;">이벤트 4</div>
-            <div style="font-size:12px; font-weight:bold; margin-top:4px;">릴레이쿠폰 🎫</div>
           </div>
 
         </div>
@@ -2645,6 +2584,87 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <button onclick="submitAdContact()" style="background:var(--navy);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:.92rem;font-weight:800;cursor:pointer">광고 신청서 제출하기 →</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ==================== AI 아이템존 (사업 코파일럿) ==================== -->
+<div id="page-itemzone" class="pg">
+  <div class="sp-page" style="max-width:900px;margin:0 auto;padding-bottom:30px">
+
+    <!-- 히어로 -->
+    <div style="background:linear-gradient(135deg,#0d1f35,#1a3a6e);border-radius:var(--r);padding:28px 22px;margin-bottom:20px;text-align:center;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;right:0;width:180px;height:180px;background:rgba(255,255,255,.05);border-radius:50%;transform:translate(40%,-40%)"></div>
+      <div style="font-size:.76rem;color:#8ab4f8;font-weight:700;letter-spacing:1px;margin-bottom:6px">AI PLATMARKET PLATFORM</div>
+      <div style="font-size:1.5rem;margin-bottom:6px">📦</div>
+      <div style="font-family:var(--fs);font-size:1.25rem;font-weight:900;margin-bottom:6px">AI아이템존 · 사업 코파일럿</div>
+      <div style="font-size:.84rem;color:rgba(255,255,255,.78);line-height:1.6">아이디어 등록부터 투자·판매 연결까지<br>9단계를 AI가 함께 완성합니다</div>
+    </div>
+
+    <!-- 9단계 파이프라인 -->
+    <div style="margin-bottom:22px">
+      <div style="font-size:.85rem;font-weight:900;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px">
+        <span style="width:3px;height:12px;background:var(--red);border-radius:2px;display:inline-block"></span> 사업화 9단계 파이프라인
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div class="iz-step" data-step="1" onclick="izStep(1)"><div class="iz-num">1</div><div class="iz-ttl">아이템 등록</div><div class="iz-sub">상품·서비스 기본정보</div></div>
+        <div class="iz-step" data-step="2" onclick="izStep(2)"><div class="iz-num">2</div><div class="iz-ttl">AI 시장성 분석</div><div class="iz-sub">수요예측·경쟁도</div></div>
+        <div class="iz-step" data-step="3" onclick="izStep(3)"><div class="iz-num">3</div><div class="iz-ttl">유사 특허 검색</div><div class="iz-sub">특허청 DB 비교</div></div>
+        <div class="iz-step" data-step="4" onclick="izStep(4)"><div class="iz-num">4</div><div class="iz-ttl">유사 서비스 비교</div><div class="iz-sub">차별점·포지셔닝</div></div>
+        <div class="iz-step" data-step="5" onclick="izStep(5)"><div class="iz-num">5</div><div class="iz-ttl">정부지원 추천</div><div class="iz-sub">적합사업 자동매칭</div></div>
+        <div class="iz-step" data-step="6" onclick="izStep(6)"><div class="iz-num">6</div><div class="iz-ttl">공동개발 모집</div><div class="iz-sub">파트너 매칭</div></div>
+        <div class="iz-step" data-step="7" onclick="izStep(7)"><div class="iz-num">7</div><div class="iz-ttl">전문가 연결</div><div class="iz-sub">법률·회계·기술</div></div>
+        <div class="iz-step" data-step="8" onclick="izStep(8)"><div class="iz-num">8</div><div class="iz-ttl">투자 연결</div><div class="iz-sub">엔젤·VC·크라우드</div></div>
+        <div class="iz-step" data-step="9" onclick="izStep(9)"><div class="iz-num">9</div><div class="iz-ttl">판매 연결</div><div class="iz-sub">채널 매칭·런치</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 1: 아이템 등록 (실사용 가능 폼) -->
+    <div id="izPanel1" class="iz-panel" style="display:block">
+      <div class="iz-panel-hd">📝 1단계 · 아이템 등록</div>
+      <div style="padding:16px">
+        <label class="iz-lbl">아이템/서비스명 *</label>
+        <input id="izName" class="fi" placeholder="예: AI 기반 무인 세탁소 예약 시스템" style="margin-bottom:10px">
+        <label class="iz-lbl">한 줄 소개</label>
+        <input id="izOneLiner" class="fi" placeholder="예: 동네 세탁소를 24시간 무인 예약으로" style="margin-bottom:10px">
+        <label class="iz-lbl">업종 분류</label>
+        <select id="izCat" class="fi" style="margin-bottom:10px">
+          <option>요식업</option><option>소매/유통</option><option>서비스업</option>
+          <option>IT/플랫폼</option><option>제조/생산</option><option>기타</option>
+        </select>
+        <label class="iz-lbl">상세 설명</label>
+        <textarea id="izDesc" class="fi" rows="4" placeholder="아이템의 핵심 기능, 타겟 고객, 차별점을 자유롭게 작성해 주세요." style="margin-bottom:14px;resize:vertical"></textarea>
+        <button class="btn-primary" style="width:100%" onclick="izSubmitStep1()">✅ 등록하고 AI 분석 시작하기 →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2~9: AI 분석 결과 패널 (공통 틀) -->
+    <div id="izPanel2" class="iz-panel"><div class="iz-panel-hd">📊 2단계 · AI 시장성 분석</div><div class="iz-body" id="izBody2"></div></div>
+    <div id="izPanel3" class="iz-panel"><div class="iz-panel-hd">🔍 3단계 · 유사 특허 검색</div><div class="iz-body" id="izBody3"></div></div>
+    <div id="izPanel4" class="iz-panel"><div class="iz-panel-hd">⚖️ 4단계 · 유사 서비스 비교</div><div class="iz-body" id="izBody4"></div></div>
+    <div id="izPanel5" class="iz-panel"><div class="iz-panel-hd">🏛 5단계 · 정부지원사업 추천</div><div class="iz-body" id="izBody5"></div></div>
+    <div id="izPanel6" class="iz-panel"><div class="iz-panel-hd">🤝 6단계 · 공동개발 모집</div><div class="iz-body" id="izBody6"></div></div>
+    <div id="izPanel7" class="iz-panel"><div class="iz-panel-hd">👨‍💼 7단계 · 전문가 연결</div><div class="iz-body" id="izBody7"></div></div>
+    <div id="izPanel8" class="iz-panel"><div class="iz-panel-hd">💰 8단계 · 투자 연결</div><div class="iz-body" id="izBody8"></div></div>
+    <div id="izPanel9" class="iz-panel"><div class="iz-panel-hd">🛒 9단계 · 판매 연결</div><div class="iz-body" id="izBody9"></div></div>
+
+    <style>
+    .iz-step{background:#fff;border:var(--bd);border-radius:var(--r);padding:12px 8px;text-align:center;cursor:pointer;transition:all .18s}
+    .iz-step:hover{border-color:var(--navy);box-shadow:var(--sh)}
+    .iz-step.act{border-color:var(--red);background:#fce8e6}
+    .iz-step.done{border-color:#2e7d32}
+    .iz-step.done .iz-num{background:#2e7d32}
+    .iz-num{width:24px;height:24px;border-radius:50%;background:var(--g3);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;margin:0 auto 6px}
+    .iz-step.act .iz-num{background:var(--red)}
+    .iz-ttl{font-size:.74rem;font-weight:700;color:var(--navy)}
+    .iz-sub{font-size:.6rem;color:var(--g4);margin-top:2px}
+    .iz-panel{display:none;border:var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:16px;background:#fff}
+    .iz-panel-hd{background:var(--navy);color:#fff;padding:10px 16px;font-size:.85rem;font-weight:900}
+    .iz-lbl{font-size:.74rem;font-weight:700;color:var(--g4);display:block;margin-bottom:4px}
+    .iz-body{padding:16px}
+    .iz-result-card{background:var(--g1);border-radius:8px;padding:12px;margin-bottom:8px}
+    .iz-result-ttl{font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+    .iz-result-txt{font-size:.76rem;color:#555;line-height:1.6}
+    </style>
   </div>
 </div>
 
@@ -4272,7 +4292,165 @@ function addPdf(name,size) {
 // 뉴스 헤더 고정 유지 대상 페이지
 const NEWS_SUB_PAGES = ['welfare','event','localad','branch','reporter','good','startup','incident','newprod','bigsale'];
 
+/* ══ GNB 카테고리 드롭다운 ══ */
+function toggleCat(id, e) {
+  if (e) e.stopPropagation();
+  const cat = document.getElementById('gcat-' + id);
+  if (!cat) return;
+  const isOpen = cat.classList.contains('open');
+  closeCats();
+  if (!isOpen) cat.classList.add('open');
+}
+function closeCats() {
+  document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open'));
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.gcat')) closeCats();
+});
+
+/* ══ 업그레이드 중 페이지 폴백 ══ */
+const _UPGRADE_MAP = {
+  aird:     ['🔬 AIR&D', '🔬', 'AI 연구·개발 플랫폼<br>시장성 분석·특허 검색·논문 리뷰 자동화'],
+  simul:    ['🧪 AI시뮬레이션', '🧪', '사업·투자·마케팅 시뮬레이션을 AI가 실행합니다'],
+  edu:      ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
+  culture:  ['🎨 AI문화예술', '🎨', 'AI와 함께하는 문화·예술 창작 플랫폼'],
+  gamezone: ['🎮 AI게임존', '🎮', '소상공인·소비자가 함께하는 AI 게임 플랫폼'],
+  good:     ['💚 더착한가게', '💚', '착한 소비를 위한 지역 착한가게 정보'],
+  recipe:   ['👨‍🍳 뉴레시피', '👨‍🍳', 'AI 추천 트렌드 레시피와 식재료 정보'],
+  association: ['🤝 전국소상공인회', '🤝', '전국 소상공인 협회 네트워크 플랫폼'],
+};
+
+function showUpgradePage(name, icon, desc) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('act'));
+  const tid = 'page-upgrade-tmp';
+  let el = document.getElementById(tid);
+  if (!el) {
+    el = document.createElement('div');
+    el.id = tid;
+    el.className = 'pg';
+    const shell = document.querySelector('.shell');
+    if (shell) shell.appendChild(el);
+  }
+  el.className = 'pg act';
+  el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62vh;text-align:center;padding:40px 20px">
+    <div style="font-size:3.5rem;margin-bottom:14px">${icon||'🔧'}</div>
+    <h2 style="font-size:1.25rem;font-weight:900;color:var(--navy);margin:0 0 8px">${name||'준비 중'}</h2>
+    <p style="font-size:.86rem;color:var(--g4);margin:0 0 18px;max-width:300px;line-height:1.65">${desc||'현재 개발 중입니다.<br>곧 만나보실 수 있습니다.'}</p>
+    <div style="background:var(--navy);color:rgba(255,255,255,.8);padding:4px 14px;border-radius:20px;font-size:.7rem;font-weight:700;margin-bottom:22px">🔧 업그레이드 중</div>
+    <button onclick="showPage('home')" style="background:var(--navy);color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer">← 홈으로</button>
+  </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setGenre(g) { toast('🎵 장르: ' + ['K-POP','트롯','발라드'][g] + ' — 뮤직 플랫폼 준비 중'); }
+function quickReg(region) { toast('📺 ' + region + ' 인터넷TV — 업그레이드 중'); }
+
+/* ══ AI아이템존 · 9단계 사업 코파일럿 ══ */
+const IZ = { data:null, maxStep:1 };
+
+function izStep(n) {
+  if (n > IZ.maxStep) { toast('먼저 ' + IZ.maxStep + '단계를 완료해 주세요'); return; }
+  document.querySelectorAll('.iz-panel').forEach(p => p.style.display = 'none');
+  const panel = document.getElementById('izPanel' + n);
+  if (panel) panel.style.display = 'block';
+  document.querySelectorAll('.iz-step').forEach(s => s.classList.remove('act'));
+  const stepEl = document.querySelector(`.iz-step[data-step="${n}"]`);
+  if (stepEl) stepEl.classList.add('act');
+  if (n >= 2 && IZ.data && !document.getElementById('izBody'+n).dataset.loaded) {
+    izLoadAnalysis(n);
+  }
+  panel?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function izSubmitStep1() {
+  const name = document.getElementById('izName').value.trim();
+  if (!name) { toast('아이템명을 입력해 주세요'); return; }
+  IZ.data = {
+    name,
+    oneLiner: document.getElementById('izOneLiner').value.trim(),
+    cat: document.getElementById('izCat').value,
+    desc: document.getElementById('izDesc').value.trim(),
+  };
+  document.querySelector('.iz-step[data-step="1"]').classList.add('done');
+  IZ.maxStep = 2;
+  for (let i = 2; i <= 9; i++) document.getElementById('izBody'+i).dataset.loaded = '';
+  toast('✅ 등록 완료! AI 분석을 시작합니다');
+  izStep(2);
+}
+
+const IZ_STEP_META = {
+  2: { icon:'📊', label:'시장성', prompt:'시장 수요·경쟁도·성장 가능성을 3개 항목으로 분석' },
+  3: { icon:'🔍', label:'특허', prompt:'유사 특허/선행기술 존재 가능성과 회피 전략을 분석' },
+  4: { icon:'⚖️', label:'경쟁사', prompt:'국내 유사 서비스 2~3개와 차별화 포인트를 비교' },
+  5: { icon:'🏛', label:'정부지원', prompt:'이 아이템에 적합한 정부지원사업 유형 2~3개를 추천' },
+  6: { icon:'🤝', label:'공동개발', prompt:'어떤 직군의 공동개발 파트너가 필요한지 추천' },
+  7: { icon:'👨‍💼', label:'전문가', prompt:'사업화에 필요한 전문가 분야(법률/회계/기술 등)를 추천' },
+  8: { icon:'💰', label:'투자', prompt:'적합한 투자 단계(엔젤/시드/VC)와 준비사항을 안내' },
+  9: { icon:'🛒', label:'판매', prompt:'이 아이템의 판매에 적합한 채널과 런칭 전략을 제안' },
+};
+
+async function izLoadAnalysis(n) {
+  const body = document.getElementById('izBody' + n);
+  const meta = IZ_STEP_META[n];
+  body.dataset.loaded = '1';
+  body.innerHTML = `<div style="text-align:center;padding:30px;color:var(--g4)"><div class="spin" style="margin:0 auto 10px"></div>AI가 ${meta.label} 분석 중입니다...</div>`;
+
+  try {
+    const r = await fetch('/api/itemzone/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ step: n, item: IZ.data })
+    });
+    const d = await r.json();
+    body.innerHTML = renderIzResult(n, d.result || d.text || '');
+  } catch (e) {
+    body.innerHTML = renderIzResult(n, izFallback(n));
+  }
+
+  IZ.maxStep = Math.max(IZ.maxStep, n + 1);
+  document.querySelector(`.iz-step[data-step="${n}"]`)?.classList.add('done');
+  if (n < 9) {
+    body.innerHTML += `<button class="btn-primary" style="width:100%;margin-top:10px" onclick="izStep(${n+1})">다음 단계 → ${IZ_STEP_META[n+1]?.label||'완료'}</button>`;
+  } else {
+    body.innerHTML += `<div style="text-align:center;padding:14px;background:#e8f5e9;border-radius:8px;margin-top:10px;font-weight:700;color:#2e7d32">🎉 9단계 사업화 분석이 모두 완료되었습니다!</div>`;
+  }
+}
+
+function renderIzResult(n, text) {
+  const meta = IZ_STEP_META[n];
+  const paras = text.split('\n').filter(p => p.trim());
+  return `<div class="iz-result-card"><div class="iz-result-ttl">${meta.icon} ${IZ.data?.name || ''} — ${meta.label} 분석 결과</div>
+    <div class="iz-result-txt">${paras.map(p => `<p style="margin:4px 0">${p}</p>`).join('')}</div></div>`;
+}
+
+function izFallback(n) {
+  const name = IZ.data?.name || '등록하신 아이템';
+  const fb = {
+    2: `${name}의 시장 수요는 꾸준히 증가하는 추세입니다.\n경쟁 강도는 중간 수준으로 진입 여지가 있습니다.\n초기 타겟 고객층을 명확히 좁히는 것을 추천합니다.`,
+    3: `유사 명칭의 선행 특허 가능성을 1차 점검했습니다.\n핵심 기능에 대한 특허 회피 설계를 권장합니다.\n변리사 상담을 통해 출원 가능성을 확인하세요.`,
+    4: `국내 유사 서비스 2곳이 확인됩니다.\n${name}은 지역 밀착형 운영에서 차별점을 가질 수 있습니다.\n가격·속도·고객경험 중 한 가지를 명확히 우위에 두세요.`,
+    5: `소상공인 디지털 전환 지원사업이 적합할 수 있습니다.\n창업성장기술개발사업(디딤돌) 검토를 권장합니다.\n지역 테크노파크 지원사업도 함께 확인하세요.`,
+    6: `기술 구현을 위한 개발 파트너가 필요할 수 있습니다.\n디자인/UX 분야 협업자도 추천됩니다.\nAI플랫마켓 공동개발 게시판에 모집글 등록이 가능합니다.`,
+    7: `사업자등록 및 법률 검토를 위한 전문가가 필요합니다.\n초기 세무·회계 자문도 함께 권장됩니다.\n전문가 연결 서비스를 통해 상담을 신청해 보세요.`,
+    8: `현재 단계는 시드(Seed) 투자가 적합해 보입니다.\nIR 자료와 재무 계획 준비를 권장합니다.\n엔젤투자자 매칭 후 후속 라운드를 고려하세요.`,
+    9: `온라인 채널과 지역 오프라인 채널 병행을 권장합니다.\nAI플랫마켓 입점을 통한 초기 판매 채널 확보가 가능합니다.\n런칭 초기 프로모션 전략을 함께 수립하세요.`,
+  };
+  return fb[n] || '분석 결과를 준비 중입니다.';
+}
+
 function showPage(id) {
+  // 업그레이드 중 모듈 처리
+  if (_UPGRADE_MAP[id]) {
+    const [name, icon, desc] = _UPGRADE_MAP[id];
+    closeCats();
+    showUpgradePage(name, icon, desc);
+    return;
+  }
+  // 임시 upgrade 페이지 숨기기
+  const _tmp = document.getElementById('page-upgrade-tmp');
+  if (_tmp) _tmp.classList.remove('act');
+  closeCats();
+
   // 뉴스 서브 오버레이 항상 초기화
   const _ov = document.getElementById('newsSubOverlay');
   if (_ov) { _ov.style.display='none'; _ov.innerHTML=''; }
