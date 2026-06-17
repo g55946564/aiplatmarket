@@ -645,6 +645,62 @@ function getJobRecommendations(p, score) {
 }
 app.post('/api/ad-request', async(req,res)=>{if(!requireDB(res))return;try{await addDoc('ad_requests',req.body);res.json({ok:true});}catch(e){res.status(500).json({error:e.message});}});
 
+/* ─────── AI아이템존 · 9단계 사업 코파일럿 AI 분석 ─────── */
+const IZ_STEP_PROMPTS = {
+  2: '아래 사업 아이디어의 시장성을 분석해라. 시장 수요, 경쟁 강도, 성장 가능성 3가지 관점에서 각각 1줄로, 총 3줄로 답하라.',
+  3: '아래 사업 아이디어와 유사한 선행 특허/기술이 있을 가능성과 회피 전략을 2~3줄로 답하라.',
+  4: '아래 사업 아이디어와 유사한 국내 서비스 1~2개를 떠올리고, 차별화 포인트를 2~3줄로 답하라.',
+  5: '아래 사업 아이디어에 적합한 한국 정부지원사업 유형(예: 디딤돌, 예비창업패키지 등)을 2~3줄로 추천하라.',
+  6: '아래 사업 아이디어 실현을 위해 필요한 공동개발 파트너 직군(개발/디자인/마케팅 등)을 2~3줄로 추천하라.',
+  7: '아래 사업 아이디어 사업화에 필요한 전문가 분야(법률/회계/세무/기술 등)를 2~3줄로 추천하라.',
+  8: '아래 사업 아이디어에 적합한 투자 단계(엔젤/시드/시리즈A)와 준비사항을 2~3줄로 안내하라.',
+  9: '아래 사업 아이디어의 판매에 적합한 채널(온라인/오프라인/B2B 등)과 런칭 전략을 2~3줄로 제안하라.',
+};
+
+app.post('/api/itemzone/analyze', async (req, res) => {
+  const { step, item } = req.body;
+  if (!step || !item || !item.name) return res.status(400).json({ error: 'step, item.name 필수' });
+
+  const sys = IZ_STEP_PROMPTS[step] || '사업 아이디어를 분석하라.';
+  const userPrompt = `아이템명: ${item.name}\n한줄소개: ${item.oneLiner||''}\n업종: ${item.cat||''}\n설명: ${item.desc||''}`;
+  const fullPrompt = `${sys}\n\n${userPrompt}\n\n반드시 한국어 평문으로, 마크다운 기호 없이 줄바꿈으로 구분해서 답하라.`;
+
+  // Firestore 로그 (비차단)
+  if (db) {
+    db.collection('itemzone_logs').add({
+      step, item, createdAt: admin.firestore.FieldValue.serverTimestamp()
+    }).catch(()=>{});
+  }
+
+  // 1) GPT 시도
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      const r = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: fullPrompt }], max_tokens: 250, temperature: 0.7 })
+      });
+      const data = await r.json();
+      const text = data.choices?.[0]?.message?.content?.trim();
+      if (text) return res.json({ ok: true, result: text, ai: 'GPT' });
+    } catch (e) { /* fall through */ }
+  }
+  // 2) Gemini 시도
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] })
+      });
+      const data = await r.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      if (text) return res.json({ ok: true, result: text, ai: 'Gemini' });
+    } catch (e) { /* fall through */ }
+  }
+  // 3) Fallback (항상 응답)
+  res.json({ ok: true, ai: 'fallback', result: null });
+});
+
 /* ─────── 관리자 API ─────── */
 app.post('/api/admin/approve', adminAuth, async(req,res)=>{
   if(!requireDB(res))return;
@@ -792,7 +848,101 @@ app.get('/api/sports', async (req, res) => {
 });
 
 /* ─────── 라우트 ─────── */
-app.get('/admin', (req,res)=>res.sendFile(path.join(__dirname,'public','admin.html')));
+/* ═══════════════════════════════════════════
+   모듈 라우팅 시스템 (path + subdomain 동시 지원)
+   GPT 협업 설계: framework/ + public/{group}/{module}/
+═══════════════════════════════════════════ */
+
+// 그룹별 모듈 매핑 (public/{group}/{module}/)
+const MODULE_MAP = {
+  // platform/
+  aird:        { group: 'platform', dir: 'aird' },
+  simul:       { group: 'platform', dir: 'simul' },
+  itemzone:    { group: 'platform', dir: 'itemzone' },
+  edu:         { group: 'platform', dir: 'edu' },
+  culture:     { group: 'platform', dir: 'culture' },
+  game:        { group: 'platform', dir: 'game' },
+  life:        { group: 'platform', dir: 'life' },
+  promotion:   { group: 'platform', dir: 'promotion' },
+  // commerce/
+  market:      { group: 'commerce', dir: 'market' },
+  localfood:   { group: 'commerce', dir: 'localfood' },
+  goodstore:   { group: 'commerce', dir: 'goodstore' },
+  newproduct:  { group: 'commerce', dir: 'newproduct' },
+  recipe:      { group: 'commerce', dir: 'recipe' },
+  promo:       { group: 'commerce', dir: 'promo' },
+  // business/
+  startup:        { group: 'business', dir: 'startup' },
+  regionaleconomy: { group: 'business', dir: 'regionaleconomy' },
+  // media/
+  live:        { group: 'media', dir: 'live' },
+  tv:          { group: 'media', dir: 'tv' },
+  music:       { group: 'media', dir: 'music' },
+  // community/
+  community:   { group: 'community', dir: '' },
+  // lifestyle/
+  sports:      { group: 'lifestyle', dir: 'sports' },
+  travel:      { group: 'lifestyle', dir: 'travel' },
+  news:        { group: 'lifestyle', dir: 'news' },
+};
+
+// 서브도메인 감지 → req.subdomainModule 세팅 (path와 동일하게 처리)
+app.use((req, res, next) => {
+  const host = (req.hostname || '').split('.');
+  // {module}.aiplatmarket.com 형태인지 확인 (host[0]이 MODULE_MAP 키인 경우)
+  if (host.length >= 3 && MODULE_MAP[host[0]]) {
+    req.subdomainModule = host[0];
+  }
+  next();
+});
+
+// 모듈 정적 파일 서빙: /platform/aird/, /commerce/market/ 등
+['platform','commerce','business','media','community','lifestyle'].forEach(group => {
+  app.use('/' + group, express.static(path.join(__dirname, 'public', group)));
+});
+
+// 모듈 단축 경로 (/aird → public/platform/aird/index.html) + module.json 상태 확인
+app.get('/:moduleId', (req, res, next) => {
+  const mod = MODULE_MAP[req.params.moduleId];
+  if (!mod) return next(); // 매핑 안되면 SPA 라우트로 넘김
+
+  const moduleDir  = path.join(__dirname, 'public', mod.group, mod.dir);
+  const moduleHtml = path.join(moduleDir, 'index.html');
+  const moduleJson = path.join(moduleDir, 'module.json');
+
+  if (fs.existsSync(moduleHtml)) {
+    return res.sendFile(moduleHtml);
+  }
+  // 모듈 폴더/파일이 아직 없으면 메인 SPA 의 showPage(업그레이드 페이지)로 폴백
+  next();
+});
+
+// 서브도메인 진입 시에도 동일 처리 (예: aird.aiplatmarket.com/)
+app.get('/', (req, res, next) => {
+  if (req.subdomainModule) {
+    const mod = MODULE_MAP[req.subdomainModule];
+    const moduleHtml = path.join(__dirname, 'public', mod.group, mod.dir, 'index.html');
+    if (fs.existsSync(moduleHtml)) return res.sendFile(moduleHtml);
+  }
+  next();
+});
+
+// module.json 메타 정보 API (Framework Dashboard용)
+app.get('/api/modules', (req, res) => {
+  const result = {};
+  Object.entries(MODULE_MAP).forEach(([id, mod]) => {
+    const jsonPath = path.join(__dirname, 'public', mod.group, mod.dir, 'module.json');
+    if (fs.existsSync(jsonPath)) {
+      try { result[id] = JSON.parse(fs.readFileSync(jsonPath, 'utf8')); }
+      catch (e) { result[id] = { id, status: 'error' }; }
+    } else {
+      result[id] = { id, group: mod.group, status: 'planned', version: '0.0.0' };
+    }
+  });
+  res.json(result);
+});
+
+
 app.get('/register', (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
 app.use((req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
 
