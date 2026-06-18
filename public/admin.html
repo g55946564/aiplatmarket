@@ -287,7 +287,7 @@ td{padding:10px 14px;font-size:.82rem;color:var(--text)}
                 <option>음식점</option><option>카페</option><option>미용</option><option>의류</option>
                 <option>생활서비스</option><option>의료</option><option>교육</option><option>농수산</option><option>숙박</option><option>여가</option>
               </select>
-              <button class="btn-primary" style="font-size:.75rem;padding:5px 12px" onclick="exportCSV()">📥 CSV 내보내기</button>
+              <button class="btn-primary" style="font-size:.75rem;padding:5px 12px" onclick="exportCSV()">📥 다른 이름으로 저장</button>
             </div>
           </div>
           <div style="overflow-x:auto">
@@ -698,7 +698,10 @@ td{padding:10px 14px;font-size:.82rem;color:var(--text)}
         <img id="qrRegister" src="/api/qr?url=https://aiplatmarket.kr/register&size=200" alt="입점신청 QR" style="width:200px;height:200px;border:2px solid var(--g2);border-radius:8px">
       </div>
       <div style="font-size:.76rem;color:var(--g4);text-align:center;margin-bottom:10px">이 QR로 바로 입점 신청 가능</div>
-      <button class="btn-primary" style="width:100%" onclick="downloadQR('qrRegister','입점신청QR')">⬇ QR 다운로드</button>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:4px">
+        <input id="qrRegisterName" type="text" placeholder="파일명 (기본: 입점신청QR)" style="border:1px solid #dde;border-radius:5px;padding:5px 8px;font-size:.75rem;flex:1;font-family:inherit">
+        <button class="btn-primary" style="width:auto;white-space:nowrap" onclick="downloadQR('qrRegister', document.getElementById('qrRegisterName').value||'입점신청QR')">⬇ 다른 이름으로 저장</button>
+      </div>
     </div>
     <div style="background:#fff;border-radius:10px;border:var(--bd);padding:20px">
       <div style="font-weight:700;color:var(--navy);margin-bottom:12px">업체별 QR 생성</div>
@@ -709,7 +712,10 @@ td{padding:10px 14px;font-size:.82rem;color:var(--text)}
         <img id="qrStore" src="" alt="QR" style="width:200px;height:200px;border:2px solid var(--g2);border-radius:8px;display:none">
         <div id="qrStorePlaceholder" style="width:200px;height:200px;background:var(--g1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:.8rem;color:var(--g4)">업체 선택 후 생성</div>
       </div>
-      <button class="btn-primary" style="width:100%" onclick="downloadQR('qrStore','업체QR')">⬇ QR 다운로드</button>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:4px">
+        <input id="qrStoreName" type="text" placeholder="파일명 (기본: 업체QR)" style="border:1px solid #dde;border-radius:5px;padding:5px 8px;font-size:.75rem;flex:1;font-family:inherit">
+        <button class="btn-primary" style="width:auto;white-space:nowrap" onclick="downloadQR('qrStore', document.getElementById('qrStoreName').value||'업체QR')">⬇ 다른 이름으로 저장</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1447,14 +1453,18 @@ async function refreshAll() {
 }
 
 function exportCSV() {
+  const defaultName = 'aiplatmarket_stores_' + new Date().toISOString().slice(0,10);
+  const input = prompt('저장할 파일명을 입력하세요 (확장자 제외):', defaultName);
+  if (input === null) return; // 취소
+  const safeName = (input.trim() || defaultName).replace(/[\\/:*?"<>|]/g, '_');
   const rows = [['업체명','업종','지역','연락처','상태','클릭','조회']];
   allStores.forEach(s=>rows.push([s.name,s.category,s.region,s.phone,s.approved?'승인':'대기',s.clicks||0,s.views||0]));
   const csv = rows.map(r=>r.join(',')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
-  a.download = 'aiplatmarket_stores.csv';
+  a.download = safeName + '.csv';
   a.click();
-  toast('CSV 내보내기 완료','success');
+  toast(`✅ "${safeName}.csv" 저장 완료`,'success');
 }
 
 function fmtDate(s) {

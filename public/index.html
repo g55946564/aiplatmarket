@@ -160,20 +160,23 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gd{width:1px;background:var(--g2);margin:7px 0;align-self:stretch;flex-shrink:0}
 
 /* ── 새 카테고리 GNB ── */
-.gnb-cat-bar{display:flex;align-items:center;background:var(--navy);min-height:38px;position:relative;z-index:250;overflow:visible}
-.gcat{position:relative}
+.gnb-cat-bar{display:flex;align-items:center;background:var(--navy);min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{display:none}
+.gcat{position:relative;flex-shrink:0}
 .gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
 .gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
 .caret{font-size:.6rem;transition:transform .2s;opacity:.7}
 .gcat.open .caret{transform:rotate(180deg)}
-.gcdrop{display:none;position:absolute;top:calc(100% + 1px);left:0;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:0 0 10px 10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;padding:8px}
+.gcdrop{display:none;position:absolute;top:calc(100% + 1px);left:0;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:0 0 10px 10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
 .gcat.open .gcdrop{display:block}
 .gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 .gcdrop-list{display:flex;flex-direction:column;gap:2px}
 .gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
 .gcdi:hover{background:#f0f4ff}
-.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy)}
-.gcdi.platform span{display:block;font-size:.63rem;color:var(--g4);margin-top:1px}
+.gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+.gcdi-txt{display:flex;flex-direction:column;min-width:0}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+.gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
 .gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
 .gcdi-badge.ext{background:#fce8e6;color:var(--red)}
 .gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
@@ -182,7 +185,11 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcbtn-reg:hover{background:rgba(46,204,113,.3)}
 .gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-chat:hover{background:rgba(201,168,76,.3)}
-@media(max-width:700px){.gnb-cat-bar{display:none}}
+@media(max-width:700px){
+  .gcbtn{padding:8px 10px;font-size:.7rem}
+  .gcdi-ico{font-size:.92rem}
+  .gcbtn-reg,.gcbtn-chat{font-size:.66rem;padding:5px 8px}
+}
 
 /* 드롭다운: position:fixed로 overflow 컨테이너 탈출 */
 .ddw{position:relative;display:flex;align-items:stretch;flex-shrink:0}
@@ -875,15 +882,15 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
         <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
         <div class="gcdrop" id="gcdrop-ai">
           <div class="gcdrop-grid">
-            <a class="gcdi platform" onclick="showPage('aird');closeCats()">🔬 <b>AIR&amp;D</b><span>연구·개발 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('simul');closeCats()">🧪 <b>AI시뮬레이션</b><span>독립 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('itemzone');closeCats()">📦 <b>AI아이템존</b><span>사업 코파일럿</span></a>
-            <a class="gcdi platform" onclick="showPage('promo-center');closeCats()">🎯 <b>AI통합홍보센터</b><span>마케팅 자동화</span></a>
-            <a class="gcdi platform" onclick="showPage('lifemap');closeCats()">🔮 <b>AI인생·진로</b><span>독립 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('edu');closeCats()">📚 <b>AI교육존</b><span>독립 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('culture');closeCats()">🎨 <b>AI문화예술</b><span>독립 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('videocenter');closeCats()">🎬 <b>AI영상생성</b><span>독립 Platform</span></a>
-            <a class="gcdi platform" onclick="showPage('gamezone');closeCats()">🎮 <b>AI게임존</b><span>독립 Platform</span></a>
+            <a class="gcdi platform" onclick="showPage('aird');closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('simul');closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('itemzone');closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
+            <a class="gcdi platform" onclick="showPage('lifemap');closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('edu');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('culture');closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('gamezone');closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
           </div>
         </div>
       </div>
@@ -3291,6 +3298,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   </div>
 </div>
 
+<!-- 업그레이드 중 페이지 — 항상 footer 바로 위에 고정 (JS가 innerHTML만 채움) -->
+<div id="page-upgrade-tmp" class="pg"></div>
+
 <footer>
   <div class="ft-outer">
     <div class="ft">
@@ -3377,6 +3387,19 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     <div style="font-size:.73rem;color:#1a56a0;font-weight:700">인천 · 맑음 18°C</div>
     <div style="font-size:.64rem;color:#5580aa;margin-top:2px" id="mobDt"></div>
   </div>
+  <div class="lsb-ttl">🤖 AI 플랫폼</div>
+  <div class="lsb-menu">
+    <div class="lmi" onclick="closeSide();showPage('aird')"><span class="ico">🔬</span>AIR&amp;D</div>
+    <div class="lmi" onclick="closeSide();showPage('simul')"><span class="ico">🧪</span>AI시뮬레이션</div>
+    <div class="lmi" onclick="closeSide();showPage('itemzone')"><span class="ico">📦</span>AI아이템존</div>
+    <div class="lmi" onclick="closeSide();showPage('promo-center')"><span class="ico">🎯</span>AI통합홍보센터</div>
+    <div class="lmi" onclick="closeSide();showPage('lifemap')"><span class="ico">🔮</span>AI인생·진로</div>
+    <div class="lmi" onclick="closeSide();showPage('edu')"><span class="ico">📚</span>AI교육존</div>
+    <div class="lmi" onclick="closeSide();showPage('culture')"><span class="ico">🎨</span>AI문화예술</div>
+    <div class="lmi" onclick="closeSide();showPage('videocenter')"><span class="ico">🎬</span>AI영상생성</div>
+    <div class="lmi" onclick="closeSide();showPage('gamezone')"><span class="ico">🎮</span>AI게임존</div>
+  </div>
+  <div class="lsb-div"></div>
   <div class="lsb-ttl">📌 메뉴</div>
   <div class="lsb-menu">
     <div class="lmi" onclick="closeSide();showPage('home')"><span class="ico">🏠</span>종합홈</div>
@@ -3384,6 +3407,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
     <div class="lmi" onclick="closeSide();showPage('global')"><span class="ico">🌐</span>글로벌경제</div>
     <div class="lmi" onclick="closeSide();showPage('live')"><span class="ico">📺</span>라이브방송</div>
     <div class="lmi" onclick="closeSide();showPage('community')"><span class="ico">💬</span>커뮤니티</div>
+    <div class="lmi" onclick="closeSide();showPage('growthmall')"><span class="ico">📈</span>AI성장+마켓몰</div>
+    <div class="lmi" onclick="closeSide();showPage('localcenter')"><span class="ico">🏛</span>AI지역경제센터</div>
     <div class="lmi" onclick="closeSide();showPage('good')"><span class="ico">💚</span>더착한가게</div>
     <div class="lmi" onclick="closeSide();showPage('welfare')"><span class="ico">🤝</span>지역복지</div>
     <div class="lmi" onclick="closeSide();showPage('localad')"><span class="ico">📋</span>지역생활광고</div>
@@ -4299,7 +4324,18 @@ function toggleCat(id, e) {
   if (!cat) return;
   const isOpen = cat.classList.contains('open');
   closeCats();
-  if (!isOpen) cat.classList.add('open');
+  if (isOpen) return;
+  cat.classList.add('open');
+  // 모바일 등 좁은 화면에서 드롭다운이 화면 밖으로 잘리지 않도록 위치 보정
+  requestAnimationFrame(() => {
+    const drop = cat.querySelector('.gcdrop');
+    if (!drop) return;
+    drop.style.left = '0'; drop.style.right = 'auto';
+    const rect = drop.getBoundingClientRect();
+    if (rect.right > window.innerWidth) { drop.style.left = 'auto'; drop.style.right = '0'; }
+    const rect2 = drop.getBoundingClientRect();
+    if (rect2.left < 0) { drop.style.left = '0'; drop.style.right = 'auto'; }
+  });
 }
 function closeCats() {
   document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open'));
@@ -4322,15 +4358,8 @@ const _UPGRADE_MAP = {
 
 function showUpgradePage(name, icon, desc) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('act'));
-  const tid = 'page-upgrade-tmp';
-  let el = document.getElementById(tid);
-  if (!el) {
-    el = document.createElement('div');
-    el.id = tid;
-    el.className = 'pg';
-    const shell = document.querySelector('.shell');
-    if (shell) shell.appendChild(el);
-  }
+  const el = document.getElementById('page-upgrade-tmp'); // 항상 footer 바로 위에 고정된 정적 요소 재사용
+  if (!el) return;
   el.className = 'pg act';
   el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62vh;text-align:center;padding:40px 20px">
     <div style="font-size:3.5rem;margin-bottom:14px">${icon||'🔧'}</div>
