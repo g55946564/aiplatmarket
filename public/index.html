@@ -45,7 +45,7 @@ body{margin:2px;font-family:var(--fn);background:#eceff4;color:var(--text);font-
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit}
-.shell{width:90%;max-width:1280px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(13,31,53,.1);min-height:100vh;overflow:visible;position:relative}
+.shell{width:90%;max-width:1280px;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(13,31,53,.1);min-height:100vh;overflow:visible;position:relative;display:flex;flex-direction:column}
 
 /* === TOP STRIP === */
 .ts{background:var(--navy);color:#aab8cb;font-size:.78rem;padding:5px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:6px}
@@ -160,14 +160,19 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gd{width:1px;background:var(--g2);margin:7px 0;align-self:stretch;flex-shrink:0}
 
 /* ── 새 카테고리 GNB ── */
+.gnb-cat-bar-wrap{position:relative}
 .gnb-cat-bar{display:flex;align-items:center;background:var(--navy);min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(13,31,53,0),rgba(13,31,53,.92) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+.gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(13,31,53,0),rgba(13,31,53,.92) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
+@media(max-width:700px){.gnb-scroll-hint.show{display:flex}}
 .gnb-cat-bar::-webkit-scrollbar{display:none}
 .gcat{position:relative;flex-shrink:0}
 .gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
 .gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
 .caret{font-size:.6rem;transition:transform .2s;opacity:.7}
 .gcat.open .caret{transform:rotate(180deg)}
-.gcdrop{display:none;position:absolute;top:calc(100% + 1px);left:0;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:0 0 10px 10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
 .gcat.open .gcdrop{display:block}
 .gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 .gcdrop-list{display:flex;flex-direction:column;gap:2px}
@@ -668,7 +673,9 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 /* === FOOTER === */
-footer{background:var(--navy);color:rgba(255,255,255,.65)}
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+.page-content-wrap{flex:1;display:flex;flex-direction:column;min-width:0}
+.page-content-wrap>.pg.act{flex:1;display:flex;flex-direction:column;min-height:0}
  .ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
 .ft-copy{font-size:.7rem}
@@ -875,7 +882,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
     <!-- GNB 하단 줄: 나머지 메뉴 스크롤 -->
     <!-- ★★★ NEW CATEGORY GNB ★★★ -->
-    <div class="gnb-cat-bar" id="gnbCatBar">
+    <div class="gnb-cat-bar-wrap">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
 
       <!-- 1. AI 플랫폼 -->
       <div class="gcat" id="gcat-ai">
@@ -986,6 +994,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
       </div>
 
     </div><!-- /gnb-cat-bar -->
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+    </div><!-- /gnb-cat-bar-wrap -->
   </nav>
 </header>
 
@@ -1003,7 +1014,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
   </div>
 </div>
 
-
+<!-- 모든 .pg 페이지를 감싸는 래퍼 — flex:1로 남는 공간을 채워서 footer가 항상 최하단에 고정되게 함 -->
+<div class="page-content-wrap">
 
 <!-- ==================== HOME PAGE ==================== -->
 <div id="page-home" class="pg act">
@@ -3300,6 +3312,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65)}
 
 <!-- 업그레이드 중 페이지 — 항상 footer 바로 위에 고정 (JS가 innerHTML만 채움) -->
 <div id="page-upgrade-tmp" class="pg"></div>
+</div><!-- /page-content-wrap -->
 
 <footer>
   <div class="ft-outer">
@@ -4318,6 +4331,25 @@ function addPdf(name,size) {
 const NEWS_SUB_PAGES = ['welfare','event','localad','branch','reporter','good','startup','incident','newprod','bigsale'];
 
 /* ══ GNB 카테고리 드롭다운 ══ */
+/* 모바일 GNB 가로 스크롤 — 더 볼 카테고리가 있으면 우측 힌트 표시 */
+function updateGnbScrollHint(bar) {
+  const hint = document.getElementById('gnbScrollHint');
+  const hintL = document.getElementById('gnbScrollHintLeft');
+  if (!hint) return;
+  const canScrollMore = bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4;
+  const canScrollBack = bar.scrollLeft > 4;
+  hint.classList.toggle('show', canScrollMore);
+  if (hintL) hintL.classList.toggle('show', canScrollBack);
+}
+window.addEventListener('load', () => {
+  const bar = document.getElementById('gnbCatBar');
+  if (bar) updateGnbScrollHint(bar);
+});
+window.addEventListener('resize', () => {
+  const bar = document.getElementById('gnbCatBar');
+  if (bar) updateGnbScrollHint(bar);
+});
+
 function toggleCat(id, e) {
   if (e) e.stopPropagation();
   const cat = document.getElementById('gcat-' + id);
@@ -4326,17 +4358,29 @@ function toggleCat(id, e) {
   closeCats();
   if (isOpen) return;
   cat.classList.add('open');
-  // 모바일 등 좁은 화면에서 드롭다운이 화면 밖으로 잘리지 않도록 위치 보정
+
+  const btn  = cat.querySelector('.gcbtn');
+  const drop = cat.querySelector('.gcdrop');
+  if (!btn || !drop) return;
+  const r = btn.getBoundingClientRect();
+  drop.style.top  = (r.bottom + 1) + 'px';
+  drop.style.left = r.left + 'px';
+  drop.style.right = 'auto';
+
+  // 화면 밖으로 잘리지 않도록 보정 (position:fixed 기준)
   requestAnimationFrame(() => {
-    const drop = cat.querySelector('.gcdrop');
-    if (!drop) return;
-    drop.style.left = '0'; drop.style.right = 'auto';
-    const rect = drop.getBoundingClientRect();
-    if (rect.right > window.innerWidth) { drop.style.left = 'auto'; drop.style.right = '0'; }
-    const rect2 = drop.getBoundingClientRect();
-    if (rect2.left < 0) { drop.style.left = '0'; drop.style.right = 'auto'; }
+    const dr = drop.getBoundingClientRect();
+    if (dr.right > window.innerWidth - 8) {
+      drop.style.left = 'auto';
+      drop.style.right = '8px';
+    }
+    if (dr.bottom > window.innerHeight - 8) {
+      drop.style.top = (r.top - dr.height - 1) + 'px'; // 아래 공간 부족하면 위로 펼침
+    }
   });
 }
+window.addEventListener('scroll', () => closeCats(), { passive: true });
+window.addEventListener('resize', () => closeCats());
 function closeCats() {
   document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open'));
 }
@@ -4361,7 +4405,7 @@ function showUpgradePage(name, icon, desc) {
   const el = document.getElementById('page-upgrade-tmp'); // 항상 footer 바로 위에 고정된 정적 요소 재사용
   if (!el) return;
   el.className = 'pg act';
-  el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62vh;text-align:center;padding:40px 20px">
+  el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:40px 20px">
     <div style="font-size:3.5rem;margin-bottom:14px">${icon||'🔧'}</div>
     <h2 style="font-size:1.25rem;font-weight:900;color:var(--navy);margin:0 0 8px">${name||'준비 중'}</h2>
     <p style="font-size:.86rem;color:var(--g4);margin:0 0 18px;max-width:300px;line-height:1.65">${desc||'현재 개발 중입니다.<br>곧 만나보실 수 있습니다.'}</p>
