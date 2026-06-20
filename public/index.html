@@ -1804,7 +1804,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <!-- 글쓰기 박스 (인라인) -->
     <div class="write-wrap" style="margin-bottom:16px">
       <div class="write-hd">
-        <span class="write-ttl">✏️ 글 작성</span>
+        <span class="write-ttl" id="cmWriteTtl">✏️ 글 작성</span>
         <span class="write-meta">로그인 후 누구나 작성 가능 · 최대 2,000자 · 5MB · 스팸 자동차단</span>
       </div>
       <select id="cm-cat-sel" style="border:var(--bd);border-radius:5px;padding:5px 10px;font-size:.78rem;margin-bottom:8px;font-family:inherit;color:var(--navy)">
@@ -1813,6 +1813,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <option value="Q&A">Q&A</option>
         <option value="공구">공동구매</option>
         <option value="후기">후기</option>
+        <option value="상생회">지역상생회</option>
       </select>
       <textarea class="write-inp" id="write-text-community" placeholder="소상공인·소비자 모두 자유롭게 작성하세요. 광고·스팸은 자동 차단됩니다."></textarea>
       <div class="write-foot">
@@ -1822,22 +1823,24 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       </div>
     </div>
 
-    <div class="cm-tabs">
+    <div class="cm-tabs" style="display:flex;align-items:center;gap:0;flex-wrap:wrap">
       <div class="cm-tab act" onclick="cmTab(this,'all')">전체</div>
-      <div class="cm-tab" onclick="cmTab(this,'free')">자유게시판</div>
-      <div class="cm-tab" onclick="cmTab(this,'info')">정보공유</div>
-      <div class="cm-tab" onclick="cmTab(this,'qna')">Q&amp;A</div>
-      <div class="cm-tab" onclick="cmTab(this,'deal')">공동구매</div>
-      <div class="cm-tab" onclick="cmTab(this,'review')">후기</div>
-      <div class="cm-tab" onclick="cmTab(this,'sanglife')">지역상생회</div>
+      <div class="cm-tab" onclick="cmTab(this,'free')" data-cat="자유">자유게시판</div>
+      <div class="cm-tab" onclick="cmTab(this,'info')" data-cat="정보">정보공유</div>
+      <div class="cm-tab" onclick="cmTab(this,'qna')" data-cat="Q&amp;A">Q&amp;A</div>
+      <div class="cm-tab" onclick="cmTab(this,'deal')" data-cat="공구">공동구매</div>
+      <div class="cm-tab" onclick="cmTab(this,'review')" data-cat="후기">후기</div>
+      <div class="cm-tab" onclick="cmTab(this,'sanglife')" data-cat="상생회">지역상생회</div>
+      <div class="cm-tab" onclick="cmTab(this,'meetup')" data-cat="모임">🙋 모임</div>
+      <button onclick="openMeetupModal()" style="margin-left:auto;background:var(--grn);color:#fff;border:none;padding:6px 13px;border-radius:20px;font-size:.74rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">+ 모임 만들기</button>
     </div>
-    <div id="write-list-community" style="display:none"></div>
+    <div id="write-list-community"></div>
     <div id="cmPosts">
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f0fe;color:#1a56a0;margin-right:5px">정보</span>인천 남동구 소상공인 지원금 신청 방법 공유합니다</div><span class="cm-post-meta">04.13 · 조회 1,241</span></div><div class="cm-post-prev">구청 담당자에게 직접 확인한 내용입니다. 신청 기간은 이달 말까지이며...</div><div class="cm-post-ft"><span>👍 38</span><span>💬 12</span><span>by 인천사장님</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fce8e6;color:var(--red);margin-right:5px">Q&A</span>배달앱 수수료 어떻게 줄이고 계신가요?</div><span class="cm-post-meta">04.12 · 조회 892</span></div><div class="cm-post-prev">배달앱 수수료가 너무 부담됩니다. 다른 분들은 어떻게 관리하고 계신지...</div><div class="cm-post-ft"><span>👍 21</span><span>💬 34</span><span>by 치킨사장</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f5e9;color:#2e7d32;margin-right:5px">후기</span>AI플랫마켓 입점 후 한 달 매출 후기 솔직하게 씁니다</div><span class="cm-post-meta">04.11 · 조회 2,103</span></div><div class="cm-post-prev">처음엔 반신반의했는데 입점 후 한달 결과를 공유드립니다. 클릭수가...</div><div class="cm-post-ft"><span>👍 87</span><span>💬 56</span><span>by 미용실원장</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fff3e0;color:#e65100;margin-right:5px">공구</span>매장용 포스기 공동구매 모집합니다 (20대 목표)</div><span class="cm-post-meta">04.10 · 조회 445</span></div><div class="cm-post-prev">현재 8분 참여 중입니다. 개당 15만원 예상, 20대 이상 모이면 진행...</div><div class="cm-post-ft"><span>👍 15</span><span>💬 22</span><span>by 가게주인A</span></div></div>
-      <div class="cm-post"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:var(--g1);color:var(--g4);margin-right:5px">자유</span>오늘 우리 가게 역대 최고 매출 달성! 기쁜 마음에 공유합니다 😊</div><span class="cm-post-meta">04.09 · 조회 678</span></div><div class="cm-post-prev">드디어 일매출 100만원을 넘었습니다! 다들 화이팅하세요...</div><div class="cm-post-ft"><span>👍 142</span><span>💬 48</span><span>by 떡볶이사장</span></div></div>
+      <div class="cm-post" data-cat="정보"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f0fe;color:#1a56a0;margin-right:5px">정보</span>인천 남동구 소상공인 지원금 신청 방법 공유합니다</div><span class="cm-post-meta">04.13 · 조회 1,241</span></div><div class="cm-post-prev">구청 담당자에게 직접 확인한 내용입니다. 신청 기간은 이달 말까지이며...</div><div class="cm-post-ft"><span>👍 38</span><span>💬 12</span><span>by 인천사장님</span></div></div>
+      <div class="cm-post" data-cat="Q&amp;A"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fce8e6;color:var(--red);margin-right:5px">Q&A</span>배달앱 수수료 어떻게 줄이고 계신가요?</div><span class="cm-post-meta">04.12 · 조회 892</span></div><div class="cm-post-prev">배달앱 수수료가 너무 부담됩니다. 다른 분들은 어떻게 관리하고 계신지...</div><div class="cm-post-ft"><span>👍 21</span><span>💬 34</span><span>by 치킨사장</span></div></div>
+      <div class="cm-post" data-cat="후기"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e8f5e9;color:#2e7d32;margin-right:5px">후기</span>AI플랫마켓 입점 후 한 달 매출 후기 솔직하게 씁니다</div><span class="cm-post-meta">04.11 · 조회 2,103</span></div><div class="cm-post-prev">처음엔 반신반의했는데 입점 후 한달 결과를 공유드립니다. 클릭수가...</div><div class="cm-post-ft"><span>👍 87</span><span>💬 56</span><span>by 미용실원장</span></div></div>
+      <div class="cm-post" data-cat="공구"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#fff3e0;color:#e65100;margin-right:5px">공구</span>매장용 포스기 공동구매 모집합니다 (20대 목표)</div><span class="cm-post-meta">04.10 · 조회 445</span></div><div class="cm-post-prev">현재 8분 참여 중입니다. 개당 15만원 예상, 20대 이상 모이면 진행...</div><div class="cm-post-ft"><span>👍 15</span><span>💬 22</span><span>by 가게주인A</span></div></div>
+      <div class="cm-post" data-cat="자유"><div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:var(--g1);color:var(--g4);margin-right:5px">자유</span>오늘 우리 가게 역대 최고 매출 달성! 기쁜 마음에 공유합니다 😊</div><span class="cm-post-meta">04.09 · 조회 678</span></div><div class="cm-post-prev">드디어 일매출 100만원을 넘었습니다! 다들 화이팅하세요...</div><div class="cm-post-ft"><span>👍 142</span><span>💬 48</span><span>by 떡볶이사장</span></div></div>
     </div>
   </div>
 </div>
@@ -4300,10 +4303,114 @@ function openNotice(i) {
 }
 
 /* ── 커뮤니티 탭 ── */
-function cmTab(el,type) {
-  document.querySelectorAll('.cm-tab').forEach(t=>t.classList.remove('act'));
+function cmTab(el, type) {
+  document.querySelectorAll('.cm-tab').forEach(t => t.classList.remove('act'));
   el.classList.add('act');
-  toast(`${el.textContent} 게시판`);
+  const cat = el.dataset.cat || null; // 전체 탭은 data-cat 없음
+
+  // 1) 게시글 실제 필터링
+  document.querySelectorAll('#cmPosts .cm-post, #write-list-community .post-card').forEach(post => {
+    if (!cat) { post.style.display = ''; return; }
+    const postCat = post.dataset.cat || post.querySelector('.cm-badge')?.textContent?.trim();
+    post.style.display = (postCat === cat) ? '' : 'none';
+  });
+
+  // 2) 글쓰기 박스를 선택한 탭에 맞게 동기화
+  const sel = document.getElementById('cm-cat-sel');
+  const writeTtl = document.getElementById('cmWriteTtl');
+  if (cat && sel) {
+    const matched = Array.from(sel.options).find(o => o.value === cat);
+    if (matched) sel.value = cat;
+    if (writeTtl) writeTtl.textContent = `✏️ ${el.textContent.trim()}에 글쓰기`;
+  } else if (writeTtl) {
+    writeTtl.textContent = '✏️ 글 작성';
+  }
+
+  if (type !== 'meetup') toast(`${el.textContent.trim()} 게시판`);
+  if (type === 'meetup') openMeetupModal();
+}
+
+/* ══ 모임 만들기 ══ */
+function openMeetupModal() {
+  const user = JSON.parse(localStorage.getItem('kakao_user') || localStorage.getItem('apm_user') || 'null');
+  const isAdmin = localStorage.getItem('apm_admin_logged') === 'true';
+  if (!user && !isAdmin) { openLoginModal(); toast('로그인 후 모임을 만들 수 있습니다.'); return; }
+
+  let modal = document.getElementById('meetupModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'meetupModal';
+    modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(13,31,53,.55);z-index:5000;align-items:center;justify-content:center;padding:20px';
+    modal.innerHTML = `
+      <div style="background:#fff;border-radius:var(--r);max-width:420px;width:100%;max-height:88vh;overflow-y:auto;padding:0">
+        <div style="background:var(--grn);color:#fff;padding:14px 18px;border-radius:var(--r) var(--r) 0 0;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:900;font-size:.95rem">🙋 모임 만들기</span>
+          <span style="cursor:pointer;font-size:1.1rem" onclick="closeMeetupModal()">✕</span>
+        </div>
+        <div style="padding:18px">
+          <label class="fl">모임 이름 *</label>
+          <input id="mtName" class="fi" placeholder="예: 인천 남동구 사장님 정기모임" style="margin-bottom:10px">
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <div style="flex:1"><label class="fl">날짜</label><input id="mtDate" type="date" class="fi"></div>
+            <div style="flex:1"><label class="fl">시간</label><input id="mtTime" type="time" class="fi"></div>
+          </div>
+          <label class="fl">장소</label>
+          <input id="mtPlace" class="fi" placeholder="예: 인천 남동구청 인근 카페" style="margin-bottom:10px">
+          <label class="fl">모집 인원</label>
+          <input id="mtCapacity" class="fi" type="number" min="2" placeholder="예: 10" style="margin-bottom:10px">
+          <label class="fl">모임 소개</label>
+          <textarea id="mtDesc" class="write-inp" style="min-height:80px" placeholder="어떤 모임인지, 누구에게 추천하는지 적어주세요."></textarea>
+          <button class="write-submit" style="width:100%;margin-top:12px;background:var(--grn)" onclick="submitMeetup()">모임 만들기</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+  }
+  modal.style.display = 'flex';
+}
+function closeMeetupModal() {
+  const modal = document.getElementById('meetupModal');
+  if (modal) modal.style.display = 'none';
+}
+async function submitMeetup() {
+  const name = document.getElementById('mtName').value.trim();
+  if (!name) { toast('모임 이름을 입력해 주세요'); return; }
+  const date = document.getElementById('mtDate').value;
+  const time = document.getElementById('mtTime').value;
+  const place = document.getElementById('mtPlace').value.trim();
+  const cap   = document.getElementById('mtCapacity').value;
+  const desc  = document.getElementById('mtDesc').value.trim();
+
+  const spamErr = checkSpam(desc || name);
+  if (spamErr) { toast(spamErr); return; }
+
+  const user = JSON.parse(localStorage.getItem('kakao_user') || localStorage.getItem('apm_user') || 'null');
+  const isAdmin = localStorage.getItem('apm_admin_logged') === 'true';
+  const userName = user?.name || (isAdmin ? '관리자' : '익명');
+
+  const listEl = document.getElementById('cmPosts');
+  if (listEl) {
+    const card = document.createElement('div');
+    card.className = 'cm-post';
+    card.dataset.cat = '모임';
+    const metaLine = [date, time, place].filter(Boolean).join(' · ');
+    card.innerHTML = `<div class="cm-post-hd"><div class="cm-post-ttl"><span class="cm-badge" style="background:#e1f5e9;color:var(--grn);margin-right:5px">모임</span>${htmlEscape(name)}</div><span class="cm-post-meta">방금</span></div><div class="cm-post-prev">${metaLine ? '📍 '+htmlEscape(metaLine)+(cap?' · 모집 '+cap+'명':'')+'<br>' : ''}${htmlEscape(desc)}</div><div class="cm-post-ft"><span>👍 0</span><span>💬 0</span><span>by ${userName}</span></div>`;
+    listEl.insertBefore(card, listEl.firstChild);
+  }
+
+  try {
+    await fetch('/api/post', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ menuId:'community', type:'meetup', name, date, time, place, capacity:cap, desc, author:userName, createdAt:new Date().toISOString() })
+    });
+  } catch(e) {}
+
+  closeMeetupModal();
+  document.getElementById('mtName').value = '';
+  document.getElementById('mtDate').value = '';
+  document.getElementById('mtTime').value = '';
+  document.getElementById('mtPlace').value = '';
+  document.getElementById('mtCapacity').value = '';
+  document.getElementById('mtDesc').value = '';
+  toast('✅ 모임이 등록되었습니다!');
 }
 
 /* ── PDF ── */
