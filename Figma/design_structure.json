@@ -1,0 +1,120 @@
+{
+  "document": {
+    "name": "AI플랫마켓 랜딩페이지",
+    "children": [
+      {
+        "id": "0:1",
+        "name": "Header",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "0:2",
+            "name": "Logo",
+            "type": "TEXT",
+            "content": "AI플랫마켓"
+          },
+          {
+            "id": "0:3",
+            "name": "Navigation",
+            "type": "FRAME",
+            "children": [
+              { "id": "0:4", "name": "Home", "type": "TEXT", "content": "Home" },
+              { "id": "0:5", "name": "Features", "type": "TEXT", "content": "Features" },
+              { "id": "0:6", "name": "Contact", "type": "TEXT", "content": "Contact" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0:7",
+        "name": "Hero Section",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "0:8",
+            "name": "Headline",
+            "type": "TEXT",
+            "content": "AI가 만드는 소상공인 상생 플랫폼"
+          },
+          {
+            "id": "0:9",
+            "name": "Subheadline",
+            "type": "TEXT",
+            "content": "소상공인과 소비자가 함께 성장하는 혁신 생태계"
+          },
+          {
+            "id": "0:10",
+            "name": "CTA Button",
+            "type": "RECTANGLE",
+            "content": "사전 참여 신청"
+          }
+        ]
+      },
+      {
+        "id": "0:11",
+        "name": "Features Section",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "0:12",
+            "name": "Feature 1",
+            "type": "FRAME",
+            "children": [
+              { "id": "0:13", "name": "Icon", "type": "VECTOR" },
+              { "id": "0:14", "name": "Title", "type": "TEXT", "content": "AI 챗도우미" },
+              { "id": "0:15", "name": "Description", "type": "TEXT", "content": "업종별 자동 홍보와 운영 지원" }
+            ]
+          },
+          {
+            "id": "0:16",
+            "name": "Feature 2",
+            "type": "FRAME",
+            "children": [
+              { "id": "0:17", "name": "Icon", "type": "VECTOR" },
+              { "id": "0:18", "name": "Title", "type": "TEXT", "content": "자동 홍보 시스템" },
+              { "id": "0:19", "name": "Description", "type": "TEXT", "content": "SNS/영상 자동 콘텐츠 생성" }
+            ]
+          },
+          {
+            "id": "0:20",
+            "name": "Feature 3",
+            "type": "FRAME",
+            "children": [
+              { "id": "0:21", "name": "Icon", "type": "VECTOR" },
+              { "id": "0:22", "name": "Title", "type": "TEXT", "content": "수익 공유 구조" },
+              { "id": "0:23", "name": "Description", "type": "TEXT", "content": "플랫폼 순수익 50% 사용자 배분" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0:24",
+        "name": "CTA Section",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "0:25",
+            "name": "CTA Text",
+            "type": "TEXT",
+            "content": "지금 사전 참여하여 혜택을 누리세요!"
+          },
+          {
+            "id": "0:26",
+            "name": "CTA Button",
+            "type": "RECTANGLE",
+            "content": "사전 참여 신청"
+          }
+        ]
+      },
+      {
+        "id": "0:27",
+        "name": "Footer",
+        "type": "FRAME",
+        "children": [
+          { "id": "0:28", "name": "Contact Info", "type": "TEXT", "content": "문의: contact@aiplatmarket.kr" },
+          { "id": "0:29", "name": "Social Links", "type": "FRAME", "children": [] }
+        ]
+      }
+    ]
+  }
+}

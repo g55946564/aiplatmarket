@@ -1,0 +1,19 @@
+{
+  "framework_version": "1.0.0",
+  "released": "2026-06-18",
+  "compatible_modules": ">=0.0.1",
+  "provides": [
+    "common_header",
+    "common_footer",
+    "common_css_variables",
+    "common_auth_session",
+    "module_status_api"
+  ],
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-18",
+      "notes": "최초 Framework 분리. platform/commerce/business/media/community/lifestyle 6개 그룹 구조 확정."
+    }
+  ]
+}
