@@ -1,0 +1,215 @@
+
+<h2 class="sr-only">AI플랫마켓 전체 아키텍처 구조 — 폴더, 라우팅, 모듈 관계도</h2>
+<style>
+*{box-sizing:border-box}
+.aw{font-family:var(--font-sans);padding:4px 0}
+.row{display:flex;gap:10px;margin-bottom:10px}
+.card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;flex:1;min-width:0}
+.card.accent{border-left:3px solid #185FA5}
+.card.green{border-left:3px solid #0F6E56}
+.card.amber{border-left:3px solid #BA7517}
+.card.purple{border-left:3px solid #534AB7}
+.card.coral{border-left:3px solid #993556}
+.lbl{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.07em;margin-bottom:6px;text-transform:uppercase}
+.ttl{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.sub{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;font-weight:500;margin:2px 2px 0 0}
+.tag.b{background:#E6F1FB;color:#0C447C}
+.tag.g{background:#E1F5EE;color:#085041}
+.tag.a{background:#FAEEDA;color:#633806}
+.tag.p{background:#EEEDFE;color:#3C3489}
+.tag.r{background:#FBEAF0;color:#72243E}
+.tag.gr{background:#F1EFE8;color:#444441}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:10px 0}
+.tree{font-size:12px;color:var(--color-text-secondary);line-height:1.9;font-family:var(--font-mono)}
+.tree b{color:var(--color-text-primary);font-weight:500}
+.url-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:12px}
+.url-path{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:5px;padding:2px 8px;font-family:var(--font-mono);color:var(--color-text-primary);font-size:11px}
+.arrow{color:var(--color-text-tertiary);font-size:11px}
+.url-dest{font-size:11px;color:var(--color-text-secondary)}
+.rec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 10px;margin-bottom:6px}
+.rec-q{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.rec-a{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+</style>
+
+<div class="aw">
+
+  <!-- 헤더 -->
+  <div style="text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--color-border-tertiary)">
+    <div style="font-size:11px;color:var(--color-text-tertiary);letter-spacing:.1em;margin-bottom:3px">AIPLATMARKET · 아키텍처 설계</div>
+    <div style="font-size:18px;font-weight:500;color:var(--color-text-primary)">플랫폼 구조 & 개발 원칙</div>
+  </div>
+
+  <!-- Row 1: GPT 질문 → 클로드 검토 -->
+  <div style="margin-bottom:10px">
+    <div class="lbl">① GPT 질문 → 클로드 검토 의견</div>
+
+    <div class="rec">
+      <div class="rec-q">중간 그룹 폴더(platform/, commerce/…)를 지금 만들어야 하나요?</div>
+      <div class="rec-a">✅ <b>지금 만드세요.</b> 라우트와 링크가 프로덕션에 깔리면 나중에 리팩토링 비용이 큽니다. 폴더는 만들되 파일은 필요할 때 채우면 됩니다. "10개 이하면 flat" 규칙은 SPA 내부 컴포넌트에 적용하고, URL 경로는 처음부터 계층형이 맞습니다.</div>
+    </div>
+    <div class="rec">
+      <div class="rec-q">Framework 역할을 어디까지 둘 것인가?</div>
+      <div class="rec-a">✅ <b>GNB·Footer·Theme·Router·Auth·AI Core·공통 UI</b> 모두 framework/ 에 넣되, 각 모듈이 직접 읽는 것이 아닌 <code>index.js</code>가 정적 파일로 서빙하는 구조로 설계하세요. 모듈은 CDN처럼 소비합니다.</div>
+    </div>
+    <div class="rec">
+      <div class="rec-q">독립 모듈의 기준 (AIR&D, 시뮬레이션, 아이템존 등)</div>
+      <div class="rec-a">✅ 각 모듈은 <code>module.json</code> (id, version, status, routes) + <code>index.html</code> 로 자기완결 구조. Framework의 공통 JS/CSS를 <code>/framework/assets/</code> 경로로 include. 모듈 내부에는 framework 코드 없음.</div>
+    </div>
+    <div class="rec">
+      <div class="rec-q">URL 전략: path 방식 vs 서브도메인, 코드 수정 없이 둘 다 지원?</div>
+      <div class="rec-a">✅ <code>index.js</code>에서 <code>req.hostname</code>으로 서브도메인 감지 → 같은 파일 서빙. 내부 링크는 전부 <b>절대 경로</b> (<code>/platform/aird/</code>). BASE_URL 환경변수로 서브도메인 전환 시 prefix만 바꾸면 됩니다.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Row 2: 폴더 구조 -->
+  <div class="row" style="margin-bottom:10px">
+    <div class="card accent" style="flex:1.2">
+      <div class="lbl">② 확정 폴더 구조</div>
+      <div class="tree">
+<b>AIplatMarket/</b>
+├── index.js  <span style="color:#BA7517">← Express 서버</span>
+├── package.json
+├── .env
+│
+├── <b>framework/</b>  <span style="color:#185FA5">← 공통 엔진</span>
+│   ├── assets/
+│   │   ├── css/   <span style="color:#0F6E56">variables, components</span>
+│   │   ├── js/    <span style="color:#0F6E56">core, router, auth, utils</span>
+│   │   ├── icons/
+│   │   └── language/ <span style="color:#0F6E56">ko.json, en.json</span>
+│   ├── components/ <span style="color:#0F6E56">gnb, footer, sidebar</span>
+│   ├── layout/     <span style="color:#0F6E56">base.html 템플릿</span>
+│   ├── core/       <span style="color:#0F6E56">ai-engine.js</span>
+│   └── version.json
+│
+└── <b>public/</b>
+    ├── index.html  <span style="color:#BA7517">← 메인 (현재 작업중)</span>
+    ├── admin.html
+    ├── <b>platform/</b>
+    │   ├── aird/
+    │   ├── simul/
+    │   ├── itemzone/
+    │   ├── edu/ · culture/ · game/
+    │   ├── lifemap/ · promotion/
+    │   └── [각 폴더: index.html + module.json]
+    ├── <b>commerce/</b>
+    │   ├── market/ · localfood/
+    │   ├── goodstore/ · newproduct/
+    │   ├── recipe/ · promo/
+    ├── <b>business/</b>
+    │   ├── startup/
+    │   └── regionaleconomy/
+    ├── <b>media/</b>   live/ · tv/ · music/
+    ├── <b>community/</b>
+    └── <b>lifestyle/</b> sports/ · travel/ · news/
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;flex:0.8">
+      <div class="card green">
+        <div class="lbl">③ URL 라우팅 전략</div>
+        <div style="margin-bottom:6px">
+          <div class="url-row"><span class="tag g">path</span><span class="url-path">/aird</span><span class="arrow">→</span><span class="url-dest">platform/aird/index.html</span></div>
+          <div class="url-row"><span class="tag g">path</span><span class="url-path">/platform/aird/</span><span class="arrow">→</span><span class="url-dest">같은 파일</span></div>
+          <div class="url-row"><span class="tag b">sub</span><span class="url-path">aird.aiplatmarket.com</span><span class="arrow">→</span><span class="url-dest">req.hostname 분기</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-tertiary)">코드 변경 없이 Nginx/Render 설정만으로 서브도메인 전환</div>
+      </div>
+
+      <div class="card purple">
+        <div class="lbl">④ 모듈 인터페이스 표준</div>
+        <div class="tree" style="font-size:11px">
+module.json
+{
+  "id": "aird",
+  "version": "0.1.0",
+  "status": "dev",
+  "title": "AIR&D",
+  "routes": ["/aird", "/platform/aird/"],
+  "ai_features": ["analysis", "recommend"],
+  "framework": "1.0.0"
+}
+        </div>
+      </div>
+
+      <div class="card amber">
+        <div class="lbl">⑤ 개발 원칙 (클로드 제안)</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+          <div><span class="tag a">1</span> Framework First — 모듈이 아닌 엔진 먼저</div>
+          <div><span class="tag a">2</span> 폴더 구조는 URL과 1:1 매핑</div>
+          <div><span class="tag a">3</span> module.json 이 각 모듈의 계약서</div>
+          <div><span class="tag a">4</span> 미완성 모듈 → "업그레이드 중" 페이지</div>
+          <div><span class="tag a">5</span> index.js 는 라우터 역할만, 로직은 framework/</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GNB 구조 -->
+  <div style="margin-bottom:6px">
+    <div class="lbl">⑥ 메인 GNB 카테고리 구조 (드롭다운)</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <div style="flex:1;min-width:120px">
+        <div class="tag b" style="display:block;text-align:center;margin-bottom:5px;padding:5px">🤖 AI 플랫폼</div>
+        <div class="tree" style="font-size:11px">
+AIR&amp;D · 시뮬레이션
+아이템존 · 홍보센터
+인생·진로 · 교육존
+문화예술 · 영상생성
+게임존
+        </div>
+      </div>
+      <div style="flex:1;min-width:100px">
+        <div class="tag g" style="display:block;text-align:center;margin-bottom:5px;padding:5px">🛍 Commerce</div>
+        <div class="tree" style="font-size:11px">
+성장+마켓몰
+지역특산품관
+더착한가게
+신상품 · 뉴레시피
+판촉물↗외부
+        </div>
+      </div>
+      <div style="flex:1;min-width:100px">
+        <div class="tag a" style="display:block;text-align:center;margin-bottom:5px;padding:5px">💼 Business</div>
+        <div class="tree" style="font-size:11px">
+사업창업
+AI지역경제센터
+전국소상공인회
+상생회 만들기
+        </div>
+      </div>
+      <div style="flex:1;min-width:100px">
+        <div class="tag p" style="display:block;text-align:center;margin-bottom:5px;padding:5px">💬 Community</div>
+        <div class="tree" style="font-size:11px">
+커뮤니티
+자유게시판
+정보공유
+공동구매
+        </div>
+      </div>
+      <div style="flex:1;min-width:100px">
+        <div class="tag r" style="display:block;text-align:center;margin-bottom:5px;padding:5px">📺 Media</div>
+        <div class="tree" style="font-size:11px">
+LIVE 홈쇼핑
+인터넷TV
+뮤직
+        </div>
+      </div>
+      <div style="flex:1;min-width:100px">
+        <div class="tag gr" style="display:block;text-align:center;margin-bottom:5px;padding:5px">🌿 Lifestyle</div>
+        <div class="tree" style="font-size:11px">
+스포츠&amp;건강
+여행
+사건사고
+지역뉴스
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
