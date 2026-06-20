@@ -1,0 +1,18 @@
+{
+  "id": "news",
+  "group": "lifestyle",
+  "title": "지역뉴스",
+  "icon": "📰",
+  "description": "지역경제 뉴스",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/news",
+    "/lifestyle/news/"
+  ],
+  "subdomain": "news.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

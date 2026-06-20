@@ -1,0 +1,18 @@
+{
+  "id": "music",
+  "group": "media",
+  "title": "뮤직",
+  "icon": "🎵",
+  "description": "음악 방송 플랫폼",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/music",
+    "/media/music/"
+  ],
+  "subdomain": "music.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

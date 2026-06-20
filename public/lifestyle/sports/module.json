@@ -1,0 +1,18 @@
+{
+  "id": "sports",
+  "group": "lifestyle",
+  "title": "스포츠&건강",
+  "icon": "⚽",
+  "description": "스포츠·건강 정보",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/sports",
+    "/lifestyle/sports/"
+  ],
+  "subdomain": "sports.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

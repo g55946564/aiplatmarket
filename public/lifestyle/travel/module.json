@@ -1,0 +1,18 @@
+{
+  "id": "travel",
+  "group": "lifestyle",
+  "title": "여행",
+  "icon": "✈️",
+  "description": "여행 정보",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/travel",
+    "/lifestyle/travel/"
+  ],
+  "subdomain": "travel.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "tv",
+  "group": "media",
+  "title": "인터넷TV",
+  "icon": "📡",
+  "description": "지역 경제TV 채널",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/tv",
+    "/media/tv/"
+  ],
+  "subdomain": "tv.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

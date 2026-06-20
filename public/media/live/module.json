@@ -1,0 +1,18 @@
+{
+  "id": "live",
+  "group": "media",
+  "title": "LIVE 홈쇼핑",
+  "icon": "📺",
+  "description": "실시간 라이브 방송",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/live",
+    "/media/live/"
+  ],
+  "subdomain": "live.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

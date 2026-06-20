@@ -1,0 +1,18 @@
+{
+  "id": "community",
+  "group": "community",
+  "title": "커뮤니티",
+  "icon": "💬",
+  "description": "소상공인 커뮤니티",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/community",
+    "/community/"
+  ],
+  "subdomain": "community.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
