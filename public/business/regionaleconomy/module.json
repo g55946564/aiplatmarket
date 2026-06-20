@@ -1,0 +1,18 @@
+{
+  "id": "regionaleconomy",
+  "group": "business",
+  "title": "AI지역경제센터",
+  "icon": "🏛",
+  "description": "지역경제 AI 분석",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/regionaleconomy",
+    "/business/regionaleconomy/"
+  ],
+  "subdomain": "regionaleconomy.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

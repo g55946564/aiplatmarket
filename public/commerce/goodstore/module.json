@@ -1,0 +1,18 @@
+{
+  "id": "goodstore",
+  "group": "commerce",
+  "title": "더착한가게",
+  "icon": "💚",
+  "description": "착한 소비 가게 정보",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/goodstore",
+    "/commerce/goodstore/"
+  ],
+  "subdomain": "goodstore.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

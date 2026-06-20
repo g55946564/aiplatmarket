@@ -1,0 +1,18 @@
+{
+  "id": "localfood",
+  "group": "commerce",
+  "title": "지역특산품관",
+  "icon": "🌾",
+  "description": "지역 특산품 직거래",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/localfood",
+    "/commerce/localfood/"
+  ],
+  "subdomain": "localfood.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

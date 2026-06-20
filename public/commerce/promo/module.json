@@ -1,0 +1,18 @@
+{
+  "id": "promo",
+  "group": "commerce",
+  "title": "판촉물",
+  "icon": "🎁",
+  "description": "외부 연동 (판촉물 쇼핑몰)",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/promo",
+    "/commerce/promo/"
+  ],
+  "subdomain": "promo.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

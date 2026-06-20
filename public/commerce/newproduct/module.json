@@ -1,0 +1,18 @@
+{
+  "id": "newproduct",
+  "group": "commerce",
+  "title": "신상품",
+  "icon": "🆕",
+  "description": "신상품 소개",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/newproduct",
+    "/commerce/newproduct/"
+  ],
+  "subdomain": "newproduct.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

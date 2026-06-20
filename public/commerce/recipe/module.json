@@ -1,0 +1,18 @@
+{
+  "id": "recipe",
+  "group": "commerce",
+  "title": "뉴레시피",
+  "icon": "👨‍🍳",
+  "description": "AI 추천 레시피",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/recipe",
+    "/commerce/recipe/"
+  ],
+  "subdomain": "recipe.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
