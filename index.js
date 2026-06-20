@@ -31,6 +31,10 @@ const path     = require('path');
 const https    = require('https');
 const http     = require('http');
 
+/* ChatDoumi AI Core — GPT/Claude/Gemini는 모두 이 Core 아래 Adapter로만 연결됩니다.
+   이 파일(index.js)의 다른 어떤 코드도 OpenAI/Gemini/Anthropic API를 직접 호출하지 않습니다. */
+const AICore = require('./ai-core');
+
 const fs = require('fs');
 
 function loadEnvFile(filePath = path.join(__dirname, '.env')) {
@@ -97,6 +101,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/framework', express.static(path.join(__dirname, 'framework')));
 // paper 신문 폴더 (public 안 루트에 위치)
 app.use('/paper', express.static(path.join(__dirname, 'public', 'paper')));
 app.get('/paper', (req,res) => res.sendFile(path.join(__dirname, 'public', 'paper', 'index.html')));
@@ -497,8 +502,8 @@ app.post('/api/branch',     async(req,res)=>{if(!requireDB(res))return;try{await
 app.post('/api/reporter',   async(req,res)=>{if(!requireDB(res))return;try{await addDoc('reporters',req.body);res.json({ok:true});}catch(e){res.status(500).json({error:e.message});}});
 
 /* ═══════════════════════════════════════════
-   🔮 인생?진로 멀티 AI 융합 엔진
-   학문별 가중치 + GPT/Gemini/Rule 자동 라우팅
+   🔮 AI 인생·진로 (LifeMap) — 19개 학문 분야
+   ChatDoumi AI Core 가 GPT/Claude/Gemini/Rule을 자동 선택
    Firestore 저장 → ChatDoumi 통합 결과 제공
 ═══════════════════════════════════════════ */
 const LAI_CONFIG = {
@@ -540,41 +545,38 @@ function calcFusionScore(results) {
   return Math.max(0, Math.round(total/totalW - balancePenalty));
 }
 
-// AI 라우팅: GPT/Gemini 없으면 Rule 기반 fallback
+// ChatDoumi AI Core 호출: GPT/Claude/Gemini는 더 이상 직접 호출하지 않고
+// engineMap.js에 정의된 순서대로 AICore가 자동 선택·폴백 처리한다.
 async function routeAI(fieldId, profile) {
   const cfg = LAI_CONFIG[fieldId];
   if (!cfg) return { score:70, summary:'분석 중', ai:'fallback' };
   const prompt = `${cfg.prompt}\n\n분석 대상:\n이름: ${profile.name}\n생년월일: ${profile.birth}\n성별: ${profile.gender}\n혈액형: ${profile.blood||'미입력'}\n출생지: ${profile.city||'미입력'}\n직업관심: ${profile.job||'미입력'}\n고민: ${profile.concern||'미입력'}\n\nJSON 형식으로만 응답: {"score":0-100,"summary":"한줄요약","advice":"조언"}`;
-  // GPT 호출 (환경변수 없으면 Rule fallback)
-  if (cfg.ai === 'gpt' && process.env.OPENAI_API_KEY) {
-    try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method:'POST', headers:{'Authorization':'Bearer '+process.env.OPENAI_API_KEY,'Content-Type':'application/json'},
-        body: JSON.stringify({ model:'gpt-4o-mini', messages:[{role:'user',content:prompt}], max_tokens:300, temperature:0.7 })
-      });
-      const data = await res.json();
-      const text = data.choices?.[0]?.message?.content || '{}';
-      const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
-      return { ...parsed, ai:'GPT' };
-    } catch(e) { /* fallback */ }
+
+  // 모든 엔진이 실패했을 때 AI Core의 RuleAdapter가 사용할 폴백 텍스트
+  const fallbackFn = async () => {
+    const score = 65 + Math.floor(Math.random()*30);
+    const summaries = { saju:'생년월일 기반 분석 완료', astrology:'별자리 기반 분석 완료', rule:'전통 학문 기반 분석 완료' };
+    return JSON.stringify({ score, summary: summaries[fieldId] || '규칙 기반 분석 완료', advice:'ChatDoumi AI Core 상세 분석을 추천드립니다.' });
+  };
+
+  // 기존 cfg.ai('gpt'|'gemini'|'rule') 힌트를 preferEngine으로 그대로 존중하되,
+  // 실패 시에는 engineMap.js의 lifeai.{fieldId} 체인을 따라 자동 폴백한다.
+  const preferEngine = cfg.ai === 'gpt' ? 'gpt' : (cfg.ai === 'gemini' ? 'gemini' : null);
+
+  const res = await AICore.process({
+    module: 'lifeai',
+    task: fieldId,
+    prompt,
+    preferEngine,
+    fallbackFn,
+  });
+
+  try {
+    const parsed = JSON.parse(res.result.replace(/```json|```/g,'').trim());
+    return { ...parsed, ai: res.engine };
+  } catch (e) {
+    return { score: 70, summary: (res.result||'').slice(0,40) || '분석 완료', advice:'', ai: res.engine };
   }
-  // Gemini 호출
-  if (cfg.ai === 'gemini' && process.env.GEMINI_API_KEY) {
-    try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ contents:[{parts:[{text:prompt}]}] })
-      });
-      const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
-      const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
-      return { ...parsed, ai:'Gemini' };
-    } catch(e) { /* fallback */ }
-  }
-  // Rule 기반 fallback (항상 작동)
-  const score = 65 + Math.floor(Math.random()*30);
-  const summaries = { saju:'생년월일 기반 분석 완료', astrology:'별자리 기반 분석 완료', rule:'전통 학문 기반 분석 완료' };
-  return { score, summary: summaries[cfg.ai]||'규칙 기반 분석 완료', advice:'ChatDoumi AI 상세 분석을 추천드립니다.', ai:'Rule' };
 }
 
 app.post('/api/lifeai', async (req, res) => {
@@ -657,6 +659,21 @@ const IZ_STEP_PROMPTS = {
   9: '아래 사업 아이디어의 판매에 적합한 채널(온라인/오프라인/B2B 등)과 런칭 전략을 2~3줄로 제안하라.',
 };
 
+/* AI아이템존 9단계 분석용 서버사이드 폴백 텍스트 — 모든 엔진 실패 시 RuleAdapter가 사용 */
+function izFallbackText(step, name) {
+  const fb = {
+    2: `${name}의 시장 수요는 꾸준히 증가하는 추세입니다.\n경쟁 강도는 중간 수준으로 진입 여지가 있습니다.\n초기 타겟 고객층을 명확히 좁히는 것을 추천합니다.`,
+    3: `유사 명칭의 선행 특허 가능성을 1차 점검했습니다.\n핵심 기능에 대한 특허 회피 설계를 권장합니다.\n변리사 상담을 통해 출원 가능성을 확인하세요.`,
+    4: `국내 유사 서비스 2곳이 확인됩니다.\n${name}은 지역 밀착형 운영에서 차별점을 가질 수 있습니다.\n가격·속도·고객경험 중 한 가지를 명확히 우위에 두세요.`,
+    5: `소상공인 디지털 전환 지원사업이 적합할 수 있습니다.\n창업성장기술개발사업(디딤돌) 검토를 권장합니다.\n지역 테크노파크 지원사업도 함께 확인하세요.`,
+    6: `기술 구현을 위한 개발 파트너가 필요할 수 있습니다.\n디자인/UX 분야 협업자도 추천됩니다.\nAI플랫마켓 공동개발 게시판에 모집글 등록이 가능합니다.`,
+    7: `사업자등록 및 법률 검토를 위한 전문가가 필요합니다.\n초기 세무·회계 자문도 함께 권장됩니다.\n전문가 연결 서비스를 통해 상담을 신청해 보세요.`,
+    8: `현재 단계는 시드(Seed) 투자가 적합해 보입니다.\nIR 자료와 재무 계획 준비를 권장합니다.\n엔젤투자자 매칭 후 후속 라운드를 고려하세요.`,
+    9: `온라인 채널과 지역 오프라인 채널 병행을 권장합니다.\nAI플랫마켓 입점을 통한 초기 판매 채널 확보가 가능합니다.\n런칭 초기 프로모션 전략을 함께 수립하세요.`,
+  };
+  return fb[step] || '분석 결과를 준비 중입니다.';
+}
+
 app.post('/api/itemzone/analyze', async (req, res) => {
   const { step, item } = req.body;
   if (!step || !item || !item.name) return res.status(400).json({ error: 'step, item.name 필수' });
@@ -672,33 +689,16 @@ app.post('/api/itemzone/analyze', async (req, res) => {
     }).catch(()=>{});
   }
 
-  // 1) GPT 시도
-  if (process.env.OPENAI_API_KEY) {
-    try {
-      const r = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: fullPrompt }], max_tokens: 250, temperature: 0.7 })
-      });
-      const data = await r.json();
-      const text = data.choices?.[0]?.message?.content?.trim();
-      if (text) return res.json({ ok: true, result: text, ai: 'GPT' });
-    } catch (e) { /* fall through */ }
-  }
-  // 2) Gemini 시도
-  if (process.env.GEMINI_API_KEY) {
-    try {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] })
-      });
-      const data = await r.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-      if (text) return res.json({ ok: true, result: text, ai: 'Gemini' });
-    } catch (e) { /* fall through */ }
-  }
-  // 3) Fallback (항상 응답)
-  res.json({ ok: true, ai: 'fallback', result: null });
+  // ChatDoumi AI Core 단일 호출 — GPT/Claude/Gemini 시도 순서는 engineMap.js(itemzone)가 결정,
+  // 전부 실패하면 RuleAdapter가 izFallbackText()로 항상 응답을 보장한다.
+  const aiRes = await AICore.process({
+    module: 'itemzone',
+    task: 'step' + step,
+    prompt: fullPrompt,
+    fallbackFn: async () => izFallbackText(step, item.name),
+  });
+
+  res.json({ ok: true, result: aiRes.result, ai: aiRes.engine });
 });
 
 /* ─────── 관리자 API ─────── */
@@ -942,6 +942,43 @@ app.get('/api/modules', (req, res) => {
   res.json(result);
 });
 
+
+// ChatDoumi AI Core 엔진 상태 (어떤 엔진이 활성화되어 있는지) — 관리자 대시보드/디버깅용
+app.get('/api/ai-core/status', (req, res) => {
+  res.json({
+    core: 'ChatDoumi AI Core',
+    engines: AICore.getEngineStatus(),
+  });
+});
+
+/* ═══════════════════════════════════════════
+   Export AI Context — 새 대화창(다른 Claude/GPT 채팅)이
+   AI플랫마켓의 현재 상태를 즉시 이해할 수 있도록
+   모듈 현황 + AI Core 상태를 한 번에 반환한다.
+   사용법: 새 창에서 이 URL의 응답을 그대로 붙여넣으면
+   PROJECT_CONTEXT.md와 합쳐 완전한 컨텍스트가 된다.
+═══════════════════════════════════════════ */
+app.get('/api/ai-context', (req, res) => {
+  const modules = {};
+  Object.entries(MODULE_MAP).forEach(([id, mod]) => {
+    const jsonPath = path.join(__dirname, 'public', mod.group, mod.dir, 'module.json');
+    if (fs.existsSync(jsonPath)) {
+      try { modules[id] = JSON.parse(fs.readFileSync(jsonPath, 'utf8')); }
+      catch (e) { modules[id] = { id, status: 'error' }; }
+    } else {
+      modules[id] = { id, group: mod.group, status: 'planned', version: '0.0.0' };
+    }
+  });
+
+  res.json({
+    project: 'AI플랫마켓 (aiplatmarket.com)',
+    generatedAt: new Date().toISOString(),
+    architecture: 'ChatDoumi AI Core — GPT/Claude/Gemini는 Adapter로 연결, 모든 모듈은 AICore.process()만 사용',
+    contextDoc: 'framework/PROJECT_CONTEXT.md 를 함께 참고하세요 (이 응답은 그 문서의 동적 보충 정보입니다)',
+    aiCoreEngines: AICore.getEngineStatus(),
+    modules,
+  });
+});
 
 app.get('/register', (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
 app.use((req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
