@@ -1,0 +1,18 @@
+{
+  "id": "aird",
+  "group": "platform",
+  "title": "AIR&D",
+  "icon": "🔬",
+  "description": "AI 연구·개발 플랫폼",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/aird",
+    "/platform/aird/"
+  ],
+  "subdomain": "aird.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

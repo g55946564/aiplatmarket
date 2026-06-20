@@ -1,0 +1,18 @@
+{
+  "id": "culture",
+  "group": "platform",
+  "title": "AI문화예술",
+  "icon": "🎨",
+  "description": "AI 문화·예술 창작 플랫폼",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/culture",
+    "/platform/culture/"
+  ],
+  "subdomain": "culture.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "simul",
+  "group": "platform",
+  "title": "AI시뮬레이션",
+  "icon": "🧪",
+  "description": "사업·투자 시뮬레이션 엔진",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/simul",
+    "/platform/simul/"
+  ],
+  "subdomain": "simul.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

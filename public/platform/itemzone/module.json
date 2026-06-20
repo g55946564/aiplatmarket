@@ -1,0 +1,18 @@
+{
+  "id": "itemzone",
+  "group": "platform",
+  "title": "AI아이템존",
+  "icon": "📦",
+  "description": "AI 사업 코파일럿 (9단계)",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/itemzone",
+    "/platform/itemzone/"
+  ],
+  "subdomain": "itemzone.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
