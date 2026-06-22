@@ -1,0 +1,38 @@
+{
+  "_comment": "이 파일은 정적 스냅샷입니다. 실시간 정확한 상태는 GET /api/ai-context 를 사용하세요. 이 파일은 주요 마일스톤마다 메인 개발창에서 수동 갱신합니다.",
+  "project": "AI플랫마켓 (aiplatmarket.com)",
+  "lastUpdated": "2026-06-19",
+  "phase": "MVP 운영 + 독립 모듈 구조 전환기",
+
+  "completed": [
+    "GNB 6개 카테고리 드롭다운 구조 (AI플랫폼/Commerce/Business/Community/Media/Lifestyle)",
+    "ChatDoumi AI Core — GPT/Claude/Gemini/Rule Adapter 패턴 통합",
+    "독립 모듈 라우팅 시스템 (MODULE_MAP, path+서브도메인 동시지원)",
+    "AI아이템존 9단계 사업 코파일럿 (등록→시장분석→...→판매연결)",
+    "공통 sticky footer / 업그레이드 중 안내 페이지 시스템",
+    "오늘의 주요뉴스 국내/글로벌 2분할 패널",
+    "Render 배포 오류 수정 (ENOENT, robots.txt, sitemap.xml)"
+  ],
+
+  "inProgress": [
+    "AI인생·진로(LifeMap) — 19개 학문 분야, 60% 핵심기능 / 40% AI기능",
+    "AI교육문화존 — 30% 핵심기능",
+    "AI홍보센터 — 40% 핵심기능",
+    "framework/memory + docs/ 공식 문서 체계 구축 (이 파일 포함)"
+  ],
+
+  "nextUp": [
+    "AIR&D, AI시뮬레이션, AI교육존, AI문화예술, AI게임존 — 각각 새 대화창에서 독립 개발 시작",
+    "module.json 기반 Platform Dashboard (메인 페이지에 모듈 카드 노출)",
+    "AGI 참여형 기능 1단계 (좋아요/댓글/포인트 — 철학의 '참여=일' 구현 시작점)"
+  ],
+
+  "longTermRoadmap": [
+    { "milestone": "MVP", "target": "구독자 200명", "status": "진행중" },
+    { "milestone": "Claude API 통합 + 공통모듈아키텍처 기반", "target": "구독자 500명", "status": "예정" },
+    { "milestone": "AI아이템존 풀런칭 + KT 믿:음 2.0 통합", "target": "구독자 1,000명", "status": "예정" },
+    { "milestone": "AI 통합 플랫폼 100개+ 모듈", "target": "장기 목표", "status": "예정" }
+  ],
+
+  "moduleStatusNote": "모듈별 정확한 % 와 status(planned/dev/live)는 각 public/{group}/{id}/module.json 및 /api/ai-context 응답을 신뢰하세요. 이 JSON의 completed/inProgress는 사람이 읽는 요약일 뿐입니다."
+}
