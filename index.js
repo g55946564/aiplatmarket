@@ -32,8 +32,27 @@ const https    = require('https');
 const http     = require('http');
 
 /* ChatDoumi AI Core — GPT/Claude/Gemini는 모두 이 Core 아래 Adapter로만 연결됩니다.
-   이 파일(index.js)의 다른 어떤 코드도 OpenAI/Gemini/Anthropic API를 직접 호출하지 않습니다. */
-const AICore = require('./ai-core');
+   이 파일(index.js)의 다른 어떤 코드도 OpenAI/Gemini/Anthropic API를 직접 호출하지 않습니다.
+   ※ ai-core/ 폴더가 저장소에 누락된 채로 배포되면 서버 전체가 죽는 일이 있었음(MODULE_NOT_FOUND).
+     아래 try-catch는 그런 상황에서도 사이트 자체는 정상 동작하도록 하는 안전망입니다
+     (AI 응답은 규칙 기반 기본 문구로 대체됨). 실제 AI 기능을 쓰려면 ai-core/ 폴더를
+     index.js와 같은 위치에 반드시 함께 업로드해야 합니다. */
+let AICore;
+try {
+  AICore = require('./ai-core');
+} catch (e) {
+  console.error('⚠️  ai-core/ 폴더를 찾을 수 없습니다 — index.js와 같은 위치에 업로드했는지 확인하세요.');
+  console.error('   (' + e.message + ')');
+  console.warn('⚠️  임시 안전 모드로 동작합니다 — AI 응답은 기본 안내 문구로 대체됩니다.');
+  // ai-core/ 가 없어도 사이트 전체가 죽지 않도록 하는 최소 폴백 (RuleAdapter와 동일한 역할)
+  AICore = {
+    process: async ({ fallbackFn }) => {
+      const result = (typeof fallbackFn === 'function') ? await fallbackFn() : '현재 AI 기능을 일시적으로 사용할 수 없습니다.';
+      return { ok: true, engine: 'Rule(ai-core 폴더 누락 — 임시폴백)', result };
+    },
+    getEngineStatus: () => ({ rule: { name: 'Rule(임시)', available: true } }),
+  };
+}
 
 const fs = require('fs');
 
@@ -978,6 +997,102 @@ app.get('/api/ai-context', (req, res) => {
     aiCoreEngines: AICore.getEngineStatus(),
     modules,
   });
+});
+
+/* ═══════════════════════════════════════════════════════
+   🪟 Popup Manager — 플랫폼 안내 팝업 (독립 모듈)
+   ─────────────────────────────────────────────────────
+   기존 코드를 수정하지 않고 "추가"만 하는 방식으로 구현.
+   - GET  /api/popup-config?key=intro   → 현재 팝업 설정 조회
+   - POST /api/popup-config             → admin.html에서 설정 갱신
+   설정은 Firestore(popup_config 컬렉션)에 저장하고, DB 미연결 시
+   DEFAULT_POPUP_CONFIG(아래)를 그대로 응답해 항상 동작을 보장한다.
+   향후 공지사항/업데이트/이벤트 등도 key만 다르게 해서 같은 구조로 추가 가능.
+═══════════════════════════════════════════════════════ */
+const DEFAULT_POPUP_CONFIG = {
+  intro: {
+    enabled: true,
+    // version이 바뀌면 "다음 업데이트까지 보지 않기"를 선택한 사용자에게도 다시 표시된다.
+    // 관리자가 내용을 의미 있게 갱신할 때 이 값을 함께 바꿔주면 된다.
+    version: '2026.06.19',
+    title: '🚀 AI플랫마켓 프리뷰 서비스',
+    body:
+`AI플랫마켓에 오신 것을 환영합니다.
+
+사람이 중심이고,
+AI는 사람의 발전을 돕습니다.
+
+AI플랫마켓은
+사람과 AI가 함께 성장하는
+진화형 플랫폼입니다.
+
+현재는 프리뷰 서비스 단계이며,
+
+일부 기능은 계속 개발 및 개선되고 있으며
+새로운 서비스와 프로젝트가 지속적으로 추가됩니다.
+
+여러분의 참여와 의견은
+플랫폼의 발전에 직접 반영됩니다.
+
+참여가 곧 일이며,
+참여가 곧 사업이 되는
+새로운 AI 생태계를 함께 만들어 갑니다.
+
+앞으로 AI 공정 기여도 분석과
+공정 수익분배 시스템을 통해
+
+플랫폼 발전에 기여한
+모든 참여자가 함께 성장할 수 있는
+미래형 플랫폼을 만들어 갑니다.
+
+감사합니다.`,
+    // 진행률 목록 — status: 완료 | 진행중 | 예정 (admin.html에서 자유롭게 추가/삭제/수정)
+    progress: [
+      { name: 'AI Core',              status: '완료' },
+      { name: 'Framework',            status: '완료' },
+      { name: '공통 디자인 시스템',     status: '완료' },
+      { name: 'AI LifeMap',           status: '진행중' },
+      { name: 'AI ItemZone',          status: '진행중' },
+      { name: 'Community',            status: '진행중' },
+      { name: 'Media',                status: '진행중' },
+      { name: 'Commerce',             status: '예정' },
+      { name: 'Business',             status: '예정' },
+      { name: 'Education & Culture',  status: '예정' },
+      { name: 'AI R&D',               status: '예정' },
+    ],
+    buttons: {
+      primary: 'AI플랫마켓 둘러보기',
+      secondary: '새로운 기능 보기',
+      close: '닫기',
+    },
+    // 사용자 제안으로 추가된 슬로건 — 팝업 하단에 항상 노출되어 브랜드를 각인시킨다.
+    slogan: '사람이 중심이고, AI는 사람의 발전을 돕습니다. 참여가 곧 일이며, 참여가 곧 사업이 되는 AI플랫폼.',
+    sloganSub: 'AI플랫마켓은 사람과 AI가 함께 성장하는 진화형 플랫폼입니다.',
+  },
+};
+
+app.get('/api/popup-config', async (req, res) => {
+  const key = req.query.key || 'intro';
+  if (db) {
+    try {
+      const doc = await db.collection('popup_config').doc(key).get();
+      if (doc.exists) return res.json({ ok: true, config: doc.data() });
+    } catch (e) { /* DB 오류 시 기본값으로 폴백 */ }
+  }
+  res.json({ ok: true, config: DEFAULT_POPUP_CONFIG[key] || null });
+});
+
+app.post('/api/popup-config', async (req, res) => {
+  const key = req.body.key || 'intro';
+  const config = req.body.config;
+  if (!config) return res.status(400).json({ ok: false, error: 'config 필요' });
+  if (!db) return res.status(503).json({ ok: false, error: 'DB 미연결 — 저장할 수 없습니다' });
+  try {
+    await db.collection('popup_config').doc(key).set(config, { merge: false });
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
 });
 
 app.get('/register', (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
