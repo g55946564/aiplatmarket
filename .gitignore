@@ -2,11 +2,27 @@
 node_modules/
 
 # 2. 파이어베이스 보안 키 (보안상 절대 제외)
+*-firebase-adminsdk-*.json
 serviceAccountKey.json
 
 # 3. 환경 변수 파일
 .env
+.env.*
 
 # 4. 운영체제 임시 파일
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# 작업공간
+work/
+
+# 로그
+logs/
+*.log
+
+*.zip
+
+# IDE
+.vscode/
+.idea/
