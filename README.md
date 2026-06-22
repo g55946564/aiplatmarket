@@ -9,6 +9,11 @@ AIplatMarket/
 ├── index.js                ← Express 서버 (라우팅 허브)
 ├── package.json
 │
+├── ai-core/                 ← public 밖! 루트에 위치
+│   ├── index.js
+│   ├── adapters/
+│   └── config/engineMap.js
+│
 ├── framework/               ← 공통 엔진 (모든 모듈이 공유)
 │   ├── assets/
 │   │   ├── css/common.css   ← 공통 디자인 토큰
@@ -21,6 +26,9 @@ AIplatMarket/
 │   ├── theme/                ← Light/Dark 테마
 │   ├── core/                 ← AI Core 연동 로직
 │   └── version.json
+│
+├── docs/                     ← public 밖! 루트에 위치
+│   └── 00_INDEX.md ~ 09_AGI_ASI_ROADMAP.md
 │
 └── public/
     ├── index.html            ← 메인 (그룹 GNB → 드롭다운 → 모듈 링크)
