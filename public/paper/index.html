@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>국민경제㊉ - 디지털 아카이브</title>
     <style>
         :root { 
@@ -122,7 +122,7 @@
         .mobile-viewer { display: none; }
 
         /* ==========================================================================
-           📱 모바일 미디어 쿼리 (768px 이하) 완벽 정돈
+           📱 모바일 미디어 쿼리 (768px 이하) - 좌우 스크롤 완벽 개방 보완
            ========================================================================== */
         @media (max-width: 768px) {
             body { overflow: hidden; }
@@ -134,7 +134,7 @@
             }
             #sidebar.mobile-open { transform: translateX(240px); box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
 
-            #menu-toggle { display: block; } /* 햄버거 메뉴 가동 */
+            #menu-toggle { display: block; }
 
             /* 헤더 컴팩트화 */
             header { height: 50px; padding: 0 10px; }
@@ -144,22 +144,34 @@
             .search-container { position: static; transform: none; gap: 4px; padding: 4px 8px; font-size: 12px; }
             .search-container input { width: 35px; }
 
-            /* 기본 책 스테이지 숨김 및 단면 전용 뷰어 가동 */
+            /* 책 스테이지 감추고 스크롤 확장형 모바일 뷰어 가동 */
             .stage { display: none; }
             
             .mobile-viewer {
                 display: flex; flex-direction: column; width: 100%; 
                 height: calc(100vh - 50px); background: #f5f5f5;
+                overflow: auto; /* [핵심 보완] 모바일 전체 영역에 상하좌우 스크롤 완전 부여 */
+                -webkit-overflow-scrolling: touch;
             }
             .mobile-toolbar {
                 display: flex; justify-content: space-between; align-items: center; 
                 padding: 10px; background: #4e342e; color: #fff; font-size: 14px;
+                position: sticky; top: 0; left: 0; z-index: 100; /* 툴바가 스크롤에 밀리지 않게 고정 */
             }
             .mobile-toolbar button {
                 border: none; background: #fff; color: #5d4037; padding: 6px 12px; 
                 border-radius: 6px; font-weight: bold; cursor: pointer;
             }
-            .mobile-pdf { flex: 1; width: 100%; border: none; background: #fff; }
+            
+            /* [핵심 보완] iframe 가로 너비 장벽을 제거하여 좌우 자유 스크롤 및 확대 지원 */
+            .mobile-pdf { 
+                flex: 1; 
+                width: 100%; 
+                min-width: 100vw; /* 스마트폰 가로 폭보다 신문이 무조건 꽉 차거나 넘쳐서 좌우 제어 가능하도록 설정 */
+                min-height: 80vh;
+                border: none; 
+                background: #fff; 
+            }
 
             /* 확대 오버레이 모바일 보정 */
             .zoom-overlay { left: 0; width: 100vw; top: 50px; height: calc(100vh - 50px); }
@@ -169,7 +181,6 @@
 </head>
 <body>
 
-<!-- 모바일 사이드바 차단막 딤 레이어 -->
 <div id="sidebar-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:4900;" onclick="toggleMobileSidebar()"></div>
 
 <div id="sidebar">
@@ -189,7 +200,6 @@
         <div style="width:200px; text-align:right; font-size:12px;">국민경제㊉신문사</div>
     </header>
 
-    <!-- 모바일 전용 단면 뷰어 영역 -->
     <div class="mobile-viewer">
         <div class="mobile-toolbar">
             <button onclick="mobilePrev()">◀ 이전</button>
@@ -199,7 +209,6 @@
         <iframe id="mobilePdf" class="mobile-pdf" src="life-info.pdf#page=1&navpanes=0"></iframe>
     </div>
 
-    <!-- PC 대화면 전용 3D 책 넘김 스테이지 영역 -->
     <div class="stage">
         <div class="nav-btn btn-prev" onclick="movePrev()">❮</div>
         <div class="nav-btn btn-next" onclick="moveNext()">❯</div>
@@ -297,11 +306,9 @@
 
     // 크로스 플랫폼 통합 이동 시스템 (PC/모바일 인덱스 완벽 매칭)
     function jumpTo(idx) {
-        // PC 책장 동기화
         pages.forEach((p, i) => { if (i < idx) p.classList.add('flipped'); else p.classList.remove('flipped'); });
         current = idx;
         
-        // 모바일 단면 인덱스 계산 역동기화
         mobilePage = idx === 1 ? 1 : (idx - 1) * 2;
         
         updateUI();
@@ -325,12 +332,11 @@
         document.getElementById('info-text').innerText = labels[current - 1];
     }
 
-    // 모바일 단면 제어 시스템
+    // 모바일 단면 제어 및 동기화 시스템
     function updateMobilePage(){
         document.getElementById('mobilePdf').src = `life-info.pdf#page=${mobilePage}&navpanes=0`;
         document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
         
-        // 목차 동기화
         const tocIdx = mobilePage === 1 ? 0 : Math.floor(mobilePage / 2);
         document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === tocIdx));
     }
@@ -349,7 +355,7 @@
         }
     }
 
-    // --- 상하 가두기 고해상도 연산 시스템 스크립트 ---
+    // --- 고해상도 드래그 줌 스크립트 ---
     const overlay = document.getElementById('zoom-overlay');
     const container = document.getElementById('zoom-container');
     const zoomIframe = document.getElementById('zoom-iframe');
@@ -476,7 +482,6 @@
         container.style.transform = `translateY(${posY}px) scale(${scale})`;
     }
 
-    // 초기 화면 진입 시 UI 갱신 초기화
     updateUI();
 </script>
 </body>
