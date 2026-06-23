@@ -1863,9 +1863,10 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <option value="상생회">지역상생회</option>
       </select>
       <textarea class="write-inp" id="write-text-community" placeholder="소상공인·소비자 모두 자유롭게 작성하세요. 광고·스팸은 자동 차단됩니다."></textarea>
+      <div id="write-file-preview-community" style="display:none;margin:6px 0"></div>
       <div class="write-foot">
-        <label class="write-img-btn" for="write-file-community">📎 이미지/PDF (최대 5MB)</label>
-        <input type="file" id="write-file-community" accept="image/*,.pdf" style="display:none">
+        <label class="write-img-btn" for="write-file-community">📎 파일 첨부 <span style="font-weight:400;opacity:.75">(JPG·PNG·GIF·WEBP·PDF, 최대 5MB)</span></label>
+        <input type="file" id="write-file-community" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf" style="display:none" onchange="previewAttachFile(this,'write-file-preview-community')">
         <button class="write-submit" onclick="submitPost('community','write-text-community','write-file-community','write-list-community')">게시하기</button>
       </div>
     </div>
@@ -3403,6 +3404,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
         <a href="#" onclick="showPage('register');return false">입점문의</a>
         <a href="#" onclick="showPage('community');return false">커뮤니티</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}else{toast('잠시 후 다시 시도해 주세요');}return false">🚀 플랫폼 안내 다시보기</a>
       </div>
       <!-- 관리자 버튼 (푸터 우측 하단) -->
       <a href="/admin" target="_blank"
