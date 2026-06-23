@@ -1,0 +1,18 @@
+{
+  "id": "life",
+  "group": "platform",
+  "title": "AI인생·진로",
+  "icon": "🔮",
+  "description": "AI 진로 로드맵 생성",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/life",
+    "/platform/life/"
+  ],
+  "subdomain": "life.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
