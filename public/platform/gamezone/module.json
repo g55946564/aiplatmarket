@@ -1,0 +1,18 @@
+{
+  "id": "game",
+  "group": "platform",
+  "title": "AI게임존",
+  "icon": "🎮",
+  "description": "AI 참여형 게임 플랫폼",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/game",
+    "/platform/game/"
+  ],
+  "subdomain": "game.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
