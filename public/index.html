@@ -5419,6 +5419,110 @@ setTimeout(() => {
   }
 }, 3000);
 
+/* ══ 챗도우미 버튼 드래그 이동 (마우스/터치 공통) ══
+   내용을 가리지 않도록 화면 어디로든 옮길 수 있게 한다.
+   - 살짝 누르고 떼면(드래그 5px 이내) → 기존처럼 팝업 토글(클릭)
+   - 누른 채로 움직이면 → 버튼이 그 위치로 이동(드래그)
+   - 마지막 위치는 localStorage에 저장해 새로고침해도 유지 */
+(function initChatFabDrag() {
+  const fab = document.getElementById('cdFab');
+  if (!fab) return;
+  const POS_KEY = 'apm_chatfab_pos';
+  const CLICK_THRESHOLD = 6; // px — 이 이상 움직이면 드래그로 판정
+
+  let startX, startY, startLeft, startTop, dragging = false, moved = false;
+
+  // 저장된 위치 복원 (있으면 right/bottom 대신 left/top 절대좌표로 전환)
+  try {
+    const saved = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
+    if (saved && typeof saved.left === 'number') {
+      applyPos(saved.left, saved.top);
+    }
+  } catch (e) {}
+
+  function applyPos(left, top) {
+    const w = fab.offsetWidth || 52, h = fab.offsetHeight || 52;
+    left = Math.max(4, Math.min(window.innerWidth - w - 4, left));
+    top  = Math.max(4, Math.min(window.innerHeight - h - 4, top));
+    fab.style.left = left + 'px';
+    fab.style.top  = top + 'px';
+    fab.style.right = 'auto';
+    fab.style.bottom = 'auto';
+  }
+
+  function getXY(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function onDown(e) {
+    const rect = fab.getBoundingClientRect();
+    const xy = getXY(e);
+    startX = xy.x; startY = xy.y;
+    startLeft = rect.left; startTop = rect.top;
+    dragging = true; moved = false;
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onUp);
+  }
+
+  function onMove(e) {
+    if (!dragging) return;
+    const xy = getXY(e);
+    const dx = xy.x - startX, dy = xy.y - startY;
+    if (Math.abs(dx) > CLICK_THRESHOLD || Math.abs(dy) > CLICK_THRESHOLD) {
+      moved = true;
+      if (e.cancelable) e.preventDefault(); // 터치 스크롤 방지
+      applyPos(startLeft + dx, startTop + dy);
+      // 팝업이 열려 있으면 버튼 위치를 따라가도록 갱신
+      const popup = document.getElementById('cdPopup');
+      if (popup && popup.style.display !== 'none') positionPopupNearFab();
+    }
+  }
+
+  function onUp() {
+    dragging = false;
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
+    if (moved) {
+      const rect = fab.getBoundingClientRect();
+      try { localStorage.setItem(POS_KEY, JSON.stringify({ left: rect.left, top: rect.top })); } catch (e) {}
+    }
+    // moved가 false면(거의 안 움직였으면) 기존 onclick="toggleCdPopup()"이 그대로 클릭으로 처리됨
+  }
+
+  function positionPopupNearFab() {
+    const popup = document.getElementById('cdPopup');
+    const rect = fab.getBoundingClientRect();
+    const popW = popup.offsetWidth || 255;
+    let left = rect.left - popW + rect.width; // 버튼 오른쪽 끝에 맞춤
+    let top  = rect.top - (popup.offsetHeight || 0) - 8; // 버튼 위쪽에 띄움
+    left = Math.max(8, Math.min(window.innerWidth - popW - 8, left));
+    top  = Math.max(8, top);
+    popup.style.left = left + 'px';
+    popup.style.top  = top + 'px';
+    popup.style.right = 'auto';
+    popup.style.bottom = 'auto';
+  }
+
+  fab.addEventListener('mousedown', onDown);
+  fab.addEventListener('touchstart', onDown, { passive: true });
+
+  // 드래그 중에는 클릭(팝업 토글)이 발생하지 않도록 차단
+  fab.addEventListener('click', function (e) {
+    if (moved) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  // 화면 회전/리사이즈 시 화면 밖으로 나가지 않게 보정
+  window.addEventListener('resize', () => {
+    const rect = fab.getBoundingClientRect();
+    if (fab.style.left) applyPos(rect.left, rect.top);
+  });
+})();
+
 /* ── 화면 전환 ── */
 function switchToPcMode() {
   const meta = document.querySelector('meta[name="viewport"]');
