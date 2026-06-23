@@ -18,10 +18,15 @@
         }
         
         /* 사이드바 */
-        #sidebar { width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; display: flex; flex-direction: column; z-index: 3000; }
+        #sidebar { width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; display: flex; flex-direction: column; z-index: 3000; transition: transform 0.3s ease; }
         .toc-list { flex: 1; overflow-y: auto; padding: 10px; }
         .toc-item { padding: 12px; margin-bottom: 5px; background: #fff; border: 1px solid #ddd; cursor: pointer; font-size: 13px; color: #5d4037; }
         .toc-item.active { background: #8b4513; color: white; }
+
+        /* 모바일 메뉴 토글 버튼 */
+        #menu-toggle {
+            display: none; font-size: 24px; background: none; border: none; color: white; cursor: pointer; padding-right: 15px;
+        }
 
         /* 헤더 중앙 검색바 */
         header { 
@@ -69,17 +74,15 @@
             justify-content: center;
             align-items: flex-start; 
             overflow: hidden;
-            /* [추정] 팝업 자체 상하단에도 최소한의 정서적 여백 확보 */
             padding-top: 25px; 
             box-sizing: border-box;
         }
         .zoom-overlay.active { display: flex; }
 
-        /* [수정] 양옆에 5~10% 황금 비율 여백을 남기도록 두께 및 제한선 조율 */
         .zoom-container {
-            width: 80vw; /* 좌우 여백을 자연스럽게 7~8%가량 배정 */
+            width: 80vw; 
             height: calc(100vh * 2.3); 
-            max-width: 1100px; /* 고해상도 대형 모니터에서도 여백을 파괴하지 않도록 고정 */
+            max-width: 1100px; 
             background: white;
             box-shadow: 0 25px 65px rgba(0,0,0,0.45);
             border: 2px solid #8b4513;
@@ -90,12 +93,6 @@
         }
         .zoom-container:active { cursor: grabbing; }
         .zoom-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
-
-        /* 모바일 화면 대응 최적화 (모바일은 가독성을 위해 여백 없이 화면 가득 매칭) */
-        @media (max-width: 768px) {
-            .zoom-overlay { left: 0; width: 100vw; padding-top: 0; }
-            .zoom-container { width: 100vw; height: calc(100vh * 2.5); border: none; max-width: 100%; }
-        }
 
         /* 가장자리 내비게이션 버튼 */
         .nav-btn { 
@@ -120,9 +117,60 @@
         .link-btn:hover { background: #5d4037; transform: translateY(-3px); }
 
         .page-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 7px 20px; border-radius: 25px; font-size: 12px; z-index: 2000; }
+
+        /* 모바일 전용 신문 뷰어 클래스 */
+        .mobile-viewer { display: none; }
+
+        /* ==========================================================================
+           📱 모바일 미디어 쿼리 (768px 이하) 완벽 정돈
+           ========================================================================== */
+        @media (max-width: 768px) {
+            body { overflow: hidden; }
+
+            /* 사이드바 오버레이 서랍장 변환 */
+            #sidebar {
+                position: fixed; left: -240px; top: 0; width: 220px; height: 100%; 
+                transition: transform 0.3s ease; z-index: 5000; background: #fff;
+            }
+            #sidebar.mobile-open { transform: translateX(240px); box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
+
+            #menu-toggle { display: block; } /* 햄버거 메뉴 가동 */
+
+            /* 헤더 컴팩트화 */
+            header { height: 50px; padding: 0 10px; }
+            header > div:first-child { font-size: 13px; width: auto !important; }
+            header > div:last-child { display: none; }
+
+            .search-container { position: static; transform: none; gap: 4px; padding: 4px 8px; font-size: 12px; }
+            .search-container input { width: 35px; }
+
+            /* 기본 책 스테이지 숨김 및 단면 전용 뷰어 가동 */
+            .stage { display: none; }
+            
+            .mobile-viewer {
+                display: flex; flex-direction: column; width: 100%; 
+                height: calc(100vh - 50px); background: #f5f5f5;
+            }
+            .mobile-toolbar {
+                display: flex; justify-content: space-between; align-items: center; 
+                padding: 10px; background: #4e342e; color: #fff; font-size: 14px;
+            }
+            .mobile-toolbar button {
+                border: none; background: #fff; color: #5d4037; padding: 6px 12px; 
+                border-radius: 6px; font-weight: bold; cursor: pointer;
+            }
+            .mobile-pdf { flex: 1; width: 100%; border: none; background: #fff; }
+
+            /* 확대 오버레이 모바일 보정 */
+            .zoom-overlay { left: 0; width: 100vw; top: 50px; height: calc(100vh - 50px); }
+            .zoom-container { width: 100vw; max-width: none; border: none; }
+        }
     </style>
 </head>
 <body>
+
+<!-- 모바일 사이드바 차단막 딤 레이어 -->
+<div id="sidebar-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:4900;" onclick="toggleMobileSidebar()"></div>
 
 <div id="sidebar">
     <div style="padding: 25px; text-align: center; border-bottom: 2px solid #d2b48c;"><strong>국민경제㊉</strong></div>
@@ -131,6 +179,7 @@
 
 <div id="main-content">
     <header>
+        <button id="menu-toggle" onclick="toggleMobileSidebar()">☰</button>
         <div style="font-weight: bold; width:200px;">DIGITAL ARCHIVE</div>
         <div class="search-container">
             <span>면 이동:</span>
@@ -140,6 +189,17 @@
         <div style="width:200px; text-align:right; font-size:12px;">국민경제㊉신문사</div>
     </header>
 
+    <!-- 모바일 전용 단면 뷰어 영역 -->
+    <div class="mobile-viewer">
+        <div class="mobile-toolbar">
+            <button onclick="mobilePrev()">◀ 이전</button>
+            <span id="mobilePageInfo">1 / 16</span>
+            <button onclick="mobileNext()">다음 ▶</button>
+        </div>
+        <iframe id="mobilePdf" class="mobile-pdf" src="life-info.pdf#page=1&navpanes=0"></iframe>
+    </div>
+
+    <!-- PC 대화면 전용 3D 책 넘김 스테이지 영역 -->
     <div class="stage">
         <div class="nav-btn btn-prev" onclick="movePrev()">❮</div>
         <div class="nav-btn btn-next" onclick="moveNext()">❯</div>
@@ -200,34 +260,93 @@
 
 <script>
     let current = 1; 
+    let mobilePage = 1;
+    const totalPages = 16;
     const pages = document.querySelectorAll('.page');
     const labels = ["1면 (표지)", "2-3면", "4-5면", "6-7면", "8-9면", "10-11면", "12-13면", "14-15면", "16면 (최종)"];
 
+    // 목차 동적 생성 및 클릭 동기화
     const toc = document.getElementById('toc-list');
     labels.forEach((l, i) => {
         const item = document.createElement('div');
         item.className = 'toc-item';
         item.innerText = l;
-        item.onclick = () => jumpTo(i + 1);
+        item.onclick = () => {
+            jumpTo(i + 1);
+            closeMobileSidebar();
+        };
         toc.appendChild(item);
     });
 
+    // 모바일 사이드바 토글 제어
+    function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const isOpen = sidebar.classList.toggle('mobile-open');
+        overlay.style.display = isOpen ? 'block' : 'none';
+    }
+
+    function closeMobileSidebar() {
+        document.getElementById('sidebar').classList.remove('mobile-open');
+        document.getElementById('sidebar-overlay').style.display = 'none';
+    }
+
+    // PC 버전 조작 스크립트
     function moveNext() { if (current < pages.length) { pages[current].classList.add('flipped'); current++; updateUI(); } }
     function movePrev() { if (current > 1) { current--; pages[current].classList.remove('flipped'); updateUI(); } }
 
+    // 크로스 플랫폼 통합 이동 시스템 (PC/모바일 인덱스 완벽 매칭)
     function jumpTo(idx) {
+        // PC 책장 동기화
         pages.forEach((p, i) => { if (i < idx) p.classList.add('flipped'); else p.classList.remove('flipped'); });
-        current = idx; updateUI();
+        current = idx;
+        
+        // 모바일 단면 인덱스 계산 역동기화
+        mobilePage = idx === 1 ? 1 : (idx - 1) * 2;
+        
+        updateUI();
+        updateMobilePage();
     }
 
     function goPage() {
         const v = parseInt(document.getElementById('page-input').value);
-        if(v >= 1 && v <= 16) jumpTo(v === 1 ? 1 : Math.floor(v / 2) + 1);
+        if(v >= 1 && v <= 16) {
+            if(window.innerWidth <= 768) {
+                mobilePage = v;
+                updateMobilePage();
+            } else {
+                jumpTo(v === 1 ? 1 : Math.floor(v / 2) + 1);
+            }
+        }
     }
 
     function updateUI() {
         document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === current - 1));
         document.getElementById('info-text').innerText = labels[current - 1];
+    }
+
+    // 모바일 단면 제어 시스템
+    function updateMobilePage(){
+        document.getElementById('mobilePdf').src = `life-info.pdf#page=${mobilePage}&navpanes=0`;
+        document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
+        
+        // 목차 동기화
+        const tocIdx = mobilePage === 1 ? 0 : Math.floor(mobilePage / 2);
+        document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === tocIdx));
+    }
+
+    function mobileNext(){
+        if(mobilePage < totalPages){
+            mobilePage++;
+            updateMobilePage();
+        }
+    }
+
+    function mobilePrev(){
+        if(mobilePage > 1){
+            mobilePage--;
+            updateMobilePage();
+        }
     }
 
     // --- 상하 가두기 고해상도 연산 시스템 스크립트 ---
@@ -291,7 +410,6 @@
     function startInteraction(e) {
         isDragging = true;
         startY = e.clientY - posY;
-        
         clickStartTime = new Date().getTime();
         clickStartY = e.clientY;
     }
@@ -345,10 +463,8 @@
         const overlayHeight = overlay.clientHeight; 
         const containerHeight = container.clientHeight * scale; 
 
-        // 상단 가두기 시 미세 여백(20px) 보정 처리
         if (posY > 20) posY = 20;
 
-        // 하단 끝 가두기에도 40px의 시각 완충 마진을 추가하여 답답함 해소
         const maxScrollUp = -(containerHeight - overlayHeight) - 40;
         
         if (containerHeight > overlayHeight) {
@@ -359,6 +475,9 @@
 
         container.style.transform = `translateY(${posY}px) scale(${scale})`;
     }
+
+    // 초기 화면 진입 시 UI 갱신 초기화
+    updateUI();
 </script>
 </body>
 </html>
