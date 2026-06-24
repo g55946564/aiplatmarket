@@ -878,7 +878,7 @@ const MODULE_MAP = {
   aird:        { group: 'platform', dir: 'aird' },
   simul:       { group: 'platform', dir: 'simul' },
   itemzone:    { group: 'platform', dir: 'itemzone' },
-  edu:         { group: 'platform', dir: 'edu' },
+  eduzone:     { group: 'platform', dir: 'eduzone' },
   culture:     { group: 'platform', dir: 'culture' },
   game:        { group: 'platform', dir: 'game' },
   life:        { group: 'platform', dir: 'life' },
