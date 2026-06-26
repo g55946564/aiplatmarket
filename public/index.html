@@ -4361,11 +4361,29 @@ function cmTab(el, type) {
   const cat = el.dataset.cat || null; // 전체 탭은 data-cat 없음
 
   // 1) 게시글 실제 필터링
+  let visibleCount = 0;
   document.querySelectorAll('#cmPosts .cm-post, #write-list-community .post-card').forEach(post => {
-    if (!cat) { post.style.display = ''; return; }
+    if (!cat) { post.style.display = ''; visibleCount++; return; }
     const postCat = post.dataset.cat || post.querySelector('.cm-badge')?.textContent?.trim();
-    post.style.display = (postCat === cat) ? '' : 'none';
+    const show = postCat === cat;
+    post.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
   });
+
+  // 1-1) 해당 카테고리에 글이 하나도 없을 때 — 빈 화면 대신 안내 문구 표시
+  let emptyEl = document.getElementById('cmEmptyState');
+  if (!emptyEl) {
+    emptyEl = document.createElement('div');
+    emptyEl.id = 'cmEmptyState';
+    emptyEl.style.cssText = 'text-align:center;padding:36px 20px;color:var(--g4);font-size:.82rem';
+    document.getElementById('cmPosts').after(emptyEl);
+  }
+  if (visibleCount === 0) {
+    emptyEl.innerHTML = `🗒️ "${el.textContent.trim()}"에 아직 등록된 글이 없습니다.<br><span style="font-size:.76rem">위 글쓰기 박스에서 첫 글을 남겨보세요!</span>`;
+    emptyEl.style.display = 'block';
+  } else {
+    emptyEl.style.display = 'none';
+  }
 
   // 2) 글쓰기 박스를 선택한 탭에 맞게 동기화
   const sel = document.getElementById('cm-cat-sel');
@@ -4378,8 +4396,9 @@ function cmTab(el, type) {
     writeTtl.textContent = '✏️ 글 작성';
   }
 
-  if (type !== 'meetup') toast(`${el.textContent.trim()} 게시판`);
+  if (type !== 'meetup' && type !== 'feedback') toast(`${el.textContent.trim()} 게시판`);
   if (type === 'meetup') openMeetupModal();
+  if (type === 'feedback') openFeedbackModal();
 }
 
 /* ══ 모임 만들기 ══ */
