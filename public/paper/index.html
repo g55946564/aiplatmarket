@@ -18,17 +18,20 @@
         }
         
         /* 사이드바 */
-        #sidebar { width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; display: flex; flex-direction: column; z-index: 3000; transition: transform 0.3s ease; }
+        #sidebar { 
+            width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; 
+            display: flex; flex-direction: column; z-index: 3000; transition: transform 0.3s ease; 
+        }
         .toc-list { flex: 1; overflow-y: auto; padding: 10px; }
         .toc-item { padding: 12px; margin-bottom: 5px; background: #fff; border: 1px solid #ddd; cursor: pointer; font-size: 13px; color: #5d4037; }
         .toc-item.active { background: #8b4513; color: white; }
 
-        /* 모바일 메뉴 토글 버튼 */
+        /* 모바일 토글 메뉴 버튼 */
         #menu-toggle {
             display: none; font-size: 24px; background: none; border: none; color: white; cursor: pointer; padding-right: 15px;
         }
 
-        /* 헤더 중앙 검색바 */
+        /* 헤더 */
         header { 
             height: 60px; background: #5d4037; display: flex; justify-content: space-between; 
             align-items: center; padding: 0 20px; color: white; z-index: 3500; position: relative;
@@ -41,7 +44,7 @@
         .search-container input { width: 50px; border: none; border-radius: 4px; padding: 4px; text-align: center; }
         .search-container button { padding: 4px 12px; background: #ffcc80; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; color: #5d4037; }
 
-        /* 스테이지 및 북 컨테이너 */
+        /* 스테이지 및 북 컨테이너 (PC 전용) */
         #main-content { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
         .stage { flex: 1; display: flex; justify-content: center; align-items: center; perspective: 3000px; position: relative; overflow: hidden; }
         .book { width: calc(var(--p-width) * 2); height: var(--p-height); position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
@@ -61,39 +64,6 @@
         }
         .back { transform: rotateY(180deg); }
 
-        /* 오버레이 영역 */
-        .zoom-overlay {
-            position: fixed;
-            top: 60px; 
-            left: 220px; 
-            width: calc(100vw - 220px); 
-            height: calc(100vh - 60px);
-            background: rgba(0, 0, 0, 0.55);
-            z-index: 2400; 
-            display: none;
-            justify-content: center;
-            align-items: flex-start; 
-            overflow: hidden;
-            padding-top: 25px; 
-            box-sizing: border-box;
-        }
-        .zoom-overlay.active { display: flex; }
-
-        .zoom-container {
-            width: 80vw; 
-            height: calc(100vh * 2.3); 
-            max-width: 1100px; 
-            background: white;
-            box-shadow: 0 25px 65px rgba(0,0,0,0.45);
-            border: 2px solid #8b4513;
-            transform: translateY(0px) scale(1);
-            transform-origin: top center; 
-            overflow: hidden;
-            cursor: grab;
-        }
-        .zoom-container:active { cursor: grabbing; }
-        .zoom-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
-
         /* 가장자리 내비게이션 버튼 */
         .nav-btn { 
             position: absolute; top: 0; width: 15vw; height: 100%; z-index: 1500; 
@@ -104,78 +74,95 @@
         .btn-prev { left: 0; } 
         .btn-next { right: 0; }
 
-        /* 콘텐츠 및 링크 */
+        /* 고해상도 확대 팝업 레이어 */
+        .zoom-overlay {
+            position: fixed; top: 60px; left: 220px; width: calc(100vw - 220px); height: calc(100vh - 60px);
+            background: rgba(0, 0, 0, 0.55); z-index: 2400; display: none; justify-content: center; align-items: flex-start; 
+            overflow: hidden; padding-top: 25px; box-sizing: border-box;
+        }
+        .zoom-overlay.active { display: flex; }
+        .zoom-container {
+            width: 80vw; height: calc(100vh * 2.3); max-width: 1100px; background: white;
+            box-shadow: 0 25px 65px rgba(0,0,0,0.45); border: 2px solid #8b4513;
+            transform: translateY(0px) scale(1); transform-origin: top center; overflow: hidden; cursor: grab;
+        }
+        .zoom-container:active { cursor: grabbing; }
+        .zoom-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+
+        /* 콘텐츠 보조 서식 */
         iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
         .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
         .static-page { padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #fff; box-sizing: border-box; }
         
         .link-btn { 
-            display: block; width: 220px; padding: 15px; margin: 10px 0;
-            background: #138b1d; color: #fff !important; text-decoration: none; 
-            border-radius: 8px; font-weight: bold; font-size: 14px; transition: 0.3s;
+            display: block; width: 220px; padding: 15px; margin: 10px 0; background: #138b1d; color: #fff !important; 
+            text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; transition: 0.3s;
         }
         .link-btn:hover { background: #5d4037; transform: translateY(-3px); }
-
         .page-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 7px 20px; border-radius: 25px; font-size: 12px; z-index: 2000; }
 
-        /* 모바일 전용 신문 뷰어 클래스 */
+        /* 모바일 전용 독립 뷰어 레이아웃 */
         .mobile-viewer { display: none; }
 
         /* ==========================================================================
-           📱 모바일 미디어 쿼리 (768px 이하) - 좌우 스크롤 완벽 개방 보완
+           📱 모바일 및 스마트폰 미디어 쿼리 (768px 이하) 완전 보완형 터치 개방
            ========================================================================== */
         @media (max-width: 768px) {
-            body { overflow: hidden; }
+            body { overflow: hidden; position: fixed; width: 100vw; height: 100vh; }
 
-            /* 사이드바 오버레이 서랍장 변환 */
+            /* 서랍장 형태로 변환되는 모바일 사이드바 */
             #sidebar {
                 position: fixed; left: -240px; top: 0; width: 220px; height: 100%; 
                 transition: transform 0.3s ease; z-index: 5000; background: #fff;
             }
             #sidebar.mobile-open { transform: translateX(240px); box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
-
             #menu-toggle { display: block; }
 
-            /* 헤더 컴팩트화 */
+            /* 컴팩트 헤더 정돈 */
             header { height: 50px; padding: 0 10px; }
             header > div:first-child { font-size: 13px; width: auto !important; }
             header > div:last-child { display: none; }
-
             .search-container { position: static; transform: none; gap: 4px; padding: 4px 8px; font-size: 12px; }
-            .search-container input { width: 35px; }
+            .search-container input { width: 40px; }
 
-            /* 책 스테이지 감추고 스크롤 확장형 모바일 뷰어 가동 */
+            /* PC 3D 요소 완벽 차단 및 모바일 전용 독립 뷰어 개방 */
             .stage { display: none; }
             
             .mobile-viewer {
-                display: flex; flex-direction: column; width: 100%; 
-                height: calc(100vh - 50px); background: #f5f5f5;
-                overflow: auto; /* [핵심 보완] 모바일 전체 영역에 상하좌우 스크롤 완전 부여 */
-                -webkit-overflow-scrolling: touch;
+                display: flex; flex-direction: column; width: 100%; height: calc(100vh - 50px); background: #f5f5f5;
             }
             .mobile-toolbar {
                 display: flex; justify-content: space-between; align-items: center; 
-                padding: 10px; background: #4e342e; color: #fff; font-size: 14px;
-                position: sticky; top: 0; left: 0; z-index: 100; /* 툴바가 스크롤에 밀리지 않게 고정 */
+                padding: 10px; background: #5d4037; color: #fff; font-size: 14px; z-index: 100;
             }
             .mobile-toolbar button {
-                border: none; background: #fff; color: #5d4037; padding: 6px 12px; 
-                border-radius: 6px; font-weight: bold; cursor: pointer;
-            }
-            
-            /* [핵심 보완] iframe 가로 너비 장벽을 제거하여 좌우 자유 스크롤 및 확대 지원 */
-            .mobile-pdf { 
-                flex: 1; 
-                width: 100%; 
-                min-width: 100vw; /* 스마트폰 가로 폭보다 신문이 무조건 꽉 차거나 넘쳐서 좌우 제어 가능하도록 설정 */
-                min-height: 80vh;
-                border: none; 
-                background: #fff; 
+                border: none; background: #fff; color: #5d4037; padding: 6px 14px; border-radius: 6px; font-weight: bold;
             }
 
-            /* 확대 오버레이 모바일 보정 */
-            .zoom-overlay { left: 0; width: 100vw; top: 50px; height: calc(100vh - 50px); }
-            .zoom-container { width: 100vw; max-width: none; border: none; }
+            /* [핵심 보완] iframe 터치 잠금을 해제하고 자유 자유이동을 유도하는 랩퍼 구역 */
+            .mobile-pdf-wrapper {
+                flex: 1;
+                width: 100%;
+                overflow: auto; /* 상하좌우 스크롤 완전 허용 */
+                -webkit-overflow-scrolling: touch; /* iOS 가속 터치 스크롤 탑재 */
+                background: #ccc;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+            /* [핵심 보완] 신문지면 너비를 가두지 않고 넉넉하게 확장하여 양옆/위아래 자유 밀기 확보 */
+            .mobile-pdf {
+                width: 100vw;
+                min-width: 600px; /* 모바일 가로화면에서도 글자가 터지거나 잘리지 않게 기본 가로폭 확보 */
+                height: 100%;
+                min-height: 85vh;
+                border: none;
+                background: #fff;
+            }
+
+            /* 확대 팝업 차단 */
+            .zoom-overlay { display: none !important; }
         }
     </style>
 </head>
@@ -206,7 +193,9 @@
             <span id="mobilePageInfo">1 / 16</span>
             <button onclick="mobileNext()">다음 ▶</button>
         </div>
-        <iframe id="mobilePdf" class="mobile-pdf" src="life-info.pdf#page=1&navpanes=0"></iframe>
+        <div class="mobile-pdf-wrapper">
+            <iframe id="mobilePdf" class="mobile-pdf" src="life-info.pdf#page=1&navpanes=0"></iframe>
+        </div>
     </div>
 
     <div class="stage">
@@ -268,13 +257,14 @@
 </div>
 
 <script>
+    // --- 글로벌 상태값 변수 정의 (중복 선언 완전 정리) ---
     let current = 1; 
     let mobilePage = 1;
     const totalPages = 16;
     const pages = document.querySelectorAll('.page');
     const labels = ["1면 (표지)", "2-3면", "4-5면", "6-7면", "8-9면", "10-11면", "12-13면", "14-15면", "16면 (최종)"];
 
-    // 목차 동적 생성 및 클릭 동기화
+    // 목차 동적 배치 및 유기적 클릭 이벤트 매핑
     const toc = document.getElementById('toc-list');
     labels.forEach((l, i) => {
         const item = document.createElement('div');
@@ -287,7 +277,7 @@
         toc.appendChild(item);
     });
 
-    // 모바일 사이드바 토글 제어
+    // 모바일 전용 토글 서랍장 스크립트
     function toggleMobileSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
@@ -300,15 +290,16 @@
         document.getElementById('sidebar-overlay').style.display = 'none';
     }
 
-    // PC 버전 조작 스크립트
+    // PC 3D 책장 전환 제어 시스템
     function moveNext() { if (current < pages.length) { pages[current].classList.add('flipped'); current++; updateUI(); } }
     function movePrev() { if (current > 1) { current--; pages[current].classList.remove('flipped'); updateUI(); } }
 
-    // 크로스 플랫폼 통합 이동 시스템 (PC/모바일 인덱스 완벽 매칭)
+    // 목차 선택 시 PC/모바일 양대 채널 스마트 라우팅 싱크 시스템
     function jumpTo(idx) {
         pages.forEach((p, i) => { if (i < idx) p.classList.add('flipped'); else p.classList.remove('flipped'); });
         current = idx;
         
+        // 목차 양면 인덱스를 모바일 단면 매칭용 홀수면 주소값으로 자동 연산 변환
         mobilePage = idx === 1 ? 1 : (idx - 1) * 2;
         
         updateUI();
@@ -332,7 +323,7 @@
         document.getElementById('info-text').innerText = labels[current - 1];
     }
 
-    // 모바일 단면 제어 및 동기화 시스템
+    // 모바일 독립 뷰어 구동 처리 및 툴바 정보 갱신
     function updateMobilePage(){
         document.getElementById('mobilePdf').src = `life-info.pdf#page=${mobilePage}&navpanes=0`;
         document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
@@ -355,7 +346,7 @@
         }
     }
 
-    // --- 고해상도 드래그 줌 스크립트 ---
+    // --- PC 대화면 전용 드래그 앤 스크롤 연산 시스템 스크립트 ---
     const overlay = document.getElementById('zoom-overlay');
     const container = document.getElementById('zoom-container');
     const zoomIframe = document.getElementById('zoom-iframe');
@@ -364,7 +355,6 @@
     let posY = 0;
     let startY = 0;
     let isDragging = false;
-    
     let clickStartTime = 0;
     let clickStartY = 0;
 
@@ -372,11 +362,9 @@
         zoomIframe.src = `life-info.pdf#page=${pageNumber}&navpanes=0`;
         overlay.style.display = 'flex';
         setTimeout(() => { overlay.style.opacity = '1'; }, 10);
-        
         scale = 1.4; 
         posY = 0;
         updateTransform();
-        
         window.addEventListener('wheel', handleOverlayWheel, { passive: false });
     }
 
@@ -389,7 +377,6 @@
     function handleOverlayWheel(e) {
         if (overlay.style.display === 'none') return;
         e.preventDefault();
-
         if (e.ctrlKey) {
             scale -= e.deltaY * 0.008;
             if (scale < 1.0) scale = 1.0;
@@ -403,15 +390,6 @@
     container.addEventListener('mousedown', startInteraction);
     window.addEventListener('mousemove', doInteraction);
     window.addEventListener('mouseup', endInteraction);
-
-    container.addEventListener('touchstart', (e) => startInteraction(e.touches[0]), { passive: true });
-    window.addEventListener('touchmove', (e) => {
-        if(isDragging && e.touches.length === 1) {
-            e.preventDefault();
-            doInteraction(e.touches[0]);
-        }
-    }, { passive: false });
-    window.addEventListener('touchend', endInteraction);
 
     function startInteraction(e) {
         isDragging = true;
@@ -429,11 +407,9 @@
     function endInteraction(e) {
         if (!isDragging) return;
         isDragging = false;
-
         const clickEndTime = new Date().getTime();
         const duration = clickEndTime - clickStartTime;
         const moveDistance = Math.abs(e.clientY - clickStartY);
-
         if (duration < 250 && moveDistance < 6) {
             closeZoom();
         }
@@ -445,44 +421,24 @@
         }
     }
 
-    let initTouchDist = 0;
-    let baseScale = 1.0;
-
-    overlay.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) {
-            initTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-            baseScale = scale;
-        }
-    }, { passive: true });
-
-    overlay.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 2) {
-            e.preventDefault();
-            const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-            const factor = dist / initTouchDist;
-            scale = Math.min(Math.max(baseScale * factor, 1.0), 4.0);
-            updateTransform();
-        }
-    }, { passive: false });
-
     function updateTransform() {
         const overlayHeight = overlay.clientHeight; 
         const containerHeight = container.clientHeight * scale; 
-
         if (posY > 20) posY = 20;
-
         const maxScrollUp = -(containerHeight - overlayHeight) - 40;
-        
         if (containerHeight > overlayHeight) {
             if (posY < maxScrollUp) posY = maxScrollUp;
         } else {
             posY = 20;
         }
-
         container.style.transform = `translateY(${posY}px) scale(${scale})`;
     }
 
+    // 최초 시스템 이니셜라이징 동기화 구동
     updateUI();
+    if(window.innerWidth <= 768) {
+        updateMobilePage();
+    }
 </script>
 </body>
 </html>
