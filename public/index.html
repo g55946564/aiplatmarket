@@ -2119,16 +2119,16 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 <!-- ==================== 지역경제본부·센터 모집 ==================== -->
 <div id="page-branch" class="pg">
   <div class="sp-page">
-    <div class="sh"><div class="sh-t">🏢 전국 지역본부 · 지사 모집</div></div>
+    <div class="sh"><div class="sh-t">🏢 전국 지역본부 · 센터 모집</div></div>
     <!-- 모집 배너 -->
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:28px;color:#fff;text-align:center;margin-bottom:20px">
-      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓 전국 지역본부 · 지사 모집</div>
+      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓 전국 지역본부 · 센터 모집</div>
       <div style="font-size:.88rem;color:var(--gold);font-weight:700;margin-bottom:6px">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       <div style="font-size:.86rem;color:rgba(255,255,255,.8);margin-bottom:16px">국민경제㊉ 플랫폼과 함께 지역 경제를 이끌어갈 파트너를 모집합니다</div>
       <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px">
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">본부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">광역시·도 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지사</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">광역본부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">광역시·도 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역지부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
       </div>
       <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:12px 32px;border-radius:var(--r);font-size:.95rem;font-weight:800;cursor:pointer">📝 지역경제본부·센터 신청하기 →</button>
     </div>
@@ -2143,12 +2143,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 
     <!-- 신청 폼 -->
     <div id="branchFormWrap" style="display:none;border:2px solid var(--gold);border-radius:var(--r);overflow:hidden;max-width:600px;margin:0 auto">
-      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 지역본부 · 지사 신청서</div>
+      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 지역본부 · 센터 신청서</div>
       <div style="padding:20px;background:#fff;display:grid;gap:12px">
         <input class="fi" placeholder="신청자 성명 *" id="bName">
         <input class="fi" placeholder="연락처 * (010-0000-0000)" id="bPhone" type="tel">
         <input class="fi" placeholder="이메일 *" id="bEmail" type="email">
-        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>지역본부 (시·도)</option><option>지사 (시·군·구)</option><option>지역지부 (읍·면·동)</option></select>
+        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>지역본부 (시·도)</option><option>센터 (시·군·구)</option><option>지역지부 (읍·면·동)</option></select>
         <input class="fi" placeholder="희망 지역 (예: 인천광역시 남동구)" id="bRegion">
         <textarea class="fi" rows="3" placeholder="간단한 자기소개 및 지원 동기..." id="bDesc" style="resize:vertical"></textarea>
         <button onclick="submitBranch()" style="background:var(--navy);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:.92rem;font-weight:800;cursor:pointer">신청서 제출하기 →</button>
@@ -3577,7 +3577,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
   <div style="background:#fff;border-radius:12px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:90vh;display:flex;flex-direction:column">
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 20px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
       <div>
-        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 지역경제본부 · 지사 신청</div>
+        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 지역경제본부 · 센터 신청</div>
         <div style="font-size:.72rem;color:var(--gold);margin-top:3px;font-weight:700">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       </div>
       <button onclick="closeBranchPopup()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
@@ -3589,7 +3589,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       <select class="fi" id="bpType">
         <option value="">신청 유형 *</option>
         <option>지역본부 (시·도)</option>
-        <option>지사 (시·군·구)</option>
+        <option>지역센터 (시·군·구)</option>
         <option>지역지부 (읍·면·동)</option>
         <option>합동사무실 운영</option>
         <option>지역 공동 운영 매장</option>
