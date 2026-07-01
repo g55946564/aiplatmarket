@@ -878,10 +878,10 @@ const MODULE_MAP = {
   aird:        { group: 'platform', dir: 'aird' },
   simul:       { group: 'platform', dir: 'simul' },
   itemzone:    { group: 'platform', dir: 'itemzone' },
-  eduzone:     { group: 'platform', dir: 'eduzone' },
+  edu:         { group: 'platform', dir: 'edu' },
   culture:     { group: 'platform', dir: 'culture' },
   game:        { group: 'platform', dir: 'game' },
-  life:        { group: 'platform', dir: 'life' },
+  lifemap:     { group: 'platform', dir: 'lifemap' },
   promotion:   { group: 'platform', dir: 'promotion' },
   // commerce/
   market:      { group: 'commerce', dir: 'market' },
@@ -1092,6 +1092,94 @@ app.post('/api/popup-config', async (req, res) => {
   if (!db) return res.status(503).json({ ok: false, error: 'DB 미연결 — 저장할 수 없습니다' });
   try {
     await db.collection('popup_config').doc(key).set(config, { merge: false });
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   💡 Feedback — 플랫폼 전체 공통 피드백 시스템 (독립 모듈)
+   ─────────────────────────────────────────────────────
+   설계 철학(01_VISION_PHILOSOPHY.md §1.1, §1.5와 직결):
+   - 로그인을 강제하지 않는다. 참여 장벽을 최대한 낮춘다.
+     "로그인 없이도 참여 가능 / 로그인하면 더 많은 혜택" 원칙.
+   - 특정 페이지 전용이 아니라 lifemap/itemzone/community/media/
+     aird/simul 등 모든 모듈이 같은 엔드포인트를 공유한다.
+     module 필드로 구분해서 관리자가 모듈별로 조회할 수 있다.
+   - 지금 당장은 단순 저장이지만, 향후 공정기여도 산출(07_AI_SIMULATION.md)과
+     AI 기반 우선순위 분석에 그대로 연결될 수 있도록 필드를 넉넉히 설계해 둔다.
+
+   엔드포인트:
+   - POST /api/feedback              제출 (비회원 가능, userId는 선택)
+   - GET  /api/feedback?userId=...   내 피드백 이력 조회 (회원 전용)
+   - GET  /api/feedback?module=...   (관리자) 모듈별 전체 조회
+   - PATCH /api/feedback/:id         (관리자) 처리 상태 변경
+═══════════════════════════════════════════════════════ */
+const FEEDBACK_TYPES = ['불편사항', '개선제안', '오류신고', '만족도', '기타'];
+const FEEDBACK_STATUSES = ['접수', '검토중', '반영완료', '보류'];
+
+app.post('/api/feedback', async (req, res) => {
+  const { module: moduleId, type, content, rating, contact, userId, userName, page } = req.body;
+  if (!content || !content.trim()) return res.status(400).json({ ok: false, error: 'content 필요' });
+
+  const doc = {
+    module: moduleId || 'general',           // lifemap/itemzone/community/media/aird/simul/general 등
+    type: FEEDBACK_TYPES.includes(type) ? type : '기타',
+    content: content.trim(),
+    rating: typeof rating === 'number' ? rating : null,   // 만족도 평가(1~5) — 선택
+    contact: contact || null,                              // 비회원 답변 요청용 — 선택
+    userId: userId || null,                                // 로그인 사용자면 uid, 비회원이면 null
+    userName: userName || '익명',
+    page: page || null,                                     // 어느 화면에서 제출했는지(디버깅/우선순위 산정용)
+    status: '접수',
+    // 향후 공정기여도/AI 우선순위 분석이 채워 넣을 필드 — 지금은 비워둠(확장 대비)
+    contributionScore: null,
+    aiAnalysis: null,
+    adminNote: null,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (!db) {
+    // DB 미연결이어도 제출 자체는 항상 성공 처리 — 참여 장벽을 낮추는 철학과 직결
+    console.warn('⚠️ DB 미연결 — 피드백이 저장되지 않고 로그로만 남습니다:', JSON.stringify(doc));
+    return res.json({ ok: true, id: null, saved: false });
+  }
+  try {
+    const ref = await db.collection('feedback').add(doc);
+    res.json({ ok: true, id: ref.id, saved: true });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+app.get('/api/feedback', async (req, res) => {
+  const { userId, module: moduleId, status, limit } = req.query;
+  if (!db) return res.json({ ok: true, items: [] });
+  try {
+    let q = db.collection('feedback');
+    if (userId) q = q.where('userId', '==', userId);          // 회원 본인 이력 조회
+    if (moduleId) q = q.where('module', '==', moduleId);       // 관리자 모듈별 조회
+    if (status) q = q.where('status', '==', status);
+    q = q.orderBy('createdAt', 'desc').limit(Math.min(parseInt(limit) || 50, 200));
+    const snap = await q.get();
+    const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    res.json({ ok: true, items });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message, items: [] });
+  }
+});
+
+app.patch('/api/feedback/:id', async (req, res) => {
+  const { status, adminNote, contributionScore } = req.body;
+  if (!db) return res.status(503).json({ ok: false, error: 'DB 미연결' });
+  try {
+    const update = { updatedAt: new Date().toISOString() };
+    if (status && FEEDBACK_STATUSES.includes(status)) update.status = status;
+    if (typeof adminNote === 'string') update.adminNote = adminNote;
+    if (typeof contributionScore === 'number') update.contributionScore = contributionScore;
+    await db.collection('feedback').doc(req.params.id).update(update);
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
