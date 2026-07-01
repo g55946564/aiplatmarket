@@ -237,6 +237,9 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcbtn-reg:hover{background:rgba(46,204,113,.3)}
 .gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+.gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
+@media(max-width:700px){.gcbtn-fb{display:none}}
 @media(max-width:700px){
   .gcbtn{padding:8px 10px;font-size:.7rem}
   .gcdi-ico{font-size:.92rem}
@@ -630,7 +633,15 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .cd-popup-hd{background:linear-gradient(135deg,var(--navy),#1a3556);color:#fff;padding:9px 13px;border-radius:10px 10px 0 0;display:flex;justify-content:space-between;align-items:center}
 .cd-popup-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1rem;cursor:pointer}
 .cd-popup-body{padding:12px 13px}
-.cd-fab{position:fixed;bottom:16px;right:16px;z-index:3999;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border:none;border-radius:50%;width:52px;height:52px;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+/* ── 플로팅 버튼 그룹 (💡+🤖 함께 드래그) ── */
+.fab-group{position:fixed;bottom:16px;right:16px;z-index:3999;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cd-fab{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border:none;border-radius:50%;width:52px;height:52px;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s;position:relative;flex-shrink:0}
+.cd-fab:hover{transform:scale(1.1)}
+.fb-fab{background:linear-gradient(135deg,#c9a84c,#a8893e);color:#1a1206;border:none;border-radius:50%;width:44px;height:44px;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;transition:transform .2s;flex-shrink:0;position:relative}
+.fb-fab:hover{transform:scale(1.1)}
+/* 마우스 올리면 나타나는 한글 툴팁 */
+.fab-tip{position:absolute;right:calc(100% + 8px);top:50%;transform:translateY(-50%);background:rgba(13,31,53,.88);color:#fff;font-size:.68rem;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.cd-fab:hover .fab-tip,.fb-fab:hover .fab-tip{opacity:1}
 .cd-fab:hover{transform:scale(1.1)}
 /* 모바일 반응형 */
 @media(max-width:900px){
@@ -942,7 +953,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <a class="gcdi platform" onclick="showPage('itemzone');closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
             <a class="gcdi platform" onclick="showPage('lifemap');closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('eduzone');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('edu');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('culture');closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('gamezone');closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
@@ -1038,6 +1049,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       <!-- 오른쪽: 입점신청 고정 -->
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
         <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
         <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
       </div>
 
@@ -1849,7 +1861,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="sh"><div class="sh-t">💬 커뮤니티</div></div>
 
     <!-- 글쓰기 박스 (인라인) -->
-    <div class="write-wrap" style="margin-bottom:16px">
+    <div class="write-wrap" style="margin-bottom:16px;position:relative" id="cmWriteWrap">
+      <!-- 비로그인 게이트 오버레이 — JS가 로그인 상태에 따라 표시/숨김 -->
+      <div id="cmLoginGate" style="position:absolute;inset:0;background:rgba(255,255,255,.92);border-radius:var(--r);z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center">
+        <div style="font-size:1.5rem">🔒</div>
+        <div style="font-size:.84rem;font-weight:700;color:var(--navy)">로그인 후 글을 작성할 수 있습니다</div>
+        <div style="font-size:.74rem;color:var(--g4)">커뮤니티 활동은 공정기여도에 반영됩니다</div>
+        <button onclick="openLoginModal()" style="background:var(--navy);color:#fff;border:none;padding:8px 22px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:4px">로그인하기</button>
+      </div>
       <div class="write-hd">
         <span class="write-ttl" id="cmWriteTtl">✏️ 글 작성</span>
         <span class="write-meta">로그인 후 누구나 작성 가능 · 최대 2,000자 · 5MB · 스팸 자동차단</span>
@@ -1863,10 +1882,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <option value="상생회">지역상생회</option>
       </select>
       <textarea class="write-inp" id="write-text-community" placeholder="소상공인·소비자 모두 자유롭게 작성하세요. 광고·스팸은 자동 차단됩니다."></textarea>
-      <div id="write-file-preview-community" style="display:none;margin:6px 0"></div>
       <div class="write-foot">
-        <label class="write-img-btn" for="write-file-community">📎 파일 첨부 <span style="font-weight:400;opacity:.75">(JPG·PNG·GIF·WEBP·PDF, 최대 5MB)</span></label>
-        <input type="file" id="write-file-community" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf" style="display:none" onchange="previewAttachFile(this,'write-file-preview-community')">
+        <label class="write-img-btn" for="write-file-community">📎 이미지/PDF (최대 5MB)</label>
+        <input type="file" id="write-file-community" accept="image/*,.pdf" style="display:none">
         <button class="write-submit" onclick="submitPost('community','write-text-community','write-file-community','write-list-community')">게시하기</button>
       </div>
     </div>
@@ -1880,9 +1898,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       <div class="cm-tab" onclick="cmTab(this,'review')" data-cat="후기">후기</div>
       <div class="cm-tab" onclick="cmTab(this,'sanglife')" data-cat="상생회">지역상생회</div>
       <div class="cm-tab" onclick="cmTab(this,'meetup')" data-cat="모임">🙋 모임</div>
-      <div class="cm-tab" onclick="cmTab(this,'feedback')" data-cat="피드백">💡 피드백</div>
       <button onclick="openMeetupModal()" style="margin-left:auto;background:var(--grn);color:#fff;border:none;padding:6px 13px;border-radius:20px;font-size:.74rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">+ 모임 만들기</button>
-      <button onclick="openFeedbackModal()" style="background:var(--gold);color:#1a1206;border:none;padding:6px 13px;border-radius:20px;font-size:.74rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0">💡 불편사항·개선 제안</button>
     </div>
     <div id="write-list-community"></div>
     <div id="cmPosts">
@@ -2119,16 +2135,16 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 <!-- ==================== 지역경제본부·센터 모집 ==================== -->
 <div id="page-branch" class="pg">
   <div class="sp-page">
-    <div class="sh"><div class="sh-t">🏢 전국 지역본부 · 센터 모집</div></div>
+    <div class="sh"><div class="sh-t">🏢 전국 지역본부 · 지사 모집</div></div>
     <!-- 모집 배너 -->
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:28px;color:#fff;text-align:center;margin-bottom:20px">
-      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓 전국 지역본부 · 센터 모집</div>
+      <div style="font-size:1.4rem;font-family:var(--fs);font-weight:900;margin-bottom:8px">🏢 AI플랫마켓 전국 지역본부 · 지사 모집</div>
       <div style="font-size:.88rem;color:var(--gold);font-weight:700;margin-bottom:6px">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       <div style="font-size:.86rem;color:rgba(255,255,255,.8);margin-bottom:16px">국민경제㊉ 플랫폼과 함께 지역 경제를 이끌어갈 파트너를 모집합니다</div>
       <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px">
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">광역본부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">광역시·도 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
-        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역지부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">본부</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">광역시·도 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지사</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">시·군·구 단위</div></div>
+        <div style="background:rgba(255,255,255,.1);border-radius:var(--r);padding:12px 20px;text-align:center"><div style="font-size:1.2rem;font-weight:900;color:var(--gold)">지역센터</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:2px">읍·면·동 단위</div></div>
       </div>
       <button onclick="openBranchPopup()" style="background:var(--gold);color:var(--navy);border:none;padding:12px 32px;border-radius:var(--r);font-size:.95rem;font-weight:800;cursor:pointer">📝 지역경제본부·센터 신청하기 →</button>
     </div>
@@ -2143,12 +2159,12 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 
     <!-- 신청 폼 -->
     <div id="branchFormWrap" style="display:none;border:2px solid var(--gold);border-radius:var(--r);overflow:hidden;max-width:600px;margin:0 auto">
-      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 지역본부 · 센터 신청서</div>
+      <div style="background:var(--gold);color:var(--navy);padding:14px 20px;font-weight:900;font-size:.95rem">📝 지역본부 · 지사 신청서</div>
       <div style="padding:20px;background:#fff;display:grid;gap:12px">
         <input class="fi" placeholder="신청자 성명 *" id="bName">
         <input class="fi" placeholder="연락처 * (010-0000-0000)" id="bPhone" type="tel">
         <input class="fi" placeholder="이메일 *" id="bEmail" type="email">
-        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>지역본부 (시·도)</option><option>센터 (시·군·구)</option><option>지역지부 (읍·면·동)</option></select>
+        <select class="fi" id="bType"><option value="">신청 유형 선택 *</option><option>지역본부 (시·도)</option><option>지사 (시·군·구)</option><option>지역지부 (읍·면·동)</option></select>
         <input class="fi" placeholder="희망 지역 (예: 인천광역시 남동구)" id="bRegion">
         <textarea class="fi" rows="3" placeholder="간단한 자기소개 및 지원 동기..." id="bDesc" style="resize:vertical"></textarea>
         <button onclick="submitBranch()" style="background:var(--navy);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:.92rem;font-weight:800;cursor:pointer">신청서 제출하기 →</button>
@@ -3406,7 +3422,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
         <a href="#" onclick="showPage('register');return false">입점문의</a>
         <a href="#" onclick="showPage('community');return false">커뮤니티</a>
-        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}else{toast('잠시 후 다시 시도해 주세요');}return false">🚀 플랫폼 안내 다시보기</a>
+        <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
       </div>
       <!-- 관리자 버튼 (푸터 우측 하단) -->
       <a href="/admin" target="_blank"
@@ -3463,7 +3479,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="lmi" onclick="closeSide();showPage('itemzone')"><span class="ico">📦</span>AI아이템존</div>
     <div class="lmi" onclick="closeSide();showPage('promo-center')"><span class="ico">🎯</span>AI통합홍보센터</div>
     <div class="lmi" onclick="closeSide();showPage('lifemap')"><span class="ico">🔮</span>AI인생·진로</div>
-    <div class="lmi" onclick="closeSide();showPage('eduzone')"><span class="ico">📚</span>AI교육존</div>
+    <div class="lmi" onclick="closeSide();showPage('edu')"><span class="ico">📚</span>AI교육존</div>
     <div class="lmi" onclick="closeSide();showPage('culture')"><span class="ico">🎨</span>AI문화예술</div>
     <div class="lmi" onclick="closeSide();showPage('videocenter')"><span class="ico">🎬</span>AI영상생성</div>
     <div class="lmi" onclick="closeSide();showPage('gamezone')"><span class="ico">🎮</span>AI게임존</div>
@@ -3577,7 +3593,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
   <div style="background:#fff;border-radius:12px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:90vh;display:flex;flex-direction:column">
     <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 20px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
       <div>
-        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 지역경제본부 · 센터 신청</div>
+        <div style="font-size:1rem;font-weight:900;font-family:var(--fs)">🏢 지역경제본부 · 지사 신청</div>
         <div style="font-size:.72rem;color:var(--gold);margin-top:3px;font-weight:700">🚀 AI경제 시대! 합동사무실 & 지역 개발 상품 공동 운영 매장 가능한 분!</div>
       </div>
       <button onclick="closeBranchPopup()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
@@ -3589,7 +3605,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       <select class="fi" id="bpType">
         <option value="">신청 유형 *</option>
         <option>지역본부 (시·도)</option>
-        <option>지역센터 (시·군·구)</option>
+        <option>지사 (시·군·구)</option>
         <option>지역지부 (읍·면·동)</option>
         <option>합동사무실 운영</option>
         <option>지역 공동 운영 매장</option>
@@ -3762,7 +3778,15 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 </div>
 
 <!-- FAB 버튼 (챗도우미) -->
-<button class="cd-fab" id="cdFab" onclick="toggleCdPopup()" title="챗도우미 AI 비서">🤖</button>
+<!-- ── 플로팅 버튼 그룹 (💡 피드백 + 🤖 챗도우미) — A방식: 함께 드래그 ── -->
+<div class="fab-group" id="fabGroup">
+  <div class="fb-fab" id="fbFab" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}" aria-label="불편사항·개선 제안">
+    💡<span class="fab-tip">불편사항·개선 제안</span>
+  </div>
+  <button class="cd-fab" id="cdFab" onclick="toggleCdPopup()" title="챗도우미 AI 비서">
+    🤖<span class="fab-tip">챗도우미 AI 비서</span>
+  </button>
+</div>
 
 <!-- ChatDoumi 자동운영 팝업 (강화) -->
 <div class="cd-popup" id="cdPopup" style="display:none;width:280px">
@@ -4361,29 +4385,11 @@ function cmTab(el, type) {
   const cat = el.dataset.cat || null; // 전체 탭은 data-cat 없음
 
   // 1) 게시글 실제 필터링
-  let visibleCount = 0;
   document.querySelectorAll('#cmPosts .cm-post, #write-list-community .post-card').forEach(post => {
-    if (!cat) { post.style.display = ''; visibleCount++; return; }
+    if (!cat) { post.style.display = ''; return; }
     const postCat = post.dataset.cat || post.querySelector('.cm-badge')?.textContent?.trim();
-    const show = postCat === cat;
-    post.style.display = show ? '' : 'none';
-    if (show) visibleCount++;
+    post.style.display = (postCat === cat) ? '' : 'none';
   });
-
-  // 1-1) 해당 카테고리에 글이 하나도 없을 때 — 빈 화면 대신 안내 문구 표시
-  let emptyEl = document.getElementById('cmEmptyState');
-  if (!emptyEl) {
-    emptyEl = document.createElement('div');
-    emptyEl.id = 'cmEmptyState';
-    emptyEl.style.cssText = 'text-align:center;padding:36px 20px;color:var(--g4);font-size:.82rem';
-    document.getElementById('cmPosts').after(emptyEl);
-  }
-  if (visibleCount === 0) {
-    emptyEl.innerHTML = `🗒️ "${el.textContent.trim()}"에 아직 등록된 글이 없습니다.<br><span style="font-size:.76rem">위 글쓰기 박스에서 첫 글을 남겨보세요!</span>`;
-    emptyEl.style.display = 'block';
-  } else {
-    emptyEl.style.display = 'none';
-  }
 
   // 2) 글쓰기 박스를 선택한 탭에 맞게 동기화
   const sel = document.getElementById('cm-cat-sel');
@@ -4396,9 +4402,8 @@ function cmTab(el, type) {
     writeTtl.textContent = '✏️ 글 작성';
   }
 
-  if (type !== 'meetup' && type !== 'feedback') toast(`${el.textContent.trim()} 게시판`);
+  if (type !== 'meetup') toast(`${el.textContent.trim()} 게시판`);
   if (type === 'meetup') openMeetupModal();
-  if (type === 'feedback') openFeedbackModal();
 }
 
 /* ══ 모임 만들기 ══ */
@@ -4571,7 +4576,7 @@ document.addEventListener('click', function(e) {
 const _UPGRADE_MAP = {
   aird:     ['🔬 AIR&D', '🔬', 'AI 연구·개발 플랫폼<br>시장성 분석·특허 검색·논문 리뷰 자동화'],
   simul:    ['🧪 AI시뮬레이션', '🧪', '사업·투자·마케팅 시뮬레이션을 AI가 실행합니다'],
-  eduzone:  ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
+  edu:      ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
   culture:  ['🎨 AI문화예술', '🎨', 'AI와 함께하는 문화·예술 창작 플랫폼'],
   gamezone: ['🎮 AI게임존', '🎮', '소상공인·소비자가 함께하는 AI 게임 플랫폼'],
   good:     ['💚 더착한가게', '💚', '착한 소비를 위한 지역 착한가게 정보'],
@@ -4727,6 +4732,13 @@ function showPage(id) {
   }
   if (id === 'home') {
     setTimeout(() => { initTodayNewsPanel(); }, 120);
+  }
+  if (id === 'community') {
+    // 커뮤니티 진입 시 로그인 상태에 따라 글쓰기 게이트 표시 여부 결정
+    const _u = JSON.parse(localStorage.getItem('kakao_user') || localStorage.getItem('apm_user') || 'null');
+    const _adm = localStorage.getItem('apm_admin_logged') === 'true';
+    const gate = document.getElementById('cmLoginGate');
+    if (gate) gate.style.display = (_u || _adm) ? 'none' : 'flex';
   }
   if (id === 'news') {
     currentNewsCat = '전체';
@@ -5427,59 +5439,42 @@ function addAdFile(f) {
 function openAdDetail(title) { toast(`📋 ${title} — 보기 기능 준비 중`); }
 
 /* ── 챗도우미 실시간 팝업 ── */
-function toggleCdPopup() {
-  const p = document.getElementById('cdPopup');
-  p.style.display = p.style.display === 'none' ? 'block' : 'none';
-}
-function closeCdPopup() {
-  document.getElementById('cdPopup').style.display = 'none';
-  sessionStorage.setItem('cd_popup_closed', '1');
-}
-// 3초 후 자동 표시 (오늘 닫은 경우 제외)
-setTimeout(() => {
-  if (!sessionStorage.getItem('cd_popup_closed')) {
-    document.getElementById('cdPopup').style.display = 'block';
-  }
-}, 3000);
-
-/* ══ 챗도우미 버튼 드래그 이동 (마우스/터치 공통) ══
-   내용을 가리지 않도록 화면 어디로든 옮길 수 있게 한다.
-   - 살짝 누르고 떼면(드래그 5px 이내) → 기존처럼 팝업 토글(클릭)
-   - 누른 채로 움직이면 → 버튼이 그 위치로 이동(드래그)
-   - 마지막 위치는 localStorage에 저장해 새로고침해도 유지 */
-(function initChatFabDrag() {
-  const fab = document.getElementById('cdFab');
-  if (!fab) return;
-  const POS_KEY = 'apm_chatfab_pos';
-  const CLICK_THRESHOLD = 6; // px — 이 이상 움직이면 드래그로 판정
-
+/* ══ 플로팅 버튼 그룹 드래그 (💡+🤖 함께 이동, A방식) ══
+   #fabGroup 컨테이너 전체를 드래그해서 두 버튼이 항상 나란히 움직입니다.
+   - 5px 이하 움직임 → 클릭(각 버튼 onclick 실행)
+   - 5px 이상 드래그 → 위치 이동, localStorage에 저장해 새로고침 후에도 유지 */
+(function initFabGroupDrag() {
+  const group = document.getElementById('fabGroup');
+  if (!group) return;
+  const POS_KEY = 'apm_fabgroup_pos';
+  const CLICK_THRESHOLD = 6;
   let startX, startY, startLeft, startTop, dragging = false, moved = false;
 
-  // 저장된 위치 복원 (있으면 right/bottom 대신 left/top 절대좌표로 전환)
-  try {
-    const saved = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
-    if (saved && typeof saved.left === 'number') {
-      applyPos(saved.left, saved.top);
-    }
-  } catch (e) {}
-
   function applyPos(left, top) {
-    const w = fab.offsetWidth || 52, h = fab.offsetHeight || 52;
-    left = Math.max(4, Math.min(window.innerWidth - w - 4, left));
-    top  = Math.max(4, Math.min(window.innerHeight - h - 4, top));
-    fab.style.left = left + 'px';
-    fab.style.top  = top + 'px';
-    fab.style.right = 'auto';
-    fab.style.bottom = 'auto';
+    const w = group.offsetWidth || 60, h = group.offsetHeight || 120;
+    left = Math.max(8, Math.min(window.innerWidth  - w - 8, left));
+    top  = Math.max(8, Math.min(window.innerHeight - h - 8, top));
+    group.style.right  = 'auto';
+    group.style.bottom = 'auto';
+    group.style.left   = left + 'px';
+    group.style.top    = top  + 'px';
   }
 
+  // 저장된 위치 복원
+  try {
+    const saved = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
+    if (saved && typeof saved.left === 'number') applyPos(saved.left, saved.top);
+  } catch (e) {}
+
   function getXY(e) {
-    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    return { x: e.clientX, y: e.clientY };
+    return e.touches && e.touches.length
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : { x: e.clientX, y: e.clientY };
   }
 
   function onDown(e) {
-    const rect = fab.getBoundingClientRect();
+    // 클릭 이벤트가 버튼 자체에서 처리되므로, 그룹 배경(gap 영역)에서도 드래그 가능
+    const rect = group.getBoundingClientRect();
     const xy = getXY(e);
     startX = xy.x; startY = xy.y;
     startLeft = rect.left; startTop = rect.top;
@@ -5496,11 +5491,8 @@ setTimeout(() => {
     const dx = xy.x - startX, dy = xy.y - startY;
     if (Math.abs(dx) > CLICK_THRESHOLD || Math.abs(dy) > CLICK_THRESHOLD) {
       moved = true;
-      if (e.cancelable) e.preventDefault(); // 터치 스크롤 방지
+      if (e.cancelable) e.preventDefault();
       applyPos(startLeft + dx, startTop + dy);
-      // 팝업이 열려 있으면 버튼 위치를 따라가도록 갱신
-      const popup = document.getElementById('cdPopup');
-      if (popup && popup.style.display !== 'none') positionPopupNearFab();
     }
   }
 
@@ -5511,40 +5503,41 @@ setTimeout(() => {
     document.removeEventListener('touchmove', onMove);
     document.removeEventListener('touchend', onUp);
     if (moved) {
-      const rect = fab.getBoundingClientRect();
+      const rect = group.getBoundingClientRect();
       try { localStorage.setItem(POS_KEY, JSON.stringify({ left: rect.left, top: rect.top })); } catch (e) {}
     }
-    // moved가 false면(거의 안 움직였으면) 기존 onclick="toggleCdPopup()"이 그대로 클릭으로 처리됨
   }
 
-  function positionPopupNearFab() {
-    const popup = document.getElementById('cdPopup');
-    const rect = fab.getBoundingClientRect();
-    const popW = popup.offsetWidth || 255;
-    let left = rect.left - popW + rect.width; // 버튼 오른쪽 끝에 맞춤
-    let top  = rect.top - (popup.offsetHeight || 0) - 8; // 버튼 위쪽에 띄움
-    left = Math.max(8, Math.min(window.innerWidth - popW - 8, left));
-    top  = Math.max(8, top);
-    popup.style.left = left + 'px';
-    popup.style.top  = top + 'px';
-    popup.style.right = 'auto';
-    popup.style.bottom = 'auto';
-  }
+  group.addEventListener('mousedown', onDown);
+  group.addEventListener('touchstart', onDown, { passive: true });
 
-  fab.addEventListener('mousedown', onDown);
-  fab.addEventListener('touchstart', onDown, { passive: true });
-
-  // 드래그 중에는 클릭(팝업 토글)이 발생하지 않도록 차단
-  fab.addEventListener('click', function (e) {
+  // 드래그 중에는 버튼 onclick이 발화하지 않도록
+  group.addEventListener('click', function(e) {
     if (moved) { e.stopPropagation(); e.preventDefault(); }
   }, true);
 
-  // 화면 회전/리사이즈 시 화면 밖으로 나가지 않게 보정
   window.addEventListener('resize', () => {
-    const rect = fab.getBoundingClientRect();
-    if (fab.style.left) applyPos(rect.left, rect.top);
+    if (group.style.left) {
+      const rect = group.getBoundingClientRect();
+      applyPos(rect.left, rect.top);
+    }
   });
 })();
+
+function toggleCdPopup() {
+  const p = document.getElementById('cdPopup');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+function closeCdPopup() {
+  document.getElementById('cdPopup').style.display = 'none';
+  sessionStorage.setItem('cd_popup_closed', '1');
+}
+// 3초 후 자동 표시 (오늘 닫은 경우 제외)
+setTimeout(() => {
+  if (!sessionStorage.getItem('cd_popup_closed')) {
+    document.getElementById('cdPopup').style.display = 'block';
+  }
+}, 3000);
 
 /* ── 화면 전환 ── */
 function switchToPcMode() {
@@ -6477,5 +6470,15 @@ function renderWriteBox(menuId, placeholder='내용을 입력하세요...') {
     });
   });
 </script>
+
+<!-- ═══════════════════════════════════════════
+     💡 Feedback Manager 연동 (독립 모듈, 추가 전용)
+     framework/assets/js/feedback-manager.js — 플랫폼 전체 공통 피드백 채널.
+     lifemap/itemzone/community 등 어떤 모듈에서든
+     FeedbackManager.open('모듈id') 한 줄로 동일하게 사용 가능.
+     framework/ 가 아직 저장소에 병합되지 않았다면 이 스크립트는
+     404로 조용히 무시되며, 기존 사이트 동작에는 영향이 없다.
+     ═══════════════════════════════════════════ -->
+<script src="/framework/assets/js/feedback-manager.js"></script>
 </body>
 </html>
