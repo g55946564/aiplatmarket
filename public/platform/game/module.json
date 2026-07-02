@@ -1,5 +1,5 @@
 {
-  "id": "gamezone",
+  "id": "game",
   "group": "platform",
   "title": "AI게임존",
   "icon": "🎮",
@@ -7,10 +7,10 @@
   "version": "0.0.1",
   "status": "planned",
   "routes": [
-    "/gamezone",
-    "/platform/gamezone/"
+    "/game",
+    "/platform/game/"
   ],
-  "subdomain": "gamezone.aiplatmarket.com",
+  "subdomain": "game.aiplatmarket.com",
   "framework_version": "1.0.0",
   "ai_features": [],
   "owner": "형식",

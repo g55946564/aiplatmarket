@@ -1,5 +1,5 @@
 {
-  "id": "eduzone",
+  "id": "edu",
   "group": "platform",
   "title": "AI교육존",
   "icon": "📚",
@@ -7,10 +7,10 @@
   "version": "0.0.1",
   "status": "planned",
   "routes": [
-    "/eduzone",
-    "/platform/eduzone/"
+    "/edu",
+    "/platform/edu/"
   ],
-  "subdomain": "eduzone.aiplatmarket.com",
+  "subdomain": "edu.aiplatmarket.com",
   "framework_version": "1.0.0",
   "ai_features": [],
   "owner": "형식",

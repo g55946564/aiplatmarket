@@ -1,5 +1,5 @@
 {
-  "id": "lifemap",
+  "id": "life",
   "group": "platform",
   "title": "AI인생·진로",
   "icon": "🔮",
@@ -7,10 +7,10 @@
   "version": "0.0.1",
   "status": "planned",
   "routes": [
-    "/lifemap",
-    "/platform/lifemap/"
+    "/life",
+    "/platform/life/"
   ],
-  "subdomain": "lifemap.aiplatmarket.com",
+  "subdomain": "life.aiplatmarket.com",
   "framework_version": "1.0.0",
   "ai_features": [],
   "owner": "형식",
