@@ -82,20 +82,26 @@ button{ font-family:inherit; }
   font-family:'Nanum Gothic Coding', monospace;
   font-size:11.5px;
   letter-spacing:.02em;
-  color:var(--ink-soft);
-  padding-bottom:8px;
-  border-bottom:1px solid var(--line);
+  color:#cfd8d2;
+  background:#111417;
   gap:14px;
+  margin:0 -34px;
+  padding:10px 34px;
 }
-.utility-bar .pub-date{ flex:0 0 auto; white-space:nowrap; }
+.utility-bar .pub-date{ flex:0 0 auto; white-space:nowrap; color:#e8ede9; }
+.utility-bar .util-login{
+  flex:0 0 auto; background:none; border:1px solid rgba(255,255,255,.35); color:#fff;
+  font-size:11.5px; font-weight:700; padding:5px 14px; border-radius:14px; cursor:pointer; white-space:nowrap;
+}
+.utility-bar .util-login:hover{ background:var(--acc); border-color:var(--acc); }
 
-/* 좌→우 자동 스크롤 마퀴 (상생의 기록 문구) */
+/* 우→좌 자동 스크롤 마퀴 (상생의 기록 문구, 검정 바 위에서 보이도록 밝은 톤) */
 .marquee-wrap{ flex:1; min-width:0; overflow:hidden; position:relative; height:14px; }
 .marquee-track{
   display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0;
   animation:marquee-rtl 42s linear infinite;
 }
-.marquee-track span{ padding-right:70px; color:var(--acc-deep); font-family:'Noto Serif KR', serif; font-style:italic; }
+.marquee-track span{ padding-right:70px; color:#cfe8d4; font-family:'Noto Serif KR', serif; font-style:italic; }
 @keyframes marquee-rtl{ from{ transform:translateX(0%); } to{ transform:translateX(-50%); } }
 
 /* ── 상단 브랜드바 (좌: 메뉴 햄버거 / 중: 타이틀 / 우: 실시간소식 햄버거) ── */
@@ -457,6 +463,7 @@ button{ font-family:inherit; }
         <span>소비자와 소상공인이 함께 쓰는 상생의 기록</span>
       </div>
     </div>
+    <button class="util-login" onclick="openLoginModal()">로그인</button>
   </div>
 
   <div class="brand-row">
