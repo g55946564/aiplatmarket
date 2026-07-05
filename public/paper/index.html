@@ -1218,6 +1218,9 @@ const ARTICLES = {
 
 function renderArticle(key){
   const a = ARTICLES[key];
+  const mainCol = document.querySelector('#view-home .main-col');
+  if(mainCol){ mainCol.style.transition = 'none'; mainCol.style.opacity = '0'; }
+
   document.getElementById('leadKicker').textContent = a.kicker;
   document.getElementById('leadTitle').textContent = a.title;
   document.getElementById('leadDek').textContent = a.dek;
@@ -1246,6 +1249,13 @@ function renderArticle(key){
       <p>${s.body}</p>
     </div>
   `).join('');
+
+  if(mainCol){
+    // 강제 리플로우 후 트랜지션 적용 → 부드럽게 페이드인
+    void mainCol.offsetHeight;
+    mainCol.style.transition = 'opacity .28s ease';
+    mainCol.style.opacity = '1';
+  }
 }
 
 let currentTab = 'headline';
@@ -1322,8 +1332,9 @@ buildHeadlineTicker();
 
     const idx = TAB_ORDER.indexOf(currentTab);
     if(idx === -1) return;
-    // 좌→우 스와이프(dx 양수) = 다음 메뉴, 우→좌 스와이프(dx 음수) = 이전 메뉴
-    const nextIdx = dx > 0
+    // 좌측으로 드래그(dx 음수, 콘텐츠가 왼쪽으로 밀림) = 다음 메뉴
+    // 우측으로 드래그(dx 양수) = 이전 메뉴
+    const nextIdx = dx < 0
       ? (idx + 1) % TAB_ORDER.length
       : (idx - 1 + TAB_ORDER.length) % TAB_ORDER.length;
     switchTab(TAB_ORDER[nextIdx]);
