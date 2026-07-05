@@ -7,7 +7,7 @@
 
 <!-- ══════════════════════════ AIplatMarket 플랫폼 공통 자산 (framework) ══════════════════════════
      MODULE_DEV_GUIDE.md 3-1 규정에 따른 필수 로드. 실제 배포 경로는
-     public/media/paper/index.html 이므로, 이 파일을 로컬에서 단독으로 열면
+     public/paper/index.html 이므로, 이 파일을 로컬에서 단독으로 열면
      아래 두 경로는 404가 나는 게 정상입니다 (서버에 배치되어야 정상 로드됨). -->
 <link rel="stylesheet" href="/framework/assets/css/common.css">
 
@@ -33,8 +33,13 @@
   --paper-card:#fffdf7;
   --ink:#221f1a;
   --ink-soft:#4a453d;
-  --navy-deep:#152A44;
-  --stamp:var(--red);
+  --navy-deep:#0f2e1a;
+  --stamp:#14532d;
+  /* ── 이 모듈 전용 accent (요청: 바탕 제외, 타이틀 포함 그린 계통) ──
+     플랫폼 공식 토큰 --navy/--gold는 fw-header 등 공통 영역에 영향을 줄 수 있어
+     그대로 두고, 이 모듈의 장식 요소(타이틀·탭·버튼 등)는 아래 그린 계열로 대체 */
+  --acc:#2e7d32;
+  --acc-deep:#1b4332;
   --line:#c9bfa8;
   --line-strong:#221f1a;
 }
@@ -78,7 +83,7 @@ button{ font-family:inherit; }
   font-family:'Noto Serif KR', serif; font-weight:900; font-size:58px;
   letter-spacing:.03em; margin:0; color:var(--ink); line-height:1; cursor:pointer;
 }
-.masthead h1 span{ color:var(--navy); }
+.masthead h1 span{ color:var(--acc-deep); }
 .masthead-tagline{ margin-top:10px; font-size:13.5px; color:var(--ink-soft); font-family:'Noto Serif KR', serif; }
 .stamp{ position:absolute; top:10px; right:4px; width:88px; height:88px; transform:rotate(-14deg); opacity:.92; }
 
@@ -97,7 +102,7 @@ button{ font-family:inherit; }
   padding:9px 15px; font-size:13px; font-weight:700; border:none; background:none;
   border-right:1px solid var(--line); color:var(--ink-soft); cursor:pointer;
 }
-.section-bar button.active{ color:var(--paper); background:var(--navy); }
+.section-bar button.active{ color:var(--paper); background:var(--acc-deep); }
 .section-bar button:last-child{ border-right:none; }
 .section-bar button.paper-mode{ color:var(--stamp); }
 .section-bar button.paper-mode.active{ background:var(--stamp); color:#fff; }
@@ -122,18 +127,18 @@ button{ font-family:inherit; }
   width:100%; aspect-ratio:16/8; border:1px solid var(--line-strong); margin-bottom:8px; position:relative; overflow:hidden;
   background:repeating-linear-gradient(135deg, #e4dcc6 0 2px, #ddd3ba 2px 4px);
 }
-.lead-figure .cap-badge{ position:absolute; bottom:10px; left:10px; background:var(--navy); color:var(--paper); font-size:11px; font-weight:700; padding:4px 10px; }
+.lead-figure .cap-badge{ position:absolute; bottom:10px; left:10px; background:var(--acc-deep); color:var(--paper); font-size:11px; font-weight:700; padding:4px 10px; }
 .figcaption{ font-size:11.5px; color:var(--ink-soft); margin-bottom:20px; font-style:italic; }
 
 .lead-body{ columns:2; column-gap:26px; font-size:14.3px; line-height:1.85; text-align:justify; }
 .lead-body p{ margin:0 0 14px; }
-.dropcap::first-letter{ font-family:'Noto Serif KR', serif; font-size:50px; font-weight:900; float:left; line-height:.8; padding:4px 6px 0 0; color:var(--navy); }
+.dropcap::first-letter{ font-family:'Noto Serif KR', serif; font-size:50px; font-weight:900; float:left; line-height:.8; padding:4px 6px 0 0; color:var(--acc-deep); }
 
 .pull-quote{ font-family:'Noto Serif KR', serif; font-size:16.5px; font-weight:700; border-left:3px solid var(--stamp); padding:4px 0 4px 16px; margin:4px 0 14px; color:var(--ink); break-inside:avoid; }
 
 .sub-stories{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:22px; border-top:2px solid var(--line-strong); padding-top:16px; }
 .sub-story h3{ font-family:'Noto Serif KR', serif; font-size:18px; margin:0 0 6px; line-height:1.35; }
-.sub-story .kicker{ font-size:11px; font-weight:700; color:var(--navy); letter-spacing:.08em; margin-bottom:4px; }
+.sub-story .kicker{ font-size:11px; font-weight:700; color:var(--acc-deep); letter-spacing:.08em; margin-bottom:4px; }
 .sub-story p{ font-size:13px; line-height:1.75; color:var(--ink-soft); margin:0; }
 
 .sidebar-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
@@ -146,7 +151,7 @@ button{ font-family:inherit; }
 .store-desc{ font-size:11.5px; color:var(--ink-soft); margin:0; line-height:1.5; }
 
 .coupon-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
-.coupon-box .box-title{ background:var(--navy); }
+.coupon-box .box-title{ background:var(--acc-deep); }
 .coupon-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px dashed var(--line); font-size:12px; }
 .coupon-row:last-child{ border-bottom:none; }
 .coupon-code{ font-family:'Nanum Gothic Coding', monospace; background:var(--paper-deep); border:1px dashed var(--ink-soft); padding:2px 6px; font-weight:700; color:var(--stamp); }
@@ -158,10 +163,10 @@ button{ font-family:inherit; }
 #view-archive{ max-width:1040px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
 .archive-toolbar{ padding:16px 24px 0; }
 .archive-toolbar .row{ display:flex; align-items:center; gap:10px; }
-.mobile-region-btn{ display:none; background:var(--navy); color:#fff; border:none; padding:9px 12px; font-size:18px; cursor:pointer; }
+.masthead-hamburger{ display:none; position:absolute; left:6px; top:18px; background:none; color:var(--acc-deep); border:none; font-size:24px; cursor:pointer; z-index:5; padding:4px 8px; }
 .search-box{ flex:1; display:flex; background:#fff; border-radius:22px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); max-width:520px; }
 .search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; }
-.search-box button{ border:none; background:var(--gold); color:#fff; width:42px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.search-box button{ border:none; background:var(--acc); color:#fff; width:42px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .search-box svg{ width:16px; height:16px; }
 
 .archive-layout{ display:flex; align-items:flex-start; margin-top:14px; }
@@ -169,7 +174,7 @@ button{ font-family:inherit; }
 .region-sidebar h4{ font-size:11.5px; color:var(--ink-soft); letter-spacing:.1em; padding:0 16px; margin:0 0 8px; }
 .region-item{ display:block; padding:8px 16px; font-size:13px; border-left:3px solid transparent; cursor:pointer; }
 .region-item:hover{ background:#f1e8d2; }
-.region-item.active{ border-left-color:var(--gold); background:#f1e8d2; font-weight:700; color:var(--navy); }
+.region-item.active{ border-left-color:var(--acc); background:#f1e8d2; font-weight:700; color:var(--acc-deep); }
 
 .archive-content{ flex:1; min-width:0; padding:0 20px 34px 22px; }
 .section-title{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; border-bottom:2px solid var(--ink); padding-bottom:8px; }
@@ -191,7 +196,7 @@ button{ font-family:inherit; }
 #siteFooter{ background:var(--navy-deep); color:#e6d8bd; padding:26px 20px; font-size:12px; line-height:1.9; }
 #siteFooter .foot-inner{ max-width:1040px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
 #siteFooter .foot-brand{ font-family:'Noto Serif KR', serif; color:#fff; font-size:15px; margin-bottom:6px; }
-#siteFooter a.foot-link{ color:var(--gold); font-weight:700; }
+#siteFooter a.foot-link{ color:var(--acc); font-weight:700; }
 
 /* ══════════════════════════ 공통 스크림 & 퀵메뉴 드로어 ══════════════════════════ */
 .scrim{ position:fixed; inset:0; background:rgba(20,15,8,.45); z-index:400; display:none; }
@@ -199,7 +204,7 @@ button{ font-family:inherit; }
 
 .quick-fab{
   position:fixed; right:20px; bottom:20px; width:52px; height:52px; border-radius:50%;
-  background:var(--navy); color:#fff; border:none; font-size:20px; cursor:pointer; z-index:450;
+  background:var(--acc-deep); color:#fff; border:none; font-size:20px; cursor:pointer; z-index:450;
   box-shadow:0 6px 18px rgba(0,0,0,.28);
 }
 .quick-drawer{
@@ -208,16 +213,16 @@ button{ font-family:inherit; }
   box-shadow:-6px 0 24px rgba(0,0,0,.2);
 }
 .quick-drawer.open{ transform:translateX(0); }
-.quick-drawer-head{ background:var(--navy); color:#fff; padding:16px 16px 0; }
+.quick-drawer-head{ background:var(--acc-deep); color:#fff; padding:16px 16px 0; }
 .quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .quick-drawer-head .row strong{ font-family:'Noto Serif KR', serif; font-size:16px; }
 .quick-tabs{ display:flex; overflow-x:auto; gap:4px; }
 .quick-tabs button{ flex:0 0 auto; background:rgba(255,255,255,.12); border:none; color:#f1e8d2; padding:9px 12px; font-size:12px; cursor:pointer; white-space:nowrap; border-radius:6px 6px 0 0; }
-.quick-tabs button.active{ background:var(--paper-card); color:var(--navy); font-weight:700; }
+.quick-tabs button.active{ background:var(--paper-card); color:var(--acc-deep); font-weight:700; }
 .quick-body{ flex:1; overflow-y:auto; padding:14px 16px; }
 .feed-item{ padding:12px 0; border-bottom:1px dashed var(--line); }
 .feed-item:last-child{ border-bottom:none; }
-.feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--gold); margin-bottom:4px; display:block; }
+.feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--acc); margin-bottom:4px; display:block; }
 .feed-item .ttl{ font-size:13px; font-weight:700; margin:0 0 3px; line-height:1.4; }
 .feed-item .time{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
 
@@ -226,22 +231,22 @@ button{ font-family:inherit; }
 #view-viewer.active{ display:flex; }
 :root{ --p-width: 30vw; --p-height: 82vh; }
 
-#viewerSidebar{ width:220px; background:rgba(255,255,255,0.96); border-right:2px solid var(--navy); display:flex; flex-direction:column; z-index:130; transition:transform .3s ease; }
+#viewerSidebar{ width:220px; background:rgba(255,255,255,0.96); border-right:2px solid var(--acc-deep); display:flex; flex-direction:column; z-index:130; transition:transform .3s ease; }
 .viewer-sidebar-head{ padding:20px; border-bottom:2px solid var(--line); }
-.viewer-sidebar-head strong{ display:block; font-size:15px; color:var(--navy); }
-.viewer-back-link{ display:inline-block; margin-top:10px; font-size:12px; color:var(--navy); border:1px solid var(--navy); padding:4px 10px; border-radius:14px; cursor:pointer; background:none; }
-.viewer-back-link:hover{ background:var(--navy); color:#fff; }
+.viewer-sidebar-head strong{ display:block; font-size:15px; color:var(--acc-deep); }
+.viewer-back-link{ display:inline-block; margin-top:10px; font-size:12px; color:var(--acc-deep); border:1px solid var(--acc-deep); padding:4px 10px; border-radius:14px; cursor:pointer; background:none; }
+.viewer-back-link:hover{ background:var(--acc-deep); color:#fff; }
 .toc-list{ flex:1; overflow-y:auto; padding:10px; }
 .toc-item{ padding:12px; margin-bottom:5px; background:#fff; border:1px solid #ddd; cursor:pointer; font-size:13px; color:var(--ink-soft); }
-.toc-item.active{ background:var(--navy); color:#fff; }
+.toc-item.active{ background:var(--acc-deep); color:#fff; }
 
 #viewer-menu-toggle{ display:none; font-size:24px; background:none; border:none; color:#fff; cursor:pointer; padding-right:15px; }
 
 #viewerMain{ flex:1; display:flex; flex-direction:column; position:relative; overflow:hidden; }
-.viewer-header{ height:58px; background:var(--navy); display:flex; justify-content:space-between; align-items:center; padding:0 20px; color:#fff; z-index:130; position:relative; }
+.viewer-header{ height:58px; background:var(--acc-deep); display:flex; justify-content:space-between; align-items:center; padding:0 20px; color:#fff; z-index:130; position:relative; }
 .viewer-pagejump{ position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:8px; align-items:center; background:rgba(255,255,255,0.15); padding:5px 15px; border-radius:20px; }
 .viewer-pagejump input{ width:50px; border:none; border-radius:4px; padding:4px; text-align:center; }
-.viewer-pagejump button{ padding:4px 12px; background:var(--gold); border:none; border-radius:15px; cursor:pointer; font-weight:bold; color:#fff; }
+.viewer-pagejump button{ padding:4px 12px; background:var(--acc); border:none; border-radius:15px; cursor:pointer; font-weight:bold; color:#fff; }
 .brand-mini{ background:rgba(255,255,255,.15); color:#fff; border:none; padding:5px 10px; border-radius:14px; font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px; cursor:pointer; flex:0 0 auto; }
 .brand-mini:hover{ background:var(--stamp); }
 
@@ -257,12 +262,12 @@ button{ font-family:inherit; }
 
 .zoom-overlay{ position:fixed; top:58px; left:220px; width:calc(100vw - 220px); height:calc(100vh - 58px); background:rgba(0,0,0,.55); z-index:200; display:none; justify-content:center; align-items:flex-start; overflow:hidden; padding-top:25px; box-sizing:border-box; }
 .zoom-overlay.active{ display:flex; }
-.zoom-container{ width:80vw; height:calc(100vh * 2.3); max-width:1100px; background:#fff; box-shadow:0 25px 65px rgba(0,0,0,.45); border:2px solid var(--navy); transform:translateY(0) scale(1); transform-origin:top center; overflow:hidden; cursor:grab; }
+.zoom-container{ width:80vw; height:calc(100vh * 2.3); max-width:1100px; background:#fff; box-shadow:0 25px 65px rgba(0,0,0,.45); border:2px solid var(--acc-deep); transform:translateY(0) scale(1); transform-origin:top center; overflow:hidden; cursor:grab; }
 .zoom-container:active{ cursor:grabbing; }
 .zoom-container iframe, .book-frame{ width:100%; height:100%; border:none; pointer-events:none; }
 .click-layer{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; cursor:pointer; }
 .static-page{ padding:40px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#fff; box-sizing:border-box; }
-.link-btn{ display:block; width:220px; padding:15px; margin:10px 0; background:var(--navy); color:#fff !important; text-decoration:none; border-radius:8px; font-weight:bold; font-size:14px; transition:.3s; }
+.link-btn{ display:block; width:220px; padding:15px; margin:10px 0; background:var(--acc-deep); color:#fff !important; text-decoration:none; border-radius:8px; font-weight:bold; font-size:14px; transition:.3s; }
 .link-btn:hover{ background:var(--stamp); transform:translateY(-3px); }
 .page-info{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.8); color:#fff; padding:7px 20px; border-radius:25px; font-size:12px; z-index:110; }
 
@@ -281,8 +286,8 @@ button{ font-family:inherit; }
   .viewer-pagejump input{ width:40px; }
   .stage{ display:none; }
   .mobile-viewer{ display:flex; flex-direction:column; width:100%; height:calc(100vh - 50px); background:#f5f5f5; }
-  .mobile-toolbar{ display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--navy); color:#fff; font-size:14px; }
-  .mobile-toolbar button{ border:none; background:#fff; color:var(--navy); padding:6px 14px; border-radius:6px; font-weight:bold; }
+  .mobile-toolbar{ display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--acc-deep); color:#fff; font-size:14px; }
+  .mobile-toolbar button{ border:none; background:#fff; color:var(--acc-deep); padding:6px 14px; border-radius:6px; font-weight:bold; }
   .mobile-pdf-wrapper{ flex:1; width:100%; overflow:auto; -webkit-overflow-scrolling:touch; background:#ccc; display:flex; justify-content:flex-start; align-items:flex-start; }
   .mobile-pdf{ width:100vw; min-width:600px; height:100%; min-height:85vh; border:none; background:#fff; pointer-events:auto; }
   .zoom-overlay{ display:none !important; }
@@ -299,7 +304,7 @@ button{ font-family:inherit; }
   .masthead h1{ font-size:38px; }
   .stamp{ display:none; }
   #appChrome, #view-home, #view-archive{ padding-left:16px; padding-right:16px; }
-  .mobile-region-btn{ display:inline-flex; }
+  .masthead-hamburger{ display:inline-flex; }
   .region-sidebar{ position:fixed; top:0; left:0; height:100%; transform:translateX(-100%); transition:transform .3s ease; z-index:500; box-shadow:6px 0 24px rgba(0,0,0,.2); }
   .region-sidebar.open{ transform:translateX(0); }
   .issue-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
@@ -323,15 +328,16 @@ button{ font-family:inherit; }
   </div>
 
   <div class="masthead">
+    <button class="masthead-hamburger" id="btnRegion" aria-label="지역별 보기">☰</button>
     <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
     <h1 onclick="goHome()" title="메인으로">국민경제<span>㊉</span></h1>
     <div class="masthead-tagline">— 소비자와 소상공인이 함께 쓰는 상생의 기록 —</div>
     <svg class="stamp" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="44" fill="none" stroke="#b23a2e" stroke-width="3"/>
-      <circle cx="50" cy="50" r="37" fill="none" stroke="#b23a2e" stroke-width="1.2"/>
-      <text x="50" y="40" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#b23a2e">상생</text>
-      <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#b23a2e">인증</text>
-      <text x="50" y="74" text-anchor="middle" font-family="Nanum Gothic Coding" font-size="7" fill="#b23a2e">GUKMIN KYUNGJE</text>
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#14532d" stroke-width="3"/>
+      <circle cx="50" cy="50" r="37" fill="none" stroke="#14532d" stroke-width="1.2"/>
+      <text x="50" y="40" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#14532d">상생</text>
+      <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#14532d">인증</text>
+      <text x="50" y="74" text-anchor="middle" font-family="Nanum Gothic Coding" font-size="7" fill="#14532d">GUKMIN KYUNGJE</text>
     </svg>
   </div>
 
@@ -402,7 +408,6 @@ button{ font-family:inherit; }
 <div id="view-archive" class="view">
   <div class="archive-toolbar">
     <div class="row">
-      <button class="mobile-region-btn" id="btnRegion" aria-label="지역 선택 열기">☰</button>
       <div class="search-box">
         <input id="searchInput" type="text" placeholder="호수, 제목, 지역으로 검색 (예: 2016년 5월)">
         <button id="searchBtn" aria-label="검색">
@@ -951,7 +956,16 @@ const regionSidebar = document.getElementById('regionSidebar');
 const scrim = document.getElementById('scrim');
 function openRegionDrawer(){ regionSidebar.classList.add('open'); scrim.classList.add('show'); }
 function closeRegionDrawer(){ regionSidebar.classList.remove('open'); if(!quickDrawer.classList.contains('open')) scrim.classList.remove('show'); }
-document.getElementById('btnRegion').addEventListener('click', openRegionDrawer);
+document.getElementById('btnRegion').addEventListener('click', () => {
+  // 지역별 보기는 '지난 신문 보기' 화면의 기능이므로, 홈 화면에서 눌렀다면 먼저 그 화면으로 전환
+  if(!document.getElementById('view-archive').classList.contains('active')){
+    document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
+    const archiveBtn = document.querySelector('#sectionBar button[data-tab="archive"]');
+    if(archiveBtn) archiveBtn.classList.add('active');
+    showView('archive');
+  }
+  openRegionDrawer();
+});
 
 /* ══════════════════════════════════════════════════════════════
    4) 퀵메뉴 드로어 (실시간 소식) - 모든 화면 공통
@@ -1057,7 +1071,7 @@ function openViewer(issue){
   bookEl.insertAdjacentHTML('beforeend', `
     <div style="position:absolute; top:0; right:0; width:var(--p-width); height:var(--p-height); z-index:0;">
       <div class="static-page" style="border:1px solid #bbb; box-shadow:0 10px 30px rgba(0,0,0,.2);">
-        <h3 style="color:var(--navy);">AI PLATMARKET</h3>
+        <h3 style="color:var(--acc-deep);">AI PLATMARKET</h3>
         <a href="https://aiplatmarket.com" target="_blank" class="link-btn">AI 플랫마켓 바로가기</a>
         <a href="https://chatdoumi.com" target="_blank" class="link-btn">내 사업 내 비서 챗도우미</a>
         <p style="font-size:11px; margin-top:20px; color:#888;">© 국민경제㊉신문사</p>
