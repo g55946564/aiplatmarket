@@ -42,9 +42,9 @@
   --r:10px;
 
   /* ── 신문 지면 전용 톤 (플랫폼 토큰과 충돌하지 않는 추가 변수) ── */
-  --paper:#F3EDE0;
-  --paper-deep:#ece4d2;
-  --paper-card:#fffdf7;
+  --paper:#ffffff;
+  --paper-deep:#ffffff;
+  --paper-card:#ffffff;
   --ink:#221f1a;
   --ink-soft:#4a453d;
   --navy-deep:#0f2e1a;
@@ -114,7 +114,6 @@ button{ font-family:inherit; }
   vertical-align:middle;
   margin-left:2px;
 }
-.stamp{ position:absolute; top:10px; right:4px; width:88px; height:88px; transform:rotate(-14deg); opacity:.92; }
 
 /* ── 포털 검색바 (마스트헤드, 기존 태그라인 자리) ── */
 .portal-search-box{
@@ -224,7 +223,9 @@ button{ font-family:inherit; }
 #view-archive{ max-width:1040px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
 .archive-toolbar{ padding:16px 24px 0; }
 .archive-toolbar .row{ display:flex; align-items:center; gap:10px; }
-.masthead-hamburger{ display:none; position:absolute; left:6px; top:18px; background:none; color:var(--acc-deep); border:none; font-size:24px; cursor:pointer; z-index:5; padding:4px 8px; }
+.masthead-hamburger{ position:absolute; top:18px; background:none; color:var(--acc-deep); border:none; font-size:24px; cursor:pointer; z-index:5; padding:4px 8px; }
+.masthead-hamburger.left{ display:none; left:6px; }
+.masthead-hamburger.right{ display:inline-flex; right:6px; }
 .search-box{ flex:1; display:flex; background:#fff; border-radius:22px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); max-width:520px; }
 .search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; }
 .search-box button{ border:none; background:var(--acc); color:#fff; width:42px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
@@ -263,11 +264,6 @@ button{ font-family:inherit; }
 .scrim{ position:fixed; inset:0; background:rgba(20,15,8,.45); z-index:400; display:none; }
 .scrim.show{ display:block; }
 
-.quick-fab{
-  position:fixed; right:20px; bottom:20px; width:52px; height:52px; border-radius:50%;
-  background:var(--acc-deep); color:#fff; border:none; font-size:20px; cursor:pointer; z-index:450;
-  box-shadow:0 6px 18px rgba(0,0,0,.28);
-}
 .quick-drawer{
   position:fixed; top:0; right:0; width:340px; max-width:88vw; height:100%; background:var(--paper-card);
   z-index:500; transform:translateX(100%); transition:transform .3s ease; display:flex; flex-direction:column;
@@ -363,9 +359,8 @@ button{ font-family:inherit; }
   .sub-stories{ grid-template-columns:1fr; }
   .lead-body{ columns:1; }
   .masthead h1{ font-size:38px; }
-  .stamp{ display:none; }
   #appChrome, #view-home, #view-archive{ padding-left:16px; padding-right:16px; }
-  .masthead-hamburger{ display:inline-flex; }
+  .masthead-hamburger.left{ display:inline-flex; }
   .region-sidebar{ position:fixed; top:0; left:0; height:100%; transform:translateX(-100%); transition:transform .3s ease; z-index:500; box-shadow:6px 0 24px rgba(0,0,0,.2); }
   .region-sidebar.open{ transform:translateX(0); }
   .issue-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
@@ -393,7 +388,7 @@ button{ font-family:inherit; }
   </div>
 
   <div class="masthead">
-    <button class="masthead-hamburger" id="btnRegion" aria-label="지역별 보기">☰</button>
+    <button class="masthead-hamburger left" id="btnRegion" aria-label="지역별 보기">☰</button>
     <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
     <h1 onclick="goHome()" title="메인으로"><span class="brand-text">국민경제</span><span class="plus-red">㊉</span></h1>
 
@@ -414,13 +409,7 @@ button{ font-family:inherit; }
       </div>
     </div>
 
-    <svg class="stamp" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="44" fill="none" stroke="#14532d" stroke-width="3"/>
-      <circle cx="50" cy="50" r="37" fill="none" stroke="#14532d" stroke-width="1.2"/>
-      <text x="50" y="40" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#14532d">상생</text>
-      <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#14532d">인증</text>
-      <text x="50" y="74" text-anchor="middle" font-family="Nanum Gothic Coding" font-size="7" fill="#14532d">GUKMIN KYUNGJE</text>
-    </svg>
+    <button class="masthead-hamburger right" id="quickFab" aria-label="실시간 소식 열기">☰</button>
   </div>
 
   <div class="headline-ticker" id="headlineTicker">
@@ -557,8 +546,7 @@ button{ font-family:inherit; }
 
 <div class="scrim" id="scrim"></div>
 
-<!-- 퀵메뉴 -->
-<button class="quick-fab" id="quickFab" aria-label="실시간 소식 열기">☰</button>
+<!-- 퀵메뉴 (버튼은 마스트헤드 우측으로 이동, 드로어만 여기 유지) -->
 <div class="quick-drawer" id="quickDrawer">
   <div class="quick-drawer-head">
     <div class="row"><strong>실시간 소식</strong><button class="viewer-back-link" id="btnQuickClose" style="border:none;color:#fff;font-size:18px;">✕</button></div>
@@ -945,6 +933,8 @@ let currentTab = 'headline';
 
 function switchTab(tab){
   document.querySelectorAll('#sectionBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  const activeBtn = document.querySelector(`#sectionBar button[data-tab="${tab}"]`);
+  if(activeBtn) activeBtn.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
   if(tab === 'archive'){
     showView('archive');
   } else {
@@ -978,38 +968,42 @@ function buildHeadlineTicker(){
 }
 buildHeadlineTicker();
 
-/* ── 섹션바(카테고리 탭) 좌→우 자동 스크롤 ──
-   내용을 복제하지 않는 실제 버튼이라 scrollLeft를 서서히 늘려 콘텐츠가
-   오른쪽에서 왼쪽으로 흐르듯 보이게 하고, 끝까지 가면 처음(0)으로 되돌아간다.
-   (이전 버전은 0에서 시작해 곧바로 줄이는 방향이라, 시작하자마자 조건에 걸려
-    오른쪽 끝으로 순간 이동하는 버그가 있었음 — 방향을 반대로 바꿔 해결)
-   사용자가 마우스를 올리거나 터치하는 동안은 자동 스크롤을 멈춘다. */
-(function autoScrollSectionBar(){
-  const bar = document.getElementById('sectionBar');
-  let paused = false;
-  bar.addEventListener('mouseenter', () => paused = true);
-  bar.addEventListener('mouseleave', () => paused = false);
-  bar.addEventListener('touchstart', () => paused = true, { passive:true });
-  bar.addEventListener('touchend', () => setTimeout(() => paused = false, 2500), { passive:true });
+/* ── 모바일: 카테고리 콘텐츠 좌우 터치 스와이프로 메뉴 전환 ──
+   (기존 자동 스크롤은 제거. 대신 "오늘의 헤드라인" 등 메뉴 아래 본문 영역을
+    좌→우로 스와이프하면 다음 메뉴로, 우→좌로 스와이프하면 이전 메뉴로 전환) */
+(function swipeTabNavigation(){
+  const target = document.querySelector('#view-home .main-col');
+  if(!target) return;
 
-  const SPEED_PX_PER_SEC = 12; // 속도를 여기서 조절 (숫자가 작을수록 느림)
-  let lastTs = null;
+  const TAB_ORDER = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
+    .map(b => b.dataset.tab)
+    .filter(t => t !== 'archive');
 
-  function tick(ts){
-    if(lastTs === null) lastTs = ts;
-    const dt = (ts - lastTs) / 1000;
-    lastTs = ts;
+  const THRESHOLD = 60; // 스와이프로 인식할 최소 이동 거리(px)
+  let startX = 0, startY = 0, tracking = false;
 
-    if(!paused){
-      const max = bar.scrollWidth - bar.clientWidth;
-      if(max > 0){
-        bar.scrollLeft += SPEED_PX_PER_SEC * dt;
-        if(bar.scrollLeft >= max) bar.scrollLeft = 0;
-      }
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  target.addEventListener('touchstart', (e) => {
+    if(e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive:true });
+
+  target.addEventListener('touchend', (e) => {
+    if(!tracking) return;
+    tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if(Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return; // 세로 스크롤(글 읽기)은 무시
+
+    const idx = TAB_ORDER.indexOf(currentTab);
+    if(idx === -1) return;
+    // 좌→우 스와이프(dx 양수) = 다음 메뉴, 우→좌 스와이프(dx 음수) = 이전 메뉴
+    const nextIdx = dx > 0
+      ? (idx + 1) % TAB_ORDER.length
+      : (idx - 1 + TAB_ORDER.length) % TAB_ORDER.length;
+    switchTab(TAB_ORDER[nextIdx]);
+  }, { passive:true });
 })();
 
 /* ── 포털 검색 드롭다운 ── */
