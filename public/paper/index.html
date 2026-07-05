@@ -67,6 +67,12 @@ body{
 a{ color:inherit; text-decoration:none; }
 button{ font-family:inherit; }
 
+/* ⚠ 플랫폼 공통 헤더(#fw-header, core.js가 채워 넣는 "AIPLATMARKET ← AI플랫마켓 홈으로" 박스)를
+   이 모듈에서는 숨깁니다. 좌측 내비게이션 드로어에 이미 AIPLATMARKET 링크가 있어 중복이라 요청에 따라 제거.
+   ※ div#fw-header 자체는 MODULE_DEV_GUIDE 규정상 마크업에는 남겨두고, 표시만 막는 방식입니다.
+      플랫폼 전체 통일성 정책과 충돌 여부는 메인 개발창 확인 권장. */
+#fw-header{ display:none !important; }
+
 /* ══════════════════════════ 공통 상단 크롬 (홈/지난호 화면) ══════════════════════════ */
 #appChrome{
   max-width:1040px;
