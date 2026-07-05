@@ -1,444 +1,954 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>국민경제㊉ - 디지털 아카이브</title>
-    <style>
-        :root { 
-            --p-width: 30vw; 
-            --p-height: 85vh; 
-            --wood-bg: #e6ccb2; 
-        }
-        
-        body { 
-            background: var(--wood-bg) url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-            margin: 0; display: flex; height: 100vh; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; 
-            position: relative;
-        }
-        
-        /* 사이드바 */
-        #sidebar { 
-            width: 220px; background: rgba(255,255,255,0.95); border-right: 2px solid #a67c52; 
-            display: flex; flex-direction: column; z-index: 3000; transition: transform 0.3s ease; 
-        }
-        .toc-list { flex: 1; overflow-y: auto; padding: 10px; }
-        .toc-item { padding: 12px; margin-bottom: 5px; background: #fff; border: 1px solid #ddd; cursor: pointer; font-size: 13px; color: #5d4037; }
-        .toc-item.active { background: #8b4513; color: white; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>국민경제㊉ - 상생신문</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Gothic+Coding&display=swap');
 
-        /* 모바일 토글 메뉴 버튼 */
-        #menu-toggle {
-            display: none; font-size: 24px; background: none; border: none; color: white; cursor: pointer; padding-right: 15px;
-        }
+:root{
+  --paper:#F3EDE0;
+  --paper-deep:#ece4d2;
+  --paper-card:#fffdf7;
+  --ink:#221f1a;
+  --ink-soft:#4a453d;
+  --navy:#1f3a5c;
+  --navy-deep:#152A44;
+  --stamp:#b23a2e;
+  --gold:#b8863a;
+  --line:#c9bfa8;
+  --line-strong:#221f1a;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper-deep);
+  color:var(--ink);
+  font-family:'Noto Sans KR', sans-serif;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; }
 
-        /* 헤더 */
-        header { 
-            height: 60px; background: #5d4037; display: flex; justify-content: space-between; 
-            align-items: center; padding: 0 20px; color: white; z-index: 3500; position: relative;
-        }
-        .search-container { 
-            position: absolute; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.15); 
-            padding: 5px 15px; border-radius: 20px;
-        }
-        .search-container input { width: 50px; border: none; border-radius: 4px; padding: 4px; text-align: center; }
-        .search-container button { padding: 4px 12px; background: #ffcc80; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; color: #5d4037; }
+/* ══════════════════════════ 공통 상단 크롬 (홈/지난호 화면) ══════════════════════════ */
+#appChrome{
+  max-width:1040px;
+  margin:0 auto;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-bottom:none;
+  padding:14px 34px 0;
+}
+.utility-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:'Nanum Gothic Coding', monospace;
+  font-size:11.5px;
+  letter-spacing:.02em;
+  color:var(--ink-soft);
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+  flex-wrap:wrap;
+  gap:6px;
+}
+.utility-bar .ticker{ color:var(--stamp); font-weight:700; }
 
-        /* 스테이지 및 북 컨테이너 (PC 전용) */
-        #main-content { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-        .stage { flex: 1; display: flex; justify-content: center; align-items: center; perspective: 3000px; position: relative; overflow: hidden; }
-        .book { width: calc(var(--p-width) * 2); height: var(--p-height); position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
-        
-        .page { 
-            width: var(--p-width); height: var(--p-height); position: absolute; 
-            top: 0; right: 0; transform-origin: left; transform-style: preserve-3d; 
-            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); 
-        }
-        .page.flipped { transform: rotateY(-180deg); }
-        
-        .front, .back { 
-            position: absolute; width: 100%; height: 100%; background: white; 
-            border: 1px solid #bbb; backface-visibility: hidden; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.4s ease;
-        }
-        .back { transform: rotateY(180deg); }
+.masthead{ text-align:center; padding:20px 0 12px; position:relative; }
+.masthead-eyebrow{ font-size:12px; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:10px; }
+.masthead h1{
+  font-family:'Noto Serif KR', serif; font-weight:900; font-size:58px;
+  letter-spacing:.03em; margin:0; color:var(--ink); line-height:1;
+}
+.masthead h1 span{ color:var(--navy); }
+.masthead-tagline{ margin-top:10px; font-size:13.5px; color:var(--ink-soft); font-family:'Noto Serif KR', serif; }
+.stamp{ position:absolute; top:10px; right:4px; width:88px; height:88px; transform:rotate(-14deg); opacity:.92; }
 
-        /* 가장자리 내비게이션 버튼 */
-        .nav-btn { 
-            position: absolute; top: 0; width: 15vw; height: 100%; z-index: 1500; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            font-size: 60px; color: rgba(0,0,0,0.02); transition: 0.3s; user-select: none;
-        }
-        .nav-btn:hover { color: rgba(139, 69, 19, 0.3); background: rgba(0,0,0,0.02); }
-        .btn-prev { left: 0; } 
-        .btn-next { right: 0; }
+.section-bar{
+  display:flex; flex-wrap:wrap;
+  border-top:3px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong);
+  margin-top:14px;
+}
+.section-bar button{
+  padding:9px 16px; font-size:13px; font-weight:700; border:none; background:none;
+  border-right:1px solid var(--line); color:var(--ink-soft); cursor:pointer;
+}
+.section-bar button.active{ color:var(--paper); background:var(--navy); }
+.section-bar button:last-child{ border-right:none; }
+.section-bar button.paper-mode{ color:var(--stamp); }
+.section-bar button.paper-mode.active{ background:var(--stamp); color:#fff; }
 
-        /* 고해상도 확대 팝업 레이어 */
-        .zoom-overlay {
-            position: fixed; top: 60px; left: 220px; width: calc(100vw - 220px); height: calc(100vh - 60px);
-            background: rgba(0, 0, 0, 0.55); z-index: 2400; display: none; justify-content: center; align-items: flex-start; 
-            overflow: hidden; padding-top: 25px; box-sizing: border-box;
-        }
-        .zoom-overlay.active { display: flex; }
-        .zoom-container {
-            width: 80vw; height: calc(100vh * 2.3); max-width: 1100px; background: white;
-            box-shadow: 0 25px 65px rgba(0,0,0,0.45); border: 2px solid #8b4513;
-            transform: translateY(0px) scale(1); transform-origin: top center; overflow: hidden; cursor: grab;
-        }
-        .zoom-container:active { cursor: grabbing; }
-        .zoom-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+/* ══════════════════════════ 뷰(view) 컨테이너 공통 ══════════════════════════ */
+.view{ display:none; }
+.view.active{ display:block; }
 
-        /* 콘텐츠 보조 서식 */
-        iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
-        .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
-        .static-page { padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #fff; box-sizing: border-box; }
-        
-        .link-btn { 
-            display: block; width: 220px; padding: 15px; margin: 10px 0; background: #138b1d; color: #fff !important; 
-            text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; transition: 0.3s;
-        }
-        .link-btn:hover { background: #5d4037; transform: translateY(-3px); }
-        .page-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 7px 20px; border-radius: 25px; font-size: 12px; z-index: 2000; }
+/* ══════════════════════════ 홈 화면 (신문 1면) ══════════════════════════ */
+#view-home{
+  max-width:1040px; margin:0 auto; background:var(--paper);
+  border:1px solid var(--line); border-top:none; padding:0 34px 30px;
+}
+.layout{ display:grid; grid-template-columns:2.1fr 1fr; gap:30px; margin-top:22px; }
 
-        /* 모바일 전용 독립 뷰어 레이아웃 */
-        .mobile-viewer { display: none; }
+.lead-kicker{ font-size:12px; font-weight:700; color:var(--stamp); letter-spacing:.12em; margin-bottom:6px; }
+.lead h2{ font-family:'Noto Serif KR', serif; font-size:32px; line-height:1.28; margin:0 0 10px; font-weight:700; }
+.lead .dek{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; font-family:'Noto Serif KR', serif; }
+.byline{ font-family:'Nanum Gothic Coding', monospace; font-size:11.5px; color:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 0; margin-bottom:16px; }
 
-        /* ==========================================================================
-           📱 모바일 및 스마트폰 미디어 쿼리 (768px 이하) 완전 보완형 터치 개방
-           ========================================================================== */
-        @media (max-width: 768px) {
-            body { overflow: hidden; position: fixed; width: 100vw; height: 100vh; }
+.lead-figure{
+  width:100%; aspect-ratio:16/8; border:1px solid var(--line-strong); margin-bottom:8px; position:relative; overflow:hidden;
+  background:repeating-linear-gradient(135deg, #e4dcc6 0 2px, #ddd3ba 2px 4px);
+}
+.lead-figure .cap-badge{ position:absolute; bottom:10px; left:10px; background:var(--navy); color:var(--paper); font-size:11px; font-weight:700; padding:4px 10px; }
+.figcaption{ font-size:11.5px; color:var(--ink-soft); margin-bottom:20px; font-style:italic; }
 
-            /* 서랍장 형태로 변환되는 모바일 사이드바 */
-            #sidebar {
-                position: fixed; left: -240px; top: 0; width: 220px; height: 100%; 
-                transition: transform 0.3s ease; z-index: 5000; background: #fff;
-            }
-            #sidebar.mobile-open { transform: translateX(240px); box-shadow: 5px 0 15px rgba(0,0,0,0.3); }
-            #menu-toggle { display: block; }
+.lead-body{ columns:2; column-gap:26px; font-size:14.3px; line-height:1.85; text-align:justify; }
+.lead-body p{ margin:0 0 14px; }
+.dropcap::first-letter{ font-family:'Noto Serif KR', serif; font-size:50px; font-weight:900; float:left; line-height:.8; padding:4px 6px 0 0; color:var(--navy); }
 
-            /* 컴팩트 헤더 정돈 */
-            header { height: 50px; padding: 0 10px; }
-            header > div:first-child { font-size: 13px; width: auto !important; }
-            header > div:last-child { display: none; }
-            .search-container { position: static; transform: none; gap: 4px; padding: 4px 8px; font-size: 12px; }
-            .search-container input { width: 40px; }
+.pull-quote{ font-family:'Noto Serif KR', serif; font-size:16.5px; font-weight:700; border-left:3px solid var(--stamp); padding:4px 0 4px 16px; margin:4px 0 14px; color:var(--ink); break-inside:avoid; }
 
-            /* PC 3D 요소 완벽 차단 및 모바일 전용 독립 뷰어 개방 */
-            .stage { display: none; }
-            
-            .mobile-viewer {
-                display: flex; flex-direction: column; width: 100%; height: calc(100vh - 50px); background: #f5f5f5;
-            }
-            .mobile-toolbar {
-                display: flex; justify-content: space-between; align-items: center; 
-                padding: 10px; background: #5d4037; color: #fff; font-size: 14px; z-index: 100;
-            }
-            .mobile-toolbar button {
-                border: none; background: #fff; color: #5d4037; padding: 6px 14px; border-radius: 6px; font-weight: bold;
-            }
+.sub-stories{ display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:22px; border-top:2px solid var(--line-strong); padding-top:16px; }
+.sub-story h3{ font-family:'Noto Serif KR', serif; font-size:18px; margin:0 0 6px; line-height:1.35; }
+.sub-story .kicker{ font-size:11px; font-weight:700; color:var(--navy); letter-spacing:.08em; margin-bottom:4px; }
+.sub-story p{ font-size:13px; line-height:1.75; color:var(--ink-soft); margin:0; }
 
-            /* [핵심 보완] iframe 터치 잠금을 해제하고 자유 자유이동을 유도하는 랩퍼 구역 */
-            .mobile-pdf-wrapper {
-                flex: 1;
-                width: 100%;
-                overflow: auto; /* 상하좌우 스크롤 완전 허용 */
-                -webkit-overflow-scrolling: touch; /* iOS 가속 터치 스크롤 탑재 */
-                background: #ccc;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-start;
-            }
+.sidebar-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
+.sidebar-box .box-title{ background:var(--ink); color:var(--paper); font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; padding:8px 12px; }
+.store-item{ padding:12px 14px; border-bottom:1px dashed var(--line); display:flex; gap:10px; align-items:flex-start; }
+.store-item:last-child{ border-bottom:none; }
+.store-thumb{ width:44px; height:44px; flex:0 0 auto; background:repeating-linear-gradient(45deg,#e4dcc6 0 3px,#ddd3ba 3px 6px); border:1px solid var(--line-strong); position:relative; }
+.store-thumb .mini-stamp{ position:absolute; bottom:-6px; right:-6px; width:22px; height:22px; border-radius:50%; border:1.6px solid var(--stamp); color:var(--stamp); font-size:7px; font-weight:700; display:flex; align-items:center; justify-content:center; background:var(--paper); transform:rotate(-10deg); text-align:center; }
+.store-name{ font-weight:700; font-size:13px; margin:0 0 3px; }
+.store-desc{ font-size:11.5px; color:var(--ink-soft); margin:0; line-height:1.5; }
 
-            /* [핵심 보완] 신문지면 너비를 가두지 않고 넉넉하게 확장하여 양옆/위아래 자유 밀기 확보 */
-            .mobile-pdf {
-                width: 100vw;
-                min-width: 600px; /* 모바일 가로화면에서도 글자가 터지거나 잘리지 않게 기본 가로폭 확보 */
-                height: 100%;
-                min-height: 85vh;
-                border: none;
-                background: #fff;
-            }
+.coupon-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
+.coupon-box .box-title{ background:var(--navy); }
+.coupon-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px dashed var(--line); font-size:12px; }
+.coupon-row:last-child{ border-bottom:none; }
+.coupon-code{ font-family:'Nanum Gothic Coding', monospace; background:var(--paper-deep); border:1px dashed var(--ink-soft); padding:2px 6px; font-weight:700; color:var(--stamp); }
 
-            /* 확대 팝업 차단 */
-            .zoom-overlay { display: none !important; }
-        }
-    </style>
+.weather-strip{ border:1px solid var(--line-strong); padding:12px 14px; font-size:11.5px; color:var(--ink-soft); line-height:1.7; font-family:'Nanum Gothic Coding', monospace; }
+.weather-strip strong{ color:var(--ink); }
+
+/* ══════════════════════════ 지난 신문 보기 화면 ══════════════════════════ */
+#view-archive{ max-width:1040px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
+.archive-toolbar{ padding:16px 24px 0; }
+.archive-toolbar .row{ display:flex; align-items:center; gap:10px; }
+.mobile-region-btn{ display:none; background:var(--navy); color:#fff; border:none; padding:9px 12px; font-size:18px; cursor:pointer; }
+.search-box{ flex:1; display:flex; background:#fff; border-radius:22px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); max-width:520px; }
+.search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; }
+.search-box button{ border:none; background:var(--gold); color:#fff; width:42px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.search-box svg{ width:16px; height:16px; }
+
+.archive-layout{ display:flex; align-items:flex-start; margin-top:14px; }
+.region-sidebar{ width:180px; flex:0 0 auto; background:var(--paper-card); border-right:1px solid var(--line); min-height:520px; padding:16px 0; }
+.region-sidebar h4{ font-size:11.5px; color:var(--ink-soft); letter-spacing:.1em; padding:0 16px; margin:0 0 8px; }
+.region-item{ display:block; padding:8px 16px; font-size:13px; border-left:3px solid transparent; cursor:pointer; }
+.region-item:hover{ background:#f1e8d2; }
+.region-item.active{ border-left-color:var(--gold); background:#f1e8d2; font-weight:700; color:var(--navy); }
+
+.archive-content{ flex:1; min-width:0; padding:0 20px 34px 22px; }
+.section-title{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; border-bottom:2px solid var(--ink); padding-bottom:8px; }
+.section-title h2{ font-family:'Noto Serif KR', serif; font-size:19px; margin:0; }
+.section-title span{ font-size:11.5px; color:var(--ink-soft); }
+
+.issue-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:16px; }
+.issue-card{ background:var(--paper-card); border:1px solid var(--line); cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; display:block; }
+.issue-card:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(60,40,20,.18); }
+.issue-thumb{ position:relative; width:100%; aspect-ratio:3/4.15; overflow:hidden; background:#ddd; border-bottom:1px solid var(--line); }
+.issue-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.issue-thumb .badge{ position:absolute; top:8px; left:8px; background:var(--stamp); color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:2px; }
+.issue-meta{ padding:9px 11px 11px; }
+.issue-meta .issue-title{ font-size:12.5px; font-weight:700; margin:0 0 3px; line-height:1.35; }
+.issue-meta .issue-date{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+.empty-state{ padding:50px 20px; text-align:center; color:var(--ink-soft); font-size:13.5px; }
+
+/* ══════════════════════════ 사이트 푸터 ══════════════════════════ */
+#siteFooter{ background:var(--navy-deep); color:#e6d8bd; padding:26px 20px; font-size:12px; line-height:1.9; }
+#siteFooter .foot-inner{ max-width:1040px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
+#siteFooter .foot-brand{ font-family:'Noto Serif KR', serif; color:#fff; font-size:15px; margin-bottom:6px; }
+#siteFooter a.foot-link{ color:var(--gold); font-weight:700; }
+
+/* ══════════════════════════ 공통 스크림 & 퀵메뉴 드로어 ══════════════════════════ */
+.scrim{ position:fixed; inset:0; background:rgba(20,15,8,.45); z-index:400; display:none; }
+.scrim.show{ display:block; }
+
+.quick-fab{
+  position:fixed; right:20px; bottom:20px; width:52px; height:52px; border-radius:50%;
+  background:var(--navy); color:#fff; border:none; font-size:20px; cursor:pointer; z-index:450;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
+}
+.quick-drawer{
+  position:fixed; top:0; right:0; width:340px; max-width:88vw; height:100%; background:var(--paper-card);
+  z-index:500; transform:translateX(100%); transition:transform .3s ease; display:flex; flex-direction:column;
+  box-shadow:-6px 0 24px rgba(0,0,0,.2);
+}
+.quick-drawer.open{ transform:translateX(0); }
+.quick-drawer-head{ background:var(--navy); color:#fff; padding:16px 16px 0; }
+.quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.quick-drawer-head .row strong{ font-family:'Noto Serif KR', serif; font-size:16px; }
+.quick-tabs{ display:flex; overflow-x:auto; gap:4px; }
+.quick-tabs button{ flex:0 0 auto; background:rgba(255,255,255,.12); border:none; color:#f1e8d2; padding:9px 12px; font-size:12px; cursor:pointer; white-space:nowrap; border-radius:6px 6px 0 0; }
+.quick-tabs button.active{ background:var(--paper-card); color:var(--navy); font-weight:700; }
+.quick-body{ flex:1; overflow-y:auto; padding:14px 16px; }
+.feed-item{ padding:12px 0; border-bottom:1px dashed var(--line); }
+.feed-item:last-child{ border-bottom:none; }
+.feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--gold); margin-bottom:4px; display:block; }
+.feed-item .ttl{ font-size:13px; font-weight:700; margin:0 0 3px; line-height:1.4; }
+.feed-item .time{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+
+/* ══════════════════════════ 뷰어 화면 (종이신문 그대로 보기) ══════════════════════════ */
+#view-viewer{ position:fixed; inset:0; background:#e6ccb2; z-index:100; display:none; }
+#view-viewer.active{ display:flex; }
+:root{ --p-width: 30vw; --p-height: 82vh; }
+
+#viewerSidebar{ width:220px; background:rgba(255,255,255,0.96); border-right:2px solid var(--navy); display:flex; flex-direction:column; z-index:130; transition:transform .3s ease; }
+.viewer-sidebar-head{ padding:20px; border-bottom:2px solid var(--line); }
+.viewer-sidebar-head strong{ display:block; font-size:15px; color:var(--navy); }
+.viewer-back-link{ display:inline-block; margin-top:10px; font-size:12px; color:var(--navy); border:1px solid var(--navy); padding:4px 10px; border-radius:14px; cursor:pointer; background:none; }
+.viewer-back-link:hover{ background:var(--navy); color:#fff; }
+.toc-list{ flex:1; overflow-y:auto; padding:10px; }
+.toc-item{ padding:12px; margin-bottom:5px; background:#fff; border:1px solid #ddd; cursor:pointer; font-size:13px; color:var(--ink-soft); }
+.toc-item.active{ background:var(--navy); color:#fff; }
+
+#viewer-menu-toggle{ display:none; font-size:24px; background:none; border:none; color:#fff; cursor:pointer; padding-right:15px; }
+
+#viewerMain{ flex:1; display:flex; flex-direction:column; position:relative; overflow:hidden; }
+.viewer-header{ height:58px; background:var(--navy); display:flex; justify-content:space-between; align-items:center; padding:0 20px; color:#fff; z-index:130; position:relative; }
+.viewer-pagejump{ position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:8px; align-items:center; background:rgba(255,255,255,0.15); padding:5px 15px; border-radius:20px; }
+.viewer-pagejump input{ width:50px; border:none; border-radius:4px; padding:4px; text-align:center; }
+.viewer-pagejump button{ padding:4px 12px; background:var(--gold); border:none; border-radius:15px; cursor:pointer; font-weight:bold; color:#fff; }
+
+.stage{ flex:1; display:flex; justify-content:center; align-items:center; perspective:3000px; position:relative; overflow:hidden; }
+.book{ width:calc(var(--p-width) * 2); height:var(--p-height); position:relative; transform-style:preserve-3d; transition:transform .4s ease; }
+.book-page{ width:var(--p-width); height:var(--p-height); position:absolute; top:0; right:0; transform-origin:left; transform-style:preserve-3d; transition:transform .8s cubic-bezier(0.645,0.045,0.355,1); }
+.book-page.flipped{ transform:rotateY(-180deg); }
+.pg-front, .pg-back{ position:absolute; width:100%; height:100%; background:#fff; border:1px solid #bbb; backface-visibility:hidden; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.2); }
+.pg-back{ transform:rotateY(180deg); }
+.nav-btn{ position:absolute; top:0; width:15vw; height:100%; z-index:120; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:56px; color:rgba(0,0,0,0.02); transition:.3s; user-select:none; }
+.nav-btn:hover{ color:rgba(31,58,92,.35); background:rgba(0,0,0,.02); }
+.btn-prev{ left:0; } .btn-next{ right:0; }
+
+.zoom-overlay{ position:fixed; top:58px; left:220px; width:calc(100vw - 220px); height:calc(100vh - 58px); background:rgba(0,0,0,.55); z-index:200; display:none; justify-content:center; align-items:flex-start; overflow:hidden; padding-top:25px; box-sizing:border-box; }
+.zoom-overlay.active{ display:flex; }
+.zoom-container{ width:80vw; height:calc(100vh * 2.3); max-width:1100px; background:#fff; box-shadow:0 25px 65px rgba(0,0,0,.45); border:2px solid var(--navy); transform:translateY(0) scale(1); transform-origin:top center; overflow:hidden; cursor:grab; }
+.zoom-container:active{ cursor:grabbing; }
+.zoom-container iframe, .book-frame{ width:100%; height:100%; border:none; pointer-events:none; }
+.click-layer{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; cursor:pointer; }
+.static-page{ padding:40px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#fff; box-sizing:border-box; }
+.link-btn{ display:block; width:220px; padding:15px; margin:10px 0; background:var(--navy); color:#fff !important; text-decoration:none; border-radius:8px; font-weight:bold; font-size:14px; transition:.3s; }
+.link-btn:hover{ background:var(--stamp); transform:translateY(-3px); }
+.page-info{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.8); color:#fff; padding:7px 20px; border-radius:25px; font-size:12px; z-index:110; }
+
+.mobile-viewer{ display:none; }
+#viewer-sidebar-overlay{ display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,.4); z-index:129; }
+
+@media (max-width:768px){
+  #view-viewer{ overflow:hidden; }
+  #viewerSidebar{ position:fixed; left:-240px; top:0; width:220px; height:100%; transition:transform .3s ease; z-index:135; background:#fff; }
+  #viewerSidebar.mobile-open{ transform:translateX(240px); box-shadow:5px 0 15px rgba(0,0,0,.3); }
+  #viewer-menu-toggle{ display:block; }
+  .viewer-header{ height:50px; padding:0 10px; }
+  .viewer-header > div:first-child{ font-size:13px; width:auto !important; }
+  .viewer-header > div:last-child{ display:none; }
+  .viewer-pagejump{ position:static; transform:none; gap:4px; padding:4px 8px; font-size:12px; }
+  .viewer-pagejump input{ width:40px; }
+  .stage{ display:none; }
+  .mobile-viewer{ display:flex; flex-direction:column; width:100%; height:calc(100vh - 50px); background:#f5f5f5; }
+  .mobile-toolbar{ display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--navy); color:#fff; font-size:14px; }
+  .mobile-toolbar button{ border:none; background:#fff; color:var(--navy); padding:6px 14px; border-radius:6px; font-weight:bold; }
+  .mobile-pdf-wrapper{ flex:1; width:100%; overflow:auto; -webkit-overflow-scrolling:touch; background:#ccc; display:flex; justify-content:flex-start; align-items:flex-start; }
+  .mobile-pdf{ width:100vw; min-width:600px; height:100%; min-height:85vh; border:none; background:#fff; pointer-events:auto; }
+  .zoom-overlay{ display:none !important; }
+}
+
+/* ══════════════════════════ 반응형 (홈/지난호) ══════════════════════════ */
+@media (max-width:900px){
+  .issue-grid{ grid-template-columns:repeat(3, 1fr); }
+}
+@media (max-width:760px){
+  .layout{ grid-template-columns:1fr; }
+  .sub-stories{ grid-template-columns:1fr; }
+  .lead-body{ columns:1; }
+  .masthead h1{ font-size:38px; }
+  .stamp{ display:none; }
+  #appChrome, #view-home, #view-archive{ padding-left:16px; padding-right:16px; }
+  .mobile-region-btn{ display:inline-flex; }
+  .region-sidebar{ position:fixed; top:0; left:0; height:100%; transform:translateX(-100%); transition:transform .3s ease; z-index:500; box-shadow:6px 0 24px rgba(0,0,0,.2); }
+  .region-sidebar.open{ transform:translateX(0); }
+  .issue-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
+  #siteFooter .foot-inner{ flex-direction:column; }
+}
+</style>
 </head>
 <body>
 
-<div id="sidebar-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:4900;" onclick="toggleMobileSidebar()"></div>
+<!-- ══════════════════════════ 공통 상단 (홈 · 지난호 화면 전용) ══════════════════════════ -->
+<div id="appChrome">
+  <div class="utility-bar">
+    <span>2026년 7월 5일 일요일 · 창간호 · 무료 배포</span>
+    <span class="ticker">오늘의 상생지수 ▲ 2.4%</span>
+    <span>발행: 국민경제㊉ 편집부</span>
+  </div>
 
-<div id="sidebar">
-    <div style="padding: 25px; text-align: center; border-bottom: 2px solid #d2b48c;"><strong>국민경제㊉</strong></div>
-    <div class="toc-list" id="toc-list"></div>
+  <div class="masthead">
+    <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
+    <h1>국민경제<span>㊉</span></h1>
+    <div class="masthead-tagline">— 소비자와 소상공인이 함께 쓰는 상생의 기록 —</div>
+    <svg class="stamp" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#b23a2e" stroke-width="3"/>
+      <circle cx="50" cy="50" r="37" fill="none" stroke="#b23a2e" stroke-width="1.2"/>
+      <text x="50" y="40" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#b23a2e">상생</text>
+      <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#b23a2e">인증</text>
+      <text x="50" y="74" text-anchor="middle" font-family="Nanum Gothic Coding" font-size="7" fill="#b23a2e">GUKMIN KYUNGJE</text>
+    </svg>
+  </div>
+
+  <div class="section-bar" id="sectionBar">
+    <button data-tab="headline" class="active">오늘의 헤드라인</button>
+    <button data-tab="store">상생 스토어</button>
+    <button data-tab="benefit">소비자 혜택</button>
+    <button data-tab="local">동네 소식</button>
+    <button data-tab="archive" class="paper-mode">종이신문 그대로 보기</button>
+  </div>
 </div>
 
-<div id="main-content">
-    <header>
-        <button id="menu-toggle" onclick="toggleMobileSidebar()">☰</button>
-        <div style="font-weight: bold; width:200px;">DIGITAL ARCHIVE</div>
-        <div class="search-container">
-            <span>면 이동:</span>
-            <input type="number" id="page-input" min="1" max="16" placeholder="1">
-            <button onclick="goPage()">이동</button>
-        </div>
-        <div style="width:200px; text-align:right; font-size:12px;">국민경제㊉신문사</div>
-    </header>
+<!-- ══════════════════════════ 홈 화면 (신문 1면) ══════════════════════════ -->
+<div id="view-home" class="view active">
+  <div class="layout">
+    <div class="main-col">
+      <div class="lead">
+        <div class="lead-kicker" id="leadKicker"></div>
+        <h2 id="leadTitle"></h2>
+        <p class="dek" id="leadDek"></p>
+        <div class="byline" id="leadByline"></div>
+        <div class="lead-figure"><span class="cap-badge">현장 사진</span></div>
+        <div class="figcaption" id="leadFigcaption"></div>
+        <div class="lead-body dropcap" id="leadBody"></div>
+      </div>
+      <div class="sub-stories" id="subStories"></div>
+    </div>
+
+    <div class="side-col">
+      <div class="sidebar-box">
+        <div class="box-title">이주의 상생 스토어</div>
+        <div class="store-item"><div class="store-thumb"><div class="mini-stamp">인증</div></div>
+          <div><div class="store-name">밀담 베이커리</div><div class="store-desc">새벽 발효종 식빵 전문 · 재구매율 47%</div></div></div>
+        <div class="store-item"><div class="store-thumb"><div class="mini-stamp">인증</div></div>
+          <div><div class="store-name">청과상 김씨네</div><div class="store-desc">전통시장 제철 과일 · 신규고객 200명↑</div></div></div>
+        <div class="store-item"><div class="store-thumb"><div class="mini-stamp">인증</div></div>
+          <div><div class="store-name">골목반찬 온기</div><div class="store-desc">독자 리뷰로 재조명된 반찬가게</div></div></div>
+      </div>
+
+      <div class="coupon-box">
+        <div class="box-title">이번 주 상생 쿠폰</div>
+        <div class="coupon-row"><span>밀담 베이커리 15% 할인</span><span class="coupon-code">MILDAM15</span></div>
+        <div class="coupon-row"><span>청과상 김씨네 2천원 할인</span><span class="coupon-code">FRESH2000</span></div>
+        <div class="coupon-row"><span>신규 가입 첫 구매 혜택</span><span class="coupon-code">WELCOME</span></div>
+      </div>
+
+      <div class="weather-strip">
+        <strong>오늘의 동네 시세</strong><br>
+        복숭아 1kg 8,900원 (▼ 3%) · 애호박 1개 1,200원 (— 0%) · 식빵 1인분 3,200원 (▲ 1%)<br>
+        내일 발행 예보: 동네 소식 · 소비자 인터뷰 특집
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ 지난 신문 보기 화면 ══════════════════════════ -->
+<div id="view-archive" class="view">
+  <div class="archive-toolbar">
+    <div class="row">
+      <button class="mobile-region-btn" id="btnRegion" aria-label="지역 선택 열기">☰</button>
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="호수, 제목, 지역으로 검색 (예: 2016년 5월)">
+        <button id="searchBtn" aria-label="검색">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="archive-layout">
+    <aside class="region-sidebar" id="regionSidebar">
+      <h4>지역별 보기</h4>
+      <a class="region-item active" data-region="전체">전체</a>
+      <a class="region-item" data-region="인천">인천</a>
+      <a class="region-item" data-region="서울">서울</a>
+      <a class="region-item" data-region="경기">경기</a>
+      <a class="region-item" data-region="부산">부산</a>
+      <a class="region-item" data-region="대구">대구</a>
+      <a class="region-item" data-region="광주">광주</a>
+      <a class="region-item" data-region="대전">대전</a>
+      <a class="region-item" data-region="강원">강원</a>
+      <a class="region-item" data-region="충청">충청</a>
+      <a class="region-item" data-region="전라">전라</a>
+      <a class="region-item" data-region="경북·경남">경북·경남</a>
+      <a class="region-item" data-region="제주">제주</a>
+    </aside>
+
+    <main class="archive-content">
+      <div class="section-title"><h2>지난 신문 보기</h2><span id="resultCount"></span></div>
+      <div class="issue-grid" id="issueGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">검색·지역 조건에 맞는 신문이 없습니다.</div>
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════════════════ 사이트 푸터 ══════════════════════════ -->
+<footer id="siteFooter">
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">국민경제㊉ 신문사</div>
+      월간 발행 · 등록번호 인천 라 00000<br>
+      인천광역시 부평구 백운로9번길 26-1<br>
+      전화 032-000-0000 · 이메일 news@example.com
+    </div>
+    <div>
+      제휴 · 운영<br>
+      <a class="foot-link" href="https://aiplatmarket.com" target="_blank">AI플랫마켓</a> ·
+      <a class="foot-link" href="https://chatdoumi.com" target="_blank">챗도우미</a><br>
+      © 2026 국민경제㊉ &amp; AI플랫마켓. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- 퀵메뉴 -->
+<button class="quick-fab" id="quickFab" aria-label="실시간 소식 열기">☰</button>
+<div class="quick-drawer" id="quickDrawer">
+  <div class="quick-drawer-head">
+    <div class="row"><strong>실시간 소식</strong><button class="viewer-back-link" id="btnQuickClose" style="border:none;color:#fff;font-size:18px;">✕</button></div>
+    <div class="quick-tabs" id="quickTabs">
+      <button class="active" data-feed="platmarket">AI플랫마켓 소식</button>
+      <button data-feed="merchant">소상공인 정보</button>
+      <button data-feed="news">오늘의 뉴스</button>
+      <button data-feed="store">상생 스토어</button>
+      <button data-feed="event">이벤트·혜택</button>
+    </div>
+  </div>
+  <div class="quick-body" id="quickBody"></div>
+</div>
+
+<!-- ══════════════════════════ 뷰어 화면 (종이신문 그대로 보기 실행 화면) ══════════════════════════ -->
+<div id="view-viewer" class="view">
+  <div id="viewer-sidebar-overlay" onclick="toggleViewerSidebar()"></div>
+  <div id="viewerSidebar">
+    <div class="viewer-sidebar-head">
+      <strong id="viewerSidebarTitle">국민경제㊉</strong><br>
+      <button class="viewer-back-link" onclick="backToArchive()">← 지난 신문 목록</button>
+    </div>
+    <div class="toc-list" id="tocList"></div>
+  </div>
+
+  <div id="viewerMain">
+    <div class="viewer-header">
+      <button id="viewer-menu-toggle" onclick="toggleViewerSidebar()">☰</button>
+      <div style="font-weight:bold;width:220px;" id="viewerHeaderTitle">DIGITAL ARCHIVE</div>
+      <div class="viewer-pagejump">
+        <span>면 이동:</span>
+        <input type="number" id="pageInput" min="1" placeholder="1">
+        <button onclick="goPage()">이동</button>
+      </div>
+      <div style="width:220px;text-align:right;font-size:12px;">국민경제㊉신문사</div>
+    </div>
 
     <div class="mobile-viewer">
-        <div class="mobile-toolbar">
-            <button onclick="mobilePrev()">◀ 이전</button>
-            <span id="mobilePageInfo">1 / 16</span>
-            <button onclick="mobileNext()">다음 ▶</button>
-        </div>
-        <div class="mobile-pdf-wrapper">
-            <iframe id="mobilePdf" class="mobile-pdf" src="life-info.pdf#page=1&navpanes=0"></iframe>
-        </div>
+      <div class="mobile-toolbar">
+        <button onclick="mobilePrev()">◀ 이전</button>
+        <span id="mobilePageInfo">1 / 16</span>
+        <button onclick="mobileNext()">다음 ▶</button>
+      </div>
+      <div class="mobile-pdf-wrapper">
+        <iframe id="mobilePdf" class="mobile-pdf" src=""></iframe>
+      </div>
     </div>
 
     <div class="stage">
-        <div class="nav-btn btn-prev" onclick="movePrev()">❮</div>
-        <div class="nav-btn btn-next" onclick="moveNext()">❯</div>
-
-        <div class="book" id="book">
-            <div class="page flipped" style="z-index: 10;">
-                <div class="front"><div class="static-page"><h3>시작</h3></div></div>
-                <div class="back">
-                    <div class="click-layer" onclick="openZoom(1)"></div>
-                    <iframe src="life-info.pdf#page=1&navpanes=0"></iframe>
-                </div>
-            </div>
-
-            <script>
-                for(let i=2; i<=14; i+=2) {
-                    let z = 9 - (i/2);
-                    document.write(`
-                    <div class="page" style="z-index: ${z};">
-                        <div class="front">
-                            <div class="click-layer" onclick="openZoom(${i})"></div>
-                            <iframe src="life-info.pdf#page=${i}&navpanes=0"></iframe>
-                        </div>
-                        <div class="back">
-                            <div class="click-layer" onclick="openZoom(${i+1})"></div>
-                            <iframe src="life-info.pdf#page=${i+1}&navpanes=0"></iframe>
-                        </div>
-                    </div>
-                    `);
-                }
-            </script>
-
-            <div class="page" style="z-index: 1;">
-                <div class="front">
-                    <div class="click-layer" onclick="openZoom(16)"></div>
-                    <iframe src="life-info.pdf#page=16&navpanes=0"></iframe>
-                </div>
-                <div class="back"></div>
-            </div>
-
-            <div style="position: absolute; top:0; right:0; width:var(--p-width); height:var(--p-height); z-index:0;">
-                <div class="static-page" style="border: 1px solid #bbb; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                    <h3 style="color:#5d4037;">AI PLATMARKET</h3>
-                    <a href="https://aiplatmarket.com" target="_blank" class="link-btn">AI 플랫마켓 바로가기</a>
-                    <a href="https://chatdoumi.com" target="_blank" class="link-btn">내 사업 내 비서 챗도우미</a>
-                    <p style="font-size:11px; margin-top:20px; color:#888;">© 국민경제㊉신문사</p>
-                </div>
-            </div>
-        </div>
-        <div class="page-info" id="info-text">1면 (표지)</div>
+      <div class="nav-btn btn-prev" onclick="movePrev()">❮</div>
+      <div class="nav-btn btn-next" onclick="moveNext()">❯</div>
+      <div class="book" id="book"></div>
+      <div class="page-info" id="infoText">1면 (표지)</div>
     </div>
-</div>
+  </div>
 
-<div class="zoom-overlay" id="zoom-overlay" onmousedown="handleOverlayClick(event)" ontouchstart="handleOverlayClick(event)">
-    <div class="zoom-container" id="zoom-container">
-        <iframe id="zoom-iframe" src=""></iframe>
-    </div>
+  <div class="zoom-overlay" id="zoomOverlay" onmousedown="handleOverlayClick(event)" ontouchstart="handleOverlayClick(event)">
+    <div class="zoom-container" id="zoomContainer"><iframe id="zoomIframe" src=""></iframe></div>
+  </div>
 </div>
 
 <script>
-    // --- 글로벌 상태값 변수 정의 (중복 선언 완전 정리) ---
-    let current = 1; 
-    let mobilePage = 1;
-    const totalPages = 16;
-    const pages = document.querySelectorAll('.page');
-    const labels = ["1면 (표지)", "2-3면", "4-5면", "6-7면", "8-9면", "10-11면", "12-13면", "14-15면", "16면 (최종)"];
+/* ══════════════════════════════════════════════════════════════
+   1) 화면 전환 (view switch)
+════════════════════════════════════════════════════════════════ */
+function showView(name){
+  document.getElementById('view-home').classList.toggle('active', name === 'home');
+  document.getElementById('view-archive').classList.toggle('active', name === 'archive');
+  document.getElementById('view-viewer').classList.toggle('active', name === 'viewer');
 
-    // 목차 동적 배치 및 유기적 클릭 이벤트 매핑
-    const toc = document.getElementById('toc-list');
-    labels.forEach((l, i) => {
-        const item = document.createElement('div');
-        item.className = 'toc-item';
-        item.innerText = l;
-        item.onclick = () => {
-            jumpTo(i + 1);
-            closeMobileSidebar();
-        };
-        toc.appendChild(item);
-    });
+  const chromeVisible = (name !== 'viewer');
+  document.getElementById('appChrome').style.display = chromeVisible ? 'block' : 'none';
+  document.getElementById('siteFooter').style.display = chromeVisible ? 'block' : 'none';
+  window.scrollTo(0,0);
+}
 
-    // 모바일 전용 토글 서랍장 스크립트
-    function toggleMobileSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-        const isOpen = sidebar.classList.toggle('mobile-open');
-        overlay.style.display = isOpen ? 'block' : 'none';
+/* ══════════════════════════════════════════════════════════════
+   2) 홈 화면 - 섹션 탭(기사 콘텐츠 전환)
+════════════════════════════════════════════════════════════════ */
+const ARTICLES = {
+  headline:{
+    kicker:'단독 · 상생 스토어 탐방',
+    title:"동네빵집 '밀담', 입점 두 달만에 온라인 주문 30% 늘었다",
+    dek:'새벽 발효종 하나로 버텨온 8평 빵집이 국민경제㊉와 AI플랫마켓의 단골 추천 기능을 만나 골목을 넘어 도시 전체의 단골을 얻었다.',
+    byline:'취재 · 편집부 | 상생스토어팀 사진 | 2026.07.05 06:00 발행',
+    figcaption:'사장 이OO씨가 새벽 반죽을 확인하고 있다. 매장 한켠엔 리뷰 출력물이 붙어 있었다.',
+    pullQuote:'"손님이 남긴 리뷰 한 줄이 다음 손님을 데려온다는 걸 처음 알았어요."',
+    body:[
+      '서울 변두리 골목, 손님 세 명이 겨우 들어설 8평 매장에서 이OO(52)씨는 15년째 빵을 굽는다. 매출은 늘 동네 안에서만 맴돌았다. 변화는 지난 5월, 딸의 권유로 국민경제㊉에 매장을 등록하면서 시작됐다.',
+      '국민경제㊉는 소비자의 구매·리뷰 데이터를 분석해 취향이 맞는 동네 가게를 추천한다. 이씨의 매장은 새벽 발효종이라는 키워드로 반경 5km 밖 소비자에게까지 노출되기 시작했다.',
+      '입점 두 달, 온라인 주문은 30% 늘었고 재구매율은 47%에 달한다. 이씨는 정률 상생 수수료 구조를 택해 마진 부담도 크지 않았다고 말했다.',
+      '편집부가 만난 소상공인 12명 중 9명이 처음으로 단골이 아닌 손님이 스스로 찾아왔다고 답했다. 하반기 중 전통시장 상인 500곳으로 추천 서비스를 확대할 계획이다.'
+    ],
+    subs:[
+      {kicker:'골목 경제', title:'전통시장 청과상 김씨, AI 추천으로 신규 고객 200명 확보', body:'단골만 오던 가게에 처음 보는 얼굴이 늘었다는 김OO씨. 시세 정보를 매일 갱신한 것이 주효했다는 분석이다.'},
+      {kicker:'소비자 목소리', title:'리뷰 한 줄이 살린 골목 반찬가게, 독자 제보', body:'폐업 직전이던 가게가 리뷰 하나로 살아났다는 제보가 이어지고 있다. 다음 호에 이야기를 모은다.'}
+    ]
+  },
+  store:{
+    kicker:'상생 스토어 특집',
+    title:'인증 스토어 100곳 돌파, 소비자 리뷰가 만든 신뢰',
+    dek:'국민경제㊉가 선정한 상생 인증 스토어가 100곳을 넘어섰다. 선정 기준과 뒷이야기를 짚었다.',
+    byline:'취재 · 상생스토어팀 | 2026.07.05 06:00 발행',
+    figcaption:'인증 스토어에는 도장 형태의 배지가 부여된다.',
+    pullQuote:'"매출보다 재구매율을 본다. 숫자보다 진짜 단골이 기준이다."',
+    body:[
+      '국민경제㊉의 상생 인증은 매출액이 아니라 재구매율과 리뷰 신뢰도를 기준으로 선정된다. 첫 심사 이후 8개월 만에 인증 스토어는 100곳을 넘겼다.',
+      '심사팀은 매달 소비자 리뷰 표본을 직접 확인하고, 허위 리뷰 여부를 교차 검증한다. 인증이 취소된 사례도 3건 있었다.',
+      '상인들 사이에서는 인증 배지가 곧 신뢰의 표시로 자리잡았다는 평가가 나온다.'
+    ],
+    subs:[
+      {kicker:'현장', title:'밀담 베이커리, 인증 후 재구매율 47%', body:'인증 이후 리뷰 수가 3배 늘었다는 것이 매장 측 설명이다.'},
+      {kicker:'제도', title:'인증 심사 기준, 하반기 개편 예고', body:'소비자단체 의견을 반영해 심사 항목을 확대할 예정이다.'}
+    ]
+  },
+  benefit:{
+    kicker:'소비자 혜택',
+    title:'이번 달 상생 쿠폰, 소비자 4만 명이 받았다',
+    dek:'소상공인 할인 쿠폰과 지역화폐 적립 혜택이 이번 달 크게 늘었다.',
+    byline:'취재 · 소비자혜택팀 | 2026.07.05 06:00 발행',
+    figcaption:'쿠폰함 화면. 매주 새로운 혜택이 갱신된다.',
+    pullQuote:'"할인보다 좋은 건 우리 동네 가게를 알게 됐다는 것."',
+    body:[
+      '이번 달 국민경제㊉를 통해 발급된 소상공인 할인 쿠폰은 누적 4만 건을 넘어섰다. 신규 가입자 대상 웰컴 쿠폰 사용률이 가장 높았다.',
+      '지역화폐 결제 시 추가 적립 혜택도 함께 제공되면서, 소비자들의 재방문율이 눈에 띄게 늘었다는 것이 운영팀의 설명이다.',
+      '다음 달에는 여름 특별 프로모션으로 전통시장 연계 쿠폰이 추가될 예정이다.'
+    ],
+    subs:[
+      {kicker:'혜택 안내', title:'신규 가입 첫 구매 무료배송', body:'가입 후 7일 이내 첫 구매 시 배송비가 면제된다.'},
+      {kicker:'이벤트', title:'상생 스토어 리뷰 작성 시 추첨 경품', body:'매달 말 추첨을 통해 소정의 상품을 증정한다.'}
+    ]
+  },
+  local:{
+    kicker:'동네 소식',
+    title:'전통시장 청과상 김씨, AI 추천으로 신규 고객 200명 확보',
+    dek:'매일 아침 시세를 직접 갱신해온 상인의 성실함이 추천 알고리즘과 만났다.',
+    byline:'취재 · 동네소식팀 | 2026.07.05 06:00 발행',
+    figcaption:'김씨가 매대에 오늘의 시세표를 붙이고 있다.',
+    pullQuote:'"단골만 오던 가게에 처음 보는 얼굴이 늘었어요."',
+    body:[
+      '30년째 같은 자리에서 과일을 팔아온 김OO(61)씨는 최근 몇 달 새 낯선 얼굴이 많아졌다고 말한다. 국민경제㊉ 입점 후 매일 시세를 갱신한 것이 계기였다.',
+      '플랫폼은 최신 시세 정보를 우선 노출하는 방식으로 성실하게 정보를 갱신하는 상인에게 더 많은 기회를 준다.',
+      '김씨는 앞으로도 손님을 속이지 않는 정직한 시세로 승부하겠다고 말했다.'
+    ],
+    subs:[
+      {kicker:'현장', title:"골목반찬 '온기', 독자 리뷰로 재조명", body:'폐업 직전이던 가게가 독자 리뷰 하나로 살아났다는 제보가 이어지고 있다.'},
+      {kicker:'동네 공지', title:'이번 주 전통시장 소독·청소 일정 안내', body:'구청과 상인회가 공동으로 위생 점검을 진행한다.'}
+    ]
+  }
+};
+
+function renderArticle(key){
+  const a = ARTICLES[key];
+  document.getElementById('leadKicker').textContent = a.kicker;
+  document.getElementById('leadTitle').textContent = a.title;
+  document.getElementById('leadDek').textContent = a.dek;
+  document.getElementById('leadByline').textContent = a.byline;
+  document.getElementById('leadFigcaption').textContent = a.figcaption;
+
+  const bodyEl = document.getElementById('leadBody');
+  bodyEl.innerHTML = '';
+  a.body.forEach((p, i) => {
+    if(i === 1){
+      const q = document.createElement('div');
+      q.className = 'pull-quote';
+      q.textContent = a.pullQuote;
+      bodyEl.appendChild(q);
     }
+    const para = document.createElement('p');
+    para.textContent = p;
+    bodyEl.appendChild(para);
+  });
 
-    function closeMobileSidebar() {
-        document.getElementById('sidebar').classList.remove('mobile-open');
-        document.getElementById('sidebar-overlay').style.display = 'none';
+  const subsEl = document.getElementById('subStories');
+  subsEl.innerHTML = a.subs.map(s => `
+    <div class="sub-story">
+      <div class="kicker">${s.kicker}</div>
+      <h3>${s.title}</h3>
+      <p>${s.body}</p>
+    </div>
+  `).join('');
+}
+
+let currentTab = 'headline';
+document.querySelectorAll('#sectionBar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    if(tab === 'archive'){
+      showView('archive');
+    } else {
+      currentTab = tab;
+      renderArticle(tab);
+      showView('home');
     }
+  });
+});
+renderArticle('headline');
 
-    // PC 3D 책장 전환 제어 시스템
-    function moveNext() { if (current < pages.length) { pages[current].classList.add('flipped'); current++; updateUI(); } }
-    function movePrev() { if (current > 1) { current--; pages[current].classList.remove('flipped'); updateUI(); } }
+/* ══════════════════════════════════════════════════════════════
+   3) 지난 신문 보기 화면
+════════════════════════════════════════════════════════════════ */
+const ISSUES = [
+  { id:"201605", title:"국민경제㊉나눔 2016년 5월호", date:"2016.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202601", title:"국민경제㊉나눔 2026년 1월호", date:"2026.01", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202602", title:"국민경제㊉나눔 2026년 2월호", date:"2026.02", region:"서울", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202603", title:"국민경제㊉나눔 2026년 3월호", date:"2026.03", region:"경기", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202604", title:"국민경제㊉나눔 2026년 4월호", date:"2026.04", region:"부산", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202605", title:"국민경제㊉나눔 2026년 5월호", date:"2026.05", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202606", title:"국민경제㊉나눔 2026년 6월호", date:"2026.06", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202607", title:"국민경제㊉나눔 2026년 7월호", date:"2026.07", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:true },
+  { id:"202512", title:"국민경제㊉나눔 2025년 12월호", date:"2025.12", region:"광주", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202511", title:"국민경제㊉나눔 2025년 11월호", date:"2025.11", region:"대전", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202510", title:"국민경제㊉나눔 2025년 10월호", date:"2025.10", region:"강원", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202509", title:"국민경제㊉나눔 2025년 9월호", date:"2025.09", region:"충청", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202508", title:"국민경제㊉나눔 2025년 8월호", date:"2025.08", region:"전라", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202507", title:"국민경제㊉나눔 2025년 7월호", date:"2025.07", region:"경북·경남", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202506", title:"국민경제㊉나눔 2025년 6월호", date:"2025.06", region:"제주", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202505", title:"국민경제㊉나눔 2025년 5월호", date:"2025.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202504", title:"국민경제㊉나눔 2025년 4월호", date:"2025.04", region:"서울", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202503", title:"국민경제㊉나눔 2025년 3월호", date:"2025.03", region:"경기", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202502", title:"국민경제㊉나눔 2025년 2월호", date:"2025.02", region:"부산", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
+  { id:"202501", title:"국민경제㊉나눔 2025년 1월호", date:"2025.01", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false }
+];
 
-    // 목차 선택 시 PC/모바일 양대 채널 스마트 라우팅 싱크 시스템
-    function jumpTo(idx) {
-        pages.forEach((p, i) => { if (i < idx) p.classList.add('flipped'); else p.classList.remove('flipped'); });
-        current = idx;
-        
-        // 목차 양면 인덱스를 모바일 단면 매칭용 홀수면 주소값으로 자동 연산 변환
-        mobilePage = idx === 1 ? 1 : (idx - 1) * 2;
-        
-        updateUI();
-        updateMobilePage();
+const grid = document.getElementById('issueGrid');
+const emptyState = document.getElementById('emptyState');
+const resultCount = document.getElementById('resultCount');
+
+function renderIssues(list){
+  grid.innerHTML = '';
+  emptyState.style.display = list.length === 0 ? 'block' : 'none';
+  resultCount.textContent = `총 ${list.length}호`;
+  list.forEach(issue => {
+    const card = document.createElement('div');
+    card.className = 'issue-card';
+    card.innerHTML = `
+      <div class="issue-thumb">
+        ${issue.isNew ? '<span class="badge">최신호</span>' : ''}
+        <img src="${issue.thumb}" alt="${issue.title} 표지" loading="lazy">
+      </div>
+      <div class="issue-meta">
+        <p class="issue-title">${issue.title}</p>
+        <div class="issue-date">${issue.date} · ${issue.region}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openViewer(issue));
+    grid.appendChild(card);
+  });
+}
+
+function currentFilter(){
+  const activeRegion = document.querySelector('.region-item.active').dataset.region;
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  return ISSUES.filter(issue => {
+    const regionOk = activeRegion === '전체' || issue.region === activeRegion;
+    const qOk = !q || issue.title.toLowerCase().includes(q) || issue.date.includes(q) || issue.region.toLowerCase().includes(q);
+    return regionOk && qOk;
+  });
+}
+function applyFilter(){ renderIssues(currentFilter()); }
+renderIssues(ISSUES);
+
+document.querySelectorAll('.region-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.region-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    applyFilter();
+    closeRegionDrawer();
+  });
+});
+document.getElementById('searchInput').addEventListener('input', applyFilter);
+document.getElementById('searchBtn').addEventListener('click', applyFilter);
+
+const regionSidebar = document.getElementById('regionSidebar');
+const scrim = document.getElementById('scrim');
+function openRegionDrawer(){ regionSidebar.classList.add('open'); scrim.classList.add('show'); }
+function closeRegionDrawer(){ regionSidebar.classList.remove('open'); if(!quickDrawer.classList.contains('open')) scrim.classList.remove('show'); }
+document.getElementById('btnRegion').addEventListener('click', openRegionDrawer);
+
+/* ══════════════════════════════════════════════════════════════
+   4) 퀵메뉴 드로어 (실시간 소식) - 모든 화면 공통
+════════════════════════════════════════════════════════════════ */
+const FEEDS = {
+  platmarket:[
+    {tag:"플랫폼 소식", ttl:"AI플랫마켓, 전통시장 상인 500곳 추천 서비스 확대", time:"방금 전"},
+    {tag:"업데이트", ttl:"단골 추천 알고리즘 v2.3 배포, 정확도 12%p 개선", time:"1시간 전"},
+    {tag:"제휴", ttl:"인천 연수구청과 소상공인 디지털전환 업무협약", time:"3시간 전"}
+  ],
+  merchant:[
+    {tag:"입점 안내", ttl:"광고비 없는 무료 상단노출, 이번 달 선착순 등록", time:"오늘"},
+    {tag:"교육", ttl:"소상공인 온라인 마케팅 무료 특강 (7월 9일)", time:"어제"},
+    {tag:"지원", ttl:"소상공인 정책자금 신청 기간 안내", time:"2일 전"}
+  ],
+  news:[
+    {tag:"오늘의 뉴스", ttl:"골목상권 매출, 전년 대비 4.1% 회복세", time:"오늘 06:00"},
+    {tag:"생활경제", ttl:"여름철 전통시장 농·수산물 시세 동향", time:"오늘 06:00"},
+    {tag:"정책", ttl:"지역화폐 인센티브 하반기 확대 검토", time:"오늘 06:00"}
+  ],
+  store:[
+    {tag:"인증 스토어", ttl:"밀담 베이커리 · 재구매율 47%", time:"이주의 상생"},
+    {tag:"인증 스토어", ttl:"청과상 김씨네 · 신규고객 200명↑", time:"이주의 상생"},
+    {tag:"인증 스토어", ttl:"골목반찬 온기 · 독자 리뷰로 재조명", time:"이주의 상생"}
+  ],
+  event:[
+    {tag:"혜택", ttl:"신규 가입 첫 구매 무료배송 쿠폰", time:"~7/31"},
+    {tag:"이벤트", ttl:"상생 스토어 리뷰 남기고 추첨 경품", time:"~7/20"},
+    {tag:"혜택", ttl:"지역화폐 결제 시 5% 추가 적립", time:"상시"}
+  ]
+};
+const quickDrawer = document.getElementById('quickDrawer');
+const quickBody = document.getElementById('quickBody');
+function renderFeed(key){
+  quickBody.innerHTML = (FEEDS[key]||[]).map(i => `
+    <div class="feed-item"><span class="tag">${i.tag}</span><p class="ttl">${i.ttl}</p><span class="time">${i.time}</span></div>
+  `).join('');
+}
+renderFeed('platmarket');
+document.querySelectorAll('#quickTabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#quickTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderFeed(btn.dataset.feed);
+  });
+});
+function openQuickDrawer(){ quickDrawer.classList.add('open'); scrim.classList.add('show'); }
+function closeQuickDrawer(){ quickDrawer.classList.remove('open'); if(!regionSidebar.classList.contains('open')) scrim.classList.remove('show'); }
+document.getElementById('quickFab').addEventListener('click', openQuickDrawer);
+document.getElementById('btnQuickClose').addEventListener('click', closeQuickDrawer);
+scrim.addEventListener('click', () => { closeRegionDrawer(); closeQuickDrawer(); });
+
+/* ══════════════════════════════════════════════════════════════
+   5) 뷰어 (종이신문 그대로 보기) — 클릭한 호를 그 자리에서 렌더링
+════════════════════════════════════════════════════════════════ */
+let pdfFile = '', totalPages = 16, current = 1, mobilePage = 1, labels = [];
+const bookEl = document.getElementById('book');
+const tocEl = document.getElementById('tocList');
+
+function openViewer(issue){
+  pdfFile = `archive/${issue.id}.pdf`;
+  totalPages = Math.max(2, issue.pages || 16);
+
+  document.getElementById('viewerHeaderTitle').textContent = issue.title;
+  document.getElementById('viewerSidebarTitle').textContent = issue.title;
+  document.getElementById('pageInput').max = totalPages;
+
+  /* 데스크톱 북(book) 재구성 */
+  bookEl.innerHTML = '';
+  bookEl.insertAdjacentHTML('beforeend', `
+    <div class="book-page flipped" style="z-index:${Math.ceil(totalPages/2)+2};">
+      <div class="pg-front"><div class="static-page"><h3>시작</h3></div></div>
+      <div class="pg-back">
+        <div class="click-layer" onclick="openZoom(1)"></div>
+        <iframe class="book-frame" src="${pdfFile}#page=1&navpanes=0"></iframe>
+      </div>
+    </div>
+  `);
+  for(let i=2; i<totalPages; i+=2){
+    const z = Math.ceil(totalPages/2) + 1 - (i/2);
+    bookEl.insertAdjacentHTML('beforeend', `
+      <div class="book-page" style="z-index:${z};">
+        <div class="pg-front">
+          <div class="click-layer" onclick="openZoom(${i})"></div>
+          <iframe class="book-frame" src="${pdfFile}#page=${i}&navpanes=0"></iframe>
+        </div>
+        <div class="pg-back">
+          <div class="click-layer" onclick="openZoom(${i+1})"></div>
+          <iframe class="book-frame" src="${pdfFile}#page=${i+1}&navpanes=0"></iframe>
+        </div>
+      </div>
+    `);
+  }
+  bookEl.insertAdjacentHTML('beforeend', `
+    <div class="book-page" style="z-index:1;">
+      <div class="pg-front">
+        <div class="click-layer" onclick="openZoom(${totalPages})"></div>
+        <iframe class="book-frame" src="${pdfFile}#page=${totalPages}&navpanes=0"></iframe>
+      </div>
+      <div class="pg-back"></div>
+    </div>
+  `);
+  bookEl.insertAdjacentHTML('beforeend', `
+    <div style="position:absolute; top:0; right:0; width:var(--p-width); height:var(--p-height); z-index:0;">
+      <div class="static-page" style="border:1px solid #bbb; box-shadow:0 10px 30px rgba(0,0,0,.2);">
+        <h3 style="color:var(--navy);">AI PLATMARKET</h3>
+        <a href="https://aiplatmarket.com" target="_blank" class="link-btn">AI 플랫마켓 바로가기</a>
+        <a href="https://chatdoumi.com" target="_blank" class="link-btn">내 사업 내 비서 챗도우미</a>
+        <p style="font-size:11px; margin-top:20px; color:#888;">© 국민경제㊉신문사</p>
+      </div>
+    </div>
+  `);
+
+  /* TOC 재구성 */
+  labels = ["1면 (표지)"];
+  for(let i=2; i<totalPages; i+=2) labels.push(`${i}-${i+1}면`);
+  labels.push(`${totalPages}면 (최종)`);
+  tocEl.innerHTML = '';
+  labels.forEach((l, i) => {
+    const item = document.createElement('div');
+    item.className = 'toc-item';
+    item.innerText = l;
+    item.onclick = () => { jumpTo(i+1); closeViewerSidebarMobile(); };
+    tocEl.appendChild(item);
+  });
+
+  current = 1;
+  mobilePage = 1;
+  document.getElementById('mobilePdf').src = `${pdfFile}#page=1&navpanes=0`;
+  document.getElementById('mobilePageInfo').textContent = `1 / ${totalPages}`;
+
+  showView('viewer');
+  updateUI();
+  updateMobilePage();
+}
+
+function backToArchive(){ showView('archive'); }
+
+function pages(){ return document.querySelectorAll('.book-page'); }
+
+function toggleViewerSidebar(){
+  const sb = document.getElementById('viewerSidebar');
+  const ov = document.getElementById('viewer-sidebar-overlay');
+  const isOpen = sb.classList.toggle('mobile-open');
+  ov.style.display = isOpen ? 'block' : 'none';
+}
+function closeViewerSidebarMobile(){
+  document.getElementById('viewerSidebar').classList.remove('mobile-open');
+  document.getElementById('viewer-sidebar-overlay').style.display = 'none';
+}
+
+function moveNext(){ const p = pages(); if(current < p.length){ p[current].classList.add('flipped'); current++; updateUI(); } }
+function movePrev(){ const p = pages(); if(current > 1){ current--; p[current-1].classList.remove('flipped'); updateUI(); } }
+
+function jumpTo(idx){
+  const p = pages();
+  p.forEach((pg,i) => { if(i < idx) pg.classList.add('flipped'); else pg.classList.remove('flipped'); });
+  current = idx;
+  mobilePage = idx === 1 ? 1 : (idx - 1) * 2;
+  updateUI();
+  updateMobilePage();
+}
+
+function goPage(){
+  const v = parseInt(document.getElementById('pageInput').value, 10);
+  if(v >= 1 && v <= totalPages){
+    if(isMobileView()){ mobilePage = v; updateMobilePage(); }
+    else { jumpTo(v === 1 ? 1 : Math.floor(v/2) + 1); }
+  }
+}
+
+function updateUI(){
+  document.querySelectorAll('.toc-item').forEach((it,i) => it.classList.toggle('active', i === current - 1));
+  const infoEl = document.getElementById('infoText');
+  if(infoEl && labels[current-1]) infoEl.innerText = labels[current-1];
+}
+
+function updateMobilePage(){
+  document.getElementById('mobilePdf').src = `${pdfFile}#page=${mobilePage}&navpanes=0`;
+  document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
+  const tocIdx = mobilePage === 1 ? 0 : Math.floor(mobilePage/2);
+  document.querySelectorAll('.toc-item').forEach((it,i) => it.classList.toggle('active', i === tocIdx));
+}
+
+function mobileNext(){ if(mobilePage < totalPages){ mobilePage++; updateMobilePage(); } }
+function mobilePrev(){ if(mobilePage > 1){ mobilePage--; updateMobilePage(); } }
+
+function isMobileView(){ return window.innerWidth <= 768; }
+window.addEventListener('resize', () => {
+  if(document.getElementById('view-viewer').classList.contains('active')){
+    if(isMobileView()) updateMobilePage(); else updateUI();
+  }
+});
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    if(document.getElementById('view-viewer').classList.contains('active')){
+      if(isMobileView()) updateMobilePage(); else updateUI();
     }
+  }, 200);
+});
 
-    function goPage() {
-        const v = parseInt(document.getElementById('page-input').value);
-        if(v >= 1 && v <= 16) {
-            if(window.innerWidth <= 768) {
-                mobilePage = v;
-                updateMobilePage();
-            } else {
-                jumpTo(v === 1 ? 1 : Math.floor(v / 2) + 1);
-            }
-        }
-    }
+/* PC 확대(zoom) 레이어 */
+const zOverlay = document.getElementById('zoomOverlay');
+const zContainer = document.getElementById('zoomContainer');
+const zIframe = document.getElementById('zoomIframe');
+let scale = 1.0, posY = 0, startY = 0, isDragging = false, clickStartTime = 0, clickStartY = 0;
 
-    function updateUI() {
-        document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === current - 1));
-        document.getElementById('info-text').innerText = labels[current - 1];
-    }
+function openZoom(pageNumber){
+  zIframe.src = `${pdfFile}#page=${pageNumber}&navpanes=0`;
+  zOverlay.style.display = 'flex';
+  setTimeout(() => { zOverlay.style.opacity = '1'; }, 10);
+  scale = 1.4; posY = 0;
+  updateTransform();
+  window.addEventListener('wheel', handleOverlayWheel, { passive:false });
+}
+function closeZoom(){
+  zOverlay.style.opacity = '0';
+  setTimeout(() => { zOverlay.style.display = 'none'; zIframe.src = ''; }, 200);
+  window.removeEventListener('wheel', handleOverlayWheel);
+}
+function handleOverlayWheel(e){
+  if(zOverlay.style.display === 'none') return;
+  e.preventDefault();
+  if(e.ctrlKey){ scale -= e.deltaY * 0.008; scale = Math.min(4.0, Math.max(1.0, scale)); }
+  else { posY -= e.deltaY * 0.85; }
+  updateTransform();
+}
+zContainer.addEventListener('mousedown', e => { isDragging = true; startY = e.clientY - posY; clickStartTime = Date.now(); clickStartY = e.clientY; });
+window.addEventListener('mousemove', e => { if(isDragging){ posY = e.clientY - startY; updateTransform(); } });
+window.addEventListener('mouseup', e => {
+  if(!isDragging) return;
+  isDragging = false;
+  const duration = Date.now() - clickStartTime;
+  const moveDistance = Math.abs(e.clientY - clickStartY);
+  if(duration < 250 && moveDistance < 6) closeZoom();
+});
+function handleOverlayClick(e){ if(e.target === zOverlay) closeZoom(); }
+function updateTransform(){
+  const overlayHeight = zOverlay.clientHeight;
+  const containerHeight = zContainer.clientHeight * scale;
+  if(posY > 20) posY = 20;
+  const maxScrollUp = -(containerHeight - overlayHeight) - 40;
+  if(containerHeight > overlayHeight){ if(posY < maxScrollUp) posY = maxScrollUp; } else { posY = 20; }
+  zContainer.style.transform = `translateY(${posY}px) scale(${scale})`;
+}
 
-    // 모바일 독립 뷰어 구동 처리 및 툴바 정보 갱신
-    function updateMobilePage(){
-        document.getElementById('mobilePdf').src = `life-info.pdf#page=${mobilePage}&navpanes=0`;
-        document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
-        
-        const tocIdx = mobilePage === 1 ? 0 : Math.floor(mobilePage / 2);
-        document.querySelectorAll('.toc-item').forEach((it, i) => it.classList.toggle('active', i === tocIdx));
-    }
-
-    function mobileNext(){
-        if(mobilePage < totalPages){
-            mobilePage++;
-            updateMobilePage();
-        }
-    }
-
-    function mobilePrev(){
-        if(mobilePage > 1){
-            mobilePage--;
-            updateMobilePage();
-        }
-    }
-
-    // --- PC 대화면 전용 드래그 앤 스크롤 연산 시스템 스크립트 ---
-    const overlay = document.getElementById('zoom-overlay');
-    const container = document.getElementById('zoom-container');
-    const zoomIframe = document.getElementById('zoom-iframe');
-
-    let scale = 1.0;
-    let posY = 0;
-    let startY = 0;
-    let isDragging = false;
-    let clickStartTime = 0;
-    let clickStartY = 0;
-
-    function openZoom(pageNumber) {
-        zoomIframe.src = `life-info.pdf#page=${pageNumber}&navpanes=0`;
-        overlay.style.display = 'flex';
-        setTimeout(() => { overlay.style.opacity = '1'; }, 10);
-        scale = 1.4; 
-        posY = 0;
-        updateTransform();
-        window.addEventListener('wheel', handleOverlayWheel, { passive: false });
-    }
-
-    function closeZoom() {
-        overlay.style.opacity = '0';
-        setTimeout(() => { overlay.style.display = 'none'; zoomIframe.src = ""; }, 200);
-        window.removeEventListener('wheel', handleOverlayWheel);
-    }
-
-    function handleOverlayWheel(e) {
-        if (overlay.style.display === 'none') return;
-        e.preventDefault();
-        if (e.ctrlKey) {
-            scale -= e.deltaY * 0.008;
-            if (scale < 1.0) scale = 1.0;
-            if (scale > 4.0) scale = 4.0;
-        } else {
-            posY -= e.deltaY * 0.85;
-        }
-        updateTransform();
-    }
-
-    container.addEventListener('mousedown', startInteraction);
-    window.addEventListener('mousemove', doInteraction);
-    window.addEventListener('mouseup', endInteraction);
-
-    function startInteraction(e) {
-        isDragging = true;
-        startY = e.clientY - posY;
-        clickStartTime = new Date().getTime();
-        clickStartY = e.clientY;
-    }
-
-    function doInteraction(e) {
-        if (!isDragging) return;
-        posY = e.clientY - startY;
-        updateTransform();
-    }
-
-    function endInteraction(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        const clickEndTime = new Date().getTime();
-        const duration = clickEndTime - clickStartTime;
-        const moveDistance = Math.abs(e.clientY - clickStartY);
-        if (duration < 250 && moveDistance < 6) {
-            closeZoom();
-        }
-    }
-
-    function handleOverlayClick(e) {
-        if (e.target === overlay) {
-            closeZoom();
-        }
-    }
-
-    function updateTransform() {
-        const overlayHeight = overlay.clientHeight; 
-        const containerHeight = container.clientHeight * scale; 
-        if (posY > 20) posY = 20;
-        const maxScrollUp = -(containerHeight - overlayHeight) - 40;
-        if (containerHeight > overlayHeight) {
-            if (posY < maxScrollUp) posY = maxScrollUp;
-        } else {
-            posY = 20;
-        }
-        container.style.transform = `translateY(${posY}px) scale(${scale})`;
-    }
-
-    // 최초 시스템 이니셜라이징 동기화 구동
-    updateUI();
-    if(window.innerWidth <= 768) {
-        updateMobilePage();
-    }
+/* 초기 화면 */
+showView('home');
 </script>
 </body>
 </html>
