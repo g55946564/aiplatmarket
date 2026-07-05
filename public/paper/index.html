@@ -98,13 +98,19 @@ button{ font-family:inherit; }
 .marquee-track span{ padding-right:70px; color:var(--acc-deep); font-family:'Noto Serif KR', serif; font-style:italic; }
 @keyframes marquee-rtl{ from{ transform:translateX(0%); } to{ transform:translateX(-50%); } }
 
-.masthead{ text-align:center; padding:20px 0 12px; position:relative; }
-.masthead-eyebrow{ font-size:12px; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:10px; }
-.masthead h1{
-  font-family:'Noto Sans KR', sans-serif; font-weight:900; font-size:58px;
-  margin:0; line-height:1; cursor:pointer;
+/* ── 상단 브랜드바 (좌: 메뉴 햄버거 / 중: 타이틀 / 우: 실시간소식 햄버거) ── */
+.brand-row{ display:flex; align-items:center; justify-content:space-between; padding:16px 4px 6px; }
+.ham-btn{
+  flex:0 0 auto; width:38px; height:38px; background:none; border:none; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
 }
-.masthead h1 .brand-text{ color:var(--acc-deep); letter-spacing:.28em; padding-left:.28em; }
+.ham-btn span{ display:block; width:22px; height:2.4px; background:var(--acc-deep); border-radius:2px; }
+.brand-center{ flex:1; text-align:center; cursor:pointer; }
+.eco-pre{ font-size:11px; letter-spacing:.2em; color:var(--ink-soft); margin-bottom:4px; }
+.eco-main{
+  font-family:'Noto Sans KR', sans-serif; font-weight:900; font-size:40px;
+  color:var(--acc-deep); letter-spacing:.22em; line-height:1;
+}
 .plus-red{
   color:#cc0000 !important;
   font-weight:900;
@@ -115,17 +121,15 @@ button{ font-family:inherit; }
   margin-left:2px;
 }
 
-/* ── 포털 검색바 (마스트헤드, 기존 태그라인 자리) ── */
-.portal-search-box{
-  position:relative; display:inline-flex; margin-top:14px;
-  background:#fff; border-radius:22px; overflow:visible; box-shadow:inset 0 0 0 1px var(--line);
-  max-width:420px; width:90%;
+/* ── 타이틀 아래 검색바 라인 ── */
+.header-searchbar{
+  position:relative; display:flex; max-width:520px; margin:6px auto 0;
+  background:#fff; border-radius:22px; box-shadow:inset 0 0 0 1px var(--line);
 }
-.portal-search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; border-radius:22px 0 0 22px; min-width:0; }
-.portal-search-box button#portalSearchBtn{ border:none; background:var(--acc); color:#fff; width:44px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:0 22px 22px 0; }
-.portal-search-box svg{ width:16px; height:16px; }
+.header-searchbar input{ flex:1; border:none; outline:none; padding:11px 18px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; border-radius:22px 0 0 22px; min-width:0; }
+.header-searchbar button#portalSearchBtn{ border:none; background:var(--acc); color:#fff; padding:0 18px; cursor:pointer; font-size:13px; font-weight:700; border-radius:0 22px 22px 0; white-space:nowrap; }
 .portal-dropdown{
-  display:none; position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  display:none; position:absolute; top:calc(100% + 8px); right:0;
   background:var(--paper-card); border:1px solid var(--line-strong); min-width:240px; z-index:60;
   box-shadow:0 10px 26px rgba(0,0,0,.18); text-align:left;
 }
@@ -165,6 +169,8 @@ button{ font-family:inherit; }
 .section-bar button:last-child{ border-right:none; }
 .section-bar button.paper-mode{ color:var(--stamp); }
 .section-bar button.paper-mode.active{ background:var(--stamp); color:#fff; }
+.section-bar button.submit-mode{ color:var(--acc); }
+.section-bar button.submit-mode.active{ background:var(--acc); color:#fff; }
 
 /* ══════════════════════════ 뷰(view) 컨테이너 공통 ══════════════════════════ */
 .view{ display:none; }
@@ -223,9 +229,6 @@ button{ font-family:inherit; }
 #view-archive{ max-width:1040px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
 .archive-toolbar{ padding:16px 24px 0; }
 .archive-toolbar .row{ display:flex; align-items:center; gap:10px; }
-.masthead-hamburger{ position:absolute; top:18px; background:none; color:var(--acc-deep); border:none; font-size:24px; cursor:pointer; z-index:5; padding:4px 8px; }
-.masthead-hamburger.left{ display:none; left:6px; }
-.masthead-hamburger.right{ display:inline-flex; right:6px; }
 .search-box{ flex:1; display:flex; background:#fff; border-radius:22px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); max-width:520px; }
 .search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; }
 .search-box button{ border:none; background:var(--acc); color:#fff; width:42px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
@@ -254,11 +257,38 @@ button{ font-family:inherit; }
 .issue-meta .issue-date{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
 .empty-state{ padding:50px 20px; text-align:center; color:var(--ink-soft); font-size:13.5px; }
 
+/* ── 기사 올리기 화면 ── */
+.submit-wrap{ max-width:640px; margin:0 auto; padding:24px 20px 50px; }
+.submit-guide{ background:var(--paper-deep); border:1px solid var(--line); border-left:4px solid var(--acc); padding:14px 18px; margin-bottom:22px; font-size:13.5px; line-height:1.8; color:var(--ink); }
+.submit-guide p{ margin:0 0 8px; }
+.submit-guide p:last-child{ margin-bottom:0; }
+.submit-form{ display:flex; flex-direction:column; gap:16px; }
+.submit-form label{ display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:700; color:var(--ink); }
+.submit-form input, .submit-form select, .submit-form textarea{
+  border:1px solid var(--line); padding:10px 12px; border-radius:6px; font-size:13.5px; font-family:inherit; font-weight:400; outline:none;
+}
+.submit-form textarea{ resize:vertical; }
+.submit-note{ font-size:12.5px; color:var(--acc-deep); min-height:16px; }
+
 /* ══════════════════════════ 사이트 푸터 ══════════════════════════ */
 #siteFooter{ background:var(--navy-deep); color:#e6d8bd; padding:26px 20px; font-size:12px; line-height:1.9; }
 #siteFooter .foot-inner{ max-width:1040px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
+#siteFooter .foot-col{ flex:1; min-width:260px; }
+#siteFooter .foot-col-right{ text-align:right; }
 #siteFooter .foot-brand{ font-family:'Noto Serif KR', serif; color:#fff; font-size:15px; margin-bottom:6px; }
-#siteFooter a.foot-link{ color:var(--acc); font-weight:700; }
+#siteFooter a.foot-link{ color:var(--acc); font-weight:700; text-decoration:none; }
+#siteFooter .foot-links{ line-height:2.1; }
+#siteFooter .foot-dropdown{ position:relative; display:inline-block; margin-top:6px; }
+#siteFooter .foot-dd-toggle{ background:none; border:none; color:var(--acc); font-weight:700; font-size:12px; cursor:pointer; padding:0; font-family:inherit; }
+#siteFooter .foot-dd-menu{
+  display:none; position:absolute; bottom:calc(100% + 8px); left:0; background:#fff; border:1px solid var(--line-strong);
+  min-width:200px; z-index:60; box-shadow:0 -8px 22px rgba(0,0,0,.25);
+}
+#siteFooter .foot-col-right .foot-dd-menu{ left:auto; right:0; }
+#siteFooter .foot-dd-menu.open{ display:block; }
+#siteFooter .foot-dd-menu a{ display:block; padding:9px 14px; font-size:12px; color:var(--ink); border-bottom:1px solid var(--line); text-align:left; text-decoration:none; }
+#siteFooter .foot-dd-menu a:last-child{ border-bottom:none; }
+#siteFooter .foot-dd-menu a:hover{ background:var(--paper-deep); color:var(--acc-deep); font-weight:700; }
 
 /* ══════════════════════════ 공통 스크림 & 퀵메뉴 드로어 ══════════════════════════ */
 .scrim{ position:fixed; inset:0; background:rgba(20,15,8,.45); z-index:400; display:none; }
@@ -282,6 +312,47 @@ button{ font-family:inherit; }
 .feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--acc); margin-bottom:4px; display:block; }
 .feed-item .ttl{ font-size:13px; font-weight:700; margin:0 0 3px; line-height:1.4; }
 .feed-item .time{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+
+/* ── 좌측 내비게이션 드로어 (AIPLATMARKET / 로그인 / 회원가입 / 지역별 보기 / 사이트맵) ── */
+.left-nav-drawer{ left:0; right:auto; transform:translateX(-100%); box-shadow:6px 0 24px rgba(0,0,0,.2); }
+.left-nav-drawer.open{ transform:translateX(0); }
+.drawer-brand-link{
+  display:block; color:#fff; font-weight:900; font-size:16px; text-decoration:none;
+  font-family:'Noto Sans KR', sans-serif; letter-spacing:.03em; margin-bottom:10px;
+}
+.drawer-brand-link em{ color:var(--acc); font-style:normal; }
+.nav-menu-item{
+  padding:13px 6px; border-bottom:1px solid var(--line); font-size:14px; font-weight:700;
+  color:var(--ink); cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+}
+.nav-menu-item:hover{ color:var(--acc-deep); }
+.nav-submenu{ padding:4px 6px 10px 14px; border-bottom:1px solid var(--line); }
+.nav-sub-btn{
+  display:block; width:100%; text-align:left; background:none; border:none; padding:8px 4px;
+  font-size:13px; color:var(--ink-soft); cursor:pointer;
+}
+.nav-sub-btn:hover{ color:var(--acc-deep); font-weight:700; }
+.nav-sub-link{ display:block; padding:6px 4px; font-size:12.5px; color:var(--ink-soft); }
+.nav-sub-link:hover{ color:var(--acc-deep); }
+
+/* ── 로그인 / 회원가입 모달 (공통) ── */
+.auth-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(13,31,53,.6); z-index:2000; align-items:center; justify-content:center; padding:20px; }
+.auth-modal-overlay.open{ display:flex; }
+.auth-modal-box{ background:#fff; border-radius:10px; padding:28px; width:320px; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+.auth-modal-box .brand{ text-align:center; margin-bottom:18px; }
+.auth-modal-box .brand .b1{ font-family:'Noto Sans KR', sans-serif; font-size:1.15rem; font-weight:900; color:var(--acc-deep); }
+.auth-modal-box .brand .b2{ font-size:.72rem; color:var(--ink-soft); margin-top:2px; }
+.auth-modal-box input{ border:1px solid var(--line); padding:10px 12px; border-radius:6px; font-size:.88rem; outline:none; font-family:inherit; width:100%; box-sizing:border-box; margin-bottom:10px; }
+.auth-modal-box .err{ color:var(--stamp); font-size:.76rem; text-align:center; min-height:16px; }
+.auth-btn{ width:100%; border:none; padding:11px; border-radius:6px; font-size:.9rem; font-weight:800; cursor:pointer; font-family:inherit; margin-bottom:8px; }
+.auth-btn.primary{ background:var(--acc-deep); color:#fff; }
+.auth-btn.kakao{ background:#FEE500; color:#3C1E1E; }
+.auth-btn.cta{ background:var(--acc); color:#fff; }
+.auth-btn.cancel{ background:var(--paper-deep); color:var(--ink-soft); }
+.auth-divider{ display:flex; align-items:center; gap:8px; margin:6px 0; }
+.auth-divider hr{ flex:1; border:none; border-top:1px solid var(--line); }
+.auth-divider span{ font-size:.72rem; color:var(--ink-soft); }
+.auth-note{ font-size:.7rem; color:var(--ink-soft); text-align:center; margin-top:4px; }
 
 /* ══════════════════════════ 뷰어 화면 (종이신문 그대로 보기) ══════════════════════════ */
 #view-viewer{ position:fixed; inset:0; background:#e6ccb2; z-index:100; display:none; }
@@ -358,13 +429,14 @@ button{ font-family:inherit; }
   .layout{ grid-template-columns:1fr; }
   .sub-stories{ grid-template-columns:1fr; }
   .lead-body{ columns:1; }
-  .masthead h1{ font-size:38px; }
+  .eco-main{ font-size:26px; letter-spacing:.14em; }
   #appChrome, #view-home, #view-archive{ padding-left:16px; padding-right:16px; }
-  .masthead-hamburger.left{ display:inline-flex; }
   .region-sidebar{ position:fixed; top:0; left:0; height:100%; transform:translateX(-100%); transition:transform .3s ease; z-index:500; box-shadow:6px 0 24px rgba(0,0,0,.2); }
   .region-sidebar.open{ transform:translateX(0); }
   .issue-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
   #siteFooter .foot-inner{ flex-direction:column; }
+  #siteFooter .foot-col-right{ text-align:left; }
+  #siteFooter .foot-col-right .foot-dd-menu{ left:0; right:auto; }
 }
 </style>
 </head>
@@ -387,29 +459,26 @@ button{ font-family:inherit; }
     </div>
   </div>
 
-  <div class="masthead">
-    <button class="masthead-hamburger left" id="btnRegion" aria-label="지역별 보기">☰</button>
-    <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
-    <h1 onclick="goHome()" title="메인으로"><span class="brand-text">국민경제</span><span class="plus-red">㊉</span></h1>
-
-    <div class="portal-search-box" id="portalSearchBox">
-      <input id="portalSearchInput" type="text" placeholder="검색어를 입력하세요">
-      <button id="portalSearchBtn" aria-label="검색 대상 선택">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
-          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/>
-        </svg>
-      </button>
-      <div class="portal-dropdown" id="portalDropdown">
-        <button data-portal="internal">📰 국민경제㊉ 신문 내 검색</button>
-        <button data-portal="naver">🟩 네이버에서 검색</button>
-        <button data-portal="google">🔵 구글에서 검색</button>
-        <button data-portal="newswire">📡 뉴스와이어에서 검색</button>
-        <button data-portal="gov">🏛 소상공인 정부포털에서 검색</button>
-        <button data-portal="ai">🤖 AI(챗도우미)로 검색</button>
-      </div>
+  <div class="brand-row">
+    <button class="ham-btn" id="btnLeftNav" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+    <div class="brand-center" onclick="goHome()" title="메인으로">
+      <div class="eco-pre">국민에 의한 국민을 위한</div>
+      <div class="eco-main">국민경제<span class="plus-red">㊉</span></div>
     </div>
+    <button class="ham-btn" id="quickFab" aria-label="실시간 소식 열기"><span></span><span></span><span></span></button>
+  </div>
 
-    <button class="masthead-hamburger right" id="quickFab" aria-label="실시간 소식 열기">☰</button>
+  <div class="header-searchbar" id="portalSearchBox">
+    <input id="portalSearchInput" type="text" placeholder="업체·메뉴·지역·뉴스 검색...">
+    <button id="portalSearchBtn" aria-label="검색 대상 선택">🔍 검색</button>
+    <div class="portal-dropdown" id="portalDropdown">
+      <button data-portal="internal">📰 국민경제㊉ 신문 내 검색</button>
+      <button data-portal="naver">🟩 네이버에서 검색</button>
+      <button data-portal="google">🔵 구글에서 검색</button>
+      <button data-portal="newswire">📡 뉴스와이어에서 검색</button>
+      <button data-portal="gov">🏛 소상공인 정부포털에서 검색</button>
+      <button data-portal="ai">🤖 AI(챗도우미)로 검색</button>
+    </div>
   </div>
 
   <div class="headline-ticker" id="headlineTicker">
@@ -435,6 +504,7 @@ button{ font-family:inherit; }
     <button data-tab="global">글로벌 뉴스</button>
     <button data-tab="incident">사건·사고</button>
     <button data-tab="ai">AI</button>
+    <button data-tab="submit" class="submit-mode">✍ 기사 올리기</button>
     <button data-tab="archive" class="paper-mode">종이신문 그대로 보기</button>
   </div>
 </div>
@@ -523,20 +593,64 @@ button{ font-family:inherit; }
   </div>
 </div>
 
+<!-- ══════════════════════════ 기사 올리기 화면 ══════════════════════════ -->
+<div id="view-submit" class="view">
+  <div class="submit-wrap">
+    <div class="section-title"><h2>✍ 기사 올리기</h2></div>
+    <div class="submit-guide">
+      <p><b>소비자·소상공인 누구나</b> 기사성 글을 올릴 수 있습니다. <b>이미지(JPG, PNG, PDF 가능)</b>도 함께 첨부해주세요.</p>
+      <p>제출하신 글은 <b>검토 후 AI가 자동으로 신문 톤에 맞게 재편집</b>하며, <b>작성자 확인 및 신문사 승인</b>을 거쳐 실제 신문에 게재됩니다.</p>
+    </div>
+    <form class="submit-form" id="submitForm" onsubmit="return submitArticle(event)">
+      <label>작성자 유형
+        <select id="subAuthorType">
+          <option value="consumer">소비자</option>
+          <option value="merchant">소상공인</option>
+        </select>
+      </label>
+      <label>제목 <input type="text" id="subTitle" placeholder="기사 제목을 입력하세요" required></label>
+      <label>작성자명 / 상호명 <input type="text" id="subAuthor" placeholder="이름 또는 상호명" required></label>
+      <label>연락처(이메일 또는 전화) <input type="text" id="subContact" placeholder="검토 결과를 받을 연락처" required></label>
+      <label>본문 <textarea id="subBody" rows="8" placeholder="기사 내용을 자유롭게 작성해주세요" required></textarea></label>
+      <label>이미지 첨부 (JPG, PNG, PDF) <input type="file" id="subFiles" accept=".jpg,.jpeg,.png,.pdf" multiple></label>
+      <div class="submit-note" id="submitNote"></div>
+      <button type="submit" class="auth-btn primary" style="width:auto;padding:12px 28px;">제출하기</button>
+    </form>
+  </div>
+</div>
+
 <!-- ══════════════════════════ 사이트 푸터 ══════════════════════════ -->
 <footer id="siteFooter">
   <div class="foot-inner">
-    <div>
-      <div class="foot-brand">국민경제㊉ 신문사</div>
-      월간 발행 · 등록번호 인천 라 00000<br>
-      인천광역시 부평구 백운로9번길 26-1<br>
-      전화 032-000-0000 · 이메일 news@example.com
+    <div class="foot-col">
+      <div class="foot-brand">월간 국민경제㊉ · AI PLATMARKET</div>
+      소상공인+소비자 상생 디지털 신문<br>
+      월간 발행 등록번호: 부평, 라00025<br>
+      대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식<br>
+      © 2026 22세기대한. All rights reserved.<br>
+      사업자등록번호: 227-18-34338<br>
+      주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+      TEL: 0505-505-9000<br>
+      <div class="foot-dropdown">
+        <button class="foot-dd-toggle" id="footEmailToggle">📧 이메일 문의 ▾</button>
+        <div class="foot-dd-menu" id="footEmailMenu">
+          <a href="mailto:newstar114@naver.com">newstar114@naver.com</a>
+          <a href="mailto:a55946564@gmail.com">a55946564@gmail.com</a>
+        </div>
+      </div>
     </div>
-    <div>
-      제휴 · 운영<br>
-      <a class="foot-link" href="https://aiplatmarket.com" target="_blank">AI플랫마켓</a> ·
-      <a class="foot-link" href="https://chatdoumi.com" target="_blank">챗도우미</a><br>
-      © 2026 국민경제㊉ &amp; AI플랫마켓. All rights reserved.
+    <div class="foot-col foot-col-right">
+      <div class="foot-links">
+        <a class="foot-link" href="#">서비스 소개</a>ㅣ<a class="foot-link" href="#">이용약관</a>ㅣ<a class="foot-link" href="#">개인정보처리방침</a>ㅣ<a class="foot-link" href="#">광고문의</a>ㅣ<a class="foot-link" href="#">커뮤니티(💡 불편사항·개선 제안)</a>
+      </div>
+      <div style="margin-top:10px;"><a class="foot-link" href="/admin">⚙️ 관리자 대시보드</a></div>
+      <div class="foot-dropdown" style="margin-top:10px;">
+        <button class="foot-dd-toggle" id="footViewToggle">🖥 화면 전환 ▾</button>
+        <div class="foot-dd-menu" id="footViewMenu">
+          <a href="javascript:void(0)" onclick="setViewMode('desktop')">PC버전</a>
+          <a href="javascript:void(0)" onclick="setViewMode('mobile')">모바일 버전</a>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
@@ -546,9 +660,31 @@ button{ font-family:inherit; }
 
 <div class="scrim" id="scrim"></div>
 
-<!-- 퀵메뉴 (버튼은 마스트헤드 우측으로 이동, 드로어만 여기 유지) -->
+<!-- 좌측 내비게이션 드로어: AIPLATMARKET / 로그인 / 회원가입 / 지역별 보기 / 사이트맵 -->
+<div class="quick-drawer left-nav-drawer" id="leftNavDrawer">
+  <div class="quick-drawer-head">
+    <div class="row">
+      <a class="drawer-brand-link" href="https://aiplatmarket.com" target="_blank" rel="noopener">AI<em>PLAT</em>MARKET</a>
+      <button class="viewer-back-link" id="btnLeftNavClose" style="border:none;color:#fff;font-size:18px;">✕</button>
+    </div>
+  </div>
+  <div class="quick-body">
+    <div class="nav-menu-item" id="navLoginToggle"><span>🔐 로그인</span><span>▾</span></div>
+    <div class="nav-submenu" id="navLoginSubmenu" style="display:none;">
+      <button class="nav-sub-btn" onclick="openLoginModal()">자체 로그인</button>
+      <button class="nav-sub-btn" onclick="kakaoLogin()">카카오 로그인</button>
+    </div>
+    <div class="nav-menu-item" onclick="openRegisterModal()"><span>📝 회원가입</span></div>
+    <div class="nav-menu-item" onclick="goToRegionView()"><span>📍 지역별 보기</span></div>
+    <div class="nav-menu-item" id="navSitemapToggle"><span>🗺 사이트맵</span><span>▾</span></div>
+    <div class="nav-submenu" id="navSitemapSubmenu" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- 우측 드로어: CHATDOUMI 링크 + 실시간 소식(기존 내용 유지) -->
 <div class="quick-drawer" id="quickDrawer">
   <div class="quick-drawer-head">
+    <a class="drawer-brand-link" href="https://chatdoumi.com" target="_blank" rel="noopener">Chat<em>Doumi</em></a>
     <div class="row"><strong>실시간 소식</strong><button class="viewer-back-link" id="btnQuickClose" style="border:none;color:#fff;font-size:18px;">✕</button></div>
     <div class="quick-tabs" id="quickTabs">
       <button class="active" data-feed="platmarket">AI플랫마켓 소식</button>
@@ -559,6 +695,37 @@ button{ font-family:inherit; }
     </div>
   </div>
   <div class="quick-body" id="quickBody"></div>
+</div>
+
+<!-- 로그인 모달 -->
+<div class="auth-modal-overlay" id="loginModal">
+  <div class="auth-modal-box">
+    <div class="brand"><div class="b1">국민경제<span class="plus-red" style="transform:translateY(-6px);">㊉</span></div><div class="b2">로그인</div></div>
+    <input type="text" id="lgId" placeholder="아이디" onkeydown="if(event.key==='Enter')doLogin()">
+    <input type="password" id="lgPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="err" id="lgErr"></div>
+    <button class="auth-btn primary" onclick="doLogin()">로그인</button>
+    <div class="auth-divider"><hr><span>또는</span><hr></div>
+    <button class="auth-btn kakao" onclick="kakaoLogin()">💬 카카오 로그인</button>
+    <div style="height:1px;background:var(--line);margin:10px 0;"></div>
+    <button class="auth-btn cta" onclick="closeLoginModal();openRegisterModal();">🏪 무료 입점 신청하기 →</button>
+    <div class="auth-note">등록비 0원 · AI 홍보문구 자동 생성</div>
+    <button class="auth-btn cancel" onclick="closeLoginModal()">취소</button>
+  </div>
+</div>
+
+<!-- 회원가입 모달 -->
+<div class="auth-modal-overlay" id="registerModal">
+  <div class="auth-modal-box">
+    <div class="brand"><div class="b1">국민경제<span class="plus-red" style="transform:translateY(-6px);">㊉</span></div><div class="b2">회원가입</div></div>
+    <input type="text" id="rgName" placeholder="이름 / 상호명">
+    <input type="text" id="rgId" placeholder="아이디">
+    <input type="password" id="rgPw" placeholder="비밀번호">
+    <input type="email" id="rgEmail" placeholder="이메일">
+    <div class="err" id="rgErr"></div>
+    <button class="auth-btn primary" onclick="doRegister()">가입하기</button>
+    <button class="auth-btn cancel" onclick="closeRegisterModal()">취소</button>
+  </div>
 </div>
 
 <!-- ══════════════════════════ 뷰어 화면 (종이신문 그대로 보기 실행 화면) ══════════════════════════ -->
@@ -618,6 +785,7 @@ button{ font-family:inherit; }
 function showView(name){
   document.getElementById('view-home').classList.toggle('active', name === 'home');
   document.getElementById('view-archive').classList.toggle('active', name === 'archive');
+  document.getElementById('view-submit').classList.toggle('active', name === 'submit');
   document.getElementById('view-viewer').classList.toggle('active', name === 'viewer');
 
   const chromeVisible = (name !== 'viewer');
@@ -937,6 +1105,8 @@ function switchTab(tab){
   if(activeBtn) activeBtn.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
   if(tab === 'archive'){
     showView('archive');
+  } else if(tab === 'submit'){
+    showView('submit');
   } else {
     currentTab = tab;
     renderArticle(tab);
@@ -952,7 +1122,7 @@ renderArticle('headline');
 /* ── 카테고리 + 헤드라인 실시간 티커 (좌→우 자동 스크롤) ── */
 function buildHeadlineTicker(){
   const tabBtns = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
-    .filter(b => b.dataset.tab !== 'archive');
+    .filter(b => b.dataset.tab !== 'archive' && b.dataset.tab !== 'submit');
   const itemsHTML = tabBtns.map(b => {
     const key = b.dataset.tab;
     const label = b.textContent;
@@ -977,7 +1147,7 @@ buildHeadlineTicker();
 
   const TAB_ORDER = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
     .map(b => b.dataset.tab)
-    .filter(t => t !== 'archive');
+    .filter(t => t !== 'archive' && t !== 'submit');
 
   const THRESHOLD = 60; // 스와이프로 인식할 최소 이동 거리(px)
   let startX = 0, startY = 0, tracking = false;
@@ -1135,14 +1305,14 @@ document.getElementById('searchBtn').addEventListener('click', applyFilter);
 const regionSidebar = document.getElementById('regionSidebar');
 const scrim = document.getElementById('scrim');
 function openRegionDrawer(){ regionSidebar.classList.add('open'); scrim.classList.add('show'); }
-function closeRegionDrawer(){ regionSidebar.classList.remove('open'); if(!quickDrawer.classList.contains('open')) scrim.classList.remove('show'); }
-document.getElementById('btnRegion').addEventListener('click', () => {
-  // 지역별 보기는 '지난 신문 보기' 화면의 기능이므로, 홈 화면에서 눌렀다면 먼저 그 화면으로 전환
+function closeRegionDrawer(){ regionSidebar.classList.remove('open'); syncScrim(); }
+function goToRegionView(){
+  closeLeftNavDrawer();
   if(!document.getElementById('view-archive').classList.contains('active')){
     switchTab('archive');
   }
   openRegionDrawer();
-});
+}
 
 /* ══════════════════════════════════════════════════════════════
    4) 퀵메뉴 드로어 (실시간 소식) - 모든 화면 공통
@@ -1189,11 +1359,123 @@ document.querySelectorAll('#quickTabs button').forEach(btn => {
     renderFeed(btn.dataset.feed);
   });
 });
-function openQuickDrawer(){ quickDrawer.classList.add('open'); scrim.classList.add('show'); }
-function closeQuickDrawer(){ quickDrawer.classList.remove('open'); if(!regionSidebar.classList.contains('open')) scrim.classList.remove('show'); }
+function openQuickDrawer(){ closeLeftNavDrawer(); quickDrawer.classList.add('open'); scrim.classList.add('show'); }
+function closeQuickDrawer(){ quickDrawer.classList.remove('open'); syncScrim(); }
 document.getElementById('quickFab').addEventListener('click', openQuickDrawer);
 document.getElementById('btnQuickClose').addEventListener('click', closeQuickDrawer);
-scrim.addEventListener('click', () => { closeRegionDrawer(); closeQuickDrawer(); });
+
+/* ══════════════════════════════════════════════════════════════
+   4-1) 좌측 내비게이션 드로어 (AIPLATMARKET / 로그인 / 회원가입 / 지역별 보기 / 사이트맵)
+════════════════════════════════════════════════════════════════ */
+const leftNavDrawer = document.getElementById('leftNavDrawer');
+function openLeftNavDrawer(){ closeQuickDrawer(); leftNavDrawer.classList.add('open'); scrim.classList.add('show'); }
+function closeLeftNavDrawer(){ leftNavDrawer.classList.remove('open'); syncScrim(); }
+document.getElementById('btnLeftNav').addEventListener('click', openLeftNavDrawer);
+document.getElementById('btnLeftNavClose').addEventListener('click', closeLeftNavDrawer);
+
+function syncScrim(){
+  const anyOpen = regionSidebar.classList.contains('open')
+    || quickDrawer.classList.contains('open')
+    || leftNavDrawer.classList.contains('open');
+  scrim.classList.toggle('show', anyOpen);
+}
+scrim.addEventListener('click', () => { closeRegionDrawer(); closeQuickDrawer(); closeLeftNavDrawer(); });
+
+/* 로그인 하위메뉴 펼치기/접기 */
+document.getElementById('navLoginToggle').addEventListener('click', () => {
+  const sub = document.getElementById('navLoginSubmenu');
+  sub.style.display = sub.style.display === 'none' ? 'block' : 'none';
+});
+
+/* 사이트맵 하위메뉴: 전체 카테고리 + 지난 신문 보기 + 기사 올리기 목록을 동적으로 구성 */
+document.getElementById('navSitemapToggle').addEventListener('click', () => {
+  const sub = document.getElementById('navSitemapSubmenu');
+  const willOpen = sub.style.display === 'none';
+  if(willOpen && !sub.dataset.built){
+    const links = Array.from(document.querySelectorAll('#sectionBar button[data-tab]')).map(b => {
+      const tab = b.dataset.tab;
+      const label = b.textContent.trim();
+      return `<a class="nav-sub-link" href="javascript:void(0)" onclick="closeLeftNavDrawer();switchTab('${tab}')">${label}</a>`;
+    }).join('');
+    sub.innerHTML = links;
+    sub.dataset.built = '1';
+  }
+  sub.style.display = willOpen ? 'block' : 'none';
+});
+
+/* ══════════════════════════════════════════════════════════════
+   4-2) 로그인 / 회원가입 모달
+   ⚠ 프로토타입 화면입니다. 실제 인증은 AI플랫마켓 계정 시스템과
+      연동되는 백엔드 라우트가 필요하며, 이 신문 모듈은 그 결과를
+      받아 표시하는 역할만 합니다.
+════════════════════════════════════════════════════════════════ */
+function openLoginModal(){ document.getElementById('loginModal').classList.add('open'); document.getElementById('lgErr').textContent=''; }
+function closeLoginModal(){ document.getElementById('loginModal').classList.remove('open'); }
+function doLogin(){
+  const id = document.getElementById('lgId').value.trim();
+  const pw = document.getElementById('lgPw').value.trim();
+  const err = document.getElementById('lgErr');
+  if(!id || !pw){ err.textContent = '아이디와 비밀번호를 입력해주세요.'; return; }
+  err.textContent = '';
+  alert('데모 화면입니다. 실제 로그인은 AI플랫마켓 계정 시스템 연동 후 지원됩니다.');
+}
+function kakaoLogin(){
+  alert('카카오 로그인 연동 예정입니다. (AI플랫마켓 계정 시스템 연동 필요)');
+}
+function openRegisterModal(){ closeLeftNavDrawer(); document.getElementById('registerModal').classList.add('open'); document.getElementById('rgErr').textContent=''; }
+function closeRegisterModal(){ document.getElementById('registerModal').classList.remove('open'); }
+function doRegister(){
+  const name = document.getElementById('rgName').value.trim();
+  const id = document.getElementById('rgId').value.trim();
+  const pw = document.getElementById('rgPw').value.trim();
+  const email = document.getElementById('rgEmail').value.trim();
+  const err = document.getElementById('rgErr');
+  if(!name || !id || !pw || !email){ err.textContent = '모든 항목을 입력해주세요.'; return; }
+  err.textContent = '';
+  alert('데모 화면입니다. 실제 회원가입은 AI플랫마켓 계정 시스템 연동 후 지원됩니다.');
+  closeRegisterModal();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4-3) 기사 올리기 (투고) 제출 처리
+   ⚠ 실제 저장을 위해서는 백엔드 업로드 라우트(예: POST /api/paper/articles)가
+      필요합니다. 지금은 프로토타입이라 제출 시 안내 메시지만 표시합니다.
+════════════════════════════════════════════════════════════════ */
+function submitArticle(e){
+  e.preventDefault();
+  const note = document.getElementById('submitNote');
+  note.textContent = '제출이 접수되었습니다. AI 재편집과 신문사 승인을 거쳐 게재 여부를 연락처로 안내드립니다.';
+  document.getElementById('submitForm').reset();
+  return false;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4-4) 푸터: 이메일 문의 / 화면 전환 드롭다운
+════════════════════════════════════════════════════════════════ */
+function toggleFootDropdown(menuId){
+  document.querySelectorAll('.foot-dd-menu').forEach(m => { if(m.id !== menuId) m.classList.remove('open'); });
+  document.getElementById(menuId).classList.toggle('open');
+}
+document.getElementById('footEmailToggle').addEventListener('click', () => toggleFootDropdown('footEmailMenu'));
+document.getElementById('footViewToggle').addEventListener('click', () => toggleFootDropdown('footViewMenu'));
+document.addEventListener('click', (e) => {
+  if(!e.target.closest('.foot-dropdown')){
+    document.querySelectorAll('.foot-dd-menu').forEach(m => m.classList.remove('open'));
+  }
+});
+
+/* "화면 전환" — 뷰포트 meta의 width를 강제로 바꿔 실제 반응형 CSS가
+   그 폭 기준으로 다시 계산되도록 함 (진짜 모바일 폭 시뮬레이션) */
+function setViewMode(mode){
+  const vp = document.querySelector('meta[name="viewport"]');
+  if(!vp) return;
+  if(mode === 'mobile'){
+    vp.setAttribute('content', 'width=420, initial-scale=1.0');
+  } else {
+    vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+  }
+  document.querySelectorAll('.foot-dd-menu').forEach(m => m.classList.remove('open'));
+}
 
 /* ══════════════════════════════════════════════════════════════
    5) 뷰어 (종이신문 그대로 보기) — 클릭한 호를 그 자리에서 렌더링
