@@ -12,7 +12,21 @@
 <link rel="stylesheet" href="/framework/assets/css/common.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Gothic+Coding&display=swap');
+/* ⚠ "아시아폰트 각헤드 B"는 상업용 폰트라 Google Fonts에 없어 웹에 바로 불러올 수 없습니다.
+   타이틀은 요청하신 스펙대로 'Noto Sans KR' Black(900)을 사용합니다.
+   위 @import가 900 두께를 함께 불러오므로 별도 @font-face 없이 바로 적용됩니다.
+
+   실제 각헤드 B 폰트 파일(라이선스)을 보유하고 계시면, 아래처럼 직접 @font-face를
+   선언해 교체할 수 있습니다 (src 경로만 실제 폰트 파일 위치로 바꿔주세요):
+   @font-face {
+     font-family: 'GakHeadB';
+     font-style: normal;
+     font-weight: 900;
+     font-display: swap;
+     src: url('/framework/assets/fonts/GakHeadB.woff2') format('woff2');
+   }
+   그 다음 .masthead h1 { font-family:'GakHeadB', 'Noto Sans KR', sans-serif; } 로 바꾸면 됩니다. */
 
 :root{
   /* ── 플랫폼 공통 디자인 토큰 (MODULE_DEV_GUIDE.md 3-2 규정값 그대로 사용) ── */
@@ -64,7 +78,6 @@ button{ font-family:inherit; }
 }
 .utility-bar{
   display:flex;
-  justify-content:space-between;
   align-items:center;
   font-family:'Nanum Gothic Coding', monospace;
   font-size:11.5px;
@@ -72,20 +85,67 @@ button{ font-family:inherit; }
   color:var(--ink-soft);
   padding-bottom:8px;
   border-bottom:1px solid var(--line);
-  flex-wrap:wrap;
-  gap:6px;
+  gap:14px;
 }
-.utility-bar .ticker{ color:var(--stamp); font-weight:700; }
+.utility-bar .pub-date{ flex:0 0 auto; white-space:nowrap; }
+
+/* 좌→우 자동 스크롤 마퀴 (상생의 기록 문구) */
+.marquee-wrap{ flex:1; min-width:0; overflow:hidden; position:relative; height:14px; }
+.marquee-track{
+  display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0;
+  animation:marquee-rtl 42s linear infinite;
+}
+.marquee-track span{ padding-right:70px; color:var(--acc-deep); font-family:'Noto Serif KR', serif; font-style:italic; }
+@keyframes marquee-rtl{ from{ transform:translateX(0%); } to{ transform:translateX(-50%); } }
 
 .masthead{ text-align:center; padding:20px 0 12px; position:relative; }
 .masthead-eyebrow{ font-size:12px; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:10px; }
 .masthead h1{
-  font-family:'Noto Serif KR', serif; font-weight:900; font-size:58px;
-  letter-spacing:.03em; margin:0; color:var(--ink); line-height:1; cursor:pointer;
+  font-family:'Noto Sans KR', sans-serif; font-weight:900; font-size:58px;
+  margin:0; line-height:1; cursor:pointer;
 }
-.masthead h1 span{ color:var(--acc-deep); }
-.masthead-tagline{ margin-top:10px; font-size:13.5px; color:var(--ink-soft); font-family:'Noto Serif KR', serif; }
+.masthead h1 .brand-text{ color:var(--acc-deep); letter-spacing:.28em; padding-left:.28em; }
+.plus-red{
+  color:#cc0000 !important;
+  font-weight:900;
+  display:inline-block;
+  font-size:.80em;
+  transform:translateY(-15px);
+  vertical-align:middle;
+  margin-left:2px;
+}
 .stamp{ position:absolute; top:10px; right:4px; width:88px; height:88px; transform:rotate(-14deg); opacity:.92; }
+
+/* ── 포털 검색바 (마스트헤드, 기존 태그라인 자리) ── */
+.portal-search-box{
+  position:relative; display:inline-flex; margin-top:14px;
+  background:#fff; border-radius:22px; overflow:visible; box-shadow:inset 0 0 0 1px var(--line);
+  max-width:420px; width:90%;
+}
+.portal-search-box input{ flex:1; border:none; outline:none; padding:10px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; border-radius:22px 0 0 22px; min-width:0; }
+.portal-search-box button#portalSearchBtn{ border:none; background:var(--acc); color:#fff; width:44px; cursor:pointer; display:flex; align-items:center; justify-content:center; border-radius:0 22px 22px 0; }
+.portal-search-box svg{ width:16px; height:16px; }
+.portal-dropdown{
+  display:none; position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  background:var(--paper-card); border:1px solid var(--line-strong); min-width:240px; z-index:60;
+  box-shadow:0 10px 26px rgba(0,0,0,.18); text-align:left;
+}
+.portal-dropdown.open{ display:block; }
+.portal-dropdown button{
+  display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid var(--line);
+  padding:10px 14px; font-size:13px; color:var(--ink); cursor:pointer;
+}
+.portal-dropdown button:last-child{ border-bottom:none; }
+.portal-dropdown button:hover{ background:var(--paper); color:var(--acc-deep); font-weight:700; }
+
+/* ── 카테고리+헤드라인 실시간 티커 (섹션바 위) ── */
+.headline-ticker{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
+.ticker-label{ flex:0 0 auto; background:var(--acc-deep); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:3px; }
+.ticker-viewport{ flex:1; min-width:0; overflow:hidden; position:relative; height:18px; }
+.ticker-track{ display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0; animation:marquee-rtl 70s linear infinite; }
+.ticker-item{ padding-right:44px; font-size:12.5px; color:var(--ink); cursor:pointer; }
+.ticker-item b{ color:var(--acc-deep); margin-right:6px; }
+.ticker-item:hover{ text-decoration:underline; }
 
 .section-bar{
   display:flex; flex-wrap:nowrap; overflow-x:auto;
@@ -142,7 +202,8 @@ button{ font-family:inherit; }
 .sub-story p{ font-size:13px; line-height:1.75; color:var(--ink-soft); margin:0; }
 
 .sidebar-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
-.sidebar-box .box-title{ background:var(--ink); color:var(--paper); font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; padding:8px 12px; }
+.box-title{ color:var(--paper); font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; padding:8px 12px; }
+.sidebar-box .box-title{ background:var(--ink); }
 .store-item{ padding:12px 14px; border-bottom:1px dashed var(--line); display:flex; gap:10px; align-items:flex-start; }
 .store-item:last-child{ border-bottom:none; }
 .store-thumb{ width:44px; height:44px; flex:0 0 auto; background:repeating-linear-gradient(45deg,#e4dcc6 0 3px,#ddd3ba 3px 6px); border:1px solid var(--line-strong); position:relative; }
@@ -322,16 +383,37 @@ button{ font-family:inherit; }
 <!-- ══════════════════════════ 공통 상단 (홈 · 지난호 화면 전용) ══════════════════════════ -->
 <div id="appChrome">
   <div class="utility-bar">
-    <span>2026년 7월 5일 일요일 · 창간호 · 무료 배포</span>
-    <span class="ticker">오늘의 상생지수 ▲ 2.4%</span>
-    <span>발행: 국민경제㊉ 편집부</span>
+    <span class="pub-date">2026년 7월 5일 일요일</span>
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span>소비자와 소상공인이 함께 쓰는 상생의 기록</span>
+        <span>소비자와 소상공인이 함께 쓰는 상생의 기록</span>
+      </div>
+    </div>
   </div>
 
   <div class="masthead">
     <button class="masthead-hamburger" id="btnRegion" aria-label="지역별 보기">☰</button>
     <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
-    <h1 onclick="goHome()" title="메인으로">국민경제<span>㊉</span></h1>
-    <div class="masthead-tagline">— 소비자와 소상공인이 함께 쓰는 상생의 기록 —</div>
+    <h1 onclick="goHome()" title="메인으로"><span class="brand-text">국민경제</span><span class="plus-red">㊉</span></h1>
+
+    <div class="portal-search-box" id="portalSearchBox">
+      <input id="portalSearchInput" type="text" placeholder="검색어를 입력하세요">
+      <button id="portalSearchBtn" aria-label="검색 대상 선택">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/>
+        </svg>
+      </button>
+      <div class="portal-dropdown" id="portalDropdown">
+        <button data-portal="internal">📰 국민경제㊉ 신문 내 검색</button>
+        <button data-portal="naver">🟩 네이버에서 검색</button>
+        <button data-portal="google">🔵 구글에서 검색</button>
+        <button data-portal="newswire">📡 뉴스와이어에서 검색</button>
+        <button data-portal="gov">🏛 소상공인 정부포털에서 검색</button>
+        <button data-portal="ai">🤖 AI(챗도우미)로 검색</button>
+      </div>
+    </div>
+
     <svg class="stamp" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="44" fill="none" stroke="#14532d" stroke-width="3"/>
       <circle cx="50" cy="50" r="37" fill="none" stroke="#14532d" stroke-width="1.2"/>
@@ -339,6 +421,13 @@ button{ font-family:inherit; }
       <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR" font-size="13" font-weight="700" fill="#14532d">인증</text>
       <text x="50" y="74" text-anchor="middle" font-family="Nanum Gothic Coding" font-size="7" fill="#14532d">GUKMIN KYUNGJE</text>
     </svg>
+  </div>
+
+  <div class="headline-ticker" id="headlineTicker">
+    <div class="ticker-label">📰 실시간</div>
+    <div class="ticker-viewport">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
   </div>
 
   <div class="section-bar" id="sectionBar">
@@ -555,12 +644,7 @@ function showView(name){
 
 /* 어느 화면(홈/지난호 목록/뷰어)에서든 타이틀(국민경제㊉)을 누르면 메인 1면으로 복귀 */
 function goHome(){
-  document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
-  const headlineBtn = document.querySelector('#sectionBar button[data-tab="headline"]');
-  if(headlineBtn) headlineBtn.classList.add('active');
-  currentTab = 'headline';
-  renderArticle('headline');
-  showView('home');
+  switchTab('headline');
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -858,21 +942,123 @@ function renderArticle(key){
 }
 
 let currentTab = 'headline';
+
+function switchTab(tab){
+  document.querySelectorAll('#sectionBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  if(tab === 'archive'){
+    showView('archive');
+  } else {
+    currentTab = tab;
+    renderArticle(tab);
+    showView('home');
+  }
+}
+
 document.querySelectorAll('#sectionBar button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const tab = btn.dataset.tab;
-    if(tab === 'archive'){
-      showView('archive');
-    } else {
-      currentTab = tab;
-      renderArticle(tab);
-      showView('home');
-    }
-  });
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
 renderArticle('headline');
+
+/* ── 카테고리 + 헤드라인 실시간 티커 (좌→우 자동 스크롤) ── */
+function buildHeadlineTicker(){
+  const tabBtns = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
+    .filter(b => b.dataset.tab !== 'archive');
+  const itemsHTML = tabBtns.map(b => {
+    const key = b.dataset.tab;
+    const label = b.textContent;
+    const a = ARTICLES[key];
+    if(!a) return '';
+    return `<span class="ticker-item" data-tab="${key}"><b>${label}</b>${a.title}</span>`;
+  }).join('');
+  const track = document.getElementById('tickerTrack');
+  track.innerHTML = itemsHTML + itemsHTML; // 이음새 없는 반복을 위해 2배 복제
+  track.querySelectorAll('.ticker-item').forEach(el => {
+    el.addEventListener('click', () => switchTab(el.dataset.tab));
+  });
+}
+buildHeadlineTicker();
+
+/* ── 섹션바(카테고리 탭) 좌→우 자동 스크롤 ──
+   내용을 복제하지 않는 실제 버튼이라 scrollLeft를 서서히 늘려 콘텐츠가
+   오른쪽에서 왼쪽으로 흐르듯 보이게 하고, 끝까지 가면 처음(0)으로 되돌아간다.
+   (이전 버전은 0에서 시작해 곧바로 줄이는 방향이라, 시작하자마자 조건에 걸려
+    오른쪽 끝으로 순간 이동하는 버그가 있었음 — 방향을 반대로 바꿔 해결)
+   사용자가 마우스를 올리거나 터치하는 동안은 자동 스크롤을 멈춘다. */
+(function autoScrollSectionBar(){
+  const bar = document.getElementById('sectionBar');
+  let paused = false;
+  bar.addEventListener('mouseenter', () => paused = true);
+  bar.addEventListener('mouseleave', () => paused = false);
+  bar.addEventListener('touchstart', () => paused = true, { passive:true });
+  bar.addEventListener('touchend', () => setTimeout(() => paused = false, 2500), { passive:true });
+
+  const SPEED_PX_PER_SEC = 12; // 속도를 여기서 조절 (숫자가 작을수록 느림)
+  let lastTs = null;
+
+  function tick(ts){
+    if(lastTs === null) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+
+    if(!paused){
+      const max = bar.scrollWidth - bar.clientWidth;
+      if(max > 0){
+        bar.scrollLeft += SPEED_PX_PER_SEC * dt;
+        if(bar.scrollLeft >= max) bar.scrollLeft = 0;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ── 포털 검색 드롭다운 ── */
+const PORTAL_URLS = {
+  // ⚠ 네이버/구글은 검색 URL이 확정 규격이라 정확합니다.
+  //   뉴스와이어/정부포털/AI(챗도우미)는 실제 서비스 쪽 검색 파라미터 확인 후 조정해주세요(현재는 예시 구성).
+  naver: q => `https://search.naver.com/search.naver?query=${encodeURIComponent(q)}`,
+  google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+  newswire: q => `https://www.newswire.co.kr/?mod=search&search_txt=${encodeURIComponent(q)}`,
+  gov: q => `https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?searchCnd=&searchWrd=${encodeURIComponent(q)}`,
+  ai: q => `https://chatdoumi.com/?q=${encodeURIComponent(q)}`
+};
+
+const portalSearchBox = document.getElementById('portalSearchBox');
+const portalDropdown = document.getElementById('portalDropdown');
+const portalSearchBtn = document.getElementById('portalSearchBtn');
+const portalSearchInput = document.getElementById('portalSearchInput');
+
+function togglePortalDropdown(){ portalDropdown.classList.toggle('open'); }
+function closePortalDropdown(){ portalDropdown.classList.remove('open'); }
+
+portalSearchBtn.addEventListener('click', togglePortalDropdown);
+document.addEventListener('click', (e) => {
+  if(!portalSearchBox.contains(e.target)) closePortalDropdown();
+});
+
+document.querySelectorAll('.portal-dropdown button[data-portal]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const q = portalSearchInput.value.trim();
+    const portal = btn.dataset.portal;
+    closePortalDropdown();
+    if(!q) return;
+
+    if(portal === 'internal'){
+      // 신문 내 검색 → 지난 신문 보기 화면의 검색창에 반영해 필터링
+      switchTab('archive');
+      const archiveInput = document.getElementById('searchInput');
+      archiveInput.value = q;
+      applyFilter();
+      return;
+    }
+    const buildUrl = PORTAL_URLS[portal];
+    if(buildUrl) window.open(buildUrl(q), '_blank');
+  });
+});
+
+portalSearchInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') togglePortalDropdown();
+});
 
 /* ══════════════════════════════════════════════════════════════
    3) 지난 신문 보기 화면
@@ -959,10 +1145,7 @@ function closeRegionDrawer(){ regionSidebar.classList.remove('open'); if(!quickD
 document.getElementById('btnRegion').addEventListener('click', () => {
   // 지역별 보기는 '지난 신문 보기' 화면의 기능이므로, 홈 화면에서 눌렀다면 먼저 그 화면으로 전환
   if(!document.getElementById('view-archive').classList.contains('active')){
-    document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
-    const archiveBtn = document.querySelector('#sectionBar button[data-tab="archive"]');
-    if(archiveBtn) archiveBtn.classList.add('active');
-    showView('archive');
+    switchTab('archive');
   }
   openRegionDrawer();
 });
@@ -1268,6 +1451,7 @@ async function loadLiveFeedsFromAICore(){
     if(data.articles){
       Object.assign(ARTICLES, data.articles);      // 받은 카테고리만 덮어씀
       renderArticle(currentTab);                    // 현재 보고 있는 탭 갱신
+      buildHeadlineTicker();                         // 실시간 티커도 최신 제목으로 재생성
     }
     if(data.feeds){
       Object.assign(FEEDS, data.feeds);
