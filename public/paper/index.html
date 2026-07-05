@@ -4,19 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>국민경제㊉ - 상생신문</title>
+
+<!-- ══════════════════════════ AIplatMarket 플랫폼 공통 자산 (framework) ══════════════════════════
+     MODULE_DEV_GUIDE.md 3-1 규정에 따른 필수 로드. 실제 배포 경로는
+     public/media/paper/index.html 이므로, 이 파일을 로컬에서 단독으로 열면
+     아래 두 경로는 404가 나는 게 정상입니다 (서버에 배치되어야 정상 로드됨). -->
+<link rel="stylesheet" href="/framework/assets/css/common.css">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Gothic+Coding&display=swap');
 
 :root{
+  /* ── 플랫폼 공통 디자인 토큰 (MODULE_DEV_GUIDE.md 3-2 규정값 그대로 사용) ── */
+  --navy:#0d1f35;
+  --gold:#c9a84c;
+  --red:#c0392b;
+  --grn:#2e7d32;
+  --g1:#f5f6f8;
+  --g2:#e8eaed;
+  --g3:#c4c8cd;
+  --g4:#8a8f98;
+  --bd:1px solid var(--g2);
+  --r:10px;
+
+  /* ── 신문 지면 전용 톤 (플랫폼 토큰과 충돌하지 않는 추가 변수) ── */
   --paper:#F3EDE0;
   --paper-deep:#ece4d2;
   --paper-card:#fffdf7;
   --ink:#221f1a;
   --ink-soft:#4a453d;
-  --navy:#1f3a5c;
   --navy-deep:#152A44;
-  --stamp:#b23a2e;
-  --gold:#b8863a;
+  --stamp:var(--red);
   --line:#c9bfa8;
   --line-strong:#221f1a;
 }
@@ -58,7 +76,7 @@ button{ font-family:inherit; }
 .masthead-eyebrow{ font-size:12px; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:10px; }
 .masthead h1{
   font-family:'Noto Serif KR', serif; font-weight:900; font-size:58px;
-  letter-spacing:.03em; margin:0; color:var(--ink); line-height:1;
+  letter-spacing:.03em; margin:0; color:var(--ink); line-height:1; cursor:pointer;
 }
 .masthead h1 span{ color:var(--navy); }
 .masthead-tagline{ margin-top:10px; font-size:13.5px; color:var(--ink-soft); font-family:'Noto Serif KR', serif; }
@@ -224,6 +242,8 @@ button{ font-family:inherit; }
 .viewer-pagejump{ position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:8px; align-items:center; background:rgba(255,255,255,0.15); padding:5px 15px; border-radius:20px; }
 .viewer-pagejump input{ width:50px; border:none; border-radius:4px; padding:4px; text-align:center; }
 .viewer-pagejump button{ padding:4px 12px; background:var(--gold); border:none; border-radius:15px; cursor:pointer; font-weight:bold; color:#fff; }
+.brand-mini{ background:rgba(255,255,255,.15); color:#fff; border:none; padding:5px 10px; border-radius:14px; font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px; cursor:pointer; flex:0 0 auto; }
+.brand-mini:hover{ background:var(--stamp); }
 
 .stage{ flex:1; display:flex; justify-content:center; align-items:center; perspective:3000px; position:relative; overflow:hidden; }
 .book{ width:calc(var(--p-width) * 2); height:var(--p-height); position:relative; transform-style:preserve-3d; transition:transform .4s ease; }
@@ -289,6 +309,11 @@ button{ font-family:inherit; }
 </head>
 <body>
 
+<!-- ══════════════════════════ 플랫폼 공통 헤더 (framework/core.js가 자동으로 채움) ══════════════════════════
+     AI플랫마켓 전체 GNB(플랫폼 스위처)가 이 자리에 렌더링됩니다.
+     "종이신문 그대로 보기(뷰어)" 화면에서는 몰입형 열람을 위해 JS로 숨깁니다. -->
+<div id="fw-header"></div>
+
 <!-- ══════════════════════════ 공통 상단 (홈 · 지난호 화면 전용) ══════════════════════════ -->
 <div id="appChrome">
   <div class="utility-bar">
@@ -299,7 +324,7 @@ button{ font-family:inherit; }
 
   <div class="masthead">
     <div class="masthead-eyebrow">국민경제㊉ × AI플랫마켓 제휴</div>
-    <h1>국민경제<span>㊉</span></h1>
+    <h1 onclick="goHome()" title="메인으로">국민경제<span>㊉</span></h1>
     <div class="masthead-tagline">— 소비자와 소상공인이 함께 쓰는 상생의 기록 —</div>
     <svg class="stamp" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="44" fill="none" stroke="#b23a2e" stroke-width="3"/>
@@ -433,6 +458,9 @@ button{ font-family:inherit; }
   </div>
 </footer>
 
+<!-- ══════════════════════════ 플랫폼 공통 푸터 (framework/core.js가 자동으로 채움) ══════════════════════════ -->
+<div id="fw-footer"></div>
+
 <div class="scrim" id="scrim"></div>
 
 <!-- 퀵메뉴 -->
@@ -465,7 +493,10 @@ button{ font-family:inherit; }
   <div id="viewerMain">
     <div class="viewer-header">
       <button id="viewer-menu-toggle" onclick="toggleViewerSidebar()">☰</button>
-      <div style="font-weight:bold;width:220px;" id="viewerHeaderTitle">DIGITAL ARCHIVE</div>
+      <div style="display:flex;align-items:center;gap:10px;width:260px;overflow:hidden;">
+        <button class="brand-mini" onclick="goHome()" title="메인으로">국민경제㊉</button>
+        <span id="viewerHeaderTitle" style="font-weight:bold;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">DIGITAL ARCHIVE</span>
+      </div>
       <div class="viewer-pagejump">
         <span>면 이동:</span>
         <input type="number" id="pageInput" min="1" placeholder="1">
@@ -510,7 +541,21 @@ function showView(name){
   const chromeVisible = (name !== 'viewer');
   document.getElementById('appChrome').style.display = chromeVisible ? 'block' : 'none';
   document.getElementById('siteFooter').style.display = chromeVisible ? 'block' : 'none';
+  const fwHeader = document.getElementById('fw-header');
+  const fwFooter = document.getElementById('fw-footer');
+  if(fwHeader) fwHeader.style.display = chromeVisible ? '' : 'none';
+  if(fwFooter) fwFooter.style.display = chromeVisible ? '' : 'none';
   window.scrollTo(0,0);
+}
+
+/* 어느 화면(홈/지난호 목록/뷰어)에서든 타이틀(국민경제㊉)을 누르면 메인 1면으로 복귀 */
+function goHome(){
+  document.querySelectorAll('#sectionBar button').forEach(b => b.classList.remove('active'));
+  const headlineBtn = document.querySelector('#sectionBar button[data-tab="headline"]');
+  if(headlineBtn) headlineBtn.classList.add('active');
+  currentTab = 'headline';
+  renderArticle('headline');
+  showView('home');
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1153,8 +1198,90 @@ function updateTransform(){
   zContainer.style.transform = `translateY(${posY}px) scale(${scale})`;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   6) AI Core(ai-core/) 연동 자리 — 정정 버전
+   ------------------------------------------------------------
+   ⚠ chatdoumi.com은 별개의 Firebase 프로젝트이며, 이 신문이 실제로
+      연동해야 할 AI Core는 AIplatMarket 저장소 안의 ai-core/ 입니다.
+      ai-core/는 AICore.process({module, task, prompt, fallbackFn})
+      형태의 "서버사이드 Node.js 함수"이지, 브라우저가 바로 fetch할 수
+      있는 공개 URL이 아닙니다.
+
+   그래서 이 신문(정적 프론트엔드)이 실제 AI 콘텐츠를 받으려면:
+   1) 이 모듈(paper)이 자신의 백엔드 라우트를 갖거나,
+      메인 index.js의 API 라우트가 아래와 같은 형태로 열려 있어야 합니다.
+        GET /api/paper/news-feed  (같은 오리진이므로 CORS 걱정 없음)
+   2) 그 라우트 내부에서만 AICore.process({ module:'paper', ... })를
+      호출하고, 결과를 아래 JSON 스키마로 응답합니다.
+   3) 이 파일은 그 라우트를 fetch만 하면 됩니다. RSS 주소도,
+      GPT/Gemini 키도, ai-core 내부 구조도 몰라도 됩니다.
+
+   ⚠ 아직 이 라우트가 없다면(=paper 모듈이 자기 백엔드가 없다면),
+      AI_CORE_ENDPOINT를 빈 값으로 두세요. 요청이 조용히 실패하고
+      기존 목업(mock) 콘텐츠가 계속 표시됩니다 — 화면은 깨지지 않습니다.
+      이 라우트 개설은 module.json 전달 시 "메인 개발창"과 상의가
+      필요합니다 (MODULE_DEV_GUIDE.md 5번 규정).
+
+   서버가 내려줘야 하는 JSON 형태 (예시):
+   {
+     "updatedAt": "2026-07-05T06:00:00+09:00",
+     "articles": {                // ARTICLES의 카테고리 키와 동일
+       "headline": { "kicker":"", "title":"", "dek":"", "byline":"",
+                      "figcaption":"", "pullQuote":"",
+                      "body":["문단1","문단2"],
+                      "subs":[{"kicker":"","title":"","body":""}] },
+       "economy": { ... }          // 필요한 카테고리만 보내도 됨(부분 갱신)
+     },
+     "feeds": {                   // 우측 실시간 소식 드로어
+       "platmarket":[{"tag":"","ttl":"","time":""}],
+       "merchant":[...], "news":[...], "store":[...], "event":[...]
+     },
+     "issues": [                  // (선택) 신규 발행호 자동 추가
+       {"id":"202608","title":"","date":"","region":"","pages":16,"thumb":"","isNew":true}
+     ]
+   }
+════════════════════════════════════════════════════════════════ */
+const AI_CORE_ENDPOINT = ""; // 예: "/api/paper/news-feed"  (같은 오리진 상대경로 권장)
+
+async function loadLiveFeedsFromAICore(){
+  if(!AI_CORE_ENDPOINT) return; // 미설정 시 목업 유지, 조용히 종료
+
+  try{
+    const res = await fetch(AI_CORE_ENDPOINT, { method:'GET' });
+    if(!res.ok) throw new Error('AI Core 응답 오류: ' + res.status);
+    const data = await res.json();
+
+    if(data.articles){
+      Object.assign(ARTICLES, data.articles);      // 받은 카테고리만 덮어씀
+      renderArticle(currentTab);                    // 현재 보고 있는 탭 갱신
+    }
+    if(data.feeds){
+      Object.assign(FEEDS, data.feeds);
+      const activeFeedBtn = document.querySelector('#quickTabs button.active');
+      if(activeFeedBtn) renderFeed(activeFeedBtn.dataset.feed);
+    }
+    if(Array.isArray(data.issues) && data.issues.length){
+      data.issues.forEach(newIssue => {
+        const idx = ISSUES.findIndex(i => i.id === newIssue.id);
+        if(idx >= 0) ISSUES[idx] = newIssue; else ISSUES.push(newIssue);
+      });
+      applyFilter();
+    }
+    console.log('[AI Core] 실시간 콘텐츠 갱신 완료:', data.updatedAt);
+  }catch(err){
+    console.warn('[AI Core] 연동 실패 — 목업 콘텐츠 유지:', err);
+  }
+}
+
 /* 초기 화면 */
 showView('home');
+loadLiveFeedsFromAICore();
+// 예: 5분마다 자동 갱신하고 싶다면 아래 주석 해제
+// setInterval(loadLiveFeedsFromAICore, 5 * 60 * 1000);
 </script>
+
+<!-- ══════════════════════════ 플랫폼 공통 스크립트 (fw-header/fw-footer 렌더) ══════════════════════════
+     MODULE_DEV_GUIDE.md 3-1 규정: 반드시 body 최하단, 모듈 스크립트 이후에 로드 -->
+<script src="/framework/assets/js/core.js"></script>
 </body>
 </html>
