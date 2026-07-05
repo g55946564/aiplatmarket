@@ -74,7 +74,7 @@ button{ font-family:inherit; }
   background:var(--paper);
   border:1px solid var(--line);
   border-bottom:none;
-  padding:14px 34px 0;
+  padding:0 34px 0;
 }
 .utility-bar{
   display:flex;
@@ -130,22 +130,32 @@ button{ font-family:inherit; }
 /* ── 타이틀 아래 검색바 라인 ── */
 .header-searchbar{
   position:relative; display:flex; max-width:520px; margin:6px auto 0;
-  background:#fff; border-radius:22px; box-shadow:inset 0 0 0 1px var(--line);
+  background:#fff; border-radius:20px; border:1px solid var(--line);
 }
-.header-searchbar input{ flex:1; border:none; outline:none; padding:11px 18px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; border-radius:22px 0 0 22px; min-width:0; }
-.header-searchbar button#portalSearchBtn{ border:none; background:var(--acc); color:#fff; padding:0 18px; cursor:pointer; font-size:13px; font-weight:700; border-radius:0 22px 22px 0; white-space:nowrap; }
-.portal-dropdown{
-  display:none; position:absolute; top:calc(100% + 8px); right:0;
-  background:var(--paper-card); border:1px solid var(--line-strong); min-width:240px; z-index:60;
-  box-shadow:0 10px 26px rgba(0,0,0,.18); text-align:left;
+.header-searchbar input{ flex:1; border:none; outline:none; padding:7px 16px; font-size:13.5px; font-family:'Noto Sans KR', sans-serif; border-radius:20px 0 0 20px; min-width:0; }
+.header-searchbar button#portalSearchBtn{ border:none; background:var(--acc); color:#fff; padding:0 16px; cursor:pointer; font-size:12.5px; font-weight:700; border-radius:0 20px 20px 0; white-space:nowrap; }
+/* ── 종합 검색 팝업 ── */
+.srch-pop{ display:none; position:fixed; inset:0; background:rgba(13,20,17,.55); z-index:2100; align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto; }
+.srch-pop.open{ display:flex; }
+.srch-pop-box{ background:#fff; width:100%; max-width:640px; border-radius:10px; overflow:hidden; box-shadow:0 25px 65px rgba(0,0,0,.4); }
+.srch-pop-hd{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--line); }
+.srch-pop-inp{ flex:1; border:1px solid var(--line); border-radius:18px; padding:8px 16px; font-size:13.5px; outline:none; font-family:inherit; }
+.srch-pop-btn{ background:var(--acc); color:#fff; border:none; padding:8px 16px; border-radius:18px; font-size:13px; font-weight:700; cursor:pointer; }
+.srch-pop-close{ background:none; border:none; font-size:18px; cursor:pointer; color:var(--ink-soft); }
+.srch-pop-body{ padding:16px 18px 24px; max-height:70vh; overflow-y:auto; }
+.srch-sec-ttl{ font-size:12.5px; font-weight:800; color:var(--acc-deep); margin:16px 0 8px; }
+.srch-sec-ttl:first-child{ margin-top:0; }
+.srch-sub-ttl{ font-size:11px; font-weight:800; color:var(--ink-soft); letter-spacing:.03em; margin:10px 0 6px; }
+.srch-tags{ display:flex; flex-wrap:wrap; gap:7px; }
+.srch-tag{ background:var(--paper-deep); border:1px solid var(--line); border-radius:14px; padding:6px 13px; font-size:12px; color:var(--ink); cursor:pointer; }
+.srch-tag:hover{ background:var(--acc); border-color:var(--acc); color:#fff; }
+.srch-portal-row{ display:flex; gap:7px; overflow-x:auto; padding-bottom:6px; }
+.srch-portal{
+  flex:0 0 auto; display:flex; align-items:center; gap:5px; border:1px solid var(--line); border-radius:16px;
+  padding:6px 12px; font-size:12px; color:var(--ink); text-decoration:none; white-space:nowrap;
 }
-.portal-dropdown.open{ display:block; }
-.portal-dropdown button{
-  display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid var(--line);
-  padding:10px 14px; font-size:13px; color:var(--ink); cursor:pointer;
-}
-.portal-dropdown button:last-child{ border-bottom:none; }
-.portal-dropdown button:hover{ background:var(--paper); color:var(--acc-deep); font-weight:700; }
+.srch-portal:hover{ border-color:var(--acc-deep); color:var(--acc-deep); }
+.srch-portal .ico{ font-size:13px; }
 
 /* ── 카테고리+헤드라인 실시간 티커 (섹션바 위) ── */
 .headline-ticker{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
@@ -177,6 +187,8 @@ button{ font-family:inherit; }
 .section-bar button.paper-mode.active{ background:var(--stamp); color:#fff; }
 .section-bar button.submit-mode{ color:var(--acc); }
 .section-bar button.submit-mode.active{ background:var(--acc); color:#fff; }
+.section-bar button.community-mode{ color:var(--acc-deep); }
+.section-bar button.community-mode.active{ background:var(--acc-deep); color:#fff; }
 
 /* ══════════════════════════ 뷰(view) 컨테이너 공통 ══════════════════════════ */
 .view{ display:none; }
@@ -265,6 +277,33 @@ button{ font-family:inherit; }
 
 /* ── 기사 올리기 화면 ── */
 .submit-wrap{ max-width:640px; margin:0 auto; padding:24px 20px 50px; }
+
+/* ── 커뮤니티 화면 ── */
+.community-wrap{ max-width:760px; margin:0 auto; padding:24px 20px 50px; }
+.board-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; margin-top:16px; }
+.board-card{
+  border:1px solid var(--line); background:var(--paper-card); padding:18px; cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.board-card:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.1); }
+.board-card .b-icon{ font-size:22px; margin-bottom:8px; }
+.board-card .b-title{ font-weight:700; font-size:14px; margin-bottom:4px; }
+.board-card .b-desc{ font-size:12px; color:var(--ink-soft); line-height:1.5; }
+.board-card.highlight{ border-color:var(--acc); border-width:2px; }
+.board-detail{ display:none; margin-top:20px; border-top:2px solid var(--ink); padding-top:16px; }
+.board-detail.open{ display:block; }
+.board-post{ padding:12px 0; border-bottom:1px dashed var(--line); font-size:13px; }
+.board-post .p-title{ font-weight:700; margin-bottom:3px; }
+.board-post .p-meta{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+@media (max-width:600px){ .board-grid{ grid-template-columns:1fr; } }
+
+/* ── 정보 모달 (신문사소개/이용약관/개인정보처리방침/광고문의) ── */
+.info-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(13,20,17,.55); z-index:2050; align-items:center; justify-content:center; padding:20px; }
+.info-modal-overlay.open{ display:flex; }
+.info-modal-box{ background:#fff; width:100%; max-width:560px; max-height:80vh; overflow-y:auto; border-radius:8px; padding:26px 28px; box-shadow:0 25px 65px rgba(0,0,0,.35); }
+.info-modal-box h3{ margin:0 0 14px; font-family:'Noto Serif KR', serif; color:var(--acc-deep); }
+.info-modal-box p{ font-size:13px; line-height:1.8; color:var(--ink); margin:0 0 10px; }
+.info-modal-box .close-btn{ margin-top:12px; background:var(--paper-deep); border:none; padding:9px 20px; border-radius:6px; cursor:pointer; font-size:13px; color:var(--ink-soft); }
 .submit-guide{ background:var(--paper-deep); border:1px solid var(--line); border-left:4px solid var(--acc); padding:14px 18px; margin-bottom:22px; font-size:13.5px; line-height:1.8; color:var(--ink); }
 .submit-guide p{ margin:0 0 8px; }
 .submit-guide p:last-child{ margin-bottom:0; }
@@ -476,15 +515,91 @@ button{ font-family:inherit; }
   </div>
 
   <div class="header-searchbar" id="portalSearchBox">
-    <input id="portalSearchInput" type="text" placeholder="업체·메뉴·지역·뉴스 검색...">
-    <button id="portalSearchBtn" aria-label="검색 대상 선택">🔍 검색</button>
-    <div class="portal-dropdown" id="portalDropdown">
-      <button data-portal="internal">📰 국민경제㊉ 신문 내 검색</button>
-      <button data-portal="naver">🟩 네이버에서 검색</button>
-      <button data-portal="google">🔵 구글에서 검색</button>
-      <button data-portal="newswire">📡 뉴스와이어에서 검색</button>
-      <button data-portal="gov">🏛 소상공인 정부포털에서 검색</button>
-      <button data-portal="ai">🤖 AI(챗도우미)로 검색</button>
+    <input id="portalSearchInput" type="text" placeholder="업체·메뉴·지역·뉴스 검색..."
+           onkeydown="if(event.key==='Enter'){const v=this.value;openSearchPop();setTimeout(()=>{const i=document.getElementById('srchPopInp');if(i){i.value=v;}},80);}">
+    <button id="portalSearchBtn" onclick="openSearchPop()" aria-label="검색">🔍 검색</button>
+  </div>
+
+  <!-- 종합 검색 팝업 (국내 빠른검색/글로벌/국내포털/AI서비스/글로벌포털) -->
+  <div class="srch-pop" id="srchPop" onclick="if(event.target===this)closeSearchPop()">
+    <div class="srch-pop-box">
+      <div class="srch-pop-hd">
+        <span style="font-size:1.2rem">🔍</span>
+        <input class="srch-pop-inp" id="srchPopInp" placeholder="업체·메뉴·지역·뉴스 검색..." onkeydown="if(event.key==='Enter')doPopSearch()">
+        <button class="srch-pop-btn" onclick="doPopSearch()">검색</button>
+        <button class="srch-pop-close" onclick="closeSearchPop()">✕</button>
+      </div>
+      <div class="srch-pop-body">
+
+        <div class="srch-sec-ttl">📰 국민경제㊉ 신문 내</div>
+        <div class="srch-tags">
+          <span class="srch-tag" onclick="popPage('headline')">오늘의 헤드라인</span>
+          <span class="srch-tag" onclick="popPage('store')">상생 스토어</span>
+          <span class="srch-tag" onclick="popPage('benefit')">소비자 혜택</span>
+          <span class="srch-tag" onclick="popPage('todaynews')">지역뉴스</span>
+          <span class="srch-tag" onclick="popPage('global')">글로벌경제</span>
+          <span class="srch-tag" onclick="popPage('archive')">지난 신문 보기</span>
+        </div>
+
+        <div class="srch-sec-ttl">🔎 국내 포털</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="#" onclick="return portalSearch('naver')" target="_blank"><span class="ico">🟢</span>네이버</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('google')" target="_blank"><span class="ico">🔵</span>구글</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('daum')" target="_blank"><span class="ico">🟠</span>다음</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('navermap')" target="_blank"><span class="ico">🗺</span>지도</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('blog')" target="_blank"><span class="ico">📝</span>블로그</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('shop')" target="_blank"><span class="ico">🛒</span>쇼핑</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('youtube')" target="_blank"><span class="ico">▶</span>유튜브</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('newswire')" target="_blank"><span class="ico">📰</span>뉴스와이어</a>
+        </div>
+
+        <div class="srch-sec-ttl" style="display:flex;align-items:center;justify-content:space-between">
+          🤖 AI 서비스 <span style="font-size:.66rem;color:var(--ink-soft);font-weight:400">분야별 주요 AI 모아보기</span>
+        </div>
+
+        <div class="srch-sub-ttl">💬 대화형 AI</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="https://chatdoumi.com" target="_blank" style="border-color:var(--acc-deep);color:var(--acc-deep);font-weight:800"><span class="ico">🤖</span>챗도우미</a>
+          <a class="srch-portal" href="https://chat.openai.com" target="_blank"><span class="ico">🟢</span>ChatGPT</a>
+          <a class="srch-portal" href="https://claude.ai" target="_blank"><span class="ico">🟠</span>Claude</a>
+          <a class="srch-portal" href="https://gemini.google.com" target="_blank"><span class="ico">🔵</span>Gemini</a>
+          <a class="srch-portal" href="https://www.perplexity.ai" target="_blank"><span class="ico">🔮</span>Perplexity</a>
+          <a class="srch-portal" href="https://copilot.microsoft.com" target="_blank"><span class="ico">⚡</span>Copilot</a>
+          <a class="srch-portal" href="https://clova.ai" target="_blank"><span class="ico">🍀</span>클로바X</a>
+          <a class="srch-portal" href="https://wrtn.ai" target="_blank"><span class="ico">✍</span>뤼튼</a>
+        </div>
+
+        <div class="srch-sub-ttl">🎨 이미지·디자인 AI</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="https://www.canva.com" target="_blank"><span class="ico">🎨</span>Canva</a>
+          <a class="srch-portal" href="https://www.midjourney.com" target="_blank"><span class="ico">🖼</span>Midjourney</a>
+          <a class="srch-portal" href="https://openai.com/dall-e-3" target="_blank"><span class="ico">🟢</span>DALL·E</a>
+          <a class="srch-portal" href="https://www.adobe.com/kr/products/firefly.html" target="_blank"><span class="ico">🔥</span>Adobe Firefly</a>
+        </div>
+
+        <div class="srch-sub-ttl">💼 업무·코딩 AI</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="https://github.com/features/copilot" target="_blank"><span class="ico">💻</span>GitHub Copilot</a>
+          <a class="srch-portal" href="https://www.notion.so/product/ai" target="_blank"><span class="ico">📝</span>Notion AI</a>
+          <a class="srch-portal" href="https://gamma.app" target="_blank"><span class="ico">🎯</span>Gamma</a>
+          <a class="srch-portal" href="https://www.jasper.ai" target="_blank"><span class="ico">📢</span>Jasper</a>
+        </div>
+
+        <div class="srch-sec-ttl">🏛 소상공인 정부포털</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="#" onclick="return portalSearch('gov')" target="_blank"><span class="ico">🏛</span>기업마당</a>
+          <a class="srch-portal" href="https://www.semas.or.kr" target="_blank"><span class="ico">🏪</span>소상공인시장진흥공단</a>
+          <a class="srch-portal" href="https://www.gov.kr" target="_blank"><span class="ico">📋</span>정부24</a>
+        </div>
+
+        <div class="srch-sec-ttl">🌍 글로벌 포털</div>
+        <div class="srch-portal-row">
+          <a class="srch-portal" href="#" onclick="return portalSearch('bing')" target="_blank"><span class="ico">⚪</span>빙</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('yahoo')" target="_blank"><span class="ico">🟣</span>야후</a>
+          <a class="srch-portal" href="#" onclick="return portalSearch('ddg')" target="_blank"><span class="ico">🦆</span>덕덕고</a>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -511,6 +626,7 @@ button{ font-family:inherit; }
     <button data-tab="global">글로벌 뉴스</button>
     <button data-tab="incident">사건·사고</button>
     <button data-tab="ai">AI</button>
+    <button data-tab="community" class="community-mode">💬 커뮤니티</button>
     <button data-tab="submit" class="submit-mode">✍ 기사 올리기</button>
     <button data-tab="archive" class="paper-mode">종이신문 그대로 보기</button>
   </div>
@@ -600,6 +716,18 @@ button{ font-family:inherit; }
   </div>
 </div>
 
+<!-- ══════════════════════════ 커뮤니티 화면 ══════════════════════════ -->
+<div id="view-community" class="view">
+  <div class="community-wrap">
+    <div class="section-title"><h2>💬 커뮤니티</h2></div>
+    <div class="board-grid" id="boardGrid"></div>
+    <div class="board-detail" id="boardDetail">
+      <div class="section-title"><h2 id="boardDetailTitle"></h2><span style="cursor:pointer;color:var(--acc-deep);" onclick="closeBoardDetail()">← 목록으로</span></div>
+      <div id="boardDetailBody"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════════════════ 기사 올리기 화면 ══════════════════════════ -->
 <div id="view-submit" class="view">
   <div class="submit-wrap">
@@ -648,9 +776,9 @@ button{ font-family:inherit; }
     </div>
     <div class="foot-col foot-col-right">
       <div class="foot-links">
-        <a class="foot-link" href="#">서비스 소개</a>ㅣ<a class="foot-link" href="#">이용약관</a>ㅣ<a class="foot-link" href="#">개인정보처리방침</a>ㅣ<a class="foot-link" href="#">광고문의</a>ㅣ<a class="foot-link" href="#">커뮤니티(💡 불편사항·개선 제안)</a>
+        <a class="foot-link" href="javascript:void(0)" onclick="openInfoModal('intro')">신문사 소개</a>ㅣ<a class="foot-link" href="javascript:void(0)" onclick="openInfoModal('terms')">이용약관</a>ㅣ<a class="foot-link" href="javascript:void(0)" onclick="openInfoModal('privacy')">개인정보처리방침</a>ㅣ<a class="foot-link" href="javascript:void(0)" onclick="openInfoModal('ad')">광고문의</a>
       </div>
-      <div style="margin-top:10px;"><a class="foot-link" href="/admin">⚙️ 관리자 대시보드</a></div>
+      <div style="margin-top:10px;"><a class="foot-link" href="admin.html" target="_blank">⚙️ 관리자 대시보드</a></div>
       <div class="foot-dropdown" style="margin-top:10px;">
         <button class="foot-dd-toggle" id="footViewToggle">🖥 화면 전환 ▾</button>
         <div class="foot-dd-menu" id="footViewMenu">
@@ -735,6 +863,15 @@ button{ font-family:inherit; }
   </div>
 </div>
 
+<!-- 정보 모달: 신문사 소개 / 이용약관 / 개인정보처리방침 / 광고문의 -->
+<div class="info-modal-overlay" id="infoModal" onclick="if(event.target===this)closeInfoModal()">
+  <div class="info-modal-box">
+    <h3 id="infoModalTitle"></h3>
+    <div id="infoModalBody"></div>
+    <button class="close-btn" onclick="closeInfoModal()">닫기</button>
+  </div>
+</div>
+
 <!-- ══════════════════════════ 뷰어 화면 (종이신문 그대로 보기 실행 화면) ══════════════════════════ -->
 <div id="view-viewer" class="view">
   <div id="viewer-sidebar-overlay" onclick="toggleViewerSidebar()"></div>
@@ -793,6 +930,7 @@ function showView(name){
   document.getElementById('view-home').classList.toggle('active', name === 'home');
   document.getElementById('view-archive').classList.toggle('active', name === 'archive');
   document.getElementById('view-submit').classList.toggle('active', name === 'submit');
+  document.getElementById('view-community').classList.toggle('active', name === 'community');
   document.getElementById('view-viewer').classList.toggle('active', name === 'viewer');
 
   const chromeVisible = (name !== 'viewer');
@@ -1114,6 +1252,9 @@ function switchTab(tab){
     showView('archive');
   } else if(tab === 'submit'){
     showView('submit');
+  } else if(tab === 'community'){
+    showView('community');
+    buildBoardGrid();
   } else {
     currentTab = tab;
     renderArticle(tab);
@@ -1129,7 +1270,7 @@ renderArticle('headline');
 /* ── 카테고리 + 헤드라인 실시간 티커 (좌→우 자동 스크롤) ── */
 function buildHeadlineTicker(){
   const tabBtns = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
-    .filter(b => b.dataset.tab !== 'archive' && b.dataset.tab !== 'submit');
+    .filter(b => b.dataset.tab !== 'archive' && b.dataset.tab !== 'submit' && b.dataset.tab !== 'community');
   const itemsHTML = tabBtns.map(b => {
     const key = b.dataset.tab;
     const label = b.textContent;
@@ -1154,7 +1295,7 @@ buildHeadlineTicker();
 
   const TAB_ORDER = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
     .map(b => b.dataset.tab)
-    .filter(t => t !== 'archive' && t !== 'submit');
+    .filter(t => t !== 'archive' && t !== 'submit' && t !== 'community');
 
   const THRESHOLD = 60; // 스와이프로 인식할 최소 이동 거리(px)
   let startX = 0, startY = 0, tracking = false;
@@ -1183,53 +1324,66 @@ buildHeadlineTicker();
   }, { passive:true });
 })();
 
-/* ── 포털 검색 드롭다운 ── */
-const PORTAL_URLS = {
-  // ⚠ 네이버/구글은 검색 URL이 확정 규격이라 정확합니다.
-  //   뉴스와이어/정부포털/AI(챗도우미)는 실제 서비스 쪽 검색 파라미터 확인 후 조정해주세요(현재는 예시 구성).
+/* ── 종합 검색 팝업 (국내 빠른검색/국내포털/AI서비스/글로벌포털) ── */
+const SEARCH_ENGINE_URLS = {
+  // ⚠ 네이버/구글/다음/유튜브 등은 검색 URL이 확정 규격이라 정확합니다.
+  //   뉴스와이어/정부포털은 실제 서비스 쪽 검색 파라미터 확인 후 조정해주세요(현재는 예시 구성).
   naver: q => `https://search.naver.com/search.naver?query=${encodeURIComponent(q)}`,
   google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
-  newswire: q => `https://www.newswire.co.kr/?mod=search&search_txt=${encodeURIComponent(q)}`,
+  daum: q => `https://search.daum.net/search?q=${encodeURIComponent(q)}`,
+  navermap: q => `https://map.naver.com/v5/search/${encodeURIComponent(q)}`,
+  blog: q => `https://blog.naver.com/search/search.naver?query=${encodeURIComponent(q)}`,
+  shop: q => `https://shopping.naver.com/search/all?query=${encodeURIComponent(q)}`,
+  youtube: q => `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`,
+  newswire: q => `https://www.newswire.co.kr/newsSearch/?q=${encodeURIComponent(q)}`,
   gov: q => `https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?searchCnd=&searchWrd=${encodeURIComponent(q)}`,
-  ai: q => `https://chatdoumi.com/?q=${encodeURIComponent(q)}`
+  bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
+  yahoo: q => `https://search.yahoo.com/search?p=${encodeURIComponent(q)}`,
+  ddg: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`
 };
 
-const portalSearchBox = document.getElementById('portalSearchBox');
-const portalDropdown = document.getElementById('portalDropdown');
-const portalSearchBtn = document.getElementById('portalSearchBtn');
-const portalSearchInput = document.getElementById('portalSearchInput');
+const srchPop = document.getElementById('srchPop');
+const srchPopInp = document.getElementById('srchPopInp');
 
-function togglePortalDropdown(){ portalDropdown.classList.toggle('open'); }
-function closePortalDropdown(){ portalDropdown.classList.remove('open'); }
+function openSearchPop(){
+  srchPop.classList.add('open');
+  const carried = document.getElementById('portalSearchInput').value.trim();
+  if(carried) srchPopInp.value = carried;
+  setTimeout(() => srchPopInp.focus(), 50);
+}
+function closeSearchPop(){ srchPop.classList.remove('open'); }
 
-portalSearchBtn.addEventListener('click', togglePortalDropdown);
-document.addEventListener('click', (e) => {
-  if(!portalSearchBox.contains(e.target)) closePortalDropdown();
-});
+function doPopSearch(){
+  const q = srchPopInp.value.trim();
+  if(!q) return;
+  window.open(SEARCH_ENGINE_URLS.naver(q), '_blank'); // 기본 검색 엔진: 네이버
+}
 
-document.querySelectorAll('.portal-dropdown button[data-portal]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const q = portalSearchInput.value.trim();
-    const portal = btn.dataset.portal;
-    closePortalDropdown();
-    if(!q) return;
+/* 빠른 검색 태그 클릭 → 즉시 네이버 검색 */
+function popKw(keyword){
+  srchPopInp.value = keyword;
+  doPopSearch();
+}
 
-    if(portal === 'internal'){
-      // 신문 내 검색 → 지난 신문 보기 화면의 검색창에 반영해 필터링
-      switchTab('archive');
-      const archiveInput = document.getElementById('searchInput');
-      archiveInput.value = q;
-      applyFilter();
-      return;
-    }
-    const buildUrl = PORTAL_URLS[portal];
-    if(buildUrl) window.open(buildUrl(q), '_blank');
-  });
-});
+/* 신문 내부 카테고리로 바로 이동 */
+function popPage(tabKey){
+  closeSearchPop();
+  switchTab(tabKey);
+}
 
-portalSearchInput.addEventListener('keydown', (e) => {
-  if(e.key === 'Enter') togglePortalDropdown();
-});
+/* 국내/글로벌 포털 아이콘 클릭 → 해당 포털에서 검색 */
+function portalSearch(engine){
+  const q = srchPopInp.value.trim();
+  const buildUrl = SEARCH_ENGINE_URLS[engine];
+  if(q && buildUrl){
+    window.open(buildUrl(q), '_blank');
+  } else if(buildUrl){
+    window.open(buildUrl(''), '_blank'); // 검색어 없으면 포털 메인/빈 검색으로 이동
+  }
+  return false; // href="#" 기본 동작 방지
+}
+
+document.getElementById('portalSearchBtn').addEventListener('click', openSearchPop);
 
 /* ══════════════════════════════════════════════════════════════
    3) 지난 신문 보기 화면
@@ -1455,6 +1609,103 @@ function submitArticle(e){
   document.getElementById('submitForm').reset();
   return false;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   4-3-1) 커뮤니티 게시판
+════════════════════════════════════════════════════════════════ */
+const BOARDS = [
+  { key:'free', icon:'📝', title:'자유게시판', desc:'동네 이야기, 자유로운 소통 공간', posts:[
+    {title:'오늘 날씨 진짜 덥네요 다들 건강 조심하세요', meta:'익명 · 방금 전'},
+    {title:'인근에 괜찮은 세탁소 아시는 분?', meta:'익명 · 1시간 전'}
+  ]},
+  { key:'qna', icon:'❓', title:'소상공인 Q&A', desc:'창업·운영 궁금증을 서로 묻고 답해요', posts:[
+    {title:'국민경제㊉ 입점 심사 얼마나 걸리나요?', meta:'예비창업자 · 오늘'},
+    {title:'상생 인증 재심사는 어떻게 신청하나요', meta:'사장님A · 어제'}
+  ]},
+  { key:'review', icon:'⭐', title:'후기·리뷰 모음', desc:'다녀온 가게, 이용 후기를 남겨주세요', posts:[
+    {title:'밀담 베이커리 정말 맛있어요 추천!', meta:'단골손님 · 오늘'},
+    {title:'청과상 김씨네 과일 신선해요', meta:'동네주민 · 2일 전'}
+  ]},
+  { key:'localnews', icon:'📍', title:'동네소식 공유', desc:'우리 동네 소식을 이웃과 나눠요', posts:[
+    {title:'이번 주말 전통시장 야시장 열린대요', meta:'주민B · 오늘'}
+  ]},
+  { key:'event', icon:'🎉', title:'이벤트 인증', desc:'쿠폰·이벤트 참여 인증샷 게시판', posts:[
+    {title:'웰컴 쿠폰 사용 완료! 인증합니다', meta:'신규가입 · 오늘'}
+  ]},
+  { key:'suggest', icon:'💡', title:'불편사항·개선 제안', desc:'플랫폼/신문에 대한 불편사항이나 개선 아이디어를 남겨주세요', posts:[
+    {title:'모바일에서 검색 버튼이 조금 작아요', meta:'이용자C · 오늘'},
+    {title:'지역 필터에 "서구"도 추가해주세요', meta:'이용자D · 3일 전'}
+  ], highlight:true }
+];
+
+function buildBoardGrid(){
+  const grid = document.getElementById('boardGrid');
+  if(grid.dataset.built) return;
+  grid.innerHTML = BOARDS.map(b => `
+    <div class="board-card${b.highlight ? ' highlight' : ''}" onclick="openBoard('${b.key}')">
+      <div class="b-icon">${b.icon}</div>
+      <div class="b-title">${b.title}</div>
+      <div class="b-desc">${b.desc}</div>
+    </div>
+  `).join('');
+  grid.dataset.built = '1';
+}
+
+function openBoard(key){
+  const board = BOARDS.find(b => b.key === key);
+  if(!board) return;
+  document.getElementById('boardDetailTitle').textContent = `${board.icon} ${board.title}`;
+  document.getElementById('boardDetailBody').innerHTML = board.posts.map(p => `
+    <div class="board-post"><div class="p-title">${p.title}</div><div class="p-meta">${p.meta}</div></div>
+  `).join('') || '<div class="board-post">아직 게시글이 없습니다.</div>';
+  document.getElementById('boardDetail').classList.add('open');
+}
+function closeBoardDetail(){ document.getElementById('boardDetail').classList.remove('open'); }
+
+/* ══════════════════════════════════════════════════════════════
+   4-3-2) 정보 모달 (신문사 소개 / 이용약관 / 개인정보처리방침 / 광고문의)
+════════════════════════════════════════════════════════════════ */
+const INFO_CONTENT = {
+  intro: {
+    title: '신문사 소개',
+    body: `<p><b>국민경제㊉</b>는 소비자와 소상공인이 함께 만들어가는 상생 디지털 신문입니다. AI플랫마켓과 제휴하여, 동네 가게의 이야기와 소비자의 생생한 목소리를 신문 형식으로 엮어 전합니다.</p>
+           <p>월간 발행 등록번호: 부평, 라00025 · 대표 겸 발행인 겸 편집인: 김형식</p>
+           <p>사업자등록번호: 227-18-34338 · 주소: 인천광역시 부평구 항동로 33번길 36-11 1층</p>`
+  },
+  terms: {
+    title: '이용약관',
+    body: `<p>본 약관은 국민경제㊉(이하 "신문")이 제공하는 서비스 이용에 관한 조건을 규정합니다.</p>
+           <p>1. 이용자는 관련 법령과 본 약관을 준수하여야 하며, 허위 정보나 타인의 권리를 침해하는 게시물을 등록해서는 안 됩니다.</p>
+           <p>2. "기사 올리기"를 통해 제출된 콘텐츠는 검토·AI 재편집·승인 절차를 거쳐 게재되며, 신문사는 게재 여부를 결정할 권한을 가집니다.</p>
+           <p>3. 이용자가 등록한 게시물의 저작권은 이용자에게 있으나, 신문 게재 목적의 편집·배포 권한을 신문사에 부여합니다.</p>
+           <p>※ 본 내용은 데모용 예시 약관이며, 실제 운영 시 법무 검토가 필요합니다.</p>`
+  },
+  privacy: {
+    title: '개인정보처리방침',
+    body: `<p>국민경제㊉는 이용자의 개인정보를 소중히 다루며, 관계 법령에 따라 안전하게 관리합니다.</p>
+           <p>1. 수집 항목: 아이디, 비밀번호, 이메일, 기사 투고 시 연락처 등</p>
+           <p>2. 이용 목적: 회원 식별, 기사 투고 검토·승인 결과 안내, 서비스 개선</p>
+           <p>3. 보유 기간: 회원 탈퇴 시 또는 목적 달성 시까지 (관계 법령에 따른 보존 의무 기간 제외)</p>
+           <p>4. 문의: newstar114@naver.com / a55946564@gmail.com</p>
+           <p>※ 본 내용은 데모용 예시이며, 실제 운영 시 법무 검토가 필요합니다.</p>`
+  },
+  ad: {
+    title: '광고문의',
+    body: `<p>국민경제㊉ 지면 및 디지털 신문에 소상공인 홍보·배너 광고를 원하시면 아래로 문의해주세요.</p>
+           <p>📧 이메일: newstar114@naver.com, a55946564@gmail.com</p>
+           <p>📞 전화: 0505-505-9000</p>
+           <p>광고 유형: 지면 배너, 카테고리 스폰서 표기, 상생 스토어 인증 배지 연계 등</p>`
+  }
+};
+
+function openInfoModal(key){
+  const info = INFO_CONTENT[key];
+  if(!info) return;
+  document.getElementById('infoModalTitle').textContent = info.title;
+  document.getElementById('infoModalBody').innerHTML = info.body;
+  document.getElementById('infoModal').classList.add('open');
+}
+function closeInfoModal(){ document.getElementById('infoModal').classList.remove('open'); }
 
 /* ══════════════════════════════════════════════════════════════
    4-4) 푸터: 이메일 문의 / 화면 전환 드롭다운

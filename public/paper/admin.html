@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>국민경제㊉ 관리자 대시보드</title>
+<style>
+/* 구조/톤은 업로드해주신 distribution.html(AI플랫마켓 반자동 배포 관리자)을 참조해
+   국민경제㊉(paper 모듈) 그린 팔레트로 재구성했습니다. */
+:root{ --navy:#14351f; --acc:#2e7d32; --acc-deep:#1b4332; --bg:#f3f7f4; --line:#e0e6e2; }
+*{box-sizing:border-box;}
+body{font-family:'Noto Sans KR', Arial, sans-serif; background:var(--bg); margin:0; color:#20241f;}
+header{background:var(--navy); color:#fff; padding:18px 24px; font-size:20px; font-weight:800; display:flex; align-items:center; justify-content:space-between;}
+header .badge{ font-size:11px; background:var(--acc); padding:4px 10px; border-radius:12px; font-weight:700; }
+.container{display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 60px);}
+.sidebar{background:#111815; color:#fff; padding:20px 0;}
+.sidebar a{display:block; color:#cfe0d3; padding:12px 22px; text-decoration:none; font-size:13.5px; cursor:pointer; border-left:3px solid transparent;}
+.sidebar a.active, .sidebar a:hover{ background:rgba(255,255,255,.06); border-left-color:var(--acc); color:#fff; }
+.main{padding:26px; overflow:auto;}
+.section{ display:none; }
+.section.active{ display:block; }
+.stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+.stat-box{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; }
+.stat-box .num{ font-size:24px; font-weight:900; color:var(--acc-deep); }
+.stat-box .lbl{ font-size:12px; color:#6b756e; margin-top:4px; }
+.card{background:#fff; padding:20px; border-radius:14px; margin-bottom:20px; box-shadow:0 4px 16px rgba(0,0,0,.06); border:1px solid var(--line);}
+.card h2{ font-size:16px; margin:0 0 14px; color:var(--acc-deep); }
+button{padding:9px 16px; border:none; border-radius:8px; background:var(--acc-deep); color:#fff; cursor:pointer; font-size:12.5px; font-weight:700;}
+button.green{background:var(--acc);}
+button.red{background:#c0392b;}
+button.ghost{background:#eef2ef; color:#3a453d;}
+table{width:100%; border-collapse:collapse; font-size:13px;}
+th,td{padding:11px 10px; border-bottom:1px solid var(--line); text-align:left;}
+th{color:#6b756e; font-weight:700; font-size:12px;}
+textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8px; padding:10px; font-family:inherit; font-size:13px; resize:vertical;}
+.tag{display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; background:#eef2ef; color:#3a453d;}
+.tag.pending{background:#fff3cd; color:#8a6d00;}
+.status-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+.status-dot.ok{ background:var(--acc); }
+.status-dot.fail{ background:#c0392b; }
+.note{ font-size:12px; color:#6b756e; line-height:1.7; }
+</style>
+</head>
+<body>
+
+<header>
+  국민경제㊉ 관리자 대시보드
+  <span class="badge">paper 모듈 · v0.1.0</span>
+</header>
+
+<div class="container">
+  <div class="sidebar">
+    <a class="active" data-sec="dash" onclick="showSec('dash', this)">대시보드</a>
+    <a data-sec="articles" onclick="showSec('articles', this)">기사 투고 승인</a>
+    <a data-sec="community" onclick="showSec('community', this)">커뮤니티 신고 관리</a>
+    <a data-sec="feed" onclick="showSec('feed', this)">실시간 소식 편집</a>
+    <a data-sec="aicore" onclick="showSec('aicore', this)">AI Core 연동 상태</a>
+    <a data-sec="issues" onclick="showSec('issues', this)">지난호 관리</a>
+  </div>
+
+  <div class="main">
+
+    <!-- 대시보드 -->
+    <div class="section active" id="sec-dash">
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="statVisit">0</div><div class="lbl">오늘 방문자</div></div>
+        <div class="stat-box"><div class="num" id="statPending">0</div><div class="lbl">투고 승인 대기</div></div>
+        <div class="stat-box"><div class="num" id="statReport">0</div><div class="lbl">커뮤니티 신고</div></div>
+        <div class="stat-box"><div class="num" id="statIssue">20</div><div class="lbl">등록된 지난호</div></div>
+      </div>
+      <div class="card">
+        <h2>요약</h2>
+        <p class="note">이 대시보드는 국민경제㊉ 신문(paper 모듈) 전용 관리 화면입니다. 실제 운영 데이터 연동을 위해서는 백엔드 API(예: /api/paper/admin/*)가 필요하며, 현재는 프로토타입 데이터로 동작합니다.</p>
+      </div>
+    </div>
+
+    <!-- 기사 투고 승인 -->
+    <div class="section" id="sec-articles">
+      <div class="card">
+        <h2>기사 투고 승인 대기</h2>
+        <table>
+          <tr><th>제목</th><th>작성자</th><th>유형</th><th>첨부</th><th>상태</th><th>처리</th></tr>
+          <tr>
+            <td>동네빵집 '밀담' 새벽 발효종 이야기</td><td>이OO (밀담 베이커리)</td><td>소상공인</td><td>📎 jpg 2장</td>
+            <td><span class="tag pending">검토중</span></td>
+            <td><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
+          </tr>
+          <tr>
+            <td>전통시장에서 만난 정직한 시세표</td><td>독자 김OO</td><td>소비자</td><td>📎 없음</td>
+            <td><span class="tag pending">검토중</span></td>
+            <td><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
+          </tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2>AI 재편집 미리보기</h2>
+        <textarea id="aiRewrite">[AI 재편집 초안] 새벽 발효종 하나로 15년을 버텨온 밀담 베이커리, 국민경제㊉ 입점 두 달만에 온라인 주문이 30% 늘었습니다...</textarea>
+        <br><br>
+        <button onclick="regenAI()">AI 재생성</button>
+        <button class="green" onclick="publishArticle()">승인 후 게재</button>
+      </div>
+    </div>
+
+    <!-- 커뮤니티 신고 관리 -->
+    <div class="section" id="sec-community">
+      <div class="card">
+        <h2>커뮤니티 신고 목록</h2>
+        <table>
+          <tr><th>게시판</th><th>게시글</th><th>신고 사유</th><th>처리</th></tr>
+          <tr>
+            <td>자유게시판</td><td>광고성 게시글로 의심됩니다</td><td>스팸/광고</td>
+            <td><button class="ghost" onclick="resolveReport(this)">확인 완료</button> <button class="red" onclick="deletePost(this)">삭제</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 실시간 소식 편집 -->
+    <div class="section" id="sec-feed">
+      <div class="card">
+        <h2>실시간 소식 (퀵메뉴) 편집 — AI플랫마켓 소식</h2>
+        <textarea id="feedEdit">AI플랫마켓, 전통시장 상인 500곳 추천 서비스 확대 / 단골 추천 알고리즘 v2.3 배포 / 인천 연수구청과 소상공인 디지털전환 업무협약</textarea>
+        <br><br>
+        <button onclick="saveFeed()">저장</button>
+        <span class="note" id="feedSaveNote"></span>
+      </div>
+    </div>
+
+    <!-- AI Core 연동 상태 -->
+    <div class="section" id="sec-aicore">
+      <div class="card">
+        <h2>AI Core 연동 상태</h2>
+        <p class="note"><span class="status-dot fail" id="aiCoreDot"></span><span id="aiCoreStatusText">확인 중...</span></p>
+        <p class="note">엔드포인트: <code>GET /api/paper/news-feed</code></p>
+        <button onclick="checkAICore()">지금 다시 확인</button>
+      </div>
+    </div>
+
+    <!-- 지난호 관리 -->
+    <div class="section" id="sec-issues">
+      <div class="card">
+        <h2>지난호 관리</h2>
+        <p class="note">새 호 추가는 <code>public/paper/archive/{id}.pdf</code> 업로드 후, <code>index.html</code>의 <code>ISSUES</code> 배열에 항목을 추가하면 됩니다. (추후 이 화면에서 직접 업로드하도록 백엔드 연동 예정)</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showSec(key, el){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + key).classList.add('active');
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function approveRow(btn){
+  const row = btn.closest('tr');
+  row.querySelector('.tag').outerHTML = '<span class="tag" style="background:#e3f3e5;color:#1b4332;">승인됨</span>';
+  btn.parentElement.innerHTML = '처리 완료';
+}
+function rejectRow(btn){
+  const row = btn.closest('tr');
+  row.querySelector('.tag').outerHTML = '<span class="tag" style="background:#fde2e1;color:#c0392b;">반려됨</span>';
+  btn.parentElement.innerHTML = '처리 완료';
+}
+function resolveReport(btn){ btn.parentElement.innerHTML = '확인 완료'; }
+function deletePost(btn){ btn.closest('tr').remove(); }
+
+function regenAI(){
+  document.getElementById('aiRewrite').value = '[AI 재편집 초안 v2] 8평 남짓한 골목 빵집이 국민경제㊉와 만나 도시 전체의 단골을 얻기까지, 15년 장인의 새벽은 오늘도 계속됩니다...';
+}
+function publishArticle(){
+  alert('게재 처리되었습니다. (프로토타입 — 실제 게재는 백엔드 연동 후 index.html의 ARTICLES 데이터에 반영됩니다)');
+}
+
+function saveFeed(){
+  document.getElementById('feedSaveNote').textContent = ' 저장되었습니다. (프로토타입 — 실제 저장은 백엔드 연동 필요)';
+}
+
+function checkAICore(){
+  const dot = document.getElementById('aiCoreDot');
+  const text = document.getElementById('aiCoreStatusText');
+  text.textContent = '확인 중...';
+  dot.className = 'status-dot fail';
+  fetch('/api/paper/news-feed')
+    .then(res => {
+      if(res.ok){
+        dot.className = 'status-dot ok';
+        text.textContent = '정상 연결됨 (200 OK)';
+      } else {
+        dot.className = 'status-dot fail';
+        text.textContent = '아직 연결되지 않음 (HTTP ' + res.status + ') — 목업 콘텐츠로 대체 중';
+      }
+    })
+    .catch(() => {
+      dot.className = 'status-dot fail';
+      text.textContent = '연결 실패 — 라우트가 아직 배포되지 않았을 수 있습니다';
+    });
+}
+
+// 초기 통계(프로토타입 값) + AI Core 상태 자동 확인
+document.getElementById('statVisit').textContent = 1248;
+document.getElementById('statPending').textContent = 2;
+document.getElementById('statReport').textContent = 1;
+checkAICore();
+</script>
+</body>
+</html>
