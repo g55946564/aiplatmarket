@@ -1413,11 +1413,12 @@ function updateTransform(){
    3) 이 파일은 그 라우트를 fetch만 하면 됩니다. RSS 주소도,
       GPT/Gemini 키도, ai-core 내부 구조도 몰라도 됩니다.
 
-   ⚠ 아직 이 라우트가 없다면(=paper 모듈이 자기 백엔드가 없다면),
-      AI_CORE_ENDPOINT를 빈 값으로 두세요. 요청이 조용히 실패하고
-      기존 목업(mock) 콘텐츠가 계속 표시됩니다 — 화면은 깨지지 않습니다.
-      이 라우트 개설은 module.json 전달 시 "메인 개발창"과 상의가
-      필요합니다 (MODULE_DEV_GUIDE.md 5번 규정).
+   ✅ 2026-07 메인 개발창 확인 완료: 엔드포인트 주소는 GET /api/paper/news-feed 로 확정.
+      아래 AI_CORE_ENDPOINT에도 이미 반영해뒀습니다. 다만 이 라우트가
+      실제 서버(index.js 또는 paper 모듈 라우터)에 아직 구현·배포되지
+      않았다면, 요청은 조용히 실패하고 기존 목업(mock) 콘텐츠가 계속
+      표시됩니다 — 화면은 깨지지 않으니, 라우트가 실제로 열리는 순간
+      자동으로 실시간 콘텐츠로 전환됩니다.
 
    서버가 내려줘야 하는 JSON 형태 (예시):
    {
@@ -1438,7 +1439,7 @@ function updateTransform(){
      ]
    }
 ════════════════════════════════════════════════════════════════ */
-const AI_CORE_ENDPOINT = ""; // 예: "/api/paper/news-feed"  (같은 오리진 상대경로 권장)
+const AI_CORE_ENDPOINT = "/api/paper/news-feed"; // 메인 개발창 확인 완료 (2026-07): AICore.process() 결과를 JSON으로 내려주는 라우트
 
 async function loadLiveFeedsFromAICore(){
   if(!AI_CORE_ENDPOINT) return; // 미설정 시 목업 유지, 조용히 종료
