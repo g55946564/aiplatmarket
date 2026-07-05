@@ -676,11 +676,14 @@ function renderIssues(list){
 function currentFilter(){
   const activeRegion = document.querySelector('.region-item.active').dataset.region;
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  return ISSUES.filter(issue => {
-    const regionOk = activeRegion === '전체' || issue.region === activeRegion;
-    const qOk = !q || issue.title.toLowerCase().includes(q) || issue.date.includes(q) || issue.region.toLowerCase().includes(q);
-    return regionOk && qOk;
-  });
+  return ISSUES
+    .filter(issue => {
+      const regionOk = activeRegion === '전체' || issue.region === activeRegion;
+      const qOk = !q || issue.title.toLowerCase().includes(q) || issue.date.includes(q) || issue.region.toLowerCase().includes(q);
+      return regionOk && qOk;
+    })
+    // 최신호가 항상 맨 앞(그리드 상단 좌측)에 오도록 id(발행년월) 기준 내림차순 정렬
+    .sort((a, b) => parseInt(b.id, 10) - parseInt(a.id, 10));
 }
 function applyFilter(){ renderIssues(currentFilter()); }
 renderIssues(ISSUES);
