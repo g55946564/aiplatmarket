@@ -503,7 +503,7 @@ button{ font-family:inherit; }
 <!-- ══════════════════════════ 공통 상단 (홈 · 지난호 화면 전용) ══════════════════════════ -->
 <div id="appChrome">
   <div class="utility-bar">
-    <span class="pub-date">2026년 7월 5일 일요일</span>
+    <span class="pub-date" id="pubDate">2026년 7월 5일 일</span>
     <div class="marquee-wrap">
       <div class="marquee-track">
         <span>소비자와 소상공인이 함께 쓰는 상생의 기록</span>
@@ -622,11 +622,13 @@ button{ font-family:inherit; }
     <button data-tab="headline" class="active">오늘의 헤드라인</button>
     <button data-tab="store">상생 스토어</button>
     <button data-tab="benefit">소비자 혜택</button>
+    <button data-tab="welfare">복지</button>
     <button data-tab="local">동네 소식</button>
+    <button data-tab="hometown">내고장 뉴스</button>
     <button data-tab="society">사회</button>
     <button data-tab="economy">경제</button>
     <button data-tab="education">교육</button>
-    <button data-tab="culture">문화</button>
+    <button data-tab="culture">문화예술</button>
     <button data-tab="science">과학</button>
     <button data-tab="sports">스포츠</button>
     <button data-tab="issue">최근 이슈</button>
@@ -1029,6 +1031,23 @@ const ARTICLES = {
       {kicker:'동네 공지', title:'이번 주 전통시장 소독·청소 일정 안내', body:'구청과 상인회가 공동으로 위생 점검을 진행한다.'}
     ]
   },
+  hometown:{
+    kicker:'내고장 뉴스',
+    title:'인천 부평, 골목상권 활성화 시범지구로 선정',
+    dek:'국민경제㊉ 본사가 있는 인천 부평구가 골목상권 디지털 전환 시범지구로 선정됐다.',
+    byline:'취재 · 지역팀 | 2026.07.05 06:00 발행',
+    figcaption:'부평구청과 상인회의 업무협약 현장.',
+    pullQuote:'"우리 동네가 먼저 바뀌는 모습을 보여주고 싶습니다."',
+    body:[
+      '인천광역시 부평구가 골목상권 디지털 전환 시범지구로 선정되며, 국민경제㊉ 입점 소상공인에 대한 지자체 지원이 확대될 전망이다.',
+      '시범지구 선정에 따라 부평구 내 전통시장과 골목상권 상인을 대상으로 디지털 마케팅 교육과 초기 입점 비용 지원이 함께 제공된다.',
+      '구청 관계자는 "우리 지역 상인들이 가장 먼저 혜택을 체감할 수 있도록 하겠다"고 밝혔다.'
+    ],
+    subs:[
+      {kicker:'지역 소식', title:'부평구, 전통시장 주차장 무료 개방 시간 확대', body:'주말 방문객 편의를 위해 무료 주차 시간이 2시간 늘어난다.'},
+      {kicker:'지역 행사', title:'부평 풍물시장, 다음 달 개장 20주년 행사', body:'지역 주민 대상 경품 행사와 할인전이 함께 열릴 예정이다.'}
+    ]
+  },
   society:{
     kicker:'사회',
     title:'1인 소상공인 산재보험 가입률, 처음으로 30% 돌파',
@@ -1081,7 +1100,7 @@ const ARTICLES = {
     ]
   },
   culture:{
-    kicker:'문화',
+    kicker:'문화예술',
     title:'전통시장, 야시장으로 변신…주말 방문객 두 배',
     dek:'낮 장사에 머물던 전통시장이 야시장 콘텐츠로 새 손님을 끌어모으고 있다.',
     byline:'취재 · 문화팀 | 2026.07.05 06:00 발행',
@@ -1095,6 +1114,23 @@ const ARTICLES = {
     subs:[
       {kicker:'행사', title:'이번 주말, 3개 전통시장 동시 야시장 개장', body:'버스킹 공연과 먹거리 부스가 함께 마련된다.'},
       {kicker:'단신', title:'상인회, 골목 벽화 그리기 봉사 진행', body:'지역 예술가와 협업해 낡은 골목 벽면을 새단장했다.'}
+    ]
+  },
+  welfare:{
+    kicker:'복지',
+    title:'소상공인 1인 사업자, 국민연금 지원 신청 두 배 늘었다',
+    dek:'혼자 가게를 운영하는 소상공인을 위한 사회보험 지원 제도 인지도가 높아지고 있다.',
+    byline:'취재 · 복지팀 | 2026.07.05 06:00 발행',
+    figcaption:'국민연금 지원 안내문을 살펴보는 상인.',
+    pullQuote:'"몰라서 못 받던 지원, 이제는 챙겨 받아요."',
+    body:[
+      '두루누리 사회보험료 지원 사업 신청이 올해 상반기 전년 대비 두 배 가까이 늘었다. 1인 소상공인 상당수가 제도 자체를 몰랐던 것으로 나타났다.',
+      '국민경제㊉는 입점 소상공인 대상으로 복지 제도 안내 배너를 노출해, 신청 절차를 간소화하는 데 기여했다는 평가를 받는다.',
+      '지자체 복지 담당자들은 앞으로도 소상공인 대상 복지 홍보를 확대할 계획이라고 밝혔다.'
+    ],
+    subs:[
+      {kicker:'제도 안내', title:'소상공인 자녀 돌봄 지원, 하반기 대상 확대', body:'영업시간이 긴 자영업자를 위한 돌봄 지원이 넓어진다.'},
+      {kicker:'복지 정보', title:'저소득 소비자 대상 생필품 할인 쿠폰 신청 접수', body:'지자체별 신청 기간과 절차가 상이하니 미리 확인이 필요하다.'}
     ]
   },
   science:{
@@ -1303,6 +1339,18 @@ function buildHeadlineTicker(){
   });
 }
 buildHeadlineTicker();
+
+/* ── 오늘 날짜 자동 표시 (요일은 한 글자, '요일' 접미사 없이) ── */
+function updatePubDate(){
+  const days = ['일','월','화','수','목','금','토'];
+  const now = new Date();
+  const text = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${days[now.getDay()]}`;
+  const el = document.getElementById('pubDate');
+  if(el) el.textContent = text;
+}
+updatePubDate();
+// 자정이 지나면 자동으로 날짜가 갱신되도록 1분마다 재확인
+setInterval(updatePubDate, 60 * 1000);
 
 /* ── 모바일: 카테고리 콘텐츠 좌우 터치 스와이프로 메뉴 전환 ──
    (기존 자동 스크롤은 제거. 대신 "오늘의 헤드라인" 등 메뉴 아래 본문 영역을
@@ -1650,7 +1698,26 @@ function doRegister(){
 function submitArticle(e){
   e.preventDefault();
   const note = document.getElementById('submitNote');
-  note.textContent = '제출이 접수되었습니다. AI 재편집과 신문사 승인을 거쳐 게재 여부를 연락처로 안내드립니다.';
+  const fileInput = document.getElementById('subFiles');
+  const files = Array.from(fileInput.files || []);
+
+  // 파일 형식 검증 (jpg, png, pdf만 허용)
+  const allowed = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+  const invalid = files.filter(f => !allowed.includes(f.type));
+  if(invalid.length){
+    note.style.color = 'var(--stamp)';
+    note.textContent = `허용되지 않는 파일 형식이 있습니다: ${invalid.map(f => f.name).join(', ')} (JPG, PNG, PDF만 첨부 가능)`;
+    return false;
+  }
+
+  const fileSummary = files.length
+    ? `첨부파일 ${files.length}개(${files.map(f => f.name).join(', ')})가 함께 접수되었습니다.`
+    : '첨부파일 없이 접수되었습니다.';
+
+  note.style.color = 'var(--acc-deep)';
+  note.textContent = `제출이 접수되었습니다. ${fileSummary} AI 재편집과 신문사 승인을 거쳐 게재 여부를 연락처로 안내드립니다.`;
+  // ⚠ 실제 파일 업로드/저장은 백엔드(예: POST /api/paper/articles, multipart/form-data)가 필요합니다.
+  //    지금은 프로토타입이라 파일을 서버로 전송하지 않고 검증·안내만 합니다.
   document.getElementById('submitForm').reset();
   return false;
 }

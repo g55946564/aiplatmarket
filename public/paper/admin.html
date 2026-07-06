@@ -5,23 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>국민경제㊉ 관리자 대시보드</title>
 <style>
-/* 구조/톤은 업로드해주신 distribution.html(AI플랫마켓 반자동 배포 관리자)을 참조해
-   국민경제㊉(paper 모듈) 그린 팔레트로 재구성했습니다. */
+/* 구조/톤은 distribution.html(AI플랫마켓 반자동 배포 관리자) + 기존 paper 관리자 화면을
+   하나로 통합하고, 그린 팔레트 + 모바일 반응형을 보완했습니다. */
 :root{ --navy:#14351f; --acc:#2e7d32; --acc-deep:#1b4332; --bg:#f3f7f4; --line:#e0e6e2; }
 *{box-sizing:border-box;}
 body{font-family:'Noto Sans KR', Arial, sans-serif; background:var(--bg); margin:0; color:#20241f;}
-header{background:var(--navy); color:#fff; padding:18px 24px; font-size:20px; font-weight:800; display:flex; align-items:center; justify-content:space-between;}
+
+header{
+  background:var(--navy); color:#fff; padding:16px 20px; font-size:18px; font-weight:800;
+  display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100;
+}
 header .badge{ font-size:11px; background:var(--acc); padding:4px 10px; border-radius:12px; font-weight:700; }
-.container{display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 60px);}
-.sidebar{background:#111815; color:#fff; padding:20px 0;}
+#hamToggle{ display:none; background:none; border:none; color:#fff; font-size:22px; cursor:pointer; margin-right:10px; }
+
+.container{display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 58px);}
+.sidebar{background:#111815; color:#fff; padding:20px 0; transition:transform .25s ease;}
 .sidebar a{display:block; color:#cfe0d3; padding:12px 22px; text-decoration:none; font-size:13.5px; cursor:pointer; border-left:3px solid transparent;}
 .sidebar a.active, .sidebar a:hover{ background:rgba(255,255,255,.06); border-left-color:var(--acc); color:#fff; }
-.main{padding:26px; overflow:auto;}
+.sidebar .grp-label{ padding:14px 22px 6px; font-size:10.5px; letter-spacing:.08em; color:#6b8f76; text-transform:uppercase; }
+
+.scrim{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:90; }
+.scrim.show{ display:block; }
+
+.main{padding:22px; overflow:auto;}
 .section{ display:none; }
 .section.active{ display:block; }
 .stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
 .stat-box{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; }
-.stat-box .num{ font-size:24px; font-weight:900; color:var(--acc-deep); }
+.stat-box .num{ font-size:22px; font-weight:900; color:var(--acc-deep); }
 .stat-box .lbl{ font-size:12px; color:#6b756e; margin-top:4px; }
 .card{background:#fff; padding:20px; border-radius:14px; margin-bottom:20px; box-shadow:0 4px 16px rgba(0,0,0,.06); border:1px solid var(--line);}
 .card h2{ font-size:16px; margin:0 0 14px; color:var(--acc-deep); }
@@ -29,9 +40,11 @@ button{padding:9px 16px; border:none; border-radius:8px; background:var(--acc-de
 button.green{background:var(--acc);}
 button.red{background:#c0392b;}
 button.ghost{background:#eef2ef; color:#3a453d;}
-table{width:100%; border-collapse:collapse; font-size:13px;}
-th,td{padding:11px 10px; border-bottom:1px solid var(--line); text-align:left;}
+.table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+table{width:100%; border-collapse:collapse; font-size:13px; min-width:520px;}
+th,td{padding:11px 10px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap;}
 th{color:#6b756e; font-weight:700; font-size:12px;}
+td:nth-child(1){ white-space:normal; min-width:180px; }
 textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8px; padding:10px; font-family:inherit; font-size:13px; resize:vertical;}
 .tag{display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; background:#eef2ef; color:#3a453d;}
 .tag.pending{background:#fff3cd; color:#8a6d00;}
@@ -39,23 +52,50 @@ textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8
 .status-dot.ok{ background:var(--acc); }
 .status-dot.fail{ background:#c0392b; }
 .note{ font-size:12px; color:#6b756e; line-height:1.7; }
+.btn-row{ display:flex; gap:8px; flex-wrap:wrap; }
+
+/* ── 모바일 반응형 ── */
+@media (max-width:860px){
+  #hamToggle{ display:inline-block; }
+  .container{ grid-template-columns:1fr; }
+  .sidebar{
+    position:fixed; top:58px; left:0; width:230px; height:calc(100vh - 58px);
+    transform:translateX(-100%); z-index:95; overflow-y:auto;
+  }
+  .sidebar.open{ transform:translateX(0); box-shadow:6px 0 20px rgba(0,0,0,.25); }
+  .main{ padding:16px; }
+  .stat-row{ grid-template-columns:repeat(2,1fr); }
+  .card{ padding:16px; }
+  .btn-row button{ flex:1; min-width:120px; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  국민경제㊉ 관리자 대시보드
-  <span class="badge">paper 모듈 · v0.1.0</span>
+  <div style="display:flex;align-items:center;">
+    <button id="hamToggle" onclick="toggleSidebar()">☰</button>
+    국민경제㊉ 관리자
+  </div>
+  <span class="badge">paper 모듈 · v0.2.0</span>
 </header>
 
+<div class="scrim" id="adminScrim" onclick="toggleSidebar()"></div>
+
 <div class="container">
-  <div class="sidebar">
+  <div class="sidebar" id="adminSidebar">
+    <div class="grp-label">신문 운영</div>
     <a class="active" data-sec="dash" onclick="showSec('dash', this)">대시보드</a>
     <a data-sec="articles" onclick="showSec('articles', this)">기사 투고 승인</a>
     <a data-sec="community" onclick="showSec('community', this)">커뮤니티 신고 관리</a>
     <a data-sec="feed" onclick="showSec('feed', this)">실시간 소식 편집</a>
-    <a data-sec="aicore" onclick="showSec('aicore', this)">AI Core 연동 상태</a>
     <a data-sec="issues" onclick="showSec('issues', this)">지난호 관리</a>
+
+    <div class="grp-label">홍보 · 배포 (AI플랫마켓 연계)</div>
+    <a data-sec="distribution" onclick="showSec('distribution', this)">반자동 배포 관리</a>
+
+    <div class="grp-label">시스템</div>
+    <a data-sec="aicore" onclick="showSec('aicore', this)">AI Core 연동 상태</a>
   </div>
 
   <div class="main">
@@ -70,7 +110,7 @@ textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8
       </div>
       <div class="card">
         <h2>요약</h2>
-        <p class="note">이 대시보드는 국민경제㊉ 신문(paper 모듈) 전용 관리 화면입니다. 실제 운영 데이터 연동을 위해서는 백엔드 API(예: /api/paper/admin/*)가 필요하며, 현재는 프로토타입 데이터로 동작합니다.</p>
+        <p class="note">이 대시보드는 국민경제㊉ 신문(paper 모듈) 전용 관리 화면입니다. "반자동 배포 관리" 메뉴는 업로드해주신 AI플랫마켓 배포 관리자(distribution.html)를 이 화면 안에 통합한 것입니다. 실제 운영 데이터 연동을 위해서는 백엔드 API(예: /api/paper/admin/*)가 필요하며, 현재는 프로토타입 데이터로 동작합니다.</p>
       </div>
     </div>
 
@@ -78,26 +118,30 @@ textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8
     <div class="section" id="sec-articles">
       <div class="card">
         <h2>기사 투고 승인 대기</h2>
+        <div class="table-wrap">
         <table>
           <tr><th>제목</th><th>작성자</th><th>유형</th><th>첨부</th><th>상태</th><th>처리</th></tr>
           <tr>
             <td>동네빵집 '밀담' 새벽 발효종 이야기</td><td>이OO (밀담 베이커리)</td><td>소상공인</td><td>📎 jpg 2장</td>
             <td><span class="tag pending">검토중</span></td>
-            <td><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
+            <td class="btn-row"><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
           </tr>
           <tr>
             <td>전통시장에서 만난 정직한 시세표</td><td>독자 김OO</td><td>소비자</td><td>📎 없음</td>
             <td><span class="tag pending">검토중</span></td>
-            <td><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
+            <td class="btn-row"><button class="green" onclick="approveRow(this)">승인</button> <button class="red" onclick="rejectRow(this)">반려</button></td>
           </tr>
         </table>
+        </div>
       </div>
       <div class="card">
         <h2>AI 재편집 미리보기</h2>
         <textarea id="aiRewrite">[AI 재편집 초안] 새벽 발효종 하나로 15년을 버텨온 밀담 베이커리, 국민경제㊉ 입점 두 달만에 온라인 주문이 30% 늘었습니다...</textarea>
         <br><br>
-        <button onclick="regenAI()">AI 재생성</button>
-        <button class="green" onclick="publishArticle()">승인 후 게재</button>
+        <div class="btn-row">
+          <button onclick="regenAI()">AI 재생성</button>
+          <button class="green" onclick="publishArticle()">승인 후 게재</button>
+        </div>
       </div>
     </div>
 
@@ -105,13 +149,15 @@ textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8
     <div class="section" id="sec-community">
       <div class="card">
         <h2>커뮤니티 신고 목록</h2>
+        <div class="table-wrap">
         <table>
           <tr><th>게시판</th><th>게시글</th><th>신고 사유</th><th>처리</th></tr>
           <tr>
             <td>자유게시판</td><td>광고성 게시글로 의심됩니다</td><td>스팸/광고</td>
-            <td><button class="ghost" onclick="resolveReport(this)">확인 완료</button> <button class="red" onclick="deletePost(this)">삭제</button></td>
+            <td class="btn-row"><button class="ghost" onclick="resolveReport(this)">확인 완료</button> <button class="red" onclick="deletePost(this)">삭제</button></td>
           </tr>
         </table>
+        </div>
       </div>
     </div>
 
@@ -123,6 +169,36 @@ textarea{width:100%; height:110px; border:1px solid var(--line); border-radius:8
         <br><br>
         <button onclick="saveFeed()">저장</button>
         <span class="note" id="feedSaveNote"></span>
+      </div>
+    </div>
+
+    <!-- 반자동 배포 관리 (distribution.html 통합) -->
+    <div class="section" id="sec-distribution">
+      <div class="card">
+        <h2>배포 후보 채널</h2>
+        <div class="table-wrap">
+        <table>
+          <tr><th>채널</th><th>플랫폼</th><th>점수</th><th>승인</th></tr>
+          <tr><td>송도 자영업 모임</td><td>카카오</td><td>92</td><td><button class="green" onclick="approveChannel(this)">승인</button></td></tr>
+          <tr><td>인천맘카페</td><td>네이버</td><td>88</td><td><button class="green" onclick="approveChannel(this)">승인</button></td></tr>
+          <tr><td>연수구 지역홍보</td><td>당근</td><td>84</td><td><button class="green" onclick="approveChannel(this)">승인</button></td></tr>
+        </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2>AI 자동 생성 배포문구</h2>
+        <textarea id="distMsg">사장님 광고비 없이 고객 유입 가능한 국민경제㊉·AI플랫마켓 무료 상단노출 입점 진행중! 선착순 무료등록 신청하세요.</textarea>
+        <br><br>
+        <div class="btn-row">
+          <button onclick="generateDistMsg()">AI 문구 재생성</button>
+          <button class="green" onclick="deployDist()">승인 후 자동 배포</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>성과 분석</h2>
+        <p>노출: <b id="distViews">0</b></p>
+        <p>클릭: <b id="distClicks">0</b></p>
+        <p>가입: <b id="distJoins">0</b></p>
       </div>
     </div>
 
@@ -153,8 +229,21 @@ function showSec(key, el){
   document.getElementById('sec-' + key).classList.add('active');
   document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
   el.classList.add('active');
+  closeSidebarIfMobile();
 }
 
+function toggleSidebar(){
+  document.getElementById('adminSidebar').classList.toggle('open');
+  document.getElementById('adminScrim').classList.toggle('show');
+}
+function closeSidebarIfMobile(){
+  if(window.innerWidth <= 860){
+    document.getElementById('adminSidebar').classList.remove('open');
+    document.getElementById('adminScrim').classList.remove('show');
+  }
+}
+
+/* 기사 투고 승인 */
 function approveRow(btn){
   const row = btn.closest('tr');
   row.querySelector('.tag').outerHTML = '<span class="tag" style="background:#e3f3e5;color:#1b4332;">승인됨</span>';
@@ -179,6 +268,19 @@ function saveFeed(){
   document.getElementById('feedSaveNote').textContent = ' 저장되었습니다. (프로토타입 — 실제 저장은 백엔드 연동 필요)';
 }
 
+/* 반자동 배포 관리 (distribution.html 로직 그대로 통합) */
+function approveChannel(btn){ btn.innerText = '승인됨'; btn.disabled = true; }
+function generateDistMsg(){
+  document.getElementById('distMsg').value = '[AI 최적화] 지금 무료입점하면 상단노출 혜택! 광고비 없이 신규고객 확보 시작하세요.';
+}
+function deployDist(){
+  alert('AI가 승인 채널에 배포를 시작합니다.');
+  document.getElementById('distViews').innerText = 1248;
+  document.getElementById('distClicks').innerText = 213;
+  document.getElementById('distJoins').innerText = 34;
+}
+
+/* AI Core 상태 확인 */
 function checkAICore(){
   const dot = document.getElementById('aiCoreDot');
   const text = document.getElementById('aiCoreStatusText');
@@ -205,6 +307,13 @@ document.getElementById('statVisit').textContent = 1248;
 document.getElementById('statPending').textContent = 2;
 document.getElementById('statReport').textContent = 1;
 checkAICore();
+
+window.addEventListener('resize', () => {
+  if(window.innerWidth > 860){
+    document.getElementById('adminSidebar').classList.remove('open');
+    document.getElementById('adminScrim').classList.remove('show');
+  }
+});
 </script>
 </body>
 </html>
