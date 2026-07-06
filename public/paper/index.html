@@ -508,7 +508,7 @@ button{ font-family:inherit; }
         <span>소비자와 소상공인이 함께 쓰는 상생의 기록</span>
       </div>
     </div>
-    <button class="util-login" onclick="openLoginModal()">로그인</button>
+    <button class="util-login" id="utilLoginBtn" onclick="handleUtilLoginClick()">로그인</button>
   </div>
 
   <div class="brand-row">
@@ -1576,8 +1576,35 @@ scrim.addEventListener('click', () => { closeRegionDrawer(); closeQuickDrawer();
    4-2) 로그인 / 회원가입 모달
    ⚠ 프로토타입 화면입니다. 실제 인증은 AI플랫마켓 계정 시스템과
       연동되는 백엔드 라우트가 필요하며, 이 신문 모듈은 그 결과를
-      받아 표시하는 역할만 합니다.
+      받아 표시하는 역할만 합니다. 아래 currentUser는 브라우저
+      메모리에만 있는 데모용 상태로, 새로고침하면 초기화됩니다.
 ════════════════════════════════════════════════════════════════ */
+let currentUser = null; // 데모용 로그인 상태. 예: { id:'user01' }
+
+function isLoggedIn(){ return !!currentUser; }
+
+function handleUtilLoginClick(){
+  if(isLoggedIn()){
+    if(confirm(`${currentUser.id}님, 로그아웃 하시겠어요?`)) logout();
+  } else {
+    openLoginModal();
+  }
+}
+
+function updateAuthUI(){
+  const btn = document.getElementById('utilLoginBtn');
+  btn.textContent = isLoggedIn() ? `${currentUser.id} 님 ▾` : '로그인';
+  // 커뮤니티 게시판 상세를 보고 있었다면 글쓰기 버튼 노출 여부를 즉시 갱신
+  if(document.getElementById('boardDetail').classList.contains('open') && currentBoardKey){
+    openBoard(currentBoardKey);
+  }
+}
+
+function logout(){
+  currentUser = null;
+  updateAuthUI();
+}
+
 function openLoginModal(){ document.getElementById('loginModal').classList.add('open'); document.getElementById('lgErr').textContent=''; }
 function closeLoginModal(){ document.getElementById('loginModal').classList.remove('open'); }
 function doLogin(){
@@ -1586,10 +1613,18 @@ function doLogin(){
   const err = document.getElementById('lgErr');
   if(!id || !pw){ err.textContent = '아이디와 비밀번호를 입력해주세요.'; return; }
   err.textContent = '';
-  alert('데모 화면입니다. 실제 로그인은 AI플랫마켓 계정 시스템 연동 후 지원됩니다.');
+  // ⚠ 데모: 실제 인증 없이 입력한 아이디로 로그인 상태만 흉내냅니다.
+  currentUser = { id };
+  updateAuthUI();
+  closeLoginModal();
+  closeLeftNavDrawer();
 }
 function kakaoLogin(){
-  alert('카카오 로그인 연동 예정입니다. (AI플랫마켓 계정 시스템 연동 필요)');
+  // ⚠ 데모: 카카오 SDK 연동 전이라 임시로 로그인 상태만 흉내냅니다.
+  currentUser = { id: '카카오사용자' };
+  updateAuthUI();
+  closeLoginModal();
+  closeLeftNavDrawer();
 }
 function openRegisterModal(){ closeLeftNavDrawer(); document.getElementById('registerModal').classList.add('open'); document.getElementById('rgErr').textContent=''; }
 function closeRegisterModal(){ document.getElementById('registerModal').classList.remove('open'); }
@@ -1659,16 +1694,53 @@ function buildBoardGrid(){
   grid.dataset.built = '1';
 }
 
+let currentBoardKey = null;
+
 function openBoard(key){
   const board = BOARDS.find(b => b.key === key);
   if(!board) return;
+  currentBoardKey = key;
   document.getElementById('boardDetailTitle').textContent = `${board.icon} ${board.title}`;
-  document.getElementById('boardDetailBody').innerHTML = board.posts.map(p => `
+
+  const writeArea = isLoggedIn()
+    ? `<button class="auth-btn primary" style="width:auto;padding:9px 18px;margin-bottom:14px;" onclick="toggleWriteForm()">✏ 글쓰기</button>
+       <div id="writeForm" style="display:none;margin-bottom:16px;padding:14px;border:1px solid var(--line);background:var(--paper-deep);">
+         <input type="text" id="writeTitle" placeholder="제목" style="width:100%;box-sizing:border-box;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-family:inherit;">
+         <textarea id="writeBody" placeholder="내용을 입력하세요" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-family:inherit;resize:vertical;"></textarea>
+         <div style="margin-top:8px;display:flex;gap:8px;">
+           <button class="auth-btn primary" style="width:auto;padding:8px 16px;" onclick="submitBoardPost()">등록</button>
+           <button class="auth-btn cancel" style="width:auto;padding:8px 16px;" onclick="toggleWriteForm()">취소</button>
+         </div>
+       </div>`
+    : `<div style="padding:12px 14px;background:var(--paper-deep);border:1px solid var(--line);margin-bottom:14px;font-size:13px;color:var(--ink-soft);display:flex;justify-content:space-between;align-items:center;">
+         <span>글쓰기는 로그인 후 이용할 수 있습니다.</span>
+         <button class="auth-btn primary" style="width:auto;padding:7px 14px;" onclick="closeBoardDetail();openLoginModal();">로그인</button>
+       </div>`;
+
+  const postsHtml = board.posts.map(p => `
     <div class="board-post"><div class="p-title">${p.title}</div><div class="p-meta">${p.meta}</div></div>
   `).join('') || '<div class="board-post">아직 게시글이 없습니다.</div>';
+
+  document.getElementById('boardDetailBody').innerHTML = writeArea + postsHtml;
   document.getElementById('boardDetail').classList.add('open');
 }
-function closeBoardDetail(){ document.getElementById('boardDetail').classList.remove('open'); }
+
+function toggleWriteForm(){
+  const form = document.getElementById('writeForm');
+  if(form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function submitBoardPost(){
+  const board = BOARDS.find(b => b.key === currentBoardKey);
+  if(!board) return;
+  const title = document.getElementById('writeTitle').value.trim();
+  const body = document.getElementById('writeBody').value.trim();
+  if(!title){ alert('제목을 입력해주세요.'); return; }
+  board.posts.unshift({ title, meta: `${currentUser.id} · 방금 전` });
+  openBoard(currentBoardKey); // 새 글 반영해 다시 렌더링
+}
+
+function closeBoardDetail(){ document.getElementById('boardDetail').classList.remove('open'); currentBoardKey = null; }
 
 /* ══════════════════════════════════════════════════════════════
    4-3-2) 정보 모달 (신문사 소개 / 이용약관 / 개인정보처리방침 / 광고문의)
