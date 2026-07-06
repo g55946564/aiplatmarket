@@ -298,7 +298,9 @@ button{ font-family:inherit; }
 .board-card.highlight{ border-color:var(--acc); border-width:2px; }
 .board-detail{ display:none; margin-top:20px; border-top:2px solid var(--ink); padding-top:16px; }
 .board-detail.open{ display:block; }
-.board-post{ padding:12px 0; border-bottom:1px dashed var(--line); font-size:13px; }
+.board-post{ padding:12px 0; border-bottom:1px dashed var(--line); font-size:13px; cursor:pointer; }
+.board-post:hover .p-title{ color:var(--acc-deep); }
+.board-post .p-body{ margin-top:8px; padding:10px 12px; background:var(--paper-deep); font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; }
 .board-post .p-title{ font-weight:700; margin-bottom:3px; }
 .board-post .p-meta{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
 @media (max-width:600px){ .board-grid{ grid-template-columns:1fr; } }
@@ -1658,26 +1660,26 @@ function submitArticle(e){
 ════════════════════════════════════════════════════════════════ */
 const BOARDS = [
   { key:'free', icon:'📝', title:'자유게시판', desc:'동네 이야기, 자유로운 소통 공간', posts:[
-    {title:'오늘 날씨 진짜 덥네요 다들 건강 조심하세요', meta:'익명 · 방금 전'},
-    {title:'인근에 괜찮은 세탁소 아시는 분?', meta:'익명 · 1시간 전'}
+    {title:'오늘 날씨 진짜 덥네요 다들 건강 조심하세요', meta:'익명 · 방금 전', body:'낮에 잠깐 나갔다 왔는데 정말 푹푹 찌네요. 다들 물 많이 드시고 건강 조심하세요!'},
+    {title:'인근에 괜찮은 세탁소 아시는 분?', meta:'익명 · 1시간 전', body:'이사온 지 얼마 안 돼서 동네를 잘 몰라요. 드라이클리닝 잘하는 세탁소 아시면 추천 부탁드려요.'}
   ]},
   { key:'qna', icon:'❓', title:'소상공인 Q&A', desc:'창업·운영 궁금증을 서로 묻고 답해요', posts:[
-    {title:'국민경제㊉ 입점 심사 얼마나 걸리나요?', meta:'예비창업자 · 오늘'},
-    {title:'상생 인증 재심사는 어떻게 신청하나요', meta:'사장님A · 어제'}
+    {title:'국민경제㊉ 입점 심사 얼마나 걸리나요?', meta:'예비창업자 · 오늘', body:'입점 신청서를 제출했는데 심사가 보통 며칠 정도 걸리는지 경험 있으신 분 계실까요?'},
+    {title:'상생 인증 재심사는 어떻게 신청하나요', meta:'사장님A · 어제', body:'예전에 인증이 취소됐었는데, 개선 후 재심사를 받고 싶습니다. 신청 절차 아시는 분 계신가요?'}
   ]},
   { key:'review', icon:'⭐', title:'후기·리뷰 모음', desc:'다녀온 가게, 이용 후기를 남겨주세요', posts:[
-    {title:'밀담 베이커리 정말 맛있어요 추천!', meta:'단골손님 · 오늘'},
-    {title:'청과상 김씨네 과일 신선해요', meta:'동네주민 · 2일 전'}
+    {title:'밀담 베이커리 정말 맛있어요 추천!', meta:'단골손님 · 오늘', body:'새벽 발효종 식빵 처음 먹어봤는데 정말 부드럽고 고소해요. 강추합니다!'},
+    {title:'청과상 김씨네 과일 신선해요', meta:'동네주민 · 2일 전', body:'복숭아가 정말 달고 신선했어요. 시세도 매일 정직하게 붙여놓으셔서 믿고 삽니다.'}
   ]},
   { key:'localnews', icon:'📍', title:'동네소식 공유', desc:'우리 동네 소식을 이웃과 나눠요', posts:[
-    {title:'이번 주말 전통시장 야시장 열린대요', meta:'주민B · 오늘'}
+    {title:'이번 주말 전통시장 야시장 열린대요', meta:'주민B · 오늘', body:'토요일 저녁 6시부터 버스킹 공연도 한다고 하네요. 다들 놀러오세요!'}
   ]},
   { key:'event', icon:'🎉', title:'이벤트 인증', desc:'쿠폰·이벤트 참여 인증샷 게시판', posts:[
-    {title:'웰컴 쿠폰 사용 완료! 인증합니다', meta:'신규가입 · 오늘'}
+    {title:'웰컴 쿠폰 사용 완료! 인증합니다', meta:'신규가입 · 오늘', body:'첫 구매 무료배송 쿠폰 잘 썼습니다. 다음에도 좋은 이벤트 기대할게요!'}
   ]},
   { key:'suggest', icon:'💡', title:'불편사항·개선 제안', desc:'플랫폼/신문에 대한 불편사항이나 개선 아이디어를 남겨주세요', posts:[
-    {title:'모바일에서 검색 버튼이 조금 작아요', meta:'이용자C · 오늘'},
-    {title:'지역 필터에 "서구"도 추가해주세요', meta:'이용자D · 3일 전'}
+    {title:'모바일에서 검색 버튼이 조금 작아요', meta:'이용자C · 오늘', body:'터치할 때 가끔 옆에 있는 버튼이 눌려요. 검색 버튼 크기를 조금 키워주시면 좋겠습니다.'},
+    {title:'지역 필터에 "서구"도 추가해주세요', meta:'이용자D · 3일 전', body:'인천 서구에 살고 있는데 지역 목록에 없어서 아쉬워요. 추가 부탁드립니다.'}
   ], highlight:true }
 ];
 
@@ -1717,8 +1719,12 @@ function openBoard(key){
          <button class="auth-btn primary" style="width:auto;padding:7px 14px;" onclick="closeBoardDetail();openLoginModal();">로그인</button>
        </div>`;
 
-  const postsHtml = board.posts.map(p => `
-    <div class="board-post"><div class="p-title">${p.title}</div><div class="p-meta">${p.meta}</div></div>
+  const postsHtml = board.posts.map((p, i) => `
+    <div class="board-post" onclick="togglePostBody(${i})">
+      <div class="p-title">${p.title}</div>
+      <div class="p-meta">${p.meta}</div>
+      <div class="p-body" id="postBody-${i}" style="display:none;">${p.body || '(본문이 없습니다)'}</div>
+    </div>
   `).join('') || '<div class="board-post">아직 게시글이 없습니다.</div>';
 
   document.getElementById('boardDetailBody').innerHTML = writeArea + postsHtml;
@@ -1736,8 +1742,14 @@ function submitBoardPost(){
   const title = document.getElementById('writeTitle').value.trim();
   const body = document.getElementById('writeBody').value.trim();
   if(!title){ alert('제목을 입력해주세요.'); return; }
-  board.posts.unshift({ title, meta: `${currentUser.id} · 방금 전` });
+  board.posts.unshift({ title, meta: `${currentUser.id} · 방금 전`, body: body || '(내용 없음)' });
   openBoard(currentBoardKey); // 새 글 반영해 다시 렌더링
+}
+
+function togglePostBody(i){
+  const el = document.getElementById(`postBody-${i}`);
+  if(!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
 function closeBoardDetail(){ document.getElementById('boardDetail').classList.remove('open'); currentBoardKey = null; }
