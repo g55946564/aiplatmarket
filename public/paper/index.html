@@ -810,15 +810,15 @@ button{ font-family:inherit; }
     </div>
   </div>
   <div class="quick-body">
-    <div class="nav-menu-item" id="navLoginToggle"><span>🔐 로그인</span><span>▾</span></div>
-    <div class="nav-submenu" id="navLoginSubmenu" style="display:none;">
-      <button class="nav-sub-btn" onclick="openLoginModal()">자체 로그인</button>
+    <div class="nav-menu-item"><span>🔐 로그인</span></div>
+    <div class="nav-submenu" id="navLoginSubmenu">
+      <button class="nav-sub-btn" onclick="openLoginModal()">신문사 로그인</button>
       <button class="nav-sub-btn" onclick="kakaoLogin()">카카오 로그인</button>
     </div>
     <div class="nav-menu-item" onclick="openRegisterModal()"><span>📝 회원가입</span></div>
     <div class="nav-menu-item" onclick="goToRegionView()"><span>📍 지역별 보기</span></div>
-    <div class="nav-menu-item" id="navSitemapToggle"><span>🗺 사이트맵</span><span>▾</span></div>
-    <div class="nav-submenu" id="navSitemapSubmenu" style="display:none;"></div>
+    <div class="nav-menu-item"><span>🗺 사이트맵</span></div>
+    <div class="nav-submenu" id="navSitemapSubmenu"></div>
   </div>
 </div>
 
@@ -1559,27 +1559,18 @@ function syncScrim(){
 }
 scrim.addEventListener('click', () => { closeRegionDrawer(); closeQuickDrawer(); closeLeftNavDrawer(); });
 
-/* 로그인 하위메뉴 펼치기/접기 */
-document.getElementById('navLoginToggle').addEventListener('click', () => {
-  const sub = document.getElementById('navLoginSubmenu');
-  sub.style.display = sub.style.display === 'none' ? 'block' : 'none';
-});
+/* 로그인 하위메뉴는 항상 펼쳐져 있음 (별도 토글 불필요) */
 
-/* 사이트맵 하위메뉴: 전체 카테고리 + 지난 신문 보기 + 기사 올리기 목록을 동적으로 구성 */
-document.getElementById('navSitemapToggle').addEventListener('click', () => {
+/* 사이트맵 하위메뉴: 전체 카테고리 + 지난 신문 보기 + 기사 올리기 목록을 항상 펼쳐서 구성 */
+(function buildSitemapSubmenu(){
   const sub = document.getElementById('navSitemapSubmenu');
-  const willOpen = sub.style.display === 'none';
-  if(willOpen && !sub.dataset.built){
-    const links = Array.from(document.querySelectorAll('#sectionBar button[data-tab]')).map(b => {
-      const tab = b.dataset.tab;
-      const label = b.textContent.trim();
-      return `<a class="nav-sub-link" href="javascript:void(0)" onclick="closeLeftNavDrawer();switchTab('${tab}')">${label}</a>`;
-    }).join('');
-    sub.innerHTML = links;
-    sub.dataset.built = '1';
-  }
-  sub.style.display = willOpen ? 'block' : 'none';
-});
+  const links = Array.from(document.querySelectorAll('#sectionBar button[data-tab]')).map(b => {
+    const tab = b.dataset.tab;
+    const label = b.textContent.trim();
+    return `<a class="nav-sub-link" href="javascript:void(0)" onclick="closeLeftNavDrawer();switchTab('${tab}')">${label}</a>`;
+  }).join('');
+  sub.innerHTML = links;
+})();
 
 /* ══════════════════════════════════════════════════════════════
    4-2) 로그인 / 회원가입 모달
