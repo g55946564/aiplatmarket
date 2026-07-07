@@ -286,24 +286,26 @@ button{ font-family:inherit; }
 
 /* ── 커뮤니티 화면 ── */
 .community-wrap{ max-width:760px; margin:0 auto; padding:24px 20px 50px; }
-.board-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; margin-top:16px; }
-.board-card{
-  border:1px solid var(--line); background:var(--paper-card); padding:18px; cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
+.board-menu-bar{
+  display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  margin-top:16px; padding-bottom:6px; border-bottom:2px solid var(--ink);
 }
-.board-card:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.1); }
-.board-card .b-icon{ font-size:22px; margin-bottom:8px; }
-.board-card .b-title{ font-weight:700; font-size:14px; margin-bottom:4px; }
-.board-card .b-desc{ font-size:12px; color:var(--ink-soft); line-height:1.5; }
-.board-card.highlight{ border-color:var(--acc); border-width:2px; }
-.board-detail{ display:none; margin-top:20px; border-top:2px solid var(--ink); padding-top:16px; }
+.board-menu-item{
+  flex:0 0 auto; display:flex; align-items:center; gap:6px; white-space:nowrap;
+  border:1px solid var(--line); background:var(--paper-card); padding:9px 16px;
+  font-size:13px; font-weight:700; color:var(--ink); cursor:pointer; border-radius:20px;
+}
+.board-menu-item:hover{ border-color:var(--acc-deep); color:var(--acc-deep); }
+.board-menu-item.active{ background:var(--acc-deep); border-color:var(--acc-deep); color:#fff; }
+.board-menu-item.highlight{ border-color:var(--acc); color:var(--acc); }
+.board-menu-item.highlight.active{ background:var(--acc); border-color:var(--acc); color:#fff; }
+.board-detail{ display:none; margin-top:20px; }
 .board-detail.open{ display:block; }
 .board-post{ padding:12px 0; border-bottom:1px dashed var(--line); font-size:13px; cursor:pointer; }
 .board-post:hover .p-title{ color:var(--acc-deep); }
 .board-post .p-body{ margin-top:8px; padding:10px 12px; background:var(--paper-deep); font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; }
 .board-post .p-title{ font-weight:700; margin-bottom:3px; }
 .board-post .p-meta{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
-@media (max-width:600px){ .board-grid{ grid-template-columns:1fr; } }
 
 /* ── 정보 모달 (신문사소개/이용약관/개인정보처리방침/광고문의) ── */
 .info-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(13,20,17,.55); z-index:2050; align-items:center; justify-content:center; padding:20px; }
@@ -623,7 +625,7 @@ button{ font-family:inherit; }
     <button data-tab="store">상생 스토어</button>
     <button data-tab="benefit">소비자 혜택</button>
     <button data-tab="welfare">복지</button>
-    <button data-tab="local">동네 소식</button>
+    <button data-tab="local">내고장뉴스</button>
     <button data-tab="hometown">내고장 뉴스</button>
     <button data-tab="society">사회</button>
     <button data-tab="economy">경제</button>
@@ -679,7 +681,7 @@ button{ font-family:inherit; }
       <div class="weather-strip">
         <strong>오늘의 동네 시세</strong><br>
         복숭아 1kg 8,900원 (▼ 3%) · 애호박 1개 1,200원 (— 0%) · 식빵 1인분 3,200원 (▲ 1%)<br>
-        내일 발행 예보: 동네 소식 · 소비자 인터뷰 특집
+        내일 발행 예보: 내고장뉴스 · 소비자 인터뷰 특집
       </div>
     </div>
   </div>
@@ -730,9 +732,9 @@ button{ font-family:inherit; }
 <div id="view-community" class="view">
   <div class="community-wrap">
     <div class="section-title"><h2>💬 커뮤니티</h2></div>
-    <div class="board-grid" id="boardGrid"></div>
+    <div class="board-menu-bar" id="boardMenuBar"></div>
     <div class="board-detail" id="boardDetail">
-      <div class="section-title"><h2 id="boardDetailTitle"></h2><span style="cursor:pointer;color:var(--acc-deep);" onclick="closeBoardDetail()">← 목록으로</span></div>
+      <div class="section-title"><h2 id="boardDetailTitle"></h2></div>
       <div id="boardDetailBody"></div>
     </div>
   </div>
@@ -1015,10 +1017,10 @@ const ARTICLES = {
     ]
   },
   local:{
-    kicker:'동네 소식',
+    kicker:'내고장뉴스',
     title:'전통시장 청과상 김씨, AI 추천으로 신규 고객 200명 확보',
-    dek:'매일 아침 시세를 직접 갱신해온 상인의 성실함이 추천 알고리즘과 만났다.',
-    byline:'취재 · 동네소식팀 | 2026.07.05 06:00 발행',
+    dek:'우리 동네 상권 소식부터 광역시도·시군구 단위 지역 뉴스까지, 내고장뉴스 한 곳에서 모아봅니다.',
+    byline:'취재 · 내고장뉴스팀 | 2026.07.05 06:00 발행',
     figcaption:'김씨가 매대에 오늘의 시세표를 붙이고 있다.',
     pullQuote:'"단골만 오던 가게에 처음 보는 얼굴이 늘었어요."',
     body:[
@@ -1027,8 +1029,8 @@ const ARTICLES = {
       '김씨는 앞으로도 손님을 속이지 않는 정직한 시세로 승부하겠다고 말했다.'
     ],
     subs:[
-      {kicker:'현장', title:"골목반찬 '온기', 독자 리뷰로 재조명", body:'폐업 직전이던 가게가 독자 리뷰 하나로 살아났다는 제보가 이어지고 있다.'},
-      {kicker:'동네 공지', title:'이번 주 전통시장 소독·청소 일정 안내', body:'구청과 상인회가 공동으로 위생 점검을 진행한다.'}
+      {kicker:'근거리 생활정보', title:"골목반찬 '온기', 독자 리뷰로 재조명", body:'폐업 직전이던 가게가 독자 리뷰 하나로 살아났다는 제보가 이어지고 있다.'},
+      {kicker:'광역 지역뉴스', title:'인천시, 소상공인 전기요금 특별지원 시군구 확대', body:'지역 언론사·포털 RSS 연동 예정 — 광역시도·시군구 단위 정책·생활 뉴스가 이 자리에 함께 노출됩니다.'}
     ]
   },
   hometown:{
@@ -1751,16 +1753,17 @@ const BOARDS = [
 ];
 
 function buildBoardGrid(){
-  const grid = document.getElementById('boardGrid');
-  if(grid.dataset.built) return;
-  grid.innerHTML = BOARDS.map(b => `
-    <div class="board-card${b.highlight ? ' highlight' : ''}" onclick="openBoard('${b.key}')">
-      <div class="b-icon">${b.icon}</div>
-      <div class="b-title">${b.title}</div>
-      <div class="b-desc">${b.desc}</div>
-    </div>
-  `).join('');
-  grid.dataset.built = '1';
+  const bar = document.getElementById('boardMenuBar');
+  if(!bar.dataset.built){
+    bar.innerHTML = BOARDS.map(b => `
+      <div class="board-menu-item${b.highlight ? ' highlight' : ''}" data-board="${b.key}" onclick="openBoard('${b.key}')">
+        <span>${b.icon}</span><span>${b.title}</span>
+      </div>
+    `).join('');
+    bar.dataset.built = '1';
+  }
+  // 커뮤니티 화면 진입 시 첫 게시판을 기본으로 바로 보여줌
+  if(!currentBoardKey) openBoard(BOARDS[0].key);
 }
 
 let currentBoardKey = null;
@@ -1769,6 +1772,7 @@ function openBoard(key){
   const board = BOARDS.find(b => b.key === key);
   if(!board) return;
   currentBoardKey = key;
+  document.querySelectorAll('.board-menu-item').forEach(el => el.classList.toggle('active', el.dataset.board === key));
   document.getElementById('boardDetailTitle').textContent = `${board.icon} ${board.title}`;
 
   const writeArea = isLoggedIn()
