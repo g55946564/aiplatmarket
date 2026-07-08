@@ -164,7 +164,7 @@ button{ font-family:inherit; }
 .srch-portal .ico{ font-size:13px; }
 
 /* ── 카테고리+헤드라인 실시간 티커 (섹션바 위) ── */
-.headline-ticker{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
+.headline-ticker{ display:flex; align-items:center; gap:10px; padding:9px 14px; margin-top:22px; background:var(--paper-deep); border:1px solid var(--line); border-radius:4px; }
 .ticker-label{ flex:0 0 auto; background:var(--acc-deep); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:3px; }
 .ticker-viewport{ flex:1; min-width:0; overflow:hidden; position:relative; height:18px; }
 .ticker-track{ display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0; animation:marquee-rtl 70s linear infinite; }
@@ -206,8 +206,8 @@ button{ font-family:inherit; }
 }
 .tab-dropdown-btn.active{ color:var(--paper); background:var(--acc-deep); }
 .tab-dropdown-menu{
-  display:none; position:absolute; top:100%; left:0; margin-top:2px;
-  background:var(--paper-card); border:1px solid var(--line-strong); min-width:150px; z-index:80;
+  display:none; position:fixed; min-width:150px; z-index:200;
+  background:var(--paper-card); border:1px solid var(--line-strong);
   box-shadow:0 10px 26px rgba(0,0,0,.18);
 }
 .tab-dropdown-menu.open{ display:block; }
@@ -430,16 +430,15 @@ button{ font-family:inherit; }
 .quick-drawer{
   position:fixed; top:0; right:0; width:340px; max-width:88vw; height:100%; background:var(--paper-card);
   z-index:500; transform:translateX(100%); transition:transform .3s ease; display:flex; flex-direction:column;
-  box-shadow:-6px 0 24px rgba(0,0,0,.2);
+  box-shadow:-6px 0 24px rgba(0,0,0,.2); overflow-y:auto; -webkit-overflow-scrolling:touch;
 }
 .quick-drawer.open{ transform:translateX(0); }
-.quick-drawer-head{ background:var(--acc-deep); color:#fff; padding:16px 16px 0; }
-.quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.quick-drawer-head{ background:var(--acc-deep); color:#fff; padding:16px 16px 14px; flex:0 0 auto; position:sticky; top:0; z-index:5; }
+.quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:0; }
 .quick-drawer-head .row strong{ font-family:'Noto Serif KR', serif; font-size:16px; }
-.quick-tabs{ display:flex; overflow-x:auto; gap:4px; }
-.quick-tabs button{ flex:0 0 auto; background:rgba(255,255,255,.12); border:none; color:#f1e8d2; padding:9px 12px; font-size:12px; cursor:pointer; white-space:nowrap; border-radius:6px 6px 0 0; }
-.quick-tabs button.active{ background:var(--paper-card); color:var(--acc-deep); font-weight:700; }
-.quick-body{ flex:1; overflow-y:auto; padding:14px 16px; }
+.quick-body{ padding:14px 16px; }
+.feed-group{ margin-bottom:18px; }
+.feed-group-title{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px; color:var(--acc-deep); border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:8px; }
 .feed-item{ padding:12px 0; border-bottom:1px dashed var(--line); }
 .feed-item:last-child{ border-bottom:none; }
 .feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--acc); margin-bottom:4px; display:block; }
@@ -969,18 +968,11 @@ button{ font-family:inherit; }
   </div>
 </div>
 
-<!-- 우측 드로어: CHATDOUMI 링크 + 실시간 소식(기존 내용 유지) -->
+<!-- 우측 드로어: CHATDOUMI 링크 + 실시간 소식(모든 메뉴 하위 내용을 한 번에 나열) -->
 <div class="quick-drawer" id="quickDrawer">
   <div class="quick-drawer-head">
     <a class="drawer-brand-link" href="https://chatdoumi.com" target="_blank" rel="noopener">Chat<em>Doumi</em></a>
     <div class="row"><strong>실시간 소식</strong><button class="viewer-back-link" id="btnQuickClose" style="border:none;color:#fff;font-size:18px;">✕</button></div>
-    <div class="quick-tabs" id="quickTabs">
-      <button class="active" data-feed="platmarket">AI플랫마켓 소식</button>
-      <button data-feed="merchant">소상공인 정보</button>
-      <button data-feed="news">오늘의 뉴스</button>
-      <button data-feed="store">상생 스토어</button>
-      <button data-feed="event">이벤트·혜택</button>
-    </div>
   </div>
   <div class="quick-body" id="quickBody"></div>
 
@@ -1567,6 +1559,8 @@ function renderArticle(key){
   if(moreBtn){ moreBtn.textContent = '세부내용 더보기 ▾'; }
 
   renderCategoryBriefs(key);
+  renderGeneralBriefs(key);
+  renderOpinions(key);
 
   if(mainCol){
     // 강제 리플로우 후 트랜지션 적용 → 부드럽게 페이드인
@@ -1598,10 +1592,20 @@ const GENERAL_BRIEFS = [
   { title:'중소기업 정책자금 하반기 신청 접수 시작', summary:'저금리 정책자금 신청이 이달 말까지 진행된다.', source:'뉴스와이어', link:'https://www.newswire.co.kr' }
 ];
 
-function renderGeneralBriefs(){
+/* 카테고리명을 숫자로 변환해 "그 카테고리만의" 순서를 만드는 용도
+   (실제 RSS 연동 전까지, 카테고리마다 다르게 보이도록 하는 임시 장치) */
+function hashStr(s){
+  let h = 0;
+  for(let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+
+function renderGeneralBriefs(key){
   const el = document.getElementById('generalBriefList');
   if(!el) return;
-  el.innerHTML = GENERAL_BRIEFS.map(b => `
+  const offset = hashStr(key || 'headline') % GENERAL_BRIEFS.length;
+  const rotated = GENERAL_BRIEFS.slice(offset).concat(GENERAL_BRIEFS.slice(0, offset));
+  el.innerHTML = rotated.map(b => `
     <a class="brief-item" href="${b.link}" target="_blank" rel="noopener">
       <div class="brief-thumb"></div>
       <div class="brief-text">
@@ -1615,37 +1619,57 @@ function renderGeneralBriefs(){
 
 /* ══════════════════════════════════════════════════════════════
    열2~3 하단) 카테고리별 관련 단신 — 기존 ARTICLES[key].subs 재활용
+   각 항목은 클릭하면 상세 요약이 펼쳐지는 방식(요약글 → 더보기)
 ════════════════════════════════════════════════════════════════ */
 function renderCategoryBriefs(key){
   const el = document.getElementById('categoryBriefGrid');
   if(!el) return;
   const a = ARTICLES[key];
   const subs = (a && a.subs) || [];
-  el.innerHTML = subs.map(s => `
-    <div class="brief-item">
+  el.innerHTML = subs.map((s, i) => `
+    <div class="brief-item" style="cursor:pointer;" onclick="toggleCategoryBrief(${i})">
       <div class="brief-thumb"></div>
       <div class="brief-text">
         <div class="b-title">${s.title}</div>
-        <div class="b-summary">${s.body}</div>
-        <div class="b-source">${s.kicker}</div>
+        <div class="b-source">${s.kicker} · <span style="color:var(--acc-deep);">더보기</span></div>
+        <div class="op-body" id="categoryBrief-${i}">${s.body}</div>
       </div>
     </div>
   `).join('') || '<div class="brief-item"><div class="brief-text"><div class="b-summary">관련 단신이 없습니다.</div></div></div>';
 }
+function toggleCategoryBrief(i){
+  const el = document.getElementById(`categoryBrief-${i}`);
+  if(el) el.classList.toggle('open');
+}
 
 /* ══════════════════════════════════════════════════════════════
-   열4) 오피니언 — 클릭 시 본문 펼침
+   열4) 오피니언 — 카테고리 자체 한줄평(pullQuote) + 공용 오피니언 회전 조합
+   클릭 시 본문 펼침
 ════════════════════════════════════════════════════════════════ */
 const OPINIONS = [
   { title:'[칼럼] 소상공인에게 필요한 건 지원금이 아니라 단골이다', byline:'객원 칼럼 · 유통경제 연구소', body:'일회성 지원금보다 꾸준한 재구매를 만드는 구조가 소상공인 생존에 더 중요하다는 게 현장의 목소리다. 국민경제㊉의 상생 인증 같은 신뢰 장치가 그 대안이 될 수 있다.' },
   { title:'[사설] AI 추천, 공정하게 작동하고 있나', byline:'편집부', body:'추천 알고리즘이 특정 매장에 유리하게 작동하지 않도록 투명한 기준 공개가 필요하다는 지적이 나온다.' },
-  { title:'[기고] 전통시장 디지털 전환, 속도보다 방향', byline:'객원 기고 · 지역상권 활성화 포럼', body:'디지털 전환을 서두르기보다, 상인들이 실제로 체감할 수 있는 속도로 단계별 지원이 이뤄져야 한다는 제언이다.' }
+  { title:'[기고] 전통시장 디지털 전환, 속도보다 방향', byline:'객원 기고 · 지역상권 활성화 포럼', body:'디지털 전환을 서두르기보다, 상인들이 실제로 체감할 수 있는 속도로 단계별 지원이 이뤄져야 한다는 제언이다.' },
+  { title:'[칼럼] 리뷰 하나의 무게', byline:'객원 칼럼 · 소비자문화연구소', body:'별점 하나, 리뷰 한 줄이 소상공인의 하루 매출을 좌우하는 시대다. 소비자의 말 한마디가 갖는 책임에 대해 생각해볼 때다.' }
 ];
 
-function renderOpinions(){
+function renderOpinions(key){
   const el = document.getElementById('opinionList');
   if(!el) return;
-  el.innerHTML = OPINIONS.map((o, i) => `
+  const a = ARTICLES[key];
+  const items = [];
+  if(a && a.pullQuote){
+    items.push({
+      title: `[한줄평] ${a.kicker} 이슈를 보는 시각`,
+      byline: '편집부 코멘트',
+      body: a.pullQuote.replace(/"/g, '')
+    });
+  }
+  const offset = hashStr(key || 'headline') % OPINIONS.length;
+  const rotated = OPINIONS.slice(offset).concat(OPINIONS.slice(0, offset));
+  items.push(...rotated.slice(0, 3));
+
+  el.innerHTML = items.map((o, i) => `
     <div class="opinion-item" onclick="toggleOpinion(${i})">
       <div class="op-title">${o.title}</div>
       <div class="op-byline">${o.byline}</div>
@@ -1784,20 +1808,26 @@ function toggleTabDropdown(evt, menuId){
   const menu = document.getElementById(menuId);
   const willOpen = !menu.classList.contains('open');
   document.querySelectorAll('.tab-dropdown-menu').forEach(m => m.classList.remove('open'));
-  if(willOpen) menu.classList.add('open');
+  if(willOpen){
+    const btnRect = evt.currentTarget.getBoundingClientRect();
+    menu.style.top = `${btnRect.bottom + 4}px`;
+    menu.style.left = `${btnRect.left}px`;
+    menu.classList.add('open');
+  }
 }
 document.addEventListener('click', (e) => {
   if(!e.target.closest('.tab-dropdown-wrap')){
     document.querySelectorAll('.tab-dropdown-menu').forEach(m => m.classList.remove('open'));
   }
 });
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.tab-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+}, { passive:true, capture:true });
 
 document.querySelectorAll('#sectionBar button:not(.tab-dropdown-btn)').forEach(btn => {
   btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
 renderArticle('headline');
-renderGeneralBriefs();
-renderOpinions();
 buildRegionQuickbar();
 renderRegionalNews('전체');
 renderUserArticles();
@@ -1837,7 +1867,7 @@ setInterval(updatePubDate, 60 * 1000);
    (기존 자동 스크롤은 제거. 대신 "오늘의 헤드라인" 등 메뉴 아래 본문 영역을
     좌→우로 스와이프하면 다음 메뉴로, 우→좌로 스와이프하면 이전 메뉴로 전환) */
 (function swipeTabNavigation(){
-  const target = document.querySelector('#view-home .col-headline');
+  const target = document.getElementById('homeLayout4');
   if(!target) return;
 
   const TAB_ORDER = Array.from(document.querySelectorAll('#sectionBar button[data-tab]'))
@@ -2055,19 +2085,24 @@ const FEEDS = {
 };
 const quickDrawer = document.getElementById('quickDrawer');
 const quickBody = document.getElementById('quickBody');
-function renderFeed(key){
-  quickBody.innerHTML = (FEEDS[key]||[]).map(i => `
-    <div class="feed-item"><span class="tag">${i.tag}</span><p class="ttl">${i.ttl}</p><span class="time">${i.time}</span></div>
+const FEED_LABELS = {
+  platmarket: 'AI플랫마켓 소식',
+  merchant: '소상공인 정보',
+  news: '오늘의 뉴스',
+  store: '상생 스토어',
+  event: '이벤트·혜택'
+};
+function renderAllFeeds(){
+  quickBody.innerHTML = Object.keys(FEED_LABELS).map(key => `
+    <div class="feed-group">
+      <div class="feed-group-title">${FEED_LABELS[key]}</div>
+      ${(FEEDS[key] || []).map(i => `
+        <div class="feed-item"><span class="tag">${i.tag}</span><p class="ttl">${i.ttl}</p><span class="time">${i.time}</span></div>
+      `).join('')}
+    </div>
   `).join('');
 }
-renderFeed('platmarket');
-document.querySelectorAll('#quickTabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#quickTabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderFeed(btn.dataset.feed);
-  });
-});
+renderAllFeeds();
 function openQuickDrawer(){ closeLeftNavDrawer(); quickDrawer.classList.add('open'); scrim.classList.add('show'); }
 function closeQuickDrawer(){ quickDrawer.classList.remove('open'); syncScrim(); }
 document.getElementById('quickFab').addEventListener('click', openQuickDrawer);
@@ -2632,8 +2667,7 @@ async function loadLiveFeedsFromAICore(){
     }
     if(data.feeds){
       Object.assign(FEEDS, data.feeds);
-      const activeFeedBtn = document.querySelector('#quickTabs button.active');
-      if(activeFeedBtn) renderFeed(activeFeedBtn.dataset.feed);
+      renderAllFeeds();
     }
     if(Array.isArray(data.issues) && data.issues.length){
       data.issues.forEach(newIssue => {
