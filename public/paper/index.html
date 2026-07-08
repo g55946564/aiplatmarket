@@ -164,12 +164,12 @@ button{ font-family:inherit; }
 .srch-portal .ico{ font-size:13px; }
 
 /* ── 카테고리+헤드라인 실시간 티커 (섹션바 위) ── */
-.headline-ticker{ display:flex; align-items:center; gap:10px; padding:9px 14px; margin-top:22px; background:var(--paper-deep); border:1px solid var(--line); border-radius:4px; }
-.ticker-label{ flex:0 0 auto; background:var(--acc-deep); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:3px; }
+.headline-ticker{ display:flex; align-items:center; gap:10px; padding:9px 14px; margin-top:22px; background:var(--acc-deep); border:1px solid var(--acc-deep); border-radius:4px; }
+.ticker-label{ flex:0 0 auto; background:var(--stamp); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:3px; }
 .ticker-viewport{ flex:1; min-width:0; overflow:hidden; position:relative; height:18px; }
 .ticker-track{ display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0; animation:marquee-rtl 70s linear infinite; }
-.ticker-item{ padding-right:44px; font-size:12.5px; color:var(--ink); cursor:pointer; }
-.ticker-item b{ color:var(--acc-deep); margin-right:6px; }
+.ticker-item{ padding-right:44px; font-size:12.5px; color:#f2ede1; cursor:pointer; }
+.ticker-item b{ color:#ffd7d0; margin-right:6px; }
 .ticker-item:hover{ text-decoration:underline; }
 
 .section-bar{
@@ -306,6 +306,7 @@ button{ font-family:inherit; }
 .rq-district-menu button:hover{ background:var(--paper-deep); color:var(--acc-deep); }
 
 .brief-grid4{ display:grid; grid-template-columns:repeat(4, 1fr); gap:0 20px; margin-top:14px; }
+.brief-divider{ border-top:2px solid var(--line-strong); margin-top:24px; width:100%; }
 
 .sidebar-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
 .box-title{ color:var(--paper); font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; padding:8px 12px; }
@@ -433,9 +434,12 @@ button{ font-family:inherit; }
   box-shadow:-6px 0 24px rgba(0,0,0,.2); overflow-y:auto; -webkit-overflow-scrolling:touch;
 }
 .quick-drawer.open{ transform:translateX(0); }
-.quick-drawer-head{ background:var(--acc-deep); color:#fff; padding:16px 16px 14px; flex:0 0 auto; position:sticky; top:0; z-index:5; }
-.quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:0; }
+.quick-drawer-head{ background:var(--acc-deep); color:#fff; padding:16px 16px 0; flex:0 0 auto; position:sticky; top:0; z-index:5; }
+.quick-drawer-head .row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .quick-drawer-head .row strong{ font-family:'Noto Serif KR', serif; font-size:16px; }
+.quick-tabs{ display:flex; overflow-x:auto; gap:4px; }
+.quick-tabs button{ flex:0 0 auto; background:rgba(255,255,255,.12); border:none; color:#f1e8d2; padding:9px 12px; font-size:12px; cursor:pointer; white-space:nowrap; border-radius:6px 6px 0 0; }
+.quick-tabs button.active{ background:var(--paper-card); color:var(--acc-deep); font-weight:700; }
 .quick-body{ padding:14px 16px; }
 .feed-group{ margin-bottom:18px; }
 .feed-group-title{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px; color:var(--acc-deep); border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:8px; }
@@ -558,12 +562,13 @@ button{ font-family:inherit; }
   .issue-grid{ grid-template-columns:repeat(3, 1fr); }
 }
 @media (max-width:760px){
-  .layout4{ grid-template-columns:1fr; gap:0; }
-  .col-briefs{ order:2; margin-top:24px; }
-  .col-headline{ order:1; }
-  .col-opinion{ order:3; margin-top:24px; }
-  .col-briefs .brief-strip{ flex-direction:row; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:12px; }
-  .col-briefs .brief-item{ flex:0 0 200px; border-bottom:none; border-right:1px dashed var(--line); padding-right:12px; }
+  .layout4{
+    grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:100%;
+    gap:0; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  }
+  .col-briefs, .col-headline, .col-opinion{ scroll-snap-align:start; min-width:100%; order:initial; margin-top:0; padding:0 2px; }
+  .col-briefs .brief-strip{ flex-direction:column; overflow-x:visible; gap:0; }
+  .col-briefs .brief-item{ flex:none; border-bottom:1px dashed var(--line); border-right:none; padding-right:0; }
   .mini-brief-grid{ grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:200px; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:0 14px; }
   .mini-brief-grid .brief-item{ border-bottom:none; border-right:1px dashed var(--line); padding-right:12px; }
   .brief-grid4{ grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:220px; overflow-x:auto; -webkit-overflow-scrolling:touch; gap:0 14px; }
@@ -779,9 +784,9 @@ button{ font-family:inherit; }
       <div class="lead">
         <div class="lead-kicker" id="leadKicker"></div>
         <h2 id="leadTitle"></h2>
+        <div class="lead-figure"><span class="cap-badge">사진 · 영상</span></div>
         <p class="dek" id="leadDek"></p>
         <div class="byline" id="leadByline"></div>
-        <div class="lead-figure"><span class="cap-badge">사진 · 영상</span></div>
         <button class="lead-more-btn" id="leadMoreBtn" onclick="toggleLeadBody()">세부내용 더보기 ▾</button>
         <div class="lead-body-wrap" id="leadBodyWrap">
           <div class="figcaption" id="leadFigcaption"></div>
@@ -791,8 +796,8 @@ button{ font-family:inherit; }
 
       <div class="sub-stories" id="subStories"></div>
 
-      <div class="col-heading" style="margin-top:20px;">관련 단신</div>
-      <div class="mini-brief-grid" id="categoryBriefGrid"></div>
+      <div class="brief-divider"></div>
+      <div class="brief-grid4" id="categoryBriefGrid"></div>
     </div>
 
     <!-- 열4: 오피니언 -->
@@ -973,6 +978,13 @@ button{ font-family:inherit; }
   <div class="quick-drawer-head">
     <a class="drawer-brand-link" href="https://chatdoumi.com" target="_blank" rel="noopener">Chat<em>Doumi</em></a>
     <div class="row"><strong>실시간 소식</strong><button class="viewer-back-link" id="btnQuickClose" style="border:none;color:#fff;font-size:18px;">✕</button></div>
+    <div class="quick-tabs" id="quickTabs">
+      <button class="active" data-feed="platmarket">AI플랫마켓 소식</button>
+      <button data-feed="merchant">소상공인 정보</button>
+      <button data-feed="news">오늘의 뉴스</button>
+      <button data-feed="store">상생 스토어</button>
+      <button data-feed="event">이벤트·혜택</button>
+    </div>
   </div>
   <div class="quick-body" id="quickBody"></div>
 
@@ -1621,21 +1633,46 @@ function renderGeneralBriefs(key){
    열2~3 하단) 카테고리별 관련 단신 — 기존 ARTICLES[key].subs 재활용
    각 항목은 클릭하면 상세 요약이 펼쳐지는 방식(요약글 → 더보기)
 ════════════════════════════════════════════════════════════════ */
+/* 카테고리와 무관하게 배치되는 단신 풀 (소상공인·PR성 기사 포함) */
+const PR_BRIEFS = [
+  { title:'소상공인연합회, 여름 특별 회원가입 이벤트', summary:'가입비 면제 혜택이 이달 말까지 제공된다.', source:'PR' },
+  { title:'국민경제㊉, 입점 매장 1만 곳 돌파 기념 이벤트', summary:'입점 상인 대상 수수료 할인 쿠폰이 지급된다.', source:'플랫폼 소식' },
+  { title:'전통시장 상인회, 여름맞이 위생점검 자율 실시', summary:'소비자 신뢰 제고를 위한 자체 점검이 확대됐다.', source:'단신' },
+  { title:'소상공인 정책자금 설명회, 온라인으로 병행 진행', summary:'현장 참석이 어려운 상인을 위한 대안이 마련됐다.', source:'정책브리핑' },
+  { title:'배달 라이더 안전교육, 무료로 확대 운영', summary:'폭염기 안전사고 예방을 위한 교육이 늘어난다.', source:'단신' },
+  { title:'지역화폐 가맹점, 이번 달 500곳 추가 등록', summary:'가맹점 확대로 소비자 이용 편의성이 높아졌다.', source:'지자체' },
+  { title:'소상공인 브랜드 디자인 무료 지원 사업 접수', summary:'로고·간판 디자인 컨설팅을 무료로 받을 수 있다.', source:'PR' },
+  { title:'국민경제㊉ 앱, 리뷰 100만 건 돌파', summary:'누적 리뷰 데이터가 추천 정확도 향상에 활용된다.', source:'플랫폼 소식' }
+];
+
 function renderCategoryBriefs(key){
   const el = document.getElementById('categoryBriefGrid');
   if(!el) return;
   const a = ARTICLES[key];
   const subs = (a && a.subs) || [];
-  el.innerHTML = subs.map((s, i) => `
+
+  const offset = hashStr(key || 'headline') % PR_BRIEFS.length;
+  const rotatedPR = PR_BRIEFS.slice(offset).concat(PR_BRIEFS.slice(0, offset));
+
+  // 1행: [카테고리 서브기사1] [카테고리 서브기사2] [무관 단신] [무관 단신]
+  // 2행: [무관 단신] [무관 단신] [무관 단신] [무관 단신]
+  const items = [];
+  subs.forEach(s => items.push({ title:s.title, summary:s.body, source:s.kicker, expandable:true }));
+  while(items.length < 8){
+    const pr = rotatedPR[items.length % rotatedPR.length];
+    items.push({ title:pr.title, summary:pr.summary, source:pr.source, expandable:true });
+  }
+
+  el.innerHTML = items.slice(0, 8).map((it, i) => `
     <div class="brief-item" style="cursor:pointer;" onclick="toggleCategoryBrief(${i})">
       <div class="brief-thumb"></div>
       <div class="brief-text">
-        <div class="b-title">${s.title}</div>
-        <div class="b-source">${s.kicker} · <span style="color:var(--acc-deep);">더보기</span></div>
-        <div class="op-body" id="categoryBrief-${i}">${s.body}</div>
+        <div class="b-title">${it.title}</div>
+        <div class="b-source">${it.source} · <span style="color:var(--acc-deep);">더보기</span></div>
+        <div class="op-body" id="categoryBrief-${i}">${it.summary}</div>
       </div>
     </div>
-  `).join('') || '<div class="brief-item"><div class="brief-text"><div class="b-summary">관련 단신이 없습니다.</div></div></div>';
+  `).join('');
 }
 function toggleCategoryBrief(i){
   const el = document.getElementById(`categoryBrief-${i}`);
@@ -1875,12 +1912,19 @@ setInterval(updatePubDate, 60 * 1000);
     .filter(t => t !== 'archive' && t !== 'submit' && t !== 'community');
 
   const THRESHOLD = 60; // 스와이프로 인식할 최소 이동 거리(px)
-  let startX = 0, startY = 0, tracking = false;
+  const EDGE_SLOP = 4;  // 스크롤 끝으로 판단할 여유(px)
+  let startX = 0, startY = 0, startScrollLeft = 0, tracking = false;
+
+  function isMobileLayout(){
+    // 모바일에서만 homeLayout4가 가로 스크롤 캐러셀(1~4열)이 됨
+    return window.innerWidth <= 760;
+  }
 
   target.addEventListener('touchstart', (e) => {
     if(e.touches.length !== 1) return;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
+    startScrollLeft = target.scrollLeft;
     tracking = true;
   }, { passive:true });
 
@@ -1891,6 +1935,18 @@ setInterval(updatePubDate, 60 * 1000);
     const dy = e.changedTouches[0].clientY - startY;
     if(Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return; // 세로 스크롤(글 읽기)은 무시
 
+    if(isMobileLayout()){
+      // 모바일: 1~4열(캐러셀)을 다 스크롤해서 맨 끝에 도달했을 때만 카테고리 전환
+      const maxScroll = target.scrollWidth - target.clientWidth;
+      const atRightEdge = target.scrollLeft >= maxScroll - EDGE_SLOP;
+      const atLeftEdge = target.scrollLeft <= EDGE_SLOP;
+      const startedAtRightEdge = startScrollLeft >= maxScroll - EDGE_SLOP;
+      const startedAtLeftEdge = startScrollLeft <= EDGE_SLOP;
+
+      if(dx < 0 && !(startedAtRightEdge && atRightEdge)) return; // 왼쪽으로 더 갈 열이 남아있으면 카테고리 전환 안 함
+      if(dx > 0 && !(startedAtLeftEdge && atLeftEdge)) return;   // 오른쪽으로 더 갈 열이 남아있으면 카테고리 전환 안 함
+    }
+
     const idx = TAB_ORDER.indexOf(currentTab);
     if(idx === -1) return;
     // 좌측으로 드래그(dx 음수, 콘텐츠가 왼쪽으로 밀림) = 다음 메뉴
@@ -1899,6 +1955,7 @@ setInterval(updatePubDate, 60 * 1000);
       ? (idx + 1) % TAB_ORDER.length
       : (idx - 1 + TAB_ORDER.length) % TAB_ORDER.length;
     switchTab(TAB_ORDER[nextIdx]);
+    target.scrollLeft = 0; // 새 카테고리는 항상 1열(주요 뉴스 단신)부터 보이도록 초기화
   }, { passive:true });
 })();
 
@@ -2085,24 +2142,19 @@ const FEEDS = {
 };
 const quickDrawer = document.getElementById('quickDrawer');
 const quickBody = document.getElementById('quickBody');
-const FEED_LABELS = {
-  platmarket: 'AI플랫마켓 소식',
-  merchant: '소상공인 정보',
-  news: '오늘의 뉴스',
-  store: '상생 스토어',
-  event: '이벤트·혜택'
-};
-function renderAllFeeds(){
-  quickBody.innerHTML = Object.keys(FEED_LABELS).map(key => `
-    <div class="feed-group">
-      <div class="feed-group-title">${FEED_LABELS[key]}</div>
-      ${(FEEDS[key] || []).map(i => `
-        <div class="feed-item"><span class="tag">${i.tag}</span><p class="ttl">${i.ttl}</p><span class="time">${i.time}</span></div>
-      `).join('')}
-    </div>
+function renderFeed(key){
+  quickBody.innerHTML = (FEEDS[key] || []).map(i => `
+    <div class="feed-item"><span class="tag">${i.tag}</span><p class="ttl">${i.ttl}</p><span class="time">${i.time}</span></div>
   `).join('');
 }
-renderAllFeeds();
+renderFeed('platmarket');
+document.querySelectorAll('#quickTabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#quickTabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderFeed(btn.dataset.feed);
+  });
+});
 function openQuickDrawer(){ closeLeftNavDrawer(); quickDrawer.classList.add('open'); scrim.classList.add('show'); }
 function closeQuickDrawer(){ quickDrawer.classList.remove('open'); syncScrim(); }
 document.getElementById('quickFab').addEventListener('click', openQuickDrawer);
@@ -2667,7 +2719,8 @@ async function loadLiveFeedsFromAICore(){
     }
     if(data.feeds){
       Object.assign(FEEDS, data.feeds);
-      renderAllFeeds();
+      const activeFeedBtn = document.querySelector('#quickTabs button.active');
+      if(activeFeedBtn) renderFeed(activeFeedBtn.dataset.feed);
     }
     if(Array.isArray(data.issues) && data.issues.length){
       data.issues.forEach(newIssue => {
