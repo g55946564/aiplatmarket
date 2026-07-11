@@ -236,7 +236,8 @@ button{ font-family:inherit; }
 .lead-kicker{ font-size:12px; font-weight:700; color:var(--stamp); letter-spacing:.12em; margin-bottom:6px; }
 .lead h2{ font-family:'Noto Serif KR', serif; font-size:28px; line-height:1.28; margin:0 0 10px; font-weight:700; }
 .lead .dek{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; font-family:'Noto Serif KR', serif; }
-.byline{ font-family:'Nanum Gothic Coding', monospace; font-size:11.5px; color:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:6px 0; margin-bottom:16px; }
+.byline{ font-family:'Nanum Gothic Coding', monospace; font-size:11px; color:var(--ink-soft); }
+.lead-more-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line); }
 
 .lead-figure{
   width:100%; aspect-ratio:16/8; border:1px solid var(--line-strong); margin-bottom:10px; position:relative; overflow:hidden;
@@ -247,7 +248,7 @@ button{ font-family:inherit; }
 
 /* 본문 세부내용 더보기 (기본 접힘) */
 .lead-more-btn{
-  display:block; margin:0 0 12px; background:var(--paper-deep); border:1px solid var(--line-strong);
+  flex:0 0 auto; background:var(--paper-deep); border:1px solid var(--line-strong);
   padding:8px 14px; font-size:12.5px; font-weight:700; color:var(--acc-deep); cursor:pointer; border-radius:4px;
 }
 .lead-body-wrap{ display:none; }
@@ -311,15 +312,20 @@ button{ font-family:inherit; }
 .brief-grid4{ display:grid; grid-template-columns:repeat(4, 1fr); gap:0 20px; margin-top:14px; }
 .brief-divider{ border-top:2px solid var(--line-strong); margin-top:24px; width:100%; }
 
-/* 카드형 단신 (전국 소상공인 뉴스): 제목 헤더 + 큰 이미지 + 요약(클릭 시 펼침) */
-.brief-grid4.card-style{ gap:16px; }
-.brief-card{ border:1px solid var(--line-strong); background:var(--paper-card); cursor:pointer; }
-.brief-card .bc-title{ padding:8px 10px; font-size:12.5px; font-weight:700; border-bottom:1px solid var(--line); color:var(--ink); }
-.brief-card .bc-image{ aspect-ratio:4/3; background:repeating-linear-gradient(135deg,#e4dcc6 0 3px,#ddd3ba 3px 6px); }
-.brief-card .bc-summary{ padding:9px 10px; font-size:11.5px; color:var(--ink-soft); line-height:1.6; }
-.brief-card .bc-summary .op-body{ display:none; margin-top:6px; color:var(--ink); }
-.brief-card .bc-summary .op-body.open{ display:block; }
-.brief-card .bc-more{ color:var(--acc-deep); font-weight:700; }
+/* 전국 소상공인 뉴스: 테마별 4개 컬럼 (텍스트 리스트, 아래→위 자동 스크롤) */
+.theme-grid4{ display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-top:14px; }
+.theme-col{ border:1px solid var(--line-strong); background:var(--paper-card); display:flex; flex-direction:column; }
+.theme-col-head{
+  display:flex; align-items:center; justify-content:space-between; padding:9px 12px;
+  color:#fff; font-size:13px; font-weight:700;
+}
+.theme-col-head .tc-more{ font-size:11px; font-weight:400; cursor:pointer; opacity:.9; }
+.theme-col-body{ height:168px; overflow:hidden; position:relative; }
+.theme-col-track{ position:absolute; left:0; top:0; width:100%; animation:theme-scroll-up 14s linear infinite; }
+.theme-item{ padding:9px 12px; font-size:12px; line-height:1.5; color:var(--ink); border-bottom:1px dashed var(--line); }
+.theme-item:last-child{ border-bottom:none; }
+@keyframes theme-scroll-up{ from{ transform:translateY(0); } to{ transform:translateY(-50%); } }
+.theme-col:hover .theme-col-track{ animation-play-state:paused; }
 
 .sidebar-box{ border:1px solid var(--line-strong); margin-bottom:20px; }
 .box-title{ color:var(--paper); font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; padding:8px 12px; }
@@ -793,19 +799,18 @@ button{ font-family:inherit; }
         <div class="lead-kicker" id="leadKicker"></div>
         <h2 id="leadTitle"></h2>
         <div class="lead-figure"><span class="cap-badge">사진 · 영상</span></div>
-        <button class="lead-more-btn" id="leadMoreBtn" onclick="toggleLeadBody()">세부내용 더보기 ▾</button>
-        <div class="byline" id="leadByline"></div>
+        <p class="dek" id="leadDek"></p>
+        <div class="lead-more-row">
+          <button class="lead-more-btn" id="leadMoreBtn" onclick="toggleLeadBody()">세부내용 더보기 ▾</button>
+          <div class="byline" id="leadByline"></div>
+        </div>
         <div class="lead-body-wrap" id="leadBodyWrap">
-          <p class="dek" id="leadDek"></p>
           <div class="figcaption" id="leadFigcaption"></div>
           <div class="lead-body dropcap" id="leadBody"></div>
         </div>
       </div>
 
       <div class="sub-stories" id="subStories"></div>
-
-      <div class="brief-divider"></div>
-      <div class="brief-grid4" id="categoryBriefGrid"></div>
     </div>
 
     <!-- 열4: 오피니언 -->
@@ -827,12 +832,12 @@ button{ font-family:inherit; }
     </div>
   </div>
 
-  <!-- 전국 소상공인 뉴스 -->
+  <!-- 전국 소상공인 뉴스 (테마별 4개 컬럼, 각 컬럼 아래→위 자동 스크롤) -->
   <div class="mini-section-bar">
     <span>🇰🇷 전국 소상공인 뉴스</span>
     <span class="mini-link" onclick="switchTab('submit')">기사 올리기 →</span>
   </div>
-  <div class="brief-grid4 card-style" id="nationalNewsGrid"></div>
+  <div class="theme-grid4" id="nationalThemeGrid"></div>
 
   <!-- 지역별 소비자 & 소상공인소식 -->
   <div class="mini-section-bar">
@@ -1512,7 +1517,6 @@ function renderArticle(key){
   if(bodyWrap){ bodyWrap.classList.remove('open'); }
   if(moreBtn){ moreBtn.textContent = '세부내용 더보기 ▾'; }
 
-  renderCategoryBriefs(key);
   renderGeneralBriefs(key);
   renderOpinions(key);
 
@@ -1731,6 +1735,43 @@ const NATIONAL_NEWS = [
   { title:'배달앱 상생 수수료율, 전국 표준안 공청회', summary:'플랫폼-입점업체 간 수수료 조정을 위한 공청회가 열린다.' },
   { title:'전국 골목상권 디지털전환 우수사례 공모전', summary:'우수 사례로 선정되면 지원금과 함께 전국에 소개된다.' }
 ];
+/* ══════════════════════════════════════════════════════════════
+   전국 소상공인 뉴스 — 테마별 4개 컬럼 (각 컬럼 아래→위 자동 스크롤)
+════════════════════════════════════════════════════════════════ */
+const THEME_COLUMNS = [
+  { icon:'✏️', title:'사업/창업', color:'var(--acc-deep)', items:[
+    '프랜차이즈 vs 독립창업 비교', '초기 자본 1천만원으로 창업하기', '2026 유망 창업 아이템 TOP10', '소상공인 창업 가이드 A-Z'
+  ]},
+  { icon:'📍', title:'지역행사', color:'var(--acc)', items:[
+    '전통시장 먹거리 대축제 개최', '지역 아트 마켓 참가 모집', '인천 마라톤 대회 신청 중', '인천 봄꽃 축제 4/20~4/25'
+  ]},
+  { icon:'🏪', title:'더착한상품', color:'#8a6d1f', items:[
+    '봄 시즌 네일아트 신상 컬러', '로컬팜 봄나물 꾸러미 출시', '봄 신상 린넨 원피스 입고', '달달 카페 신메뉴 벚꽃라떼'
+  ]},
+  { icon:'🔥', title:'빅세일', color:'var(--stamp)', items:[
+    '아메리카노 2+1 전 매장 적용', '헬스장 3개월권 60% 할인', '피자 라지 2판 20% 할인', '삼겹살 1+1 오늘 하루만!'
+  ]}
+];
+
+function renderThemeColumns(){
+  const el = document.getElementById('nationalThemeGrid');
+  if(!el) return;
+  el.innerHTML = THEME_COLUMNS.map(col => {
+    const itemsHtml = col.items.map(t => `<div class="theme-item">${t}</div>`).join('');
+    return `
+      <div class="theme-col">
+        <div class="theme-col-head" style="background:${col.color};">
+          <span>${col.icon} ${col.title}</span>
+          <span class="tc-more" onclick="switchTab('submit')">전체 ›</span>
+        </div>
+        <div class="theme-col-body">
+          <div class="theme-col-track">${itemsHtml}${itemsHtml}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function renderNationalNews(){
   const el = document.getElementById('nationalNewsGrid');
   if(!el) return;
