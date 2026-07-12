@@ -1571,7 +1571,6 @@ function renderGeneralBriefs(key){
   const rotated = GENERAL_BRIEFS.slice(offset).concat(GENERAL_BRIEFS.slice(0, offset));
   el.innerHTML = rotated.map(b => `
     <a class="brief-item" href="${b.link}" target="_blank" rel="noopener">
-      <div class="brief-thumb"></div>
       <div class="brief-text">
         <div class="b-title">${b.title}</div>
         <div class="b-summary">${b.summary}</div>
@@ -1617,7 +1616,6 @@ function renderCategoryBriefs(key){
 
   el.innerHTML = items.slice(0, 8).map((it, i) => `
     <div class="brief-item" style="cursor:pointer;" onclick="toggleCategoryBrief(${i})">
-      <div class="brief-thumb"></div>
       <div class="brief-text">
         <div class="b-title">${it.title}</div>
         <div class="b-source">${it.source} · <span style="color:var(--acc-deep);">더보기</span></div>
@@ -1676,7 +1674,6 @@ function renderAdPr(key){
   const rotated = PR_BRIEFS.slice(offset).concat(PR_BRIEFS.slice(0, offset));
   el.innerHTML = rotated.slice(0, 4).map((p, i) => `
     <div class="brief-item" style="cursor:pointer;" onclick="toggleAdPr(${i})">
-      <div class="brief-thumb"></div>
       <div class="brief-text">
         <div class="b-title">${p.title}</div>
         <div class="b-source">${p.source} · <span style="color:var(--acc-deep);">더보기</span></div>
@@ -1737,24 +1734,49 @@ function selectRegion(region){
 ════════════════════════════════════════════════════════════════ */
 const THEME_COLUMNS = [
   { icon:'✏️', title:'사업/창업', color:'var(--acc-deep)', items:[
-    '프랜차이즈 vs 독립창업 비교', '초기 자본 1천만원으로 창업하기', '2026 유망 창업 아이템 TOP10', '소상공인 창업 가이드 A-Z'
+    { text:'프랜차이즈 vs 독립창업 비교', detail:'초기 비용, 브랜드 지원, 운영 자율성 등 항목별로 비교한 가이드입니다.' },
+    { text:'초기 자본 1천만원으로 창업하기', link:'https://news.google.com/search?q=' + encodeURIComponent('소자본 창업') + '&hl=ko&gl=KR&ceid=KR:ko' },
+    { text:'2026 유망 창업 아이템 TOP10', detail:'무인 세탁, 반려동물 케어, 1인 식당 등이 상위권에 올랐습니다.' },
+    { text:'소상공인 창업 가이드 A-Z', link:'https://www.bizinfo.go.kr' }
   ]},
   { icon:'📍', title:'지역행사', color:'var(--acc)', items:[
-    '전통시장 먹거리 대축제 개최', '지역 아트 마켓 참가 모집', '인천 마라톤 대회 신청 중', '인천 봄꽃 축제 4/20~4/25'
+    { text:'전통시장 먹거리 대축제 개최', detail:'이번 주말 전국 12개 전통시장에서 동시에 열립니다.' },
+    { text:'지역 아트 마켓 참가 모집', link:'https://news.google.com/search?q=' + encodeURIComponent('지역 아트마켓') + '&hl=ko&gl=KR&ceid=KR:ko' },
+    { text:'인천 마라톤 대회 신청 중', detail:'참가 신청은 이번 달 말까지이며 선착순 마감입니다.' },
+    { text:'인천 봄꽃 축제 4/20~4/25', link:'https://www.korea.kr' }
   ]},
   { icon:'🏪', title:'더착한상품', color:'#8a6d1f', items:[
-    '봄 시즌 네일아트 신상 컬러', '로컬팜 봄나물 꾸러미 출시', '봄 신상 린넨 원피스 입고', '달달 카페 신메뉴 벚꽃라떼'
+    { text:'봄 시즌 네일아트 신상 컬러', detail:'파스텔톤 신상 컬러가 이번 주 새로 입고됐습니다.' },
+    { text:'로컬팜 봄나물 꾸러미 출시', link:'https://search.naver.com/search.naver?query=' + encodeURIComponent('로컬팜 봄나물') },
+    { text:'봄 신상 린넨 원피스 입고', detail:'소량 입고 상품으로 조기 품절될 수 있습니다.' },
+    { text:'달달 카페 신메뉴 벚꽃라떼', link:'https://search.naver.com/search.naver?query=' + encodeURIComponent('벚꽃라떼') }
   ]},
   { icon:'🔥', title:'빅세일', color:'var(--stamp)', items:[
-    '아메리카노 2+1 전 매장 적용', '헬스장 3개월권 60% 할인', '피자 라지 2판 20% 할인', '삼겹살 1+1 오늘 하루만!'
+    { text:'아메리카노 2+1 전 매장 적용', detail:'이번 주 평일 오전 11시까지 한정 적용됩니다.' },
+    { text:'헬스장 3개월권 60% 할인', link:'https://search.naver.com/search.naver?query=' + encodeURIComponent('헬스장 할인') },
+    { text:'피자 라지 2판 20% 할인', detail:'포장 주문 시에만 적용되는 할인입니다.' },
+    { text:'삼겹살 1+1 오늘 하루만!', link:'https://search.naver.com/search.naver?query=' + encodeURIComponent('삼겹살 할인') }
   ]}
 ];
 
 function renderThemeColumns(){
   const el = document.getElementById('nationalThemeGrid');
   if(!el) return;
-  el.innerHTML = THEME_COLUMNS.map(col => {
-    const itemsHtml = col.items.map(t => `<div class="theme-item">${t}</div>`).join('');
+  let counter = 0;
+  el.innerHTML = THEME_COLUMNS.map((col) => {
+    const buildItem = (it) => {
+      const idx = counter++;
+      if(it.link){
+        return `<a class="theme-item" href="${it.link}" target="_blank" rel="noopener">${it.text} ↗</a>`;
+      }
+      return `
+        <div class="theme-item" style="cursor:pointer;" onclick="toggleThemeItem(${idx})">
+          ${it.text}
+          <div class="op-body" id="themeItem-${idx}">${it.detail || ''}</div>
+        </div>
+      `;
+    };
+    const itemsHtml = col.items.map(buildItem).join('') + col.items.map(buildItem).join('');
     return `
       <div class="theme-col">
         <div class="theme-col-head" style="background:${col.color};">
@@ -1762,11 +1784,15 @@ function renderThemeColumns(){
           <span class="tc-more" onclick="switchTab('submit')">전체 ›</span>
         </div>
         <div class="theme-col-body">
-          <div class="theme-col-track">${itemsHtml}${itemsHtml}</div>
+          <div class="theme-col-track">${itemsHtml}</div>
         </div>
       </div>
     `;
   }).join('');
+}
+function toggleThemeItem(idx){
+  const el = document.getElementById(`themeItem-${idx}`);
+  if(el) el.classList.toggle('open');
 }
 
 function renderRegionalNews(region){
@@ -1778,7 +1804,6 @@ function renderRegionalNews(region){
     : `<div class="brief-item"><div class="brief-text"><div class="b-summary">"${region}" 지역 뉴스는 준비 중입니다. 시군구 데이터를 알려주시면 채워드립니다.</div></div></div>`;
   el.innerHTML = items.map((n, i) => `
     <div class="brief-item" style="cursor:pointer;" onclick="toggleRegionalNews(${i})">
-      <div class="brief-thumb"></div>
       <div class="brief-text">
         <div class="b-title">${n.title}</div>
         <div class="b-source">${n.source} · <span style="color:var(--acc-deep);">더보기</span></div>
@@ -1802,7 +1827,7 @@ const USER_ARTICLES = [
   { title:"동네빵집 '밀담' 새벽 발효종 이야기", summary:'15년째 같은 자리를 지켜온 사장님의 이야기를 독자가 직접 전합니다.', author:'이OO (밀담 베이커리)', body:'매일 새벽 4시, 반죽을 시작합니다. 발효종 하나로 15년을 버텨온 이야기를 들려드리고 싶었습니다...' },
   { title:'전통시장에서 만난 정직한 시세표', summary:'매일 아침 시세를 손수 적어 붙이는 상인을 만났습니다.', author:'독자 김OO', body:'과일가게 사장님이 매일 새벽 시세를 확인하고 정직하게 가격표를 붙이는 모습이 인상 깊었습니다...' },
   { title:'첫 창업 6개월, 시행착오 기록', summary:'작은 카페를 연 지 6개월, 겪었던 어려움과 배운 점을 나눕니다.', author:'예비창업자 박OO', body:'처음엔 원가 계산도 서툴렀지만, 이제는 조금씩 자리를 잡아가고 있습니다...' },
-  { title:'"소상공인 목소리 담았다" 독자 투고, 언론에도 소개', summary:'국민경제㊉ 독자 투고 사례가 외부 매체에 인용 보도됐습니다.', author:'편집부', link:'https://news.google.com/rss/search?q=' + encodeURIComponent('소상공인') },
+  { title:'"소상공인 목소리 담았다" 독자 투고, 언론에도 소개', summary:'국민경제㊉ 독자 투고 사례가 외부 매체에 인용 보도됐습니다.', author:'편집부', link:'https://news.google.com/search?q=' + encodeURIComponent('소상공인') + '&hl=ko&gl=KR&ceid=KR:ko' },
   { title:'우리 동네 창업 성공기, 포털 메인에도 떴어요', summary:'독자가 남긴 창업 후기가 포털 인기 글로 소개된 사례입니다.', author:'편집부', link:'https://search.naver.com/search.naver?query=' + encodeURIComponent('소상공인 창업 후기') }
 ];
 
@@ -1814,7 +1839,6 @@ function renderUserArticles(){
       // 외부 링크형: 언론사·포털에 소개된 투고 사례 (새 탭으로 이동)
       return `
         <a class="brief-item" href="${u.link}" target="_blank" rel="noopener">
-          <div class="brief-thumb"></div>
           <div class="brief-text">
             <div class="b-title">${u.title}</div>
             <div class="b-summary">${u.summary}</div>
@@ -1826,7 +1850,6 @@ function renderUserArticles(){
     // 내부 펼침형: 국민경제㊉에 직접 올라온 투고 원문
     return `
       <div class="brief-item" style="cursor:pointer;" onclick="toggleUserArticle(${i})">
-        <div class="brief-thumb"></div>
         <div class="brief-text">
           <div class="b-title">${u.title}</div>
           <div class="b-summary">${u.summary}</div>
