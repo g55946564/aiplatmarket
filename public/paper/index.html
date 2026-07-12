@@ -583,6 +583,9 @@ button{ font-family:inherit; }
   .issue-grid{ grid-template-columns:repeat(3, 1fr); }
 }
 @container app (max-width:760px){
+  .mini-section-bar{ flex-wrap:nowrap; font-size:12.5px; gap:6px; }
+  .mini-section-bar span:first-child{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mini-section-bar .mini-link{ flex:0 0 auto; white-space:nowrap; font-size:11px; }
   .layout4{
     grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:100%;
     gap:0; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
@@ -859,7 +862,7 @@ button{ font-family:inherit; }
 
   <!-- 실시간 소비자&소상공인 직접 올린 기사 -->
   <div class="mini-section-bar">
-    <span>✍ 실시간 · 소비자·소상공인 직접 올린 기사</span>
+    <span>✍ 소비자·소상공인 직접 기사</span>
     <span class="mini-link" onclick="switchTab('submit')">기사 올리기 →</span>
   </div>
   <div class="brief-grid4" id="userArticlesGrid"></div>
