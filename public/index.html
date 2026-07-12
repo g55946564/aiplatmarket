@@ -1046,6 +1046,30 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         </div>
       </div>
 
+      <div class="gcat-div"></div>
+
+      <!-- 📰 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/paper/','_blank');closeCats()">
+              <span class="gcdi-ico">🏛</span><span class="gcdi-txt"><b>국민경제㊉</b><span class="gcdi-desc">AI 큐레이션 경제신문</span></span>
+            </a>
+            <a class="gcdi" onclick="toast('복지신문 — 준비 중입니다');closeCats()">
+              <span class="gcdi-ico">🤝</span><span class="gcdi-txt"><b>복지신문</b><span class="gcdi-desc">지역복지·사회서비스 뉴스</span></span>
+            </a>
+            <a class="gcdi" onclick="toast('내고장뉴스 — 준비 중입니다');closeCats()">
+              <span class="gcdi-ico">🏘</span><span class="gcdi-txt"><b>내고장뉴스</b><span class="gcdi-desc">우리 지역 생활밀착 뉴스</span></span>
+            </a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/paper/','_blank');closeCats()" style="color:var(--navy);font-weight:700">
+              <span class="gcdi-ico">📄</span><span class="gcdi-txt"><b>종이신문 그대로 보기</b><span class="gcdi-desc">지면 신문 PDF 뷰어</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <!-- 오른쪽: 입점신청 고정 -->
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
         <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
@@ -3423,6 +3447,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <a href="#" onclick="showPage('register');return false">입점문의</a>
         <a href="#" onclick="showPage('community');return false">커뮤니티</a>
         <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}else{toast('잠시 후 다시 시도해 주세요');}return false">🚀 플랫폼 안내 다시보기</a>
       </div>
       <!-- 관리자 버튼 (푸터 우측 하단) -->
       <a href="/admin" target="_blank"
