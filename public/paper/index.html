@@ -290,8 +290,9 @@ button{ font-family:inherit; }
 .opinion-item .op-title{ font-size:12.5px; font-weight:700; color:var(--ink); line-height:1.4; }
 .opinion-item:hover .op-title{ color:var(--acc-deep); }
 .opinion-item .op-byline{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; font-family:monospace; }
-.opinion-item .op-body{ display:none; font-size:12px; line-height:1.7; color:var(--ink); margin-top:8px; padding:8px 10px; background:var(--paper-deep); white-space:pre-wrap; }
-.opinion-item .op-body.open{ display:block; }
+.op-body{ display:none; font-size:12px; line-height:1.7; color:var(--ink); margin-top:8px; padding:8px 10px; background:var(--paper-deep); white-space:pre-wrap; }
+.op-body.open{ display:block; }
+.theme-item:hover{ background:var(--paper-deep); }
 
 /* ── 지역뉴스 / 투고기사 섹션 공통 ── */
 .mini-section-bar{
@@ -300,6 +301,7 @@ button{ font-family:inherit; }
   font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--ink);
 }
 .mini-section-bar .mini-link{ font-size:12px; font-weight:700; color:var(--acc-deep); cursor:pointer; font-family:'Noto Sans KR', sans-serif; }
+.region-quickbar-row{ margin-top:10px; }
 .region-quickbar{ display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
 .rq-btn{ flex:0 0 auto; border:1px solid var(--line); background:var(--paper-card); padding:5px 12px; border-radius:14px; font-size:11.5px; color:var(--ink); cursor:pointer; white-space:nowrap; }
 .rq-btn.active{ background:var(--acc-deep); border-color:var(--acc-deep); color:#fff; }
@@ -848,6 +850,9 @@ button{ font-family:inherit; }
   <!-- 지역별 소비자 & 소상공인소식 -->
   <div class="mini-section-bar">
     <span>📍 지역별 소비자 &amp; 소상공인소식</span>
+    <span class="mini-link" onclick="switchTab('submit')">기사 올리기 →</span>
+  </div>
+  <div class="region-quickbar-row">
     <div class="region-quickbar" id="regionQuickBar"></div>
   </div>
   <div class="brief-grid4" id="regionalNewsGrid"></div>
