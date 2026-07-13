@@ -241,8 +241,9 @@ button{ font-family:inherit; }
 
 .lead-figure{
   width:100%; aspect-ratio:16/8; border:1px solid var(--line-strong); margin-bottom:10px; position:relative; overflow:hidden;
-  background:repeating-linear-gradient(135deg, #e4dcc6 0 2px, #ddd3ba 2px 4px);
+  background:var(--paper-deep);
 }
+.lead-figure svg{ position:absolute; inset:0; width:100%; height:100%; }
 .lead-figure .cap-badge{ position:absolute; bottom:10px; left:10px; background:var(--acc-deep); color:var(--paper); font-size:11px; font-weight:700; padding:4px 10px; }
 .figcaption{ font-size:11.5px; color:var(--ink-soft); margin-bottom:20px; font-style:italic; }
 
@@ -809,7 +810,7 @@ button{ font-family:inherit; }
       <div class="lead">
         <div class="lead-kicker" id="leadKicker"></div>
         <h2 id="leadTitle"></h2>
-        <div class="lead-figure"><span class="cap-badge">사진 · 영상</span></div>
+        <div class="lead-figure" id="leadFigure"><span class="cap-badge">사진 · 영상</span></div>
         <p class="dek" id="leadDek"></p>
         <div class="lead-more-row">
           <button class="lead-more-btn" id="leadMoreBtn" onclick="toggleLeadBody()">세부내용 더보기 ▾</button>
@@ -1490,6 +1491,60 @@ const ARTICLES = {
     subs:[{kicker:'채용',title:'주말 알바 구인 많은 업종 top3',body:'카페·편의점·음식점 순으로 수요가 많다.'},{kicker:'창업',title:'소자본 창업 상담, 이번 달 예약 마감 임박',body:'예비창업자 대상 무료 컨설팅 신청이 몰리고 있다.'}]
   }
 };
+
+/* ══════════════════════════════════════════════════════════════
+   메인 헤드라인용 카테고리별 SVG 일러스트
+   ⚠ 실제 사진/영상이 아닌, 저작권 문제 없는 심플한 벡터 일러스트입니다.
+      실제 사진으로 교체하려면 <div id="leadFigure"> 안의 SVG를
+      <img src="..."> 로 바꿔주시면 됩니다.
+════════════════════════════════════════════════════════════════ */
+const ICON_SHAPES = {
+  bakery: '<path d="M120 130 q0-30 30-30 q5-18 25-18 q20 0 25 18 q30 0 30 30 q0 14-14 14 H134 q-14 0-14-14 Z" fill="{c}"/><circle cx="150" cy="95" r="3" fill="{c}" opacity=".6"/><circle cx="180" cy="88" r="3" fill="{c}" opacity=".6"/><circle cx="210" cy="96" r="3" fill="{c}" opacity=".6"/>',
+  market: '<path d="M130 100 L270 100 L250 155 Q200 165 150 155 Z" fill="none" stroke="{c}" stroke-width="6"/><circle cx="170" cy="85" r="14" fill="{c}"/><circle cx="200" cy="78" r="16" fill="{c}"/><circle cx="230" cy="86" r="13" fill="{c}"/>',
+  education: '<path d="M200 90 L120 112 L200 134 L280 112 Z" fill="{c}"/><path d="M150 120 V150 Q200 165 200 150 V120" fill="none" stroke="{c}" stroke-width="6"/><path d="M250 120 V150 Q200 165 200 150 V120" fill="none" stroke="{c}" stroke-width="6"/>',
+  culture: '<circle cx="160" cy="140" r="16" fill="{c}"/><circle cx="240" cy="130" r="16" fill="{c}"/><path d="M176 140 V80 L256 65 V130" fill="none" stroke="{c}" stroke-width="6"/>',
+  science: '<path d="M185 70 H215 V105 L245 155 Q250 165 238 165 H162 Q150 165 155 155 L185 105 Z" fill="none" stroke="{c}" stroke-width="6"/><path d="M168 135 H232" stroke="{c}" stroke-width="6"/><circle cx="190" cy="150" r="4" fill="{c}"/><circle cx="212" cy="145" r="3" fill="{c}"/>',
+  sports: '<circle cx="145" cy="115" r="16" fill="{c}"/><circle cx="255" cy="115" r="16" fill="{c}"/><rect x="161" y="107" width="78" height="16" rx="4" fill="{c}"/>',
+  finance: '<ellipse cx="200" cy="145" rx="42" ry="12" fill="{c}"/><ellipse cx="200" cy="125" rx="42" ry="12" fill="{c}" opacity=".75"/><ellipse cx="200" cy="105" rx="42" ry="12" fill="{c}" opacity=".55"/>',
+  global: '<circle cx="200" cy="115" r="48" fill="none" stroke="{c}" stroke-width="6"/><ellipse cx="200" cy="115" rx="20" ry="48" fill="none" stroke="{c}" stroke-width="4"/><path d="M152 115 H248 M158 90 H242 M158 140 H242" stroke="{c}" stroke-width="4"/>',
+  ai: '<rect x="160" y="80" width="80" height="70" rx="10" fill="none" stroke="{c}" stroke-width="6"/><circle cx="185" cy="105" r="5" fill="{c}"/><circle cx="215" cy="105" r="5" fill="{c}"/><path d="M180 130 Q200 142 220 130" stroke="{c}" stroke-width="5" fill="none"/><path d="M160 100 H145 M160 130 H145 M240 100 H255 M240 130 H255" stroke="{c}" stroke-width="4"/>',
+  community: '<circle cx="170" cy="100" r="18" fill="{c}"/><circle cx="230" cy="100" r="18" fill="{c}"/><path d="M140 160 Q140 125 170 125 Q200 125 200 160" fill="{c}"/><path d="M200 160 Q200 125 230 125 Q260 125 260 160" fill="{c}" opacity=".8"/>',
+  home: '<path d="M200 68 L268 118 H252 V162 H148 V118 H132 Z" fill="{c}"/><rect x="188" y="130" width="24" height="32" fill="var(--paper-deep)"/>',
+  fashion: '<path d="M200 90 L200 100 M200 100 L150 135 Q140 142 150 148 H250 Q260 142 250 135 Z" fill="none" stroke="{c}" stroke-width="6" stroke-linejoin="round"/><circle cx="200" cy="88" r="6" fill="{c}"/>',
+  goodstore: '<path d="M200 155 C 140 115, 150 75, 190 82 C 198 84, 200 92, 200 92 C 200 92, 202 84, 210 82 C 250 75, 260 115, 200 155 Z" fill="{c}"/>',
+  jobs: '<rect x="145" y="105" width="110" height="65" rx="6" fill="none" stroke="{c}" stroke-width="6"/><path d="M178 105 V90 Q178 82 188 82 H212 Q222 82 222 90 V105" fill="none" stroke="{c}" stroke-width="6"/><path d="M145 130 H255" stroke="{c}" stroke-width="4"/>',
+  environment: '<path d="M200 160 C 160 160, 140 120, 165 85 C 195 45, 245 65, 245 105 C 245 140, 220 160, 200 160 Z" fill="{c}"/><path d="M200 160 C 200 130, 205 100, 230 80" stroke="var(--paper-deep)" stroke-width="4" fill="none"/>',
+  consumer: '<rect x="155" y="105" width="90" height="60" rx="6" fill="{c}"/><rect x="150" y="88" width="100" height="22" rx="6" fill="{c}" opacity=".85"/><rect x="192" y="88" width="16" height="77" fill="var(--paper-deep)"/>',
+  store: '<path d="M135 95 H265 L258 118 H142 Z" fill="{c}"/><rect x="150" y="118" width="100" height="48" fill="none" stroke="{c}" stroke-width="6"/><rect x="188" y="140" width="24" height="26" fill="{c}"/>'
+};
+
+/* 카테고리 키 → 일러스트 테마 매핑 */
+const CATEGORY_ICON = {
+  headline:'store', store:'store', benefit:'consumer', welfare:'community', local:'community',
+  education:'education', culture:'culture', science:'science', sports:'sports',
+  global:'global', incident:'community', ai:'ai',
+  ingredient:'market', agrifish:'market', localspecial:'market',
+  matjip:'bakery', meotjip:'fashion', goodstore:'goodstore', goodproduct:'goodstore',
+  realestate:'home', interior:'home', fashion:'fashion', mobility:'sports',
+  finance:'finance', environment:'environment', jobs:'jobs'
+};
+
+function renderLeadFigure(key){
+  const el = document.getElementById('leadFigure');
+  if(!el) return;
+  const theme = CATEGORY_ICON[key] || 'store';
+  const color = 'var(--acc-deep)';
+  const iconSvg = (ICON_SHAPES[theme] || ICON_SHAPES.store).split('{c}').join(color);
+  el.innerHTML = `
+    <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+      <rect width="400" height="200" fill="var(--paper-deep)"/>
+      <circle cx="60" cy="40" r="70" fill="var(--acc)" opacity=".08"/>
+      <circle cx="360" cy="180" r="90" fill="var(--acc)" opacity=".06"/>
+      ${iconSvg}
+    </svg>
+    <span class="cap-badge">${ARTICLES[key] ? ARTICLES[key].kicker : '일러스트'}</span>
+  `;
+}
 
 function renderArticle(key){
   const a = ARTICLES[key];
