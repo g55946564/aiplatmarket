@@ -1495,8 +1495,8 @@ const ARTICLES = {
 /* ══════════════════════════════════════════════════════════════
    메인 헤드라인용 카테고리별 SVG 일러스트
    ⚠ 실제 사진/영상이 아닌, 저작권 문제 없는 심플한 벡터 일러스트입니다.
-      실제 사진으로 교체하려면 <div id="leadFigure"> 안의 SVG를
-      <img src="..."> 로 바꿔주시면 됩니다.
+      실제 사진으로 교체하려면 leadFigure 요소 안의 SVG를
+      img 태그로 바꿔주시면 됩니다.
 ════════════════════════════════════════════════════════════════ */
 const ICON_SHAPES = {
   bakery: '<path d="M120 130 q0-30 30-30 q5-18 25-18 q20 0 25 18 q30 0 30 30 q0 14-14 14 H134 q-14 0-14-14 Z" fill="{c}"/><circle cx="150" cy="95" r="3" fill="{c}" opacity=".6"/><circle cx="180" cy="88" r="3" fill="{c}" opacity=".6"/><circle cx="210" cy="96" r="3" fill="{c}" opacity=".6"/>',
@@ -1556,6 +1556,7 @@ function renderArticle(key){
   document.getElementById('leadDek').textContent = a.dek;
   document.getElementById('leadByline').textContent = a.byline;
   document.getElementById('leadFigcaption').textContent = a.figcaption;
+  renderLeadFigure(key);
 
   const bodyEl = document.getElementById('leadBody');
   bodyEl.innerHTML = '';
