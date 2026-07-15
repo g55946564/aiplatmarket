@@ -948,15 +948,15 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
         <div class="gcdrop" id="gcdrop-ai">
           <div class="gcdrop-grid">
-            <a class="gcdi platform" onclick="showPage('aird');closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('simul');closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('itemzone');closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/aird','_self');closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/simul','_self');closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/itemzone','_self');closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
-            <a class="gcdi platform" onclick="showPage('lifemap');closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('edu');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('culture');closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/lifemap','_self');closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/eduzone','_self');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/culture','_self');closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('gamezone');closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('/gamezone','_self');closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
           </div>
         </div>
       </div>
@@ -1042,30 +1042,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
             <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
             <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="gcat-div"></div>
-
-      <!-- 📰 디지털신문 -->
-      <div class="gcat" id="gcat-paper">
-        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-paper">
-          <div class="gcdrop-list">
-            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/paper/','_blank');closeCats()">
-              <span class="gcdi-ico">🏛</span><span class="gcdi-txt"><b>국민경제㊉</b><span class="gcdi-desc">AI 큐레이션 경제신문</span></span>
-            </a>
-            <a class="gcdi" onclick="toast('복지신문 — 준비 중입니다');closeCats()">
-              <span class="gcdi-ico">🤝</span><span class="gcdi-txt"><b>복지신문</b><span class="gcdi-desc">지역복지·사회서비스 뉴스</span></span>
-            </a>
-            <a class="gcdi" onclick="toast('내고장뉴스 — 준비 중입니다');closeCats()">
-              <span class="gcdi-ico">🏘</span><span class="gcdi-txt"><b>내고장뉴스</b><span class="gcdi-desc">우리 지역 생활밀착 뉴스</span></span>
-            </a>
-            <div class="gcdi-sep"></div>
-            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/paper/','_blank');closeCats()" style="color:var(--navy);font-weight:700">
-              <span class="gcdi-ico">📄</span><span class="gcdi-txt"><b>종이신문 그대로 보기</b><span class="gcdi-desc">지면 신문 PDF 뷰어</span></span>
-            </a>
           </div>
         </div>
       </div>
@@ -3441,13 +3417,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
       <div class="ft-links">
         <a href="#" onclick="showPage('about');return false">서비스 소개</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
         <a href="#" onclick="showPage('terms');return false">이용약관</a>
         <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
         <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
         <a href="#" onclick="showPage('register');return false">입점문의</a>
         <a href="#" onclick="showPage('community');return false">커뮤니티</a>
         <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
-        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}else{toast('잠시 후 다시 시도해 주세요');}return false">🚀 플랫폼 안내 다시보기</a>
       </div>
       <!-- 관리자 버튼 (푸터 우측 하단) -->
       <a href="/admin" target="_blank"
