@@ -235,7 +235,7 @@ button{ font-family:inherit; }
 
 .lead-kicker{ font-size:12px; font-weight:700; color:var(--stamp); letter-spacing:.12em; margin-bottom:6px; }
 .lead h2{ font-family:'Noto Serif KR', serif; font-size:28px; line-height:1.28; margin:0 0 10px; font-weight:700; }
-.lead .dek{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; font-family:'Noto Serif KR', serif; }
+.lead .dek{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; font-family:'Noto Serif KR', serif; letter-spacing:-.01em; }
 .byline{ font-family:'Nanum Gothic Coding', monospace; font-size:11px; color:var(--ink-soft); }
 .lead-more-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line); }
 
@@ -255,7 +255,7 @@ button{ font-family:inherit; }
 .lead-body-wrap{ display:none; }
 .lead-body-wrap.open{ display:block; }
 
-.lead-body{ columns:1; font-size:14.3px; line-height:1.85; text-align:justify; }
+.lead-body{ columns:1; font-size:14.3px; line-height:1.85; text-align:justify; letter-spacing:-.02em; }
 .lead-body p{ margin:0 0 14px; }
 .dropcap::first-letter{ font-family:'Noto Serif KR', serif; font-size:50px; font-weight:900; float:left; line-height:.8; padding:4px 6px 0 0; color:var(--acc-deep); }
 
@@ -1101,6 +1101,8 @@ button{ font-family:inherit; }
       <button class="viewer-back-link" onclick="backToArchive()">← 지난 신문 목록</button>
     </div>
     <div class="toc-list" id="tocList"></div>
+    <div class="thumb-grid-heading">전체 페이지</div>
+    <div class="thumb-grid" id="thumbGrid"></div>
   </div>
 
   <div id="viewerMain">
