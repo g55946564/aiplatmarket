@@ -1,0 +1,15 @@
+{
+  "id": "shop",
+  "group": "commerce",
+  "title": "AI더착한쇼핑(몰)",
+  "icon": "🛍️",
+  "description": "AI 큐레이션 기반 착한 소비 쇼핑몰",
+  "version": "0.1.0",
+  "status": "planned",
+  "routes": ["/shop", "/commerce/shop/"],
+  "subdomain": "shop.aiplatmarket.com",
+  "framework_version": "2.0.0",
+  "ai_core": { "enabled": true, "engines": ["gemini", "gpt", "claude", "rule"] },
+  "owner": "형식",
+  "updated": "2026-07-18"
+}

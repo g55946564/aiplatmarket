@@ -323,7 +323,7 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .lsb-ttl{font-size:.68rem;font-weight:900;color:var(--navy);letter-spacing:1.5px;text-transform:uppercase;padding:0 4px 5px;border-bottom:2px solid var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:4px}
 .lsb-div{height:1px;background:var(--g2);margin:10px 0}
 .lsb-menu{display:flex;flex-direction:column;gap:1px;margin-bottom:3px}
-.lmi{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:4px;font-size:.78rem;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;white-space:nowrap}
+.lmi{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:4px;font-size:.78rem;font-weight:600;color:var(--text);cursor:pointer;transition:all .18s;white-space:nowrap;text-decoration:none}
 .lmi:hover{background:var(--g1);color:var(--red)}
 .lmi.act{background:#fce8e6;color:var(--red)}
 .lmi .ico{font-size:.9rem;width:18px;text-align:center;flex-shrink:0}
@@ -948,15 +948,15 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
         <div class="gcdrop" id="gcdrop-ai">
           <div class="gcdrop-grid">
-            <a class="gcdi platform" onclick="window.open('/aird','_self');closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/simul','_self');closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/itemzone','_self');closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/lifemap','_self');closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/eduzone','_self');closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/culture','_self');closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="window.open('/gamezone','_self');closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
           </div>
         </div>
       </div>
@@ -973,6 +973,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
             <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 더착한상품</a>
             <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
             <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
           </div>
         </div>
@@ -1042,6 +1043,18 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
             <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
             <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 7. 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
           </div>
         </div>
       </div>
@@ -2988,7 +3001,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <!-- AI 서비스 섹션 -->
     <div style="font-family:var(--fs);font-size:.86rem;font-weight:900;color:var(--navy);margin-bottom:10px;padding-left:10px;border-left:3px solid var(--red)">🤖 AI 성장 서비스</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px">
-      <div class="gm-card" onclick="showPage('lifemap')">
+      <div class="gm-card" onclick="window.open('/lifemap','_blank')">
         <span class="gm-ico">🔮</span><span class="gm-ttl">AI 라이프맵</span>
         <span class="gm-sub">인생·진로 분석</span>
       </div>
@@ -3040,7 +3053,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
           <div class="gmp-name">AI 라이프맵 리포트</div>
           <div class="gmp-desc">20개 학문 융합 분석 상세 리포트</div>
           <div class="gmp-price">9,900원~</div>
-          <button class="gmp-btn" onclick="showPage('lifemap')">신청하기</button>
+          <button class="gmp-btn" onclick="window.open('/lifemap','_blank')">신청하기</button>
         </div>
       </div>
 
@@ -3479,11 +3492,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="lmi" onclick="closeSide();showPage('simul')"><span class="ico">🧪</span>AI시뮬레이션</div>
     <div class="lmi" onclick="closeSide();showPage('itemzone')"><span class="ico">📦</span>AI아이템존</div>
     <div class="lmi" onclick="closeSide();showPage('promo-center')"><span class="ico">🎯</span>AI통합홍보센터</div>
-    <div class="lmi" onclick="closeSide();showPage('lifemap')"><span class="ico">🔮</span>AI인생·진로</div>
-    <div class="lmi" onclick="closeSide();showPage('eduzone')"><span class="ico">📚</span>AI교육존</div>
-    <div class="lmi" onclick="closeSide();showPage('culture')"><span class="ico">🎨</span>AI문화예술</div>
+    <a class="lmi" href="/lifemap" target="_blank" rel="noopener" onclick="closeSide()"><span class="ico">🔮</span>AI인생·진로 체험존</a>
+    <a class="lmi" href="/eduzone" target="_blank" rel="noopener" onclick="closeSide()"><span class="ico">📚</span>AI교육존</a>
+    <a class="lmi" href="/culture" target="_blank" rel="noopener" onclick="closeSide()"><span class="ico">🎨</span>AI문화예술</a>
     <div class="lmi" onclick="closeSide();showPage('videocenter')"><span class="ico">🎬</span>AI영상생성</div>
-    <div class="lmi" onclick="closeSide();showPage('gamezone')"><span class="ico">🎮</span>AI게임존</div>
+    <a class="lmi" href="/gamezone" target="_blank" rel="noopener" onclick="closeSide()"><span class="ico">🎮</span>AI게임존</a>
   </div>
   <div class="lsb-div"></div>
   <div class="lsb-ttl">📌 메뉴</div>
@@ -3494,6 +3507,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="lmi" onclick="closeSide();showPage('live')"><span class="ico">📺</span>라이브방송</div>
     <div class="lmi" onclick="closeSide();showPage('community')"><span class="ico">💬</span>커뮤니티</div>
     <div class="lmi" onclick="closeSide();showPage('growthmall')"><span class="ico">📈</span>AI성장+마켓몰</div>
+    <a class="lmi" href="/shop" target="_blank" rel="noopener" onclick="closeSide()"><span class="ico">🛍️</span>AI더착한쇼핑(몰)</a>
     <div class="lmi" onclick="closeSide();showPage('localcenter')"><span class="ico">🏛</span>AI지역경제센터</div>
     <div class="lmi" onclick="closeSide();showPage('good')"><span class="ico">💚</span>더착한가게</div>
     <div class="lmi" onclick="closeSide();showPage('welfare')"><span class="ico">🤝</span>지역복지</div>
@@ -4608,7 +4622,7 @@ document.addEventListener('click', function(e) {
 const _UPGRADE_MAP = {
   aird:     ['🔬 AIR&D', '🔬', 'AI 연구·개발 플랫폼<br>시장성 분석·특허 검색·논문 리뷰 자동화'],
   simul:    ['🧪 AI시뮬레이션', '🧪', '사업·투자·마케팅 시뮬레이션을 AI가 실행합니다'],
-  eduzone:      ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
+  edu:      ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
   culture:  ['🎨 AI문화예술', '🎨', 'AI와 함께하는 문화·예술 창작 플랫폼'],
   gamezone: ['🎮 AI게임존', '🎮', '소상공인·소비자가 함께하는 AI 게임 플랫폼'],
   good:     ['💚 더착한가게', '💚', '착한 소비를 위한 지역 착한가게 정보'],
