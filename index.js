@@ -31,12 +31,13 @@ const path     = require('path');
 const https    = require('https');
 const http     = require('http');
 
-/* ChatDoumi AI Core — GPT/Claude/Gemini는 모두 이 Core 아래 Adapter로만 연결됩니다.
-   이 파일(index.js)의 다른 어떤 코드도 OpenAI/Gemini/Anthropic API를 직접 호출하지 않습니다.
+/* ChatDoumi AI Core 클라이언트 — AI플랫마켓은 GPT/Claude/Gemini를 직접 호출하지 않고,
+   AI 로직(TaskRouter/ProviderManager 등)도 갖고 있지 않습니다. 모든 AI 처리는
+   ChatDoumi 서버(CHATDOUMI_API_URL)에 HTTP로 요청을 보내 처리합니다 (진짜 마이크로서비스 구조).
    ※ ai-core/ 폴더가 저장소에 누락된 채로 배포되면 서버 전체가 죽는 일이 있었음(MODULE_NOT_FOUND).
      아래 try-catch는 그런 상황에서도 사이트 자체는 정상 동작하도록 하는 안전망입니다
-     (AI 응답은 규칙 기반 기본 문구로 대체됨). 실제 AI 기능을 쓰려면 ai-core/ 폴더를
-     index.js와 같은 위치에 반드시 함께 업로드해야 합니다. */
+     (AI 응답은 규칙 기반 기본 문구로 대체됨). ai-core/index.js 파일 하나만 있으면 되고,
+     TaskRouter/ProviderManager 등 엔진 파일은 더 이상 AI플랫마켓 저장소에 필요 없습니다. */
 let AICore;
 try {
   AICore = require('./ai-core');
@@ -50,7 +51,8 @@ try {
       const result = (typeof fallbackFn === 'function') ? await fallbackFn() : '현재 AI 기능을 일시적으로 사용할 수 없습니다.';
       return { ok: true, engine: 'Rule(ai-core 폴더 누락 — 임시폴백)', result };
     },
-    getEngineStatus: () => ({ rule: { name: 'Rule(임시)', available: true } }),
+    getEngineStatus: async () => ({ rule: { name: 'Rule(임시)', available: true } }),
+    setDb: () => {}, // ai-core 폴더 누락 시에도 setDb 호출이 죽지 않도록
   };
 }
 
@@ -154,6 +156,7 @@ try {
     admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
   }
   db = admin.firestore();
+  if (typeof AICore.setDb === 'function') AICore.setDb(db); // 과거 호환용 no-op — 챗도우미 서버가 자체 DB를 사용하므로 실제로는 아무 동작 안 함
   console.log('✅ Firebase 연결 | Project:', serviceAccount.project_id);
 } catch (e) {
   if (e.code === 'ENOENT') {
@@ -489,41 +492,12 @@ async function googleNews(keyword) {
   setCache(key,items); return items;
 }
 
-const KEYWORD_MAP={전체:'소상공인',경제:'소상공인 경제 매출',창업:'소상공인 창업 지원',IT:'소상공인 AI IT 디지털',농수산:'로컬푸드 농수산 직거래',지방자치:'지방자치 소상공인',사회:'소상공인 사회 지역',교육:'소상공인 교육','Job뉴스':'소상공인 채용 일자리',부동산:'소상공인 임차료 상가',생활:'지역 생활 소상공인',생활과학:'생활과학 과학향기 kisti',스포츠:'국내 스포츠 소식',건강:'건강 웰빙 소상공인'};
-// 글로벌 뉴스 전용 영어 키워드 (Google RSS 기반 — 한국어로 검색하면 국내 뉴스가 나와서 분리)
-const GLOBAL_KEYWORDS = ['world economy business 2026', 'global trade finance news', 'international small business economy'];
+const KEYWORD_MAP={전체:'소상공인',경제:'소상공인 경제 매출',창업:'소상공인 창업 지원',IT:'소상공인 AI IT 디지털',농수산:'로컬푸드 농수산 직거래',지방자치:'지방자치 소상공인',사회:'소상공인 사회 지역',교육:'소상공인 교육','Job뉴스':'소상공인 채용 일자리',부동산:'소상공인 임차료 상가',생활:'지역 생활 소상공인',생활과학:'생활과학 과학향기 kisti',글로벌:'글로벌 경제 국제 비즈니스 소상공인',스포츠:'국내 스포츠 소식',건강:'건강 웰빙 소상공인'};
 
 app.get('/api/news', async (req, res) => {
   const { cat='전체', source='all', display=10 } = req.query;
+  const keyword=KEYWORD_MAP[cat]||cat;
   const result={cat,items:[],sources:[],warnings:[]};
-
-  // 글로벌 카테고리는 영어 키워드로 Google RSS만 사용 (Naver에서 국내 뉴스가 나오는 문제 방지)
-  if (cat === '글로벌') {
-    for (const kw of GLOBAL_KEYWORDS) {
-      try {
-        const items = await googleNews(kw);
-        const ex = new Set(result.items.map(n => n.title));
-        result.items.push(...items.filter(n => !ex.has(n.title)));
-        result.sources.push('google');
-        if (result.items.length >= Number(display)) break;
-      } catch(e) { result.warnings.push('google:' + e.message); }
-    }
-    // 글로벌 폴백
-    if (!result.items.length) {
-      result.items = [
-        {title:'Fed holds rates steady amid global growth concerns',desc:'The Federal Reserve kept interest rates unchanged.',link:'#',date:new Date().toISOString(),source:'글로벌',origin:'fallback'},
-        {title:'Global small business confidence index rises in Q2 2026',desc:'SMBs worldwide report improved outlook.',link:'#',date:new Date().toISOString(),source:'글로벌',origin:'fallback'},
-        {title:'AI adoption accelerates among international retailers',desc:'Global retail SMBs adopt AI tools rapidly.',link:'#',date:new Date().toISOString(),source:'글로벌',origin:'fallback'},
-        {title:'World trade volume up 2.3% — WTO Q1 2026 report',desc:'Global trade volumes increased moderately.',link:'#',date:new Date().toISOString(),source:'글로벌',origin:'fallback'},
-        {title:'EU digital market regulations impact global e-commerce',desc:'New EU rules affect cross-border commerce.',link:'#',date:new Date().toISOString(),source:'글로벌',origin:'fallback'},
-      ];
-    }
-    result.items = result.items.slice(0, Number(display) * 2);
-    return res.json(result);
-  }
-
-  // 국내 뉴스 (기존 로직 그대로)
-  const keyword = KEYWORD_MAP[cat] || cat;
   if(source==='all'||source==='naver'){
     try{result.items.push(...await naverNews(keyword,Number(display)));result.sources.push('naver');}
     catch(e){result.warnings.push('naver:'+e.message);}
@@ -928,8 +902,6 @@ const MODULE_MAP = {
   music:       { group: 'media', dir: 'music' },
   // community/
   community:   { group: 'community', dir: '' },
-  // ── media ──
-  paper:       { group: 'media', dir: 'paper' },   // 국민경제㊉ 신문
   // lifestyle/
   sports:      { group: 'lifestyle', dir: 'sports' },
   travel:      { group: 'lifestyle', dir: 'travel' },
@@ -994,10 +966,10 @@ app.get('/api/modules', (req, res) => {
 
 
 // ChatDoumi AI Core 엔진 상태 (어떤 엔진이 활성화되어 있는지) — 관리자 대시보드/디버깅용
-app.get('/api/ai-core/status', (req, res) => {
+app.get('/api/ai-core/status', async (req, res) => {
   res.json({
     core: 'ChatDoumi AI Core',
-    engines: AICore.getEngineStatus(),
+    engines: await AICore.getEngineStatus(),
   });
 });
 
@@ -1008,7 +980,7 @@ app.get('/api/ai-core/status', (req, res) => {
    사용법: 새 창에서 이 URL의 응답을 그대로 붙여넣으면
    PROJECT_CONTEXT.md와 합쳐 완전한 컨텍스트가 된다.
 ═══════════════════════════════════════════ */
-app.get('/api/ai-context', (req, res) => {
+app.get('/api/ai-context', async (req, res) => {
   const modules = {};
   Object.entries(MODULE_MAP).forEach(([id, mod]) => {
     const jsonPath = path.join(__dirname, 'public', mod.group, mod.dir, 'module.json');
@@ -1023,9 +995,9 @@ app.get('/api/ai-context', (req, res) => {
   res.json({
     project: 'AI플랫마켓 (aiplatmarket.com)',
     generatedAt: new Date().toISOString(),
-    architecture: 'ChatDoumi AI Core — GPT/Claude/Gemini는 Adapter로 연결, 모든 모듈은 AICore.process()만 사용',
+    architecture: 'ChatDoumi AI Core — 독립 서버(HTTP)로 분리 운영. AI플랫마켓은 GPT/Claude/Gemini를 직접 호출하지 않고 ai-core/index.js를 통해 챗도우미 서버에 요청만 보냄',
     contextDoc: 'framework/PROJECT_CONTEXT.md 를 함께 참고하세요 (이 응답은 그 문서의 동적 보충 정보입니다)',
-    aiCoreEngines: AICore.getEngineStatus(),
+    aiCoreEngines: await AICore.getEngineStatus(),
     modules,
   });
 });
@@ -1215,131 +1187,6 @@ app.patch('/api/feedback/:id', async (req, res) => {
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
   }
-});
-
-/* ═══════════════════════════════════════════════════════
-   📰 국민경제㊉ 신문 (paper 모듈) — AI 뉴스 큐레이션 API
-   ─────────────────────────────────────────────────────
-   GET /api/paper/news-feed?section=경제&limit=10
-   ※ catch-all 라우트보다 반드시 먼저 등록해야 이 경로가
-     index.html로 응답되는 현상이 발생하지 않습니다.
-   paper 모듈 index.html의 AI_CORE_ENDPOINT = '/api/paper/news-feed'
-═══════════════════════════════════════════════════════ */
-app.get('/api/paper/news-feed', async (req, res) => {
-  const section = req.query.section || '전체';
-  const limit   = Math.min(parseInt(req.query.limit) || 10, 30);
-
-  // 1) 뉴스 수집 (기존 naverNews / googleNews 재사용)
-  let rawItems = [];
-  const sectionKeyword = {
-    '전체':'국민경제 소상공인', '경제':'경제 소상공인 매출',
-    '창업':'창업 스타트업 소상공인', '지역':'지역경제 소상공인',
-    '글로벌':'world economy small business', '정책':'소상공인 정책 지원금',
-  }[section] || section;
-
-  try { rawItems = await naverNews(sectionKeyword, limit * 2); } catch(e) {}
-  if (rawItems.length < 3) {
-    try {
-      const g = await googleNews(sectionKeyword);
-      const ex = new Set(rawItems.map(n => n.title));
-      rawItems.push(...g.filter(n => !ex.has(n.title)));
-    } catch(e) {}
-  }
-
-  // 2) AICore로 큐레이션 (요약·우선순위 재정렬)
-  //    뉴스가 없거나 AICore 실패해도 rawItems 그대로 반환해 항상 응답 보장
-  let curatedItems = rawItems.slice(0, limit);
-  if (rawItems.length >= 3) {
-    const prompt = `아래 뉴스 목록을 소상공인·지역경제 관점에서 중요도 순으로 최대 ${limit}개 선별하고,
-각 기사에 한 줄 한국어 요약을 추가해서 아래 JSON 배열로만 답하라. 다른 텍스트는 절대 출력하지 마라.
-[{"title":"...","summary":"(한국어 한 줄 요약)","link":"...","date":"...","source":"..."}]
-
-뉴스 목록:
-${rawItems.slice(0, 20).map((n,i) => `${i+1}. ${n.title} (${n.source})`).join('\n')}`;
-
-    try {
-      const aiRes = await AICore.process({
-        module: 'paper', task: 'news-curation', prompt,
-        fallbackFn: async () => null,
-      });
-      if (aiRes.result) {
-        const cleaned = aiRes.result.replace(/```json|```/g, '').trim();
-        const parsed  = JSON.parse(cleaned);
-        if (Array.isArray(parsed) && parsed.length) {
-          // AI가 선별한 순서 유지, link/date는 원본 보완
-          curatedItems = parsed.map(ai => {
-            const orig = rawItems.find(r => r.title === ai.title) || {};
-            return { ...orig, ...ai };
-          }).slice(0, limit);
-        }
-      }
-    } catch(e) { /* AI 실패 → rawItems 그대로 사용 */ }
-  }
-
-  // 3) JSON 응답 (paper 모듈 index.html이 그대로 소비하는 스키마)
-  res.json({
-    ok: true,
-    section,
-    limit,
-    count: curatedItems.length,
-    aiCurated: curatedItems.some(n => n.summary),
-    items: curatedItems,
-  });
-});
-
-/* ─── 관리자 대시보드 ─── */
-app.get('/admin', (req, res) => {
-  const adminPath = path.join(__dirname, 'public', 'admin.html');
-  if (fs.existsSync(adminPath)) return res.sendFile(adminPath);
-  // public/admin.html 없으면 루트에서 찾기 (배포 구조 호환)
-  const rootAdminPath = path.join(__dirname, 'admin.html');
-  if (fs.existsSync(rootAdminPath)) return res.sendFile(rootAdminPath);
-  res.status(404).send('admin.html 파일이 없습니다. 저장소 루트 또는 public/ 폴더에 admin.html을 배치하세요.');
-});
-
-/* ─── paper 모듈 커뮤니티 게시물 API ───
-   새로고침해도 글이 사라지지 않도록 Firestore에 영구 저장.
-   AI플랫마켓 기존 카카오 계정 시스템과 연동 (userId로 작성자 추적 → 향후 기여도 연동).
-   DB 미연결 시에도 메모리 임시 저장으로 폴백해 서비스 지속 가능. */
-let _paperPostsMemory = []; // DB 미연결 시 폴백용 메모리 저장소
-
-app.get('/api/paper/community/posts', async (req, res) => {
-  const { section = '', limit = 20 } = req.query;
-  if (db) {
-    try {
-      let q = db.collection('paper_posts').orderBy('createdAt', 'desc').limit(Number(limit));
-      if (section) q = db.collection('paper_posts').where('section', '==', section).orderBy('createdAt', 'desc').limit(Number(limit));
-      const snap = await q.get();
-      return res.json({ ok: true, items: snap.docs.map(d => ({ id: d.id, ...d.data() })), saved: true });
-    } catch (e) { /* Firestore 오류 시 메모리 폴백 */ }
-  }
-  const items = section ? _paperPostsMemory.filter(p => p.section === section) : _paperPostsMemory;
-  res.json({ ok: true, items: items.slice(0, Number(limit)), saved: false });
-});
-
-app.post('/api/paper/community/posts', async (req, res) => {
-  const { content, section, userId, userName, anonymous } = req.body;
-  if (!content?.trim()) return res.status(400).json({ ok: false, error: 'content 필요' });
-  const doc = {
-    content: content.trim(),
-    section: section || '자유',
-    userId:   anonymous ? null : (userId || null),
-    userName: anonymous ? '익명' : (userName || '익명'),
-    anonymous: !!anonymous,
-    likes: 0,
-    createdAt: new Date().toISOString(),
-  };
-  if (db) {
-    try {
-      const ref = await db.collection('paper_posts').add(doc);
-      return res.json({ ok: true, id: ref.id, saved: true });
-    } catch (e) { /* Firestore 오류 시 메모리 폴백 */ }
-  }
-  // DB 없으면 메모리에 임시 저장 (서버 재시작 시 초기화됨 — paper 모듈이 이를 화면에 표시)
-  const memDoc = { id: 'mem_' + Date.now(), ...doc };
-  _paperPostsMemory.unshift(memDoc);
-  if (_paperPostsMemory.length > 200) _paperPostsMemory = _paperPostsMemory.slice(0, 200);
-  res.json({ ok: true, id: memDoc.id, saved: false, warning: 'DB 미연결 — 서버 재시작 시 초기화됩니다' });
 });
 
 app.get('/register', (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
