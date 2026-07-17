@@ -110,7 +110,10 @@ async function buildFallback(moduleId, task, fallbackFn, startedAt, reason) {
   };
 }
 
-/** 챗도우미 서버 연결 상태 확인 (관리자 대시보드용) */
+/** 챗도우미 서버 연결 상태 확인 (관리자 대시보드용)
+ *  상시 헬스체크는 비용이 발생하지 않는 /health(무료, 인증불필요)를 사용한다.
+ *  /api/ai-status는 실제 AI 호출 비용이 발생하고 x-api-key 인증이 필요하므로
+ *  여기서는 사용하지 않고, 필요 시 관리자가 별도로 확인한다. */
 async function getEngineStatus() {
   if (!CHATDOUMI_API_URL) {
     return { chatdoumi: { name: 'ChatDoumi AI Core', available: false, reason: 'CHATDOUMI_API_URL 미설정' } };
@@ -118,7 +121,7 @@ async function getEngineStatus() {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 4000);
-    const res = await fetch(CHATDOUMI_API_URL.replace(/\/$/, '') + '/api/ai-status', { signal: controller.signal });
+    const res = await fetch(CHATDOUMI_API_URL.replace(/\/$/, '') + '/health', { signal: controller.signal });
     clearTimeout(timer);
     const data = await res.json().catch(() => ({}));
     return {

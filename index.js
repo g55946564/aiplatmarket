@@ -881,9 +881,9 @@ const MODULE_MAP = {
   aird:        { group: 'platform', dir: 'aird' },
   simul:       { group: 'platform', dir: 'simul' },
   itemzone:    { group: 'platform', dir: 'itemzone' },
-  edu:         { group: 'platform', dir: 'edu' },
+  eduzone:     { group: 'platform', dir: 'eduzone' },
   culture:     { group: 'platform', dir: 'culture' },
-  game:        { group: 'platform', dir: 'game' },
+  gamezone:    { group: 'platform', dir: 'gamezone' },
   lifemap:     { group: 'platform', dir: 'lifemap' },
   promotion:   { group: 'platform', dir: 'promotion' },
   // commerce/
@@ -893,6 +893,7 @@ const MODULE_MAP = {
   newproduct:  { group: 'commerce', dir: 'newproduct' },
   recipe:      { group: 'commerce', dir: 'recipe' },
   promo:       { group: 'commerce', dir: 'promo' },
+  shop:        { group: 'commerce', dir: 'shop' },       // AI더착한쇼핑(몰)
   // business/
   startup:        { group: 'business', dir: 'startup' },
   regionaleconomy: { group: 'business', dir: 'regionaleconomy' },
@@ -900,6 +901,7 @@ const MODULE_MAP = {
   live:        { group: 'media', dir: 'live' },
   tv:          { group: 'media', dir: 'tv' },
   music:       { group: 'media', dir: 'music' },
+  paper:       { group: 'media', dir: 'paper' },          // 국민경제㊉ 신문
   // community/
   community:   { group: 'community', dir: '' },
   // lifestyle/
