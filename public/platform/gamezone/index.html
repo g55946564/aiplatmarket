@@ -3,21 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI게임존 · AI플랫마켓</title>
-<link rel="stylesheet" href="/framework/assets/css/common.css">
-</head>
-<body>
-<div id="fw-header"></div>
+<title>AI플랫마켓 | Game Zone</title>
 
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px;font-family:'Pretendard',sans-serif">
-  <div style="font-size:3.5rem;margin-bottom:14px">🎮</div>
-  <h1 style="font-size:1.3rem;font-weight:900;color:#0d1f35;margin:0 0 8px">AI게임존</h1>
-  <p style="font-size:.88rem;color:#888;margin:0 0 20px;max-width:320px;line-height:1.6">AI 참여형 게임 플랫폼<br>곧 만나보실 수 있습니다.</p>
-  <div style="background:#0d1f35;color:#fff;padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:24px">🔧 업그레이드 중 · v0.0.0</div>
-  <a href="/" style="background:#0d1f35;color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none">← AI플랫마켓 홈으로</a>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#333;
+}
+
+header{
+    background:linear-gradient(135deg,#2c7be5,#5a4fcf);
+    color:white;
+    padding:40px 20px;
+    text-align:center;
+}
+
+header h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+header p{
+    opacity:.9;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.section-title{
+    margin:30px 0 15px;
+    color:#2c7be5;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    transition:.25s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:14px;
+    color:#666;
+}
+
+.badge{
+    display:inline-block;
+    background:#ff4b5c;
+    color:white;
+    padding:3px 10px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.notice{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-top:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+footer{
+    margin-top:50px;
+    padding:30px;
+    text-align:center;
+    background:#222;
+    color:white;
+}
+
+button{
+    margin-top:15px;
+    background:#2c7be5;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d5fc2;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🎮 AI플랫마켓 Game Zone</h1>
+
+<p>
+게임 · 이벤트 · 포인트 · AI 체험 공간
+</p>
+
+</header>
+
+<div class="container">
+
+<h2 class="section-title">🎯 게임 카테고리</h2>
+
+<div class="grid">
+
+<div class="card" onclick="comingSoon()">
+<div class="badge">Puzzle</div>
+<h3>🧠 퍼즐 게임</h3>
+<p>
+기억력 게임<br>
+퀴즈 게임<br>
+미로 찾기
+</p>
+<button>입장하기</button>
 </div>
 
-<div id="fw-footer"></div>
-<script src="/framework/assets/js/core.js"></script>
+<div class="card" onclick="comingSoon()">
+<div class="badge">Arcade</div>
+<h3>🎮 아케이드</h3>
+<p>
+Snake<br>
+Brick Break<br>
+Tetris
+</p>
+<button>입장하기</button>
+</div>
+
+<div class="card" onclick="comingSoon()">
+<div class="badge">Lucky</div>
+<h3>🎁 이벤트 게임</h3>
+<p>
+룰렛<br>
+복권<br>
+출석체크
+</p>
+<button>입장하기</button>
+</div>
+
+<div class="card" onclick="comingSoon()">
+<div class="badge">AI</div>
+<h3>🤖 AI 게임</h3>
+<p>
+AI 운세<br>
+AI 적성검사<br>
+AI MBTI
+</p>
+<button>입장하기</button>
+</div>
+
+</div>
+
+<h2 class="section-title">🔥 오늘의 추천 게임</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🎲 룰렛</h3>
+<p>매일 1회 참여 이벤트</p>
+</div>
+
+<div class="card">
+<h3>🐍 Snake</h3>
+<p>최고 점수에 도전하세요.</p>
+</div>
+
+<div class="card">
+<h3>🧠 기억력 게임</h3>
+<p>두뇌를 깨우는 미니게임</p>
+</div>
+
+</div>
+
+<h2 class="section-title">🏆 인기 게임</h2>
+
+<div class="notice">
+
+<ul>
+
+<li>🥇 Snake</li>
+
+<li>🥈 룰렛</li>
+
+<li>🥉 기억력 게임</li>
+
+</ul>
+
+</div>
+
+<h2 class="section-title">🎁 오늘의 이벤트</h2>
+
+<div class="notice">
+
+<p>
+
+매일 출석하고 포인트를 받아보세요.
+
+</p>
+
+<p>
+
+광고 참여 이벤트와 다양한 리워드가 준비될 예정입니다.
+
+</p>
+
+</div>
+
+<h2 class="section-title">🤖 AI 체험</h2>
+
+<div class="notice">
+
+<ul>
+
+<li>AI 운세</li>
+
+<li>AI MBTI</li>
+
+<li>AI 적성검사</li>
+
+<li>AI 성향분석</li>
+
+</ul>
+
+</div>
+
+<h2 class="section-title">🚀 2차 확장 예정</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>🏎 Racing</h3>
+
+</div>
+
+<div class="card">
+
+<h3>🐦 Flappy Bird</h3>
+
+</div>
+
+<div class="card">
+
+<h3>🔫 Shooting</h3>
+
+</div>
+
+<div class="card">
+
+<h3>❤️ AI Love Test</h3>
+
+</div>
+
+<div class="card">
+
+<h3>💼 AI Career Match</h3>
+
+</div>
+
+<div class="card">
+
+<h3>📈 AI Business Score</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+AI플랫마켓 Game Zone MVP
+
+<br><br>
+
+© AIPlatMarket.com
+
+</footer>
+
+<script>
+
+function comingSoon(){
+
+alert("게임 준비중입니다.\n\n정식 서비스에서 제공됩니다.");
+
+}
+
+/*
+
+===================================
+
+TODO
+
+- Firebase Authentication
+
+- Firestore Ranking
+
+- Point System
+
+- Attendance
+
+- Roulette
+
+- AI Chat Assistant
+
+- Advertisement Reward
+
+===================================
+
+*/
+
+</script>
+
 </body>
 </html>
