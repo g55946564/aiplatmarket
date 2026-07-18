@@ -1151,7 +1151,10 @@ let selectedIds = new Set();
    API 호출
 ============================== */
 async function api(path, method='GET', body=null) {
-  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  // 🔒 관리자 인증 토큰을 모든 요청에 자동 첨부.
+  //    /api/admin/* 라우트들은 서버(adminAuth 미들웨어)에서 이 헤더를 요구하는데
+  //    기존에는 로그인 시점에만 검증하고 이후 요청엔 붙이지 않아 401이 나던 문제를 함께 수정.
+  const opts = { method, headers: { 'Content-Type': 'application/json', 'X-Admin-Token': adminPw } };
   if (body) opts.body = JSON.stringify(body);
   try {
     const res = await fetch(path, opts);
@@ -1690,8 +1693,8 @@ async function loadFeedbackList() {
     if (moduleId) params.set('module', moduleId);
     if (status) params.set('status', status);
     params.set('limit', '200');
-    const r = await fetch('/api/feedback?' + params.toString());
-    const d = await r.json();
+    const d = await api('/api/feedback?' + params.toString());
+    if (!d || !d.ok) throw new Error(d?.error || '인증 실패 또는 서버 오류');
     items = d.items || [];
   } catch (e) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--red)">불러오기 실패: ${e.message}</td></tr>`;
