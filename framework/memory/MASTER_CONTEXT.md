@@ -48,7 +48,7 @@ GPT·Claude·Gemini는 "여러 AI"가 아니라 **AI Core 아래의 Adapter(Engi
 
 | 그룹 | 모듈 |
 |---|---|
-| **platform** | aird, simul, itemzone, edu, culture, game, life(lifemap), promotion |
+| **platform** | aird, simul, itemzone, eduzone, culture, gamezone, lifemap, promotion |
 | **commerce** | market(성장+마켓몰), localfood(지역특산품), goodstore(더착한가게), newproduct, recipe, promo |
 | **business** | startup(사업창업), regionaleconomy(AI지역경제센터) |
 | **media** | live, tv, music |
@@ -67,7 +67,7 @@ GPT·Claude·Gemini는 "여러 AI"가 아니라 **AI Core 아래의 Adapter(Engi
 ## 6. 지금 무엇이 메인 창에서 진행 중인가
 
 메인 index.js/index.html/admin.html은 **이 대화창(메인 개발창)** 이 계속 관리합니다.
-독립 모듈(aird, simul, edu, culture, game, life, itemzone 등)은 **각각 새 대화창**에서
+독립 모듈(aird, simul, eduzone, culture, gamezone, lifemap, itemzone 등)은 **각각 새 대화창**에서
 `AI_BOOTSTRAP.md` + `MASTER_CONTEXT.md` + `MODULE_DEV_GUIDE.md` 3개를 첨부하고 시작합니다.
 완성되면 모듈 폴더(`index.html`+`module.json`)만 메인 창에 전달 — **MODULE_MAP에 이미
 라우트가 등록되어 있으므로 메인 index.js를 다시 건드릴 필요가 없습니다.**
