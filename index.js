@@ -325,6 +325,12 @@ app.get('/api/store', async (req, res) => {
   if (!requireDB(res)) return;
   try {
     const { region, category, keyword, sort, all } = req.query;
+    // 🔒 보안: all=true(승인대기 포함 전체 조회)는 관리자 전용 — 미승인 업체의
+    //    연락처 등 개인정보가 인증 없이 노출되던 문제를 막는다.
+    if (all === 'true') {
+      const token = req.headers['x-admin-token'] || req.query.token;
+      if (token !== ADMIN_TOKEN) return res.status(401).json({ error: '관리자 인증 필요' });
+    }
     let ref = db.collection('stores');
     if (all!=='true') ref=ref.where('approved','==',true);
     if (category) ref=ref.where('category','==',category);
@@ -887,7 +893,7 @@ const MODULE_MAP = {
   lifemap:     { group: 'platform', dir: 'lifemap' },
   promotion:   { group: 'platform', dir: 'promotion' },
   // commerce/
-  market:      { group: 'commerce', dir: 'market' },
+  growthmall:  { group: 'commerce', dir: 'growthmall' },
   localfood:   { group: 'commerce', dir: 'localfood' },
   goodstore:   { group: 'commerce', dir: 'goodstore' },
   newproduct:  { group: 'commerce', dir: 'newproduct' },
@@ -1162,14 +1168,37 @@ app.post('/api/feedback', async (req, res) => {
 app.get('/api/feedback', async (req, res) => {
   const { userId, module: moduleId, status, limit } = req.query;
   if (!db) return res.json({ ok: true, items: [] });
+
+  // 🔒 보안: module/status로 "전체 조회"하는 것은 관리자 전용 — 개인정보(contact, userId)가
+  //    포함된 피드백을 인증 없이 아무나 긁어갈 수 있는 문제라 관리자 토큰을 요구한다.
+  //    본인 이력 조회(userId 지정)만 비로그인 API로 허용한다.
+  const isAdminQuery = !!moduleId || !!status;
+  if (isAdminQuery) {
+    const token = req.headers['x-admin-token'] || req.query.token;
+    if (token !== ADMIN_TOKEN) return res.status(401).json({ ok: false, error: '관리자 인증 필요' });
+  }
+  if (!userId && !isAdminQuery) {
+    return res.status(400).json({ ok: false, error: 'userId 또는 관리자 인증(module/status) 필요' });
+  }
+
   try {
     let q = db.collection('feedback');
-    if (userId) q = q.where('userId', '==', userId);          // 회원 본인 이력 조회
-    if (moduleId) q = q.where('module', '==', moduleId);       // 관리자 모듈별 조회
+    if (userId) q = q.where('userId', '==', userId);
+    if (moduleId) q = q.where('module', '==', moduleId);
     if (status) q = q.where('status', '==', status);
     q = q.orderBy('createdAt', 'desc').limit(Math.min(parseInt(limit) || 50, 200));
     const snap = await q.get();
-    const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // 화이트리스트 방식 — 문서에 어떤 필드가 추가되더라도 여기 명시한 필드만 응답에 나간다.
+    // 본인 조회(userId)는 자기 자료라 contact 포함, 관리자 조회는 이미 인증됐으므로 그대로 포함.
+    const items = snap.docs.map(d => {
+      const v = d.data();
+      return {
+        id: d.id, module: v.module, type: v.type, content: v.content,
+        rating: v.rating, contact: v.contact, userName: v.userName,
+        status: v.status, adminNote: v.adminNote, createdAt: v.createdAt, updatedAt: v.updatedAt,
+      };
+    });
     res.json({ ok: true, items });
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message, items: [] });
