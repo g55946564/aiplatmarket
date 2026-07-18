@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI플랫마켓 표준 헤더·Footer 미리보기</title>
+</head>
+<body style="margin:0;font-family:'Pretendard','Noto Sans KR',sans-serif">
+
+<div style="background:#fffbe6;border-bottom:2px solid #c9a84c;padding:10px 16px;font-size:.8rem;color:#7a5c00;text-align:center">
+  📌 이 파일은 <b>미리보기 전용</b>입니다. 실제 프로젝트에는
+  <code>AIPLATMARKET_HEADER_FOOTER.html</code>(원본, 붙여넣기용)을 사용하세요.
+  이 파일 자체를 복사해서 쓰지 마세요.
+</div>
+
+<style>
+:root{
+  --navy:#0d1f35; --navy2:#1a3556; --red:#c0392b; --gold:#c9a84c;
+  --grn:#1a7a4a; --grn2:#0d5c36; --gnb-grn:#15603e; --gnb-grn2:#0e4a30;
+  --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
+  --bd:1px solid var(--g2); --r:10px; --fs:'Pretendard','Noto Sans KR',sans-serif;
+}
+
+nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
+.gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
+.gnb-top-scroll{padding-left:0px}
+.gnb-top-scroll::-webkit-scrollbar{display:none}
+.gnb-top-fixed{padding:4px 0 4px 2px}
+.gnb-sub{padding:0;scrollbar-width:none}
+.gnb-sub::-webkit-scrollbar{display:none}
+.gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
+.gnb-cat-bar-wrap{position:relative}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+.gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+.gnb-cat-bar::-webkit-scrollbar{display:none}
+.gcat{position:relative;flex-shrink:0}
+.gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+.gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+.caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+.gcat.open .caret{transform:rotate(180deg)}
+.gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcat.open .gcdrop{display:block}
+.gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gcdrop-list{display:flex;flex-direction:column;gap:2px}
+.gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+.gcdi:hover{background:#f0f4ff}
+.gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+.gcdi-txt{display:flex;flex-direction:column;min-width:0}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+.gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+.gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+.gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+.gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+.ft-copy{font-size:.7rem}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap}
+.ft-links a{font-size:.73rem;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
+@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
+</style>
+
+<!-- ══════════ HEADER (GNB) — 그대로 <body> 최상단에 붙여넣기 ══════════ -->
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy)">
+  <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
+  <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
+</div>
+    <div class="gnb-cat-bar-wrap">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
+
+      <!-- 1. AI 플랫폼 -->
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#promo-center','_blank');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#videocenter','_blank');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 2. Commerce -->
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#newprod','_blank');closeCats()">🆕 더착한상품</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#recipe','_blank');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+            <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 3. Business -->
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#create-sanglife','_blank');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+            <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 4. Community -->
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 5. Media -->
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">발라드</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 6. Lifestyle -->
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#travel','_blank');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#incident','_blank');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#global','_blank');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 7. 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 입점신청 고정 -->
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="window.open('https://aiplatmarket.com/#register','_blank')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
+
+    </div><!-- /gnb-cat-bar -->
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+    </div><!-- /gnb-cat-bar-wrap -->
+
+<!-- ══════════ /HEADER ══════════ -->
+
+
+<!-- ══════════ FOOTER — 그대로 <body> 최하단(스크립트 앞)에 붙여넣기 ══════════ -->
+<footer>
+  <div class="ft-outer">
+    <div class="ft">
+<!-- 좌: 브랜드 + 사업자 정보 -->
+    <div style="min-width:240px">
+      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+        사업자등록번호: 227-18-34338<br>
+        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+        TEL: 0505-505-9000<br>
+        <!-- 이메일 드롭다운 -->
+        <span style="position:relative;display:inline-block">
+          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
+            </a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
+            </a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- 우: 링크 + 관리자 -->
+    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+      <div class="ft-links">
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#about','_blank');return false">서비스 소개</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#terms','_blank');return false">이용약관</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#privacy','_blank');return false">개인정보처리방침</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#adcontact','_blank');return false">광고문의</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#register','_blank');return false">입점문의</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#community','_blank');return false">커뮤니티</a>
+        <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+      </div>
+      <!-- 관리자 버튼 (푸터 우측 하단) -->
+      <a href="/admin" target="_blank"
+         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
+         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
+         title="관리자 대시보드">
+        ⚙️ 관리자 대시보드
+      </a>
+      <!-- PC/모바일 버전 전환 (드롭다운) -->
+      <div style="position:relative" id="viewModeDdw">
+        <button onclick="toggleViewModeDd()"
+           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
+           id="viewModeBtn">
+          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
+        </button>
+        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
+          </div>
+          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    </div>
+  </div>
+    
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ /FOOTER ══════════ -->
+
+
+<script>
+/* AI플랫마켓 표준 GNB/Footer가 필요로 하는 JS 함수 4개 — 그대로 </body> 직전에 붙여넣으세요 */
+
+function toggleCat(id, e) {
+  if (e) e.stopPropagation();
+  const cat = document.getElementById('gcat-' + id);
+  if (!cat) return;
+  const isOpen = cat.classList.contains('open');
+  closeCats();
+  if (isOpen) return;
+  cat.classList.add('open');
+
+  const btn  = cat.querySelector('.gcbtn');
+  const drop = cat.querySelector('.gcdrop');
+  if (!btn || !drop) return;
+  const r = btn.getBoundingClientRect();
+  drop.style.top  = (r.bottom + 1) + 'px';
+  drop.style.left = r.left + 'px';
+  drop.style.right = 'auto';
+
+  requestAnimationFrame(() => {
+    const dr = drop.getBoundingClientRect();
+    if (dr.right > window.innerWidth - 8) {
+      drop.style.left = 'auto';
+      drop.style.right = '8px';
+    }
+    if (dr.bottom > window.innerHeight - 8) {
+      drop.style.top = (r.top - dr.height - 1) + 'px';
+    }
+  });
+}
+window.addEventListener('scroll', () => closeCats(), { passive: true });
+window.addEventListener('resize', () => closeCats());
+
+function closeCats() {
+  document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open'));
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.gcat')) closeCats();
+});
+
+function updateGnbScrollHint(bar) {
+  const hint = document.getElementById('gnbScrollHint');
+  const hintL = document.getElementById('gnbScrollHintLeft');
+  if (!hint) return;
+  const canScrollMore = bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4;
+  const canScrollBack = bar.scrollLeft > 4;
+  hint.classList.toggle('show', canScrollMore);
+  if (hintL) hintL.classList.toggle('show', canScrollBack);
+}
+window.addEventListener('load', () => {
+  const bar = document.getElementById('gnbCatBar');
+  if (bar) updateGnbScrollHint(bar);
+});
+
+function toggleFtEmail() {
+  const dd = document.getElementById('ftEmailDd');
+  if (!dd) return;
+  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+}
+
+/* toast() 함수가 이 프로젝트에 없다면 최소 버전을 함께 사용하세요 (Footer 일부 버튼이 참조) */
+if (typeof toast === 'undefined') {
+  window.toast = function(msg) { console.log('[toast]', msg); };
+}
+</script>
+
+
+<div style="padding:60px 20px;text-align:center;color:#888;font-size:.85rem;background:#f5f6f8">
+  (본문 콘텐츠 자리 — 실제 프로젝트에서는 이 위치에 각 모듈의 화면이 들어갑니다)
+</div>
+
+</body>
+</html>
