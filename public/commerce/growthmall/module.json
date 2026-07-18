@@ -1,0 +1,18 @@
+{
+  "id": "growthmall",
+  "group": "commerce",
+  "title": "AI성장+마켓몰",
+  "icon": "📈",
+  "description": "AI 성장 분석 + 마켓몰",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/growthmall",
+    "/commerce/growthmall/"
+  ],
+  "subdomain": "growthmall.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}

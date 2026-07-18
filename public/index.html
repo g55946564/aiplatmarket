@@ -239,11 +239,10 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcbtn-chat:hover{background:rgba(201,168,76,.3)}
 .gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
-@media(max-width:700px){.gcbtn-fb{display:none}}
 @media(max-width:700px){
   .gcbtn{padding:8px 10px;font-size:.7rem}
   .gcdi-ico{font-size:.92rem}
-  .gcbtn-reg,.gcbtn-chat{font-size:.66rem;padding:5px 8px}
+  .gcbtn-reg,.gcbtn-chat,.gcbtn-fb{font-size:.66rem;padding:5px 8px}
 }
 
 /* 드롭다운: position:fixed로 overflow 컨테이너 탈출 */
@@ -969,11 +968,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <div class="gcdrop" id="gcdrop-comm">
           <div class="gcdrop-list">
             <a class="gcdi" onclick="showPage('growthmall');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
             <a class="gcdi" onclick="showPage('local-products');closeCats()">🌾 지역특산품관</a>
             <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
             <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 더착한상품</a>
             <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
-            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
             <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
           </div>
         </div>
