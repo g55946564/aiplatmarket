@@ -575,7 +575,7 @@ button{ font-family:inherit; }
   .mobile-toolbar{ display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--acc-deep); color:#fff; font-size:14px; }
   .mobile-toolbar button{ border:none; background:#fff; color:var(--acc-deep); padding:6px 14px; border-radius:6px; font-weight:bold; }
   .mobile-pdf-wrapper{ flex:1; width:100%; overflow:auto; -webkit-overflow-scrolling:touch; background:#ccc; display:flex; justify-content:flex-start; align-items:flex-start; }
-  .mobile-pdf{ width:100vw; min-width:600px; height:100%; min-height:85vh; border:none; background:#fff; pointer-events:auto; }
+  .mobile-pdf{ width:100%; height:100%; overflow-y:auto; background:#fff; padding:16px; box-sizing:border-box; }
   .zoom-overlay{ display:none !important; }
 }
 
@@ -1127,7 +1127,7 @@ button{ font-family:inherit; }
         <button onclick="mobileNext()">다음 ▶</button>
       </div>
       <div class="mobile-pdf-wrapper">
-        <iframe id="mobilePdf" class="mobile-pdf" src=""></iframe>
+        <div id="mobilePdf" class="mobile-pdf"></div>
       </div>
     </div>
 
@@ -1140,7 +1140,7 @@ button{ font-family:inherit; }
   </div>
 
   <div class="zoom-overlay" id="zoomOverlay" onmousedown="handleOverlayClick(event)" ontouchstart="handleOverlayClick(event)">
-    <div class="zoom-container" id="zoomContainer"><iframe id="zoomIframe" src=""></iframe></div>
+    <div class="zoom-container" id="zoomContainer"><div id="zoomIframe"></div></div>
   </div>
 </div>
 
@@ -2593,26 +2593,56 @@ function setViewMode(mode){
 /* ══════════════════════════════════════════════════════════════
    5) 뷰어 (종이신문 그대로 보기) — 클릭한 호를 그 자리에서 렌더링
 ════════════════════════════════════════════════════════════════ */
-let pdfFile = '', totalPages = 16, current = 1, mobilePage = 1, labels = [];
+let pdfFile = '', totalPages = 16, current = 1, mobilePage = 1, labels = [], currentIssueTitle = '';
 const bookEl = document.getElementById('book');
 const tocEl = document.getElementById('tocList');
 
+/* ══════════════════════════════════════════════════════════════
+   지면보기 목업 페이지 생성기
+   ⚠ 실제 PDF(archive/{id}.pdf)가 없는 상태에서 iframe으로 불러오면,
+      서버의 catch-all 라우팅이 AI플랫마켓 메인 화면을 대신 돌려주면서
+      그게 반복돼 보이는 문제가 있었습니다. 그래서 지금은 우리 사이트의
+      실제 기사 데이터(ARTICLES)를 신문 지면처럼 그려서 임시로 채웁니다.
+      실제 PDF가 준비되면 이 함수 대신 다시 PDF 렌더링으로 교체하면 됩니다.
+════════════════════════════════════════════════════════════════ */
+const MOCK_PAGE_CATEGORIES = ['headline','store','benefit','local','welfare','education','culture','science','sports','global','incident','ai','finance','environment','jobs','realestate'];
+
+function buildMockPageHTML(pageNum, issueTitle){
+  const key = MOCK_PAGE_CATEGORIES[(pageNum - 1) % MOCK_PAGE_CATEGORIES.length];
+  const a = ARTICLES[key] || ARTICLES.headline;
+  const bodyHtml = (a.body || []).map(p => `<p>${p}</p>`).join('');
+  const subsHtml = (a.subs || []).map(s => `<div class="mp-sub"><b>${s.kicker}</b> ${s.title}</div>`).join('');
+  return `
+    <div class="mock-page">
+      <div class="mp-strip">${issueTitle} · ${pageNum}면</div>
+      <div class="mp-kicker">${a.kicker}</div>
+      <div class="mp-title">${a.title}</div>
+      <div class="mp-byline">${a.byline}</div>
+      <div class="mp-body">${bodyHtml}</div>
+      ${subsHtml ? `<div class="mp-subs">${subsHtml}</div>` : ''}
+      <div class="mp-footer">국민경제㊉ · ${pageNum}</div>
+    </div>
+  `;
+}
+
 function openViewer(issue){
-  pdfFile = `archive/${issue.id}.pdf`;
+  pdfFile = `archive/${issue.id}.pdf`; // 실제 PDF 준비 시 사용할 경로(현재는 목업 페이지로 대체)
   totalPages = Math.max(2, issue.pages || 16);
+  const issueTitle = issue.title;
+  currentIssueTitle = issueTitle;
 
   document.getElementById('viewerHeaderTitle').textContent = issue.title;
   document.getElementById('viewerSidebarTitle').textContent = issue.title;
   document.getElementById('pageInput').max = totalPages;
 
-  /* 데스크톱 북(book) 재구성 */
+  /* 데스크톱 북(book) 재구성 — PDF iframe 대신 목업 지면 HTML 사용 */
   bookEl.innerHTML = '';
   bookEl.insertAdjacentHTML('beforeend', `
     <div class="book-page flipped" style="z-index:${Math.ceil(totalPages/2)+2};">
       <div class="pg-front"><div class="static-page"><h3>시작</h3></div></div>
       <div class="pg-back">
         <div class="click-layer" onclick="openZoom(1)"></div>
-        <iframe class="book-frame" src="${pdfFile}#page=1&navpanes=0"></iframe>
+        ${buildMockPageHTML(1, issueTitle)}
       </div>
     </div>
   `);
@@ -2622,11 +2652,11 @@ function openViewer(issue){
       <div class="book-page" style="z-index:${z};">
         <div class="pg-front">
           <div class="click-layer" onclick="openZoom(${i})"></div>
-          <iframe class="book-frame" src="${pdfFile}#page=${i}&navpanes=0"></iframe>
+          ${buildMockPageHTML(i, issueTitle)}
         </div>
         <div class="pg-back">
           <div class="click-layer" onclick="openZoom(${i+1})"></div>
-          <iframe class="book-frame" src="${pdfFile}#page=${i+1}&navpanes=0"></iframe>
+          ${buildMockPageHTML(i+1, issueTitle)}
         </div>
       </div>
     `);
@@ -2635,7 +2665,7 @@ function openViewer(issue){
     <div class="book-page" style="z-index:1;">
       <div class="pg-front">
         <div class="click-layer" onclick="openZoom(${totalPages})"></div>
-        <iframe class="book-frame" src="${pdfFile}#page=${totalPages}&navpanes=0"></iframe>
+        ${buildMockPageHTML(totalPages, issueTitle)}
       </div>
       <div class="pg-back"></div>
     </div>
@@ -2651,7 +2681,7 @@ function openViewer(issue){
     </div>
   `);
 
-  /* TOC 재구성 */
+  /* 사이드바: TOC + 전체 페이지 썸네일 그리드 재구성 */
   labels = ["1면 (표지)"];
   for(let i=2; i<totalPages; i+=2) labels.push(`${i}-${i+1}면`);
   labels.push(`${totalPages}면 (최종)`);
@@ -2664,9 +2694,20 @@ function openViewer(issue){
     tocEl.appendChild(item);
   });
 
+  const thumbGrid = document.getElementById('thumbGrid');
+  if(thumbGrid){
+    thumbGrid.innerHTML = '';
+    for(let p = 1; p <= totalPages; p++){
+      const th = document.createElement('div');
+      th.className = 'thumb-cell';
+      th.innerText = p;
+      th.onclick = () => { jumpTo(p === 1 ? 1 : Math.floor(p/2) + 1); closeViewerSidebarMobile(); };
+      thumbGrid.appendChild(th);
+    }
+  }
+
   current = 1;
   mobilePage = 1;
-  document.getElementById('mobilePdf').src = `${pdfFile}#page=1&navpanes=0`;
   document.getElementById('mobilePageInfo').textContent = `1 / ${totalPages}`;
 
   showView('viewer');
@@ -2716,7 +2757,7 @@ function updateUI(){
 }
 
 function updateMobilePage(){
-  document.getElementById('mobilePdf').src = `${pdfFile}#page=${mobilePage}&navpanes=0`;
+  document.getElementById('mobilePdf').innerHTML = buildMockPageHTML(mobilePage, currentIssueTitle);
   document.getElementById('mobilePageInfo').innerText = `${mobilePage} / ${totalPages}`;
   const tocIdx = mobilePage === 1 ? 0 : Math.floor(mobilePage/2);
   document.querySelectorAll('.toc-item').forEach((it,i) => it.classList.toggle('active', i === tocIdx));
@@ -2739,14 +2780,14 @@ window.addEventListener('orientationchange', () => {
   }, 200);
 });
 
-/* PC 확대(zoom) 레이어 */
+/* PC 확대(zoom) 레이어 — 목업 지면 콘텐츠를 확대해서 보여줌 */
 const zOverlay = document.getElementById('zoomOverlay');
 const zContainer = document.getElementById('zoomContainer');
 const zIframe = document.getElementById('zoomIframe');
 let scale = 1.0, posY = 0, startY = 0, isDragging = false, clickStartTime = 0, clickStartY = 0;
 
 function openZoom(pageNumber){
-  zIframe.src = `${pdfFile}#page=${pageNumber}&navpanes=0`;
+  zIframe.innerHTML = buildMockPageHTML(pageNumber, currentIssueTitle);
   zOverlay.style.display = 'flex';
   setTimeout(() => { zOverlay.style.opacity = '1'; }, 10);
   scale = 1.4; posY = 0;
@@ -2755,7 +2796,7 @@ function openZoom(pageNumber){
 }
 function closeZoom(){
   zOverlay.style.opacity = '0';
-  setTimeout(() => { zOverlay.style.display = 'none'; zIframe.src = ''; }, 200);
+  setTimeout(() => { zOverlay.style.display = 'none'; zIframe.innerHTML = ''; }, 200);
   window.removeEventListener('wheel', handleOverlayWheel);
 }
 function handleOverlayWheel(e){
