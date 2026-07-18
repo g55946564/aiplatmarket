@@ -1060,7 +1060,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 
       <!-- 오른쪽: 입점신청 고정 -->
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
-        <button class="gcbtn-fb" onclick="showPage('pricing')">💎 요금제</button>
         <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
         <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
         <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
@@ -1618,6 +1617,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <small>📰 뉴스레터 구독</small>
         <strong>매일 아침 지역 소식 받기</strong>
         <button class="btn-nl" onclick="toast('구독 신청이 완료되었습니다!')">무료 구독 →</button>
+      </div>
+
+      <!-- AI Point 안내 (우측 하단) -->
+      <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:14px;text-align:center;color:#fff">
+        <div style="font-size:.68rem;color:rgba(255,255,255,.6);margin-bottom:2px">💎 내 AI Point</div>
+        <div style="font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:8px" id="rsbMyPoint">- AP</div>
+        <button onclick="showPage('pricing')" style="width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:7px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer">AI Point 확인하기</button>
       </div>
     </aside>
 
@@ -4639,21 +4645,36 @@ async function loadPricingPlans() {
 async function loadMyPointBalance() {
   const el = document.getElementById('pricingMyBalance');
   const userId = getCurrentUserForPricing();
-  if (!userId) { el.textContent = '로그인 필요'; return; }
+  if (!userId) { if (el) el.textContent = '로그인 필요'; return; }
   try {
     const r = await fetch('/api/pricing/point-balance?userId=' + encodeURIComponent(userId));
     const d = await r.json();
     if (d.ok && typeof d.balance === 'number') {
-      el.textContent = d.balance.toLocaleString() + ' AP';
-      // 헤더 배지들도 함께 동기화
-      document.querySelectorAll('#myPt, #myPt2').forEach(e => e.textContent = d.balance.toLocaleString() + ' AP');
+      if (el) el.textContent = d.balance.toLocaleString() + ' AP';
+      syncAiPointDisplays(d.balance);
     } else {
-      el.textContent = '- AP';
+      if (el) el.textContent = '- AP';
     }
   } catch (e) {
-    el.textContent = '- AP';
+    if (el) el.textContent = '- AP';
   }
 }
+
+/* 헤더 배지·우측 사이드바 등 여러 곳에 흩어진 AI Point 표시를 한 번에 동기화 */
+function syncAiPointDisplays(balance) {
+  const txt = balance.toLocaleString() + ' AP';
+  document.querySelectorAll('#myPt, #myPt2, #rsbMyPoint').forEach(e => { if (e) e.textContent = txt; });
+}
+
+/* 우측 사이드바는 요금제 페이지가 아니어도 항상 보이므로, 홈 진입 시에도 잔액을 갱신 */
+(function initRsbPointOnLoad() {
+  const userId = getCurrentUserForPricing();
+  if (!userId) return;
+  fetch('/api/pricing/point-balance?userId=' + encodeURIComponent(userId))
+    .then(r => r.json())
+    .then(d => { if (d.ok && typeof d.balance === 'number') syncAiPointDisplays(d.balance); })
+    .catch(() => {});
+})();
 
 async function loadPointHistory() {
   const list = document.getElementById('pricingHistoryList');
