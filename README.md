@@ -29,7 +29,7 @@ AIplatMarket/
     ├── admin.html
     │
     ├── platform/               ← AI 핵심 플랫폼 (독립 모듈)
-    │   ├── aird/  simul/  itemzone/
+    │   ├── aird/  simul/  itemzone/ /metazone
     │   ├── eduzone/  culture/  gamezone/  lifemap/  promotion/
     │
     ├── commerce/
