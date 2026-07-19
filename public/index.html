@@ -234,7 +234,7 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcdi-txt{display:flex;flex-direction:column;min-width:0}
 .gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
 .gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
-.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:4px;flex-shrink:0;white-space:nowrap;display:inline-block;vertical-align:middle}
 .gcdi-badge.ext{background:#fce8e6;color:var(--red)}
 .gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
 .gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
@@ -952,14 +952,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
         <div class="gcdrop" id="gcdrop-ai">
           <div class="gcdrop-grid">
-            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()" style="position:relative"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span><span class="gcdi-badge" style="position:absolute;top:4px;right:6px;background:var(--red);color:#fff">인기</span></a>
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존 <span class="gcdi-badge" style="background:var(--red);color:#fff">인기</span></b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/metazone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌐</span><span class="gcdi-txt"><b>AI메타존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
             <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" href="/metazone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌐</span><span class="gcdi-txt"><b>AI메타존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
             <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
           </div>
@@ -3984,6 +3984,17 @@ let _tt;
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', function() {
+  // ── URL 직접 접속 시 해당 모듈 페이지로 자동 진입 ──
+  // 서버가 아직 실제 index.html이 없는 모듈(/metazone 등)은 메인 index.html을
+  // 그대로 내려주는데, 기본값인 홈 화면 대신 그 모듈의 "업그레이드 중" 안내를
+  // 보여주기 위해 최초 로드 시 현재 경로를 확인한다.
+  (function initFromUrlPath() {
+    const path = window.location.pathname.replace(/^\/+|\/+$/g, ''); // 앞뒤 슬래시 제거
+    if (path && (_UPGRADE_MAP[path] || document.getElementById('page-' + path))) {
+      showPage(path);
+    }
+  })();
+
   // ── 즉시 실행 (화면 표시에 필요) ──
   initDate();
   buildSidoList();
@@ -4817,9 +4828,10 @@ document.addEventListener('click', function(e) {
 const _UPGRADE_MAP = {
   aird:     ['🔬 AIR&D', '🔬', 'AI 연구·개발 플랫폼<br>시장성 분석·특허 검색·논문 리뷰 자동화'],
   simul:    ['🧪 AI시뮬레이션', '🧪', '사업·투자·마케팅 시뮬레이션을 AI가 실행합니다'],
-  edu:      ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
+  eduzone:  ['📚 AI교육존', '📚', 'AI 맞춤 교육 커리큘럼 및 역량 강화 프로그램'],
   culture:  ['🎨 AI문화예술', '🎨', 'AI와 함께하는 문화·예술 창작 플랫폼'],
   gamezone: ['🎮 AI게임존', '🎮', '소상공인·소비자가 함께하는 AI 게임 플랫폼'],
+  metazone: ['🌐 AI메타존', '🌐', 'AI 기반 메타버스·가상공간 플랫폼'],
   good:     ['💚 더착한가게', '💚', '착한 소비를 위한 지역 착한가게 정보'],
   recipe:   ['👨‍🍳 뉴레시피', '👨‍🍳', 'AI 추천 트렌드 레시피와 식재료 정보'],
   association: ['🤝 전국소상공인회', '🤝', '전국 소상공인 협회 네트워크 플랫폼'],
