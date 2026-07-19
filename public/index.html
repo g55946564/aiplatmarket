@@ -162,7 +162,12 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 
 /* ── 새 카테고리 GNB ── */
 .gnb-cat-bar-wrap{position:relative}
-.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.35);border-radius:3px}
+.gnb-cat-bar::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.55)}
+.gnb-cat-bar::-webkit-scrollbar-track{background:transparent}
+@media(max-width:700px){.gnb-cat-bar{scrollbar-width:none}.gnb-cat-bar::-webkit-scrollbar{display:none}}
 .gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
 .gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
 
@@ -947,15 +952,15 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
         <div class="gcdrop" id="gcdrop-ai">
           <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()" style="position:relative"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span><span class="gcdi-badge" style="position:absolute;top:4px;right:6px;background:var(--red);color:#fff">인기</span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
             <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
-            <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
-            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
-            <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="showPage('promo-center');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
+            <a class="gcdi platform" onclick="showPage('videocenter');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
           </div>
         </div>
       </div>
@@ -2304,38 +2309,35 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
   </div></div>
 </div>
 
-<!-- ==================== 요금제 · AI Point ==================== -->
+<!-- ==================== AI Point ==================== -->
 <div id="page-pricing" class="pg">
-  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+  <div class="sp-page" style="max-width:600px;margin:0 auto;padding-bottom:30px">
 
     <div style="text-align:center;margin-bottom:24px">
       <div style="font-size:1.4rem">💎</div>
-      <div style="font-family:var(--fs);font-size:1.15rem;font-weight:900;color:var(--navy);margin:6px 0 4px">요금제 &amp; AI Point</div>
+      <div style="font-family:var(--fs);font-size:1.15rem;font-weight:900;color:var(--navy);margin:6px 0 4px">AI Point</div>
       <div style="font-size:.82rem;color:var(--g4)">AI플랫마켓과 ChatDoumi 전체 생태계에서 사용하는 통합 포인트입니다 · 1 AI Point = 1원</div>
     </div>
 
     <!-- 내 AI Point 요약 -->
-    <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:18px 20px;margin-bottom:24px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-      <div>
-        <div style="font-size:.72rem;color:rgba(255,255,255,.6)">내 AI Point 잔액</div>
-        <div style="font-size:1.5rem;font-weight:900;color:var(--gold)" id="pricingMyBalance">- AP</div>
-      </div>
-      <div style="display:flex;gap:8px">
-        <button onclick="showPage('pricing-history')" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer">사용내역 보기</button>
-        <button onclick="toast('AI Point 충전 — 준비 중입니다')" style="background:var(--gold);color:#1a1206;border:none;padding:8px 16px;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer">+ 충전하기</button>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:20px;margin-bottom:16px;color:#fff;text-align:center">
+      <div style="font-size:.72rem;color:rgba(255,255,255,.6);margin-bottom:4px">내 AI Point 잔액</div>
+      <div style="font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:14px" id="pricingMyBalance">- AP</div>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button onclick="showPage('pricing-history')" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:9px 18px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer">사용내역 보기</button>
+        <button onclick="toast('AI Point 충전 — 준비 중입니다')" style="background:var(--gold);color:#1a1206;border:none;padding:9px 18px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer">💳 AI Point 충전하기</button>
       </div>
     </div>
 
-    <!-- 요금제 4단계 비교 -->
-    <div id="pricingPlanGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px">
-      <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--g4);font-size:.82rem">
-        <div class="spin" style="margin:0 auto 10px"></div>요금제 정보를 ChatDoumi AI Core에서 불러오는 중...
-      </div>
+    <!-- AI Point 사용처 안내 -->
+    <div style="background:var(--g1);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;text-align:center">
+      <div style="font-size:.86rem;color:var(--navy);line-height:1.7">AI Point는 <b>검사료·체험료·AI 이용료·쇼핑</b> 등에<br>사용됩니다.</div>
     </div>
 
-    <div style="font-size:.7rem;color:var(--g4);text-align:center;line-height:1.6">
-      * 월 기본 AI Point 제공량 및 이용범위는 ChatDoumi AI Core의 중앙 정책에 따라 실시간으로 결정됩니다.<br>
-      * AI Point는 현금 환급·현금 교환·회원 간 양도가 지원되지 않습니다.
+    <div style="font-size:.72rem;color:var(--g4);text-align:center;line-height:1.7">
+      각 서비스별 이용료는 실제 이용을 요청하실 때 화면에 안내되며,<br>
+      통합 AI Point 정책에 따라 그 시점에 확인 후 사용됩니다.<br><br>
+      AI Point는 언제든 충전 가능하며, 현금 환급·현금 교환·회원 간 양도는 지원되지 않습니다.
     </div>
   </div>
 </div>
@@ -2343,7 +2345,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 <!-- ==================== AI Point 사용내역 ==================== -->
 <div id="page-pricing-history" class="pg">
   <div class="sp-page" style="max-width:700px;margin:0 auto;padding-bottom:30px">
-    <div class="sh"><div class="sh-t">💎 AI Point 사용내역</div><span class="sh-m" onclick="showPage('pricing')">← 요금제로</span></div>
+    <div class="sh"><div class="sh-t">💎 AI Point 사용내역</div><span class="sh-m" onclick="showPage('pricing')">← AI Point로</span></div>
     <div id="pricingHistoryList" style="margin-top:14px">
       <div style="text-align:center;padding:30px;color:var(--g4);font-size:.82rem">불러오는 중...</div>
     </div>
@@ -2633,7 +2635,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <tr style="border-bottom:var(--bd);background:var(--g1)"><td style="padding:7px 10px">홍보기자단 신청</td><td style="padding:7px 10px">신청자명·연락처·이메일·담당지역</td><td style="padding:7px 10px">처리 후 2년</td></tr>
             <tr><td style="padding:7px 10px">뉴스레터 구독</td><td style="padding:7px 10px">이메일 주소</td><td style="padding:7px 10px">해지 후 즉시 삭제</td></tr>
             <tr style="border-bottom:var(--bd)"><td style="padding:7px 10px">불편사항·개선 제안(피드백)</td><td style="padding:7px 10px">이용자명(선택)·연락처(선택)·제안 내용</td><td style="padding:7px 10px">처리 후 1년</td></tr>
-            <tr style="background:var(--g1)"><td style="padding:7px 10px">AI Point·요금제 이용</td><td style="padding:7px 10px">회원 식별정보·AI Point 잔액 및 사용내역·결제내역</td><td style="padding:7px 10px">관계 법령에 따른 보관기간(전자상거래법 등)</td></tr>
+            <tr style="background:var(--g1)"><td style="padding:7px 10px">AI Point 이용</td><td style="padding:7px 10px">회원 식별정보·AI Point 잔액 및 사용내역·결제내역</td><td style="padding:7px 10px">관계 법령에 따른 보관기간(전자상거래법 등)</td></tr>
           </tbody>
         </table>
       </section>
@@ -3584,7 +3586,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="lmi" onclick="closeSide();showPage('branch')"><span class="ico">🏢</span>지역경제본부·센터</div>
     <div class="lmi" onclick="closeSide();showPage('reporter')"><span class="ico">📰</span>홍보기자단</div>
     <div class="lmi" onclick="closeSide();showPage('register')"><span class="ico">✅</span>입점신청</div>
-    <div class="lmi" onclick="closeSide();showPage('pricing')"><span class="ico">💎</span>요금제·AI Point</div>
+    <div class="lmi" onclick="closeSide();showPage('pricing')"><span class="ico">💎</span>AI Point</div>
   </div>
   <div class="lsb-div"></div>
   <div class="lsb-ttl">📍 지역별</div>
@@ -3621,6 +3623,20 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="ai-ttl">🤖 AI 매출 분석</div>
     <p>사장님 매장 AI 분석 서비스</p>
     <a class="btn-ai" href="https://chatdoumi.com" target="_blank" rel="noopener">AI 분석 시작하기 →</a>
+  </div>
+
+  <!-- 뉴스레터 구독 (모바일 우측 패널) -->
+  <div class="nl-box" style="margin-top:12px">
+    <small>📰 뉴스레터 구독</small>
+    <strong>매일 아침 지역 소식 받기</strong>
+    <button class="btn-nl" onclick="toast('구독 신청이 완료되었습니다!')">무료 구독 →</button>
+  </div>
+
+  <!-- AI Point 안내 (모바일 우측 패널) -->
+  <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:14px;text-align:center;color:#fff;margin-top:12px">
+    <div style="font-size:.68rem;color:rgba(255,255,255,.6);margin-bottom:2px">💎 내 AI Point</div>
+    <div style="font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:8px" id="rsbMyPointMob">- AP</div>
+    <button onclick="closeSide();showPage('pricing')" style="width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:7px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer">AI Point 확인하기</button>
   </div>
 </div>
 
@@ -4597,7 +4613,7 @@ async function submitMeetup() {
 }
 
 /* ══════════════════════════════════════════════
-   💰 요금제 · AI Point (price.md 참조 정책)
+   💰 AI Point (price.md 참조 정책)
    AI플랫마켓은 가격을 직접 결정하지 않습니다. 모든 값은
    /api/pricing/* 를 통해 ChatDoumi AI Core에서 조회합니다.
 ═══════════════════════════════════════════════ */
@@ -4605,41 +4621,6 @@ async function submitMeetup() {
 function getCurrentUserForPricing() {
   const user = JSON.parse(localStorage.getItem('kakao_user') || localStorage.getItem('apm_user') || 'null');
   return user?.id || user?.uid || null;
-}
-
-async function loadPricingPlans() {
-  const grid = document.getElementById('pricingPlanGrid');
-  try {
-    const r = await fetch('/api/pricing/plans');
-    const d = await r.json();
-    const plans = d.plans || [];
-
-    grid.innerHTML = plans.map(p => `
-      <div style="border:var(--bd);border-radius:var(--r);padding:20px 16px;background:#fff;text-align:center;position:relative;${p.id==='PRO'?'border-color:var(--gold);box-shadow:0 4px 16px rgba(201,168,76,.15)':''}">
-        ${p.id==='PRO' ? '<div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1206;font-size:.62rem;font-weight:900;padding:3px 12px;border-radius:20px">인기</div>' : ''}
-        <div style="font-size:1rem;font-weight:900;color:var(--navy);margin-bottom:6px">${p.name}</div>
-        <div style="font-size:1.35rem;font-weight:900;color:var(--navy);margin-bottom:2px">${p.priceWon===0?'무료':p.priceWon.toLocaleString()+'원'}</div>
-        <div style="font-size:.68rem;color:var(--g4);margin-bottom:14px">${p.priceWon===0?'':'/ 월'}</div>
-        <div style="background:var(--g1);border-radius:8px;padding:10px;margin-bottom:14px">
-          <div style="font-size:.68rem;color:var(--g4)">월 기본 AI Point</div>
-          <div style="font-size:.92rem;font-weight:900;color:var(--gold)">${p.monthlyAiPoint!=null ? p.monthlyAiPoint.toLocaleString()+' AP' : '정책 확인 중'}</div>
-        </div>
-        <div style="text-align:left;font-size:.72rem;color:#555;line-height:1.8;margin-bottom:16px">
-          ${p.aiScope ? `<div>🤖 ${p.aiScope}</div>` : ''}
-          ${p.chatdoumiScope ? `<div>💬 ${p.chatdoumiScope}</div>` : ''}
-          ${p.aiplatmarketScope ? `<div>🏪 ${p.aiplatmarketScope}</div>` : ''}
-          <div>${p.canTopUp ? '✅ AI Point 추가 충전 가능' : '➖ 추가 충전 불가'}</div>
-        </div>
-        <button onclick="toast('${p.name} 요금제 신청 — 준비 중입니다')" style="width:100%;background:${p.id==='PRO'?'var(--gold)':'var(--navy)'};color:${p.id==='PRO'?'#1a1206':'#fff'};border:none;padding:9px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer">${p.priceWon===0?'현재 이용 중':'선택하기'}</button>
-      </div>
-    `).join('');
-
-    if (d.source === 'local-fallback') {
-      grid.insertAdjacentHTML('beforeend', `<div style="grid-column:1/-1;text-align:center;font-size:.72rem;color:var(--g4);margin-top:8px">⚠️ ChatDoumi AI Core 연결 전이라 월 AI Point 제공량은 아직 표시되지 않습니다</div>`);
-    }
-  } catch (e) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--red)">요금제 정보를 불러오지 못했습니다</div>`;
-  }
 }
 
 async function loadMyPointBalance() {
@@ -4663,10 +4644,10 @@ async function loadMyPointBalance() {
 /* 헤더 배지·우측 사이드바 등 여러 곳에 흩어진 AI Point 표시를 한 번에 동기화 */
 function syncAiPointDisplays(balance) {
   const txt = balance.toLocaleString() + ' AP';
-  document.querySelectorAll('#myPt, #myPt2, #rsbMyPoint').forEach(e => { if (e) e.textContent = txt; });
+  document.querySelectorAll('#myPt, #myPt2, #rsbMyPoint, #rsbMyPointMob').forEach(e => { if (e) e.textContent = txt; });
 }
 
-/* 우측 사이드바는 요금제 페이지가 아니어도 항상 보이므로, 홈 진입 시에도 잔액을 갱신 */
+/* 우측 사이드바는 AI Point 페이지가 아니어도 항상 보이므로, 홈 진입 시에도 잔액을 갱신 */
 (function initRsbPointOnLoad() {
   const userId = getCurrentUserForPricing();
   if (!userId) return;
@@ -4994,7 +4975,7 @@ function showPage(id) {
     const gate = document.getElementById('cmLoginGate');
     if (gate) gate.style.display = (_u || _adm) ? 'none' : 'flex';
   }
-  if (id === 'pricing') { loadPricingPlans(); loadMyPointBalance(); }
+  if (id === 'pricing') { loadMyPointBalance(); }
   if (id === 'pricing-history') { loadPointHistory(); }
   if (id === 'news') {
     currentNewsCat = '전체';
