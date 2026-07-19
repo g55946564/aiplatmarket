@@ -1,0 +1,18 @@
+{
+  "id": "metazone",
+  "group": "platform",
+  "title": "AI메타존",
+  "icon": "🌐",
+  "description": "AI 기반 메타버스/가상공간 플랫폼",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/metazone",
+    "/platform/metazone/"
+  ],
+  "subdomain": "metazone.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-07-18"
+}
