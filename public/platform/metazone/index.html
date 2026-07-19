@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI MetaZone | AI플랫마켓</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+    background: #f5f7fa;
+    color: #18212b;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* =========================
+   Header
+========================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e5e8ec;
+}
+
+.nav {
+    max-width: 1280px;
+    margin: auto;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #4776e6;
+}
+
+.menu {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    color: #52606d;
+}
+
+.menu a:hover {
+    color: #4776e6;
+}
+
+.login {
+    padding: 9px 18px;
+    border: 1px solid #d9dee5;
+    border-radius: 20px;
+    background: white;
+}
+
+/* =========================
+   Hero
+========================= */
+
+.hero {
+    min-height: 600px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(92,139,255,.18), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(97,211,177,.16), transparent 35%),
+        linear-gradient(135deg,#eef4ff,#f8fbff 50%,#eefaf6);
+    display: flex;
+    align-items: center;
+}
+
+.hero-inner {
+    max-width: 1280px;
+    width: 100%;
+    margin: auto;
+    padding: 90px 24px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 13px;
+    background: white;
+    border: 1px solid #dfe6f0;
+    border-radius: 30px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(38px,5vw,68px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: #4776e6;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #5b6875;
+    max-width: 650px;
+    margin-bottom: 32px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 14px 23px;
+    border-radius: 12px;
+    font-size: 15px;
+    border: none;
+}
+
+.btn-primary {
+    background: #4776e6;
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid #dce2e9;
+}
+
+/* =========================
+   Virtual World Preview
+========================= */
+
+.world-preview {
+    min-height: 380px;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.25)),
+        radial-gradient(circle at 50% 40%,#dff3ff,#d8e7f4 50%,#cbd9df);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.8);
+    box-shadow: 0 25px 60px rgba(53,72,93,.12);
+}
+
+.world-label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,.8);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.world-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.7);
+    border: 2px solid rgba(71,118,230,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    color: #4776e6;
+}
+
+.world-card {
+    position: absolute;
+    padding: 10px 14px;
+    background: rgba(255,255,255,.9);
+    border-radius: 14px;
+    font-size: 13px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.card-1 { top: 80px; left: 30px; }
+.card-2 { top: 70px; right: 25px; }
+.card-3 { bottom: 65px; left: 40px; }
+.card-4 { bottom: 45px; right: 30px; }
+
+/* =========================
+   Section
+========================= */
+
+.section {
+    max-width: 1280px;
+    margin: auto;
+    padding: 90px 24px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: #687582;
+}
+
+/* =========================
+   4 Core Zones
+========================= */
+
+.core-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+}
+
+.core-card {
+    background: white;
+    border-radius: 22px;
+    padding: 30px;
+    min-height: 260px;
+    border: 1px solid #e7ebef;
+    transition: .25s;
+}
+
+.core-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.07);
+}
+
+.core-number {
+    font-size: 13px;
+    color: #4776e6;
+    margin-bottom: 18px;
+}
+
+.core-card h3 {
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.core-card p {
+    color: #66727d;
+    font-size: 14px;
+}
+
+/* =========================
+   Experience
+========================= */
+
+.experience {
+    background: white;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+}
+
+.exp-card {
+    padding: 24px;
+    min-height: 150px;
+    border-radius: 18px;
+    background: #f7f9fb;
+    border: 1px solid #e8edf1;
+}
+
+.exp-card h4 {
+    margin-bottom: 8px;
+}
+
+.exp-card p {
+    font-size: 13px;
+    color: #697681;
+}
+
+/* =========================
+   Productive Experience
+========================= */
+
+.production {
+    background: #f0f5ff;
+}
+
+.production-flow {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 10px;
+    align-items: center;
+}
+
+.flow-box {
+    background: white;
+    padding: 24px 15px;
+    text-align: center;
+    border-radius: 16px;
+    border: 1px solid #dce5f3;
+}
+
+.arrow {
+    text-align: center;
+    font-size: 22px;
+    color: #4776e6;
+}
+
+/* =========================
+   User Roles
+========================= */
+
+.roles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.role {
+    background: white;
+    border: 1px solid #dce2e8;
+    border-radius: 30px;
+    padding: 10px 18px;
+    font-size: 14px;
+}
+
+/* =========================
+   Ecosystem
+========================= */
+
+.ecosystem {
+    background: #18212b;
+    color: white;
+}
+
+.ecosystem .section-title p {
+    color: #b8c2cc;
+}
+
+.eco-grid {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 14px;
+}
+
+.eco-card {
+    padding: 25px 18px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.1);
+    text-align: center;
+}
+
+.eco-card h4 {
+    margin-bottom: 8px;
+}
+
+.eco-card p {
+    font-size: 12px;
+    color: #bdc7d0;
+}
+
+/* =========================
+   Future
+========================= */
+
+.future-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+}
+
+.future-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #e5e9ed;
+}
+
+.future-card h3 {
+    margin-bottom: 10px;
+}
+
+.future-card p {
+    font-size: 14px;
+    color: #66727d;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta {
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 60px 30px;
+    text-align: center;
+    background: linear-gradient(135deg,#4776e6,#6c8ff0);
+    border-radius: 30px;
+    color: white;
+}
+
+.cta h2 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    opacity: .9;
+    margin-bottom: 25px;
+}
+
+.cta button {
+    padding: 13px 24px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #4776e6;
+}
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+    background: #111820;
+    color: #aeb8c2;
+    padding: 40px 24px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media(max-width:900px) {
+
+    .hero-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .core-grid,
+    .experience-grid,
+    .future-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .eco-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .production-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    .menu {
+        display: none;
+    }
+}
+
+@media(max-width:600px) {
+
+    .core-grid,
+    .experience-grid,
+    .future-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+
+    .world-preview {
+        min-height: 320px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
+AI<span>MetaZone</span>
+</div>
+
+<nav class="menu">
+<a href="#core">핵심 체험</a>
+<a href="#experience">현실 체험</a>
+<a href="#production">생산적 체험</a>
+<a href="#ecosystem">AI 생태계</a>
+<a href="#future">미래 확장</a>
+</nav>
+
+<button class="login">AI플랫마켓</button>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<div>
+
+<div class="badge">
+AI플랫마켓 독립 프로젝트
+</div>
+
+<h1>
+나를 발견하고,<br>
+세상을 <span>직접 체험하다.</span>
+</h1>
+
+<p>
+AI LifeMap에서 나를 발견하고,
+AI Trust와 AI Boundary로 나의 가치와 경계를 이해하며,
+AI GrowthMap으로 발전하고 싶은 나를 찾습니다.
+그리고 AI MetaZone에서 실제 삶과 미래를 직접 체험합니다.
+</p>
+
+<div class="hero-buttons">
+
+<button class="btn-primary">
+AI MetaZone 시작하기
+</button>
+
+<button class="btn-secondary">
+AI LifeMap 먼저 알아보기
+</button>
+
+</div>
+
+</div>
+
+
+<div class="world-preview">
+
+<div class="world-label">
+Digital Twin · AI Virtual Experience
+</div>
+
+<div class="world-center">
+AI<br>
+MetaZone
+</div>
+
+<div class="world-card card-1">
+AI Trust
+</div>
+
+<div class="world-card card-2">
+AI Boundary
+</div>
+
+<div class="world-card card-3">
+AI GrowthMap
+</div>
+
+<div class="world-card card-4">
+AI Experience
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CORE -->
+
+<section class="section" id="core">
+
+<div class="section-title">
+
+<h2>AI MetaZone 핵심 체험</h2>
+
+<p>
+나를 이해하고, 가치와 경계를 발견하고,
+성장하며 직접 체험합니다.
+</p>
+
+</div>
+
+
+<div class="core-grid">
+
+<div class="core-card">
+
+<div class="core-number">01</div>
+
+<h3>AI Trust</h3>
+
+<p>
+나는 무엇을 신뢰하고 존경하는가?
+신뢰받는 사람과 조직의 행동,
+가치와 전문성을 탐색합니다.
+</p>
+
+</div>
+
+
+<div class="core-card">
+
+<div class="core-number">02</div>
+
+<h3>AI Boundary</h3>
+
+<p>
+나는 무엇에 경계를 두는가?
+불신·회피·위험·관계의 경계를
+상황 체험을 통해 이해합니다.
+</p>
+
+</div>
+
+
+<div class="core-card">
+
+<div class="core-number">03</div>
+
+<h3>AI GrowthMap</h3>
+
+<p>
+나는 무엇을 발전시키고 싶은가?
+나의 성향을 새로운 강점과 역량으로
+발전시키는 성장 체험입니다.
+</p>
+
+</div>
+
+
+<div class="core-card">
+
+<div class="core-number">04</div>
+
+<h3>AI Experience</h3>
+
+<p>
+직접 해보면 어떤가?
+직업·사업·농업·자연·스포츠·여행 등
+현실의 다양한 삶을 체험합니다.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- EXPERIENCE -->
+
+<section class="section experience" id="experience">
+
+<div class="section-title">
+
+<h2>현실의 모든 삶을 체험하다</h2>
+
+<p>
+도시뿐 아니라 자연과 지역,
+생산과 생활까지 다양한 현실을 경험합니다.
+</p>
+
+</div>
+
+
+<div class="experience-grid">
+
+<div class="exp-card">
+<h4>직업·사업</h4>
+<p>
+직장인 · 전문가 · 기업가 · 창업가 · 프리랜서
+</p>
+</div>
+
+<div class="exp-card">
+<h4>농업·농촌</h4>
+<p>
+농부 · 스마트팜 · 귀농 · 지역 농업
+</p>
+</div>
+
+<div class="exp-card">
+<h4>수산·어촌</h4>
+<p>
+어업 · 수산업 · 어촌 생활 · 해양산업
+</p>
+</div>
+
+<div class="exp-card">
+<h4>자연·환경</h4>
+<p>
+임업 · 산림 · 생태 · 자연생활
+</p>
+</div>
+
+<div class="exp-card">
+<h4>스포츠·건강</h4>
+<p>
+운동 · 건강관리 · 스포츠 · 웰니스
+</p>
+</div>
+
+<div class="exp-card">
+<h4>레저·여행</h4>
+<p>
+캠핑 · 여행 · 관광 · 다양한 라이프스타일
+</p>
+</div>
+
+<div class="exp-card">
+<h4>문화·예술</h4>
+<p>
+음악 · 미술 · 공연 · 영상 · 창작
+</p>
+</div>
+
+<div class="exp-card">
+<h4>미래산업</h4>
+<p>
+AI · 로봇 · 스마트시티 · 우주 · 미래모빌리티
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PRODUCTIVE EXPERIENCE -->
+
+<section class="section production" id="production">
+
+<div class="section-title">
+
+<h2>체험을 넘어 생산으로</h2>
+
+<p>
+AI MetaZone의 체험은 실제 결과물과 경제활동으로 연결될 수 있습니다.
+</p>
+
+</div>
+
+
+<div class="production-flow">
+
+<div class="flow-box">
+체험
+<br>
+Experience
+</div>
+
+<div class="arrow">→</div>
+
+<div class="flow-box">
+생산·창작
+<br>
+Create
+</div>
+
+<div class="arrow">→</div>
+
+<div class="flow-box">
+상품·서비스
+<br>
+Product
+</div>
+
+<div class="arrow">→</div>
+
+<div class="flow-box">
+판매·협업
+<br>
+Market
+</div>
+
+<div class="arrow">→</div>
+
+<div class="flow-box">
+성장·사업화
+<br>
+Growth
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ROLES -->
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>누구나 여러 역할이 될 수 있습니다</h2>
+
+<p>
+하나의 이용자가 상황에 따라 다양한 역할로 참여합니다.
+</p>
+
+</div>
+
+
+<div class="roles">
+
+<div class="role">체험자</div>
+<div class="role">생산자</div>
+<div class="role">구매자</div>
+<div class="role">판매자</div>
+<div class="role">사업자</div>
+<div class="role">개발자</div>
+<div class="role">기획자</div>
+<div class="role">연구자</div>
+<div class="role">창작자</div>
+<div class="role">협업자</div>
+<div class="role">투자 참여자</div>
+
+</div>
+
+</section>
+
+
+<!-- ECOSYSTEM -->
+
+<section class="section ecosystem" id="ecosystem">
+
+<div class="section-title">
+
+<h2>AI플랫마켓 생태계 연결</h2>
+
+<p>
+체험에서 발견한 가능성을 실제 프로젝트와 시장으로 연결합니다.
+</p>
+
+</div>
+
+
+<div class="eco-grid">
+
+<div class="eco-card">
+<h4>AI LifeMap</h4>
+<p>나를 발견하고<br>인생·진로를 탐색</p>
+</div>
+
+<div class="eco-card">
+<h4>AI MetaZone</h4>
+<p>삶과 직업을<br>직접 체험</p>
+</div>
+
+<div class="eco-card">
+<h4>AI Simulation</h4>
+<p>선택과 결과를<br>가상으로 검증</p>
+</div>
+
+<div class="eco-card">
+<h4>AI ItemZone</h4>
+<p>아이디어와<br>시장성을 탐색</p>
+</div>
+
+<div class="eco-card">
+<h4>AI R&D</h4>
+<p>아이디어를<br>연구·개발</p>
+</div>
+
+</div>
+
+
+<div style="height:20px"></div>
+
+
+<div class="eco-grid">
+
+<div class="eco-card">
+<h4>AI 성장+마켓몰</h4>
+<p>개인과 사업의<br>성장을 현실화</p>
+</div>
+
+<div class="eco-card">
+<h4>AI플랫마켓</h4>
+<p>생산·구매·판매<br>협업·경제활동</p>
+</div>
+
+<div class="eco-card">
+<h4>AI Fusion</h4>
+<p>AI플랫마켓<br>데이터와 기능 연결</p>
+</div>
+
+<div class="eco-card">
+<h4>Digital Twin</h4>
+<p>실제 공간을<br>온라인으로 연결</p>
+</div>
+
+<div class="eco-card">
+<h4>AI 인생·진로 체험센터</h4>
+<p>온라인과 오프라인<br>현장 체험 연결</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FUTURE -->
+
+<section class="section" id="future">
+
+<div class="section-title">
+
+<h2>AI MetaZone의 미래</h2>
+
+<p>
+온라인 체험에서 실제 공간과 몰입형 미래 체험으로 확장합니다.
+</p>
+
+</div>
+
+
+<div class="future-grid">
+
+<div class="future-card">
+
+<h3>NOW</h3>
+
+<p>
+PC·모바일 기반
+AI 체험 콘텐츠
+</p>
+
+</div>
+
+<div class="future-card">
+
+<h3>3D</h3>
+
+<p>
+3D 가상공간
+AI 아바타
+AI 안내자
+</p>
+
+</div>
+
+<div class="future-card">
+
+<h3>VR · AR · XR</h3>
+
+<p>
+몰입형 직업·생활·산업 체험
+Digital Twin
+</p>
+
+</div>
+
+<div class="future-card">
+
+<h3>4D EXPERIENCE</h3>
+
+<p>
+온라인과 오프라인이 연결된
+미래형 체험센터
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<div class="cta">
+
+<h2>
+당신은 어떤 삶을 살아보고 싶나요?
+</h2>
+
+<p>
+AI MetaZone에서 먼저 경험해 보세요.
+</p>
+
+<button>
+체험 시작하기
+</button>
+
+</div>
+
+
+<footer>
+
+AI MetaZone · AI플랫마켓 독립 프로젝트<br>
+나를 발견하고 · 세상을 체험하고 · 미래를 만들어가는 공간
+
+</footer>
+
+
+<script>
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener('click', function(e) {
+
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute('href'));
+
+        if(target) {
+
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+        }
+
+    });
+
+});
+
+
+document.querySelectorAll('button').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        alert(
+            'AI MetaZone MVP 체험 기능은 현재 준비 중입니다.'
+        );
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
