@@ -90,7 +90,7 @@ AICore.process({ module, task, prompt, fallbackFn, options })
 
 | 그룹 | 성격 | 예시 모듈 |
 |---|---|---|
-| `platform` | AI 핵심 기능, 완전 독립 Platform | aird, simul, itemzone, eduzone, culture, gamezone, lifemap, metazone, promotion |
+| `platform` | AI 핵심 기능, 완전 독립 Platform | aird, simul, itemzone, eduzone, culture, gamezone, lifemap, promotion |
 | `commerce` | 쇼핑/마켓, 준독립 | growthmall, localfood, goodstore, newproduct, recipe, promo, shop |
 | `business` | 사업/경제 지원, 준독립 | startup, regionaleconomy |
 | `media` | 방송/콘텐츠 | live, tv, music |

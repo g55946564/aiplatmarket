@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════
    AI플랫마켓 Framework · core.js  (v2.0.0)
    ─────────────────────────────────────────────
-   모든 독립 모듈(lifemap, itemzone, eduzone, culture, gamezone,
+   모든 독립 모듈(lifemap, itemzone, eduzone, culture, gamezone, metazone,
    shop, paper, aird, simul 등)에 AI플랫마켓 표준 GNB(전체 카테고리
    드롭다운 포함)와 표준 Footer를 그대로 주입합니다.
 
@@ -39,6 +39,7 @@
             <a href="${BASE_URL}/culture" target="_blank" rel="noopener">🎨 AI문화예술</a>
             <a href="${BASE_URL}/#videocenter">🎬 AI영상생성</a>
             <a href="${BASE_URL}/gamezone" target="_blank" rel="noopener">🎮 AI게임존</a>
+            <a href="${BASE_URL}/metazone" target="_blank" rel="noopener">🌐 AI메타존</a>
             <a href="${BASE_URL}/shop" target="_blank" rel="noopener">🛍️ AI더착한쇼핑(몰)</a>
           </div>
         </div>

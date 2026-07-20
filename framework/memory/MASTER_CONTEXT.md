@@ -48,7 +48,7 @@ GPT·Claude·Gemini는 "여러 AI"가 아니라 **AI Core 아래의 Adapter(Engi
 
 | 그룹 | 모듈 |
 |---|---|
-| **platform** | aird, simul, itemzone, eduzone, culture, gamezone, lifemap, metazone, promotion |
+| **platform** | aird, simul, itemzone, eduzone, culture, gamezone, metazone, lifemap, promotion |
 | **commerce** | market(성장+마켓몰), localfood(지역특산품), goodstore(더착한가게), newproduct, recipe, promo |
 | **business** | startup(사업창업), regionaleconomy(AI지역경제센터) |
 | **media** | live, tv, music |
