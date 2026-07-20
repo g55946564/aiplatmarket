@@ -3,21 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI통합홍보센터 · AI플랫마켓</title>
-<link rel="stylesheet" href="/framework/assets/css/common.css">
+<title>AI통합홍보센터 MVP</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans KR", sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+header {
+  background: #111827;
+  color: white;
+  padding: 18px 24px;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.12);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.hero {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+.hero h1 {
+  margin-top: 0;
+  font-size: 30px;
+}
+
+.hero p {
+  color: #6b7280;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 5px 18px rgba(0,0,0,.05);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.project-card {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: .2s;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+}
+
+.project-card.active {
+  border-color: #2563eb;
+}
+
+.project-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.project-card p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+select,
+textarea,
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.channel-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.channel {
+  background: #f3f4f6;
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+}
+
+.result-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat {
+  background: #f9fafb;
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header-inner {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+</style>
 </head>
+
 <body>
-<div id="fw-header"></div>
 
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px;font-family:'Pretendard',sans-serif">
-  <div style="font-size:3.5rem;margin-bottom:14px">🎯</div>
-  <h1 style="font-size:1.3rem;font-weight:900;color:#0d1f35;margin:0 0 8px">AI통합홍보센터</h1>
-  <p style="font-size:.88rem;color:#888;margin:0 0 20px;max-width:320px;line-height:1.6">AI 마케팅 자동화<br>곧 만나보실 수 있습니다.</p>
-  <div style="background:#0d1f35;color:#fff;padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:24px">🔧 업그레이드 중 · v0.0.0</div>
-  <a href="/" style="background:#0d1f35;color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none">← AI플랫마켓 홈으로</a>
-</div>
+<header>
+  <div class="header-inner">
+    <div class="logo">AI플랫마켓 · AI통합홍보센터</div>
+    <div class="badge">초기 확장형 MVP Prototype</div>
+  </div>
+</header>
 
-<div id="fw-footer"></div>
-<script src="/framework/assets/js/core.js"></script>
+<main class="container">
+
+  <section class="hero">
+    <h1>AI통합홍보센터</h1>
+    <p>
+      하나의 콘텐츠를 여러 채널로 확장하고,
+      AI플랫마켓의 다양한 프로젝트와 소상공인의 성장을 지원합니다.
+    </p>
+
+    <div class="channel-list">
+      <span class="channel">Naver</span>
+      <span class="channel">Google</span>
+      <span class="channel">YouTube</span>
+      <span class="channel">Instagram</span>
+      <span class="channel">Facebook</span>
+      <span class="channel">TikTok</span>
+      <span class="channel">Kakao</span>
+      <span class="channel">QR</span>
+    </div>
+  </section>
+
+
+  <!-- 1. 홍보 대상 -->
+  <section class="card">
+    <h2>1. 무엇을 홍보하시겠습니까?</h2>
+
+    <div class="grid">
+
+      <div class="card project-card active"
+           onclick="selectProject(this, 'lifemap')">
+        <div class="project-icon">🧭</div>
+        <h3>AI LifeMap</h3>
+        <p>
+          AI 인생·진로 탐색과 자기이해를 지원하는
+          첫 번째 핵심 홍보 대상
+        </p>
+      </div>
+
+      <div class="card project-card"
+           onclick="selectProject(this, 'platform')">
+        <div class="project-icon">🌐</div>
+        <h3>AI플랫마켓</h3>
+        <p>플랫폼 자체 인지도와 신규 이용자 확보</p>
+      </div>
+
+      <div class="card project-card"
+           onclick="selectProject(this, 'chatdoumi')">
+        <div class="project-icon">🤖</div>
+        <h3>챗도우미</h3>
+        <p>소상공인 AI 비서 및 업무 지원 서비스 홍보</p>
+      </div>
+
+      <div class="card project-card"
+           onclick="selectProject(this, 'smallbusiness')">
+        <div class="project-icon">🏪</div>
+        <h3>소상공인</h3>
+        <p>가게·상품·서비스 홍보</p>
+      </div>
+
+      <div class="card project-card"
+           onclick="selectProject(this, 'metazone')">
+        <div class="project-icon">🪐</div>
+        <h3>AI MetaZone</h3>
+        <p>온라인·오프라인 체험형 공간 홍보</p>
+      </div>
+
+      <div class="card project-card"
+           onclick="selectProject(this, 'itemzone')">
+        <div class="project-icon">💡</div>
+        <h3>AI ItemZone</h3>
+        <p>아이디어·창업·사업 실행 지원 홍보</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- 2. 홍보 설정 -->
+  <section class="card" style="margin-top:24px;">
+
+    <h2>2. 홍보 캠페인 설정</h2>
+
+    <div class="form-group">
+      <label>홍보 목표</label>
+      <select id="goal">
+        <option value="awareness">인지도 확대</option>
+        <option value="visit">신규 방문자 확보</option>
+        <option value="signup">회원가입 유도</option>
+        <option value="conversion">서비스 이용 유도</option>
+        <option value="event">이벤트 홍보</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>주요 타깃</label>
+      <input
+        id="target"
+        value="진로와 미래를 고민하는 청소년·청년·취업준비생">
+    </div>
+
+    <div class="form-group">
+      <label>핵심 메시지</label>
+      <textarea id="message">나에게 맞는 진로와 직업을 AI와 함께 탐색해보세요.</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>홍보 채널</label>
+
+      <div class="channel-list">
+        <span class="channel">Naver Blog</span>
+        <span class="channel">Google SEO</span>
+        <span class="channel">YouTube</span>
+        <span class="channel">Shorts</span>
+        <span class="channel">Instagram</span>
+        <span class="channel">Facebook</span>
+        <span class="channel">TikTok</span>
+        <span class="channel">Kakao</span>
+        <span class="channel">QR 전단</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="generatePromotion()">
+      AI 홍보 콘텐츠 생성
+    </button>
+
+  </section>
+
+
+  <!-- 3. AI Core 상태 -->
+  <section class="card" style="margin-top:24px;">
+
+    <h2>AI Core 처리 상태</h2>
+
+    <p>
+      AI통합홍보센터는 직접 AI 모델을 호출하지 않고
+      챗도우미 AI Core를 통해 콘텐츠를 생성합니다.
+    </p>
+
+    <div class="result">
+      <div class="result-title">MVP AI 호출 순서</div>
+
+      <div class="channel-list">
+        <span class="channel">1. Gemini</span>
+        <span class="channel">2. GPT</span>
+        <span class="channel">3. Claude</span>
+      </div>
+
+      <p>
+        Gemini 호출 실패·한도초과·Timeout 등 예외 발생 시
+        GPT → Claude 순으로 Fallback
+      </p>
+
+      <span class="status" id="aiStatus">
+        대기 중
+      </span>
+    </div>
+
+  </section>
+
+
+  <!-- 4. 결과 -->
+  <section class="card" style="margin-top:24px;">
+
+    <h2>홍보 콘텐츠 결과</h2>
+
+    <div id="resultArea">
+
+      <p style="color:#6b7280;">
+        AI 홍보 콘텐츠를 생성하면
+        원본 콘텐츠와 채널별 변환 결과가 표시됩니다.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- 5. 성과 -->
+  <section class="card" style="margin-top:24px;">
+
+    <h2>캠페인 성과</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        방문
+        <strong>0</strong>
+      </div>
+
+      <div class="stat">
+        클릭
+        <strong>0</strong>
+      </div>
+
+      <div class="stat">
+        회원가입
+        <strong>0</strong>
+      </div>
+
+      <div class="stat">
+        LifeMap 이용
+        <strong>0</strong>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+let selectedProject = "lifemap";
+
+function selectProject(element, project) {
+
+  document
+    .querySelectorAll(".project-card")
+    .forEach(card => {
+      card.classList.remove("active");
+    });
+
+  element.classList.add("active");
+
+  selectedProject = project;
+
+  console.log("Selected project:", selectedProject);
+}
+
+
+function generatePromotion() {
+
+  const goal =
+    document.getElementById("goal").value;
+
+  const target =
+    document.getElementById("target").value;
+
+  const message =
+    document.getElementById("message").value;
+
+  const status =
+    document.getElementById("aiStatus");
+
+  status.innerText =
+    "AI Core 처리 중... Gemini 호출";
+
+  setTimeout(() => {
+
+    status.innerText =
+      "Gemini 성공 · 콘텐츠 생성 완료";
+
+    document.getElementById("resultArea")
+      .innerHTML = `
+
+        <div class="result">
+
+          <div class="result-title">
+            AI LifeMap 홍보 원본 콘텐츠
+          </div>
+
+          <p>
+            ${message}
+          </p>
+
+          <hr>
+
+          <h3>채널별 콘텐츠</h3>
+
+          <p>
+            <strong>Naver Blog</strong><br>
+            AI LifeMap을 통해 나에게 맞는 진로와
+            직업을 탐색해보세요.
+          </p>
+
+          <p>
+            <strong>Instagram</strong><br>
+            나에게 맞는 미래는 무엇일까요?
+            AI LifeMap과 함께 찾아보세요.
+          </p>
+
+          <p>
+            <strong>YouTube Shorts</strong><br>
+            "내가 잘할 수 있는 일은 뭘까?"
+            AI LifeMap으로 새로운 가능성을 찾아보세요.
+          </p>
+
+          <p>
+            <strong>Kakao</strong><br>
+            AI로 나의 인생과 진로를 탐색해보세요.
+            AI LifeMap 체험하기
+          </p>
+
+          <p>
+            <strong>QR 전단</strong><br>
+            QR을 스캔하고 AI LifeMap을 체험해보세요.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            onclick="saveContent()">
+            콘텐츠 저장
+          </button>
+
+          <button
+            class="btn btn-primary"
+            onclick="createQR()">
+            QR 만들기
+          </button>
+
+        </div>
+      `;
+
+  }, 1000);
+}
+
+
+function saveContent() {
+  alert(
+    "향후 Firestore 콘텐츠 라이브러리에 저장"
+  );
+}
+
+
+function createQR() {
+  alert(
+    "향후 AI LifeMap 추적 URL 기반 QR 생성"
+  );
+}
+
+</script>
+
 </body>
 </html>
