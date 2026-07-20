@@ -1166,6 +1166,77 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
+/* ═══════════════════════════════════════════════════════
+   💰 요금제 / AI Point API — price.md 참조 정책 반영
+   ─────────────────────────────────────────────────────
+   AI플랫마켓은 가격을 결정하지 않고 조회·표시·요청 중계만 담당합니다
+   (실제 가격 산정·AI Point 검증·차감·AI 호출은 전부 ChatDoumi AI Core 책임).
+   price.md §10 "AI플랫마켓의 역할" 참고.
+═══════════════════════════════════════════════════════ */
+
+// 요금제 4단계 — 가격(월정액)만 여기 표시용으로 유지, AI Point 제공량은 하드코딩하지 않고
+// 항상 ChatDoumi AI Core에서 조회한다 (price.md §3 "코드에 AI Point 제공량을 하드코딩하지 않는다").
+const PRICING_PLANS = [
+  { id: 'FREE',  name: 'FREE',  priceWon: 0 },
+  { id: 'FREE_PLUS', name: 'FREE+', priceWon: 9900 },
+  { id: 'PRO',   name: 'PRO',   priceWon: 29000 },
+  { id: 'GOLD',  name: 'GOLD',  priceWon: 59000 },
+];
+
+// 요금제 목록 조회 — 가격은 위 상수(월정액), AI Point 제공량 등 세부 정책은 ChatDoumi에서 병합
+app.get('/api/pricing/plans', async (req, res) => {
+  let chatdoumiPlans = null;
+  try {
+    const status = await AICore.getEngineStatus();
+    if (status?.chatdoumi?.available && process.env.CHATDOUMI_API_URL) {
+      const r = await fetch(process.env.CHATDOUMI_API_URL.replace(/\/$/, '') + '/api/price/plans', {
+        headers: process.env.CHATDOUMI_API_KEY ? { 'Authorization': 'Bearer ' + process.env.CHATDOUMI_API_KEY } : {},
+      });
+      if (r.ok) chatdoumiPlans = await r.json();
+    }
+  } catch (e) { /* 챗도우미 응답 없으면 아래 기본 표시로 폴백 */ }
+
+  const plans = PRICING_PLANS.map(p => {
+    const remote = chatdoumiPlans?.find?.(r => r.id === p.id);
+    return {
+      ...p,
+      monthlyAiPoint: remote?.monthlyAiPoint ?? null, // null이면 프론트에서 "정책 확인 중"으로 표시
+      aiScope: remote?.aiScope ?? null,
+      chatdoumiScope: remote?.chatdoumiScope ?? null,
+      aiplatmarketScope: remote?.aiplatmarketScope ?? null,
+      canTopUp: remote?.canTopUp ?? true,
+    };
+  });
+  res.json({ ok: true, source: chatdoumiPlans ? 'chatdoumi' : 'local-fallback', plans });
+});
+
+// 서비스 실행 전 가격 조회 (price.md §5, §6) — projectId/serviceType 별로 ChatDoumi에 위임
+app.post('/api/pricing/quote', async (req, res) => {
+  const { projectId, serviceType, requestType, userId } = req.body;
+  if (!projectId || !serviceType) return res.status(400).json({ ok: false, error: 'projectId, serviceType 필요' });
+  const result = await AICore.getServicePrice({ projectId, serviceType, requestType, userId });
+  res.json(result);
+});
+
+// AI Point 잔액/내역 조회 (price.md §4) — 로그인 사용자 본인만
+app.get('/api/pricing/point-balance', async (req, res) => {
+  const userId = req.query.userId;
+  if (!userId) return res.status(400).json({ ok: false, error: 'userId 필요 (본인 잔액만 조회 가능)' });
+  const result = await AICore.getPointBalance(userId);
+  res.json(result);
+});
+
+// 결제/AI Point 사용 승인 (price.md §8 "사용자 최종 승인" 이후 호출) — AI 실행은 이 승인 이후에만
+app.post('/api/pricing/charge', async (req, res) => {
+  const { projectId, serviceType, userId, method } = req.body;
+  if (!projectId || !serviceType || !userId || !method) {
+    return res.status(400).json({ ok: false, error: 'projectId, serviceType, userId, method 필요' });
+  }
+  if (!['point', 'cash'].includes(method)) return res.status(400).json({ ok: false, error: "method는 'point' 또는 'cash'" });
+  const result = await AICore.chargeService({ projectId, serviceType, userId, method });
+  res.json(result);
+});
+
 app.get('/api/feedback', async (req, res) => {
   const { userId, module: moduleId, status, limit } = req.query;
   if (!db) return res.json({ ok: true, items: [] });
