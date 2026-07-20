@@ -890,6 +890,7 @@ const MODULE_MAP = {
   eduzone:     { group: 'platform', dir: 'eduzone' },
   culture:     { group: 'platform', dir: 'culture' },
   gamezone:    { group: 'platform', dir: 'gamezone' },
+  metazone:    { group: 'platform', dir: 'metazone' },
   lifemap:     { group: 'platform', dir: 'lifemap' },
   promotion:   { group: 'platform', dir: 'promotion' },
   // commerce/
