@@ -775,8 +775,18 @@ app.get('/robots.txt', (req, res) => {
   res.send([
     'User-agent: *',
     'Allow: /',
+    // 공개 서비스·홍보·콘텐츠(메인, 각 모듈, /paper 등)는 크롤링 허용.
+    // 개인정보·회원·결제·관리자·AI 내부 데이터가 오가는 API만 명시적으로 차단한다.
     'Disallow: /admin',
-    'Disallow: /api/',
+    'Disallow: /api/admin/',
+    'Disallow: /api/feedback',
+    'Disallow: /api/pricing/point-balance',
+    'Disallow: /api/pricing/charge',
+    'Disallow: /api/store?all=true',
+    'Disallow: /api/kakao/',
+    'Disallow: /api/security/',
+    'Disallow: /api/ai-context',
+    'Disallow: /api/ai-core/',
     '',
     'Sitemap: https://aiplatmarket.com/sitemap.xml',
   ].join('\n'));
@@ -1295,9 +1305,82 @@ app.patch('/api/feedback/:id', async (req, res) => {
 app.get('/register', (req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
 app.use((req,res)=>res.sendFile(path.join(__dirname,'public','index.html')));
 
+/* ═══════════════════════════════════════════════════════
+   🛡 보안 정책 자동 점검 (SECURITY.md 3원칙 기준)
+   ─────────────────────────────────────────────────────
+   서버 부팅 시 1회 + 이후 24시간마다 자동으로 라우트를 스캔해서
+   "adminAuth 없이 여러 명의 데이터를 한 번에 조회할 수 있는 라우트"를
+   찾아냅니다 (SECURITY.md 원칙 2 위반 패턴). 완전한 취약점 스캐너는
+   아니며, 실제로 발견했던 취약점(피드백 API, 승인대기 업체 노출)과
+   같은 패턴이 새 코드에서 재발하는지 확인하는 자가점검 장치입니다.
+
+   점검 결과는 메모리에 저장되고 GET /api/security/check-log(관리자 전용)
+   로 조회 가능합니다. 실제 취약점이 의심되면 사람이 직접 코드를
+   검토해야 합니다 — 이 스캐너는 "재발 방지 알림"이 목적입니다.
+═══════════════════════════════════════════════════════ */
+let _securityCheckLog = { lastRunAt: null, findings: [], routeCount: 0 };
+
+function runSecuritySelfCheck() {
+  const findings = [];
+  let routeCount = 0;
+
+  // 전체/다건 조회를 암시하는 이름 패턴 (all, list, plans, dashboard 등) — GET만 대상
+  const BULK_HINT = /\b(all|list|dashboard|admin|branches|reporters|founders|requests?)\b/i;
+  const HAS_ADMIN_AUTH_TOKEN_CHECK = /x-admin-token/i;
+
+  try {
+    const stack = app._router?.stack || [];
+    stack.forEach(layer => {
+      if (!layer.route) return;
+      routeCount++;
+      const routePath = layer.route.path;
+      if (typeof routePath !== 'string') return;
+      const methods = Object.keys(layer.route.methods).map(m => m.toUpperCase());
+      if (!methods.includes('GET')) return;
+
+      const usesAdminAuthMiddleware = layer.route.stack.some(s => s.name === 'adminAuth');
+      // 라우트 핸들러 소스에 x-admin-token 수동 체크가 있는지도 확인 (adminAuth 미들웨어를 안 쓰고 직접 체크하는 경우 대비)
+      const handlerSrc = layer.route.stack.map(s => s.handle?.toString() || '').join('\n');
+      const hasManualAuthCheck = HAS_ADMIN_AUTH_TOKEN_CHECK.test(handlerSrc);
+
+      if (BULK_HINT.test(routePath) && !usesAdminAuthMiddleware && !hasManualAuthCheck) {
+        findings.push({
+          path: routePath,
+          methods,
+          reason: '전체/다건 조회로 보이는 경로인데 adminAuth 미들웨어나 수동 토큰 검증이 감지되지 않음 (SECURITY.md 원칙 2 확인 필요)',
+        });
+      }
+    });
+  } catch (e) {
+    findings.push({ path: '(스캔 오류)', methods: [], reason: e.message });
+  }
+
+  _securityCheckLog = { lastRunAt: new Date().toISOString(), findings, routeCount };
+
+  if (findings.length) {
+    console.warn(`⚠️  보안 자가점검: 확인 필요한 라우트 ${findings.length}건 발견`);
+    findings.forEach(f => console.warn(`   - [${f.methods.join(',')}] ${f.path} — ${f.reason}`));
+  } else {
+    console.log(`✅ 보안 자가점검 완료 — 라우트 ${routeCount}개 중 의심 패턴 없음`);
+  }
+}
+
+// 관리자 전용: 마지막 점검 결과 + 즉시 재점검 트리거
+app.get('/api/security/check-log', adminAuth, (req, res) => {
+  res.json({ ok: true, ..._securityCheckLog });
+});
+app.post('/api/security/check-now', adminAuth, (req, res) => {
+  runSecuritySelfCheck();
+  res.json({ ok: true, ..._securityCheckLog });
+});
+
 app.listen(PORT,()=>{
   console.log(`\n🚀 AI플랫마켓 → http://localhost:${PORT}`);
   console.log(`🛡 관리자  → http://localhost:${PORT}/admin`);
   console.log(`📰 네이버API : ${NAVER_ID?'✅':'❌'} | Gmail: ${GMAIL_USER?'✅':'❌'} | Kakao: ${KAKAO_KEY?'✅':'❌'}`);
   if(ADMIN_TOKEN==='dev-token-change-me') console.warn('⚠️  ADMIN_TOKEN 변경 필요!');
+
+  // 부팅 시 1회 + 이후 24시간마다 보안 자가점검
+  setTimeout(runSecuritySelfCheck, 2000); // 라우트 등록이 모두 끝난 뒤 실행되도록 약간 지연
+  setInterval(runSecuritySelfCheck, 24 * 60 * 60 * 1000);
 });
