@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI성장플랫존 | AI Growth PlatZone</title>
+<style>
+:root{
+  --bg:#f5f7fb; --surface:#fff; --text:#172033; --muted:#667085;
+  --line:#e6eaf0; --primary:#2563eb; --primary2:#7c3aed;
+  --soft:#eef4ff; --shadow:0 10px 30px rgba(28,39,65,.08);
+  --radius:20px;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
+.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px}.logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--primary2));display:grid;place-items:center;color:#fff}
+.nav{display:flex;gap:24px;color:#475467;font-size:14px}.nav a:hover{color:var(--primary)}
+.actions{display:flex;gap:9px}.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 14px;font-weight:700}.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.hero{padding:70px 5% 48px;background:radial-gradient(circle at 80% 15%,#dce9ff 0,transparent 32%),linear-gradient(135deg,#fff 0,#f0f5ff 100%)}
+.hero-grid{max-width:1220px;margin:auto;display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:#e8f0ff;color:#2457b8;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}
+.hero h1{font-size:clamp(38px,5vw,66px);line-height:1.08;letter-spacing:-2.5px;margin:18px 0}.hero h1 span{color:var(--primary)}
+.hero p{font-size:18px;line-height:1.75;color:var(--muted);max-width:720px}.hero-buttons{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.hero-card{background:#fff;border:1px solid #dfe7f5;border-radius:28px;padding:25px;box-shadow:var(--shadow)}
+.hero-card h3{margin:0 0 16px}.journey{display:grid;gap:10px}.step{display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;background:#f7f9fd}.step b{width:31px;height:31px;border-radius:10px;background:var(--soft);color:var(--primary);display:grid;place-items:center}.arrow{text-align:center;color:#98a2b3}
+.container{max-width:1220px;margin:auto;padding:54px 5%}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px}.section-head h2{font-size:29px;margin:0}.section-head p{margin:8px 0 0;color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:21px;transition:.2s;min-height:190px}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c9d8f5}.icon{font-size:27px;width:50px;height:50px;display:grid;place-items:center;background:var(--soft);border-radius:16px}.card h3{margin:18px 0 8px;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.tag{display:inline-block;margin-top:14px;font-size:12px;font-weight:800;color:var(--primary);background:#f0f5ff;padding:6px 9px;border-radius:999px}
+.feature{background:#15213a;color:#fff;border-radius:28px;padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}.feature p{color:#c8d2e3;line-height:1.7}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:17px}.mini b{font-size:22px;display:block;margin-bottom:5px}
+.flow{display:flex;gap:10px;align-items:stretch;overflow:auto;padding-bottom:5px}.flow-item{min-width:170px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px}.flow-item small{color:var(--primary);font-weight:800}.flow-arrow{display:grid;place-items:center;color:#98a2b3;font-size:22px}
+.notice{display:grid;grid-template-columns:1.3fr .7fr;gap:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}.list{display:grid;gap:12px}.row{display:flex;justify-content:space-between;gap:15px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:14px}.row:last-child{border:0;padding:0}.muted{color:var(--muted)}
+.footer{background:#111827;color:#cbd5e1;padding:38px 5%;font-size:13px}.footer b{color:#fff;font-size:18px}.mobile-menu{display:none}
+@media(max-width:980px){.nav{display:none}.hero-grid,.feature,.notice{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero{padding-top:45px}.hero-card{max-width:620px}.mobile-menu{display:inline-flex}}
+@media(max-width:580px){.topbar{height:64px;padding:0 4%}.brand{font-size:17px}.logo{width:35px;height:35px}.actions .btn:not(.primary){display:none}.hero{padding:38px 4%}.container{padding:40px 4%}.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-1.5px}.hero p{font-size:16px}.section-head{display:block}.feature{padding:24px}.mini-grid{grid-template-columns:1fr 1fr}.flow-arrow{min-width:20px}.card{min-height:auto}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#top"><span class="logo">G</span><span>AI성장플랫존 <small style="color:#7b8798">Growth</small></span></a>
+  <nav class="nav">
+    <a href="#services">성장서비스</a><a href="#journey">성장여정</a><a href="#ecosystem">생태계 연계</a><a href="#notice">소식·이벤트</a>
+  </nav>
+  <div class="actions"><button class="btn" onclick="showToast('MVP에서는 로그인 기능을 연결하지 않았습니다.')">로그인</button><button class="btn primary" onclick="showToast('AI LifeMap 연계 화면은 향후 연결됩니다.')">나의 성장 시작</button></div>
+</header>
+
+<main id="top">
+<section class="hero">
+ <div class="hero-grid">
+  <div>
+   <div class="eyebrow">✦ AI플랫마켓 통합 성장·실행 허브</div>
+   <h1>가능성을 발견하고,<br><span>함께 성장하며</span><br>실행으로 연결합니다.</h1>
+   <p>AI LifeMap에서 발견한 관심과 가능성이 배움, 교류, 협업, 프로젝트, 경제활동으로 이어지도록 연결하는 AI플랫마켓의 성장 생태계입니다.</p>
+   <div class="hero-buttons"><button class="btn primary" onclick="document.querySelector('#services').scrollIntoView({behavior:'smooth'})">성장서비스 둘러보기</button><button class="btn" onclick="document.querySelector('#journey').scrollIntoView({behavior:'smooth'})">성장여정 보기</button></div>
+  </div>
+  <aside class="hero-card">
+   <h3>나의 성장 여정</h3>
+   <div class="journey">
+    <div class="step"><b>1</b><span><strong>점검·발견</strong><br><small>AI LifeMap</small></span></div><div class="arrow">↓</div>
+    <div class="step"><b>2</b><span><strong>배움·교류·실천</strong><br><small>AI성장플랫존</small></span></div><div class="arrow">↓</div>
+    <div class="step"><b>3</b><span><strong>협업·프로젝트·경제활동</strong><br><small>AI플랫마켓 생태계</small></span></div>
+   </div>
+  </aside>
+ </div>
+</section>
+
+<section class="container" id="services">
+ <div class="section-head"><div><h2>성장을 실행으로 연결하는 서비스</h2><p>현재는 MVP 화면입니다. 각 카드는 향후 독립 서비스·페이지·DB 기능으로 확장됩니다.</p></div></div>
+ <div class="grid" id="cardGrid"></div>
+</section>
+
+<section class="container" id="journey">
+ <div class="section-head"><div><h2>이용자 성장 흐름</h2><p>개인의 발견에서 실제 참여와 경제활동까지 자연스럽게 이어지는 구조입니다.</p></div></div>
+ <div class="flow">
+  <div class="flow-item"><small>STEP 01</small><h3>AI LifeMap</h3><p class="muted">가능성·관심·성장목표 확인</p></div><div class="flow-arrow">→</div>
+  <div class="flow-item"><small>STEP 02</small><h3>성장 추천</h3><p class="muted">교육·커뮤니티·활동 연결</p></div><div class="flow-arrow">→</div>
+  <div class="flow-item"><small>STEP 03</small><h3>참여·실천</h3><p class="muted">챌린지·모임·프로젝트</p></div><div class="flow-arrow">→</div>
+  <div class="flow-item"><small>STEP 04</small><h3>협업·성과</h3><p class="muted">멘토링·팀·성장 기록</p></div><div class="flow-arrow">→</div>
+  <div class="flow-item"><small>STEP 05</small><h3>경제활동</h3><p class="muted">창업·서비스·마켓 연계</p></div>
+ </div>
+</section>
+
+<section class="container" id="ecosystem">
+ <div class="feature">
+  <div><div class="eyebrow" style="background:#26385a;color:#dbeafe">AI플랫마켓 생태계 연계</div>
+   <h2 style="font-size:34px;margin:18px 0 8px">혼자 성장하지 않고,<br>플랫폼과 사람을 연결합니다.</h2>
+   <p>AI성장플랫존은 AI를 직접 호출하지 않습니다. AI 추천·코칭·성장 분석은 챗도우미와 AI Core를 통해 처리하고, 이곳은 이용자의 실제 참여와 실행을 연결합니다.</p>
+  </div>
+  <div class="mini-grid">
+   <div class="mini"><b>AI LifeMap</b><small>성장목표·관심분야 전달</small></div>
+   <div class="mini"><b>챗도우미</b><small>AI Core·추천·코칭</small></div>
+   <div class="mini"><b>AI MetaZone</b><small>온라인·지역 체험 연결</small></div>
+   <div class="mini"><b>ItemZone·교육존</b><small>창업·교육·실행 지원</small></div>
+   <div class="mini"><b>홍보센터</b><small>체험단·리뷰어·파트너 모집</small></div>
+   <div class="mini"><b>더착한쇼핑몰</b><small>상품·서비스·경제활동</small></div>
+  </div>
+ </div>
+</section>
+
+<section class="container" id="notice">
+ <div class="notice">
+  <div class="panel"><h2 style="margin-top:0">성장 소식</h2><div class="list">
+   <div class="row"><span>AI성장플랫존 MVP 오픈 준비</span><span class="muted">준비중</span></div>
+   <div class="row"><span>성장커뮤니티·프로젝트 구조 설계</span><span class="muted">기획중</span></div>
+   <div class="row"><span>AI LifeMap 성장목표 연계</span><span class="muted">향후 연동</span></div>
+  </div></div>
+  <div class="panel"><h2 style="margin-top:0">MVP 원칙</h2><p class="muted" style="line-height:1.8">✓ AI 직접 호출 금지<br>✓ 실제 DB·결제 미연동<br>✓ 임시 데이터 기반 UI<br>✓ 컴포넌트·서비스 확장 구조<br>✓ 기존 플랫폼 중복 개발 최소화</p></div>
+ </div>
+</section>
+</main>
+<footer class="footer"><b>AI성장플랫존</b><p>AI LifeMap에서 발견한 가능성을 실제 성장과 실행으로 연결합니다.</p><p>AI플랫마켓 통합 생태계 MVP 레이아웃 · 2026</p></footer>
+<script>
+const services=[
+['🧭','성장로드맵','LifeMap의 목표와 관심 분야를 바탕으로 개인 성장 계획을 연결합니다.','핵심 허브'],
+['💬','성장커뮤니티','관심사·지역·온라인·오프라인 모임으로 교류합니다.','참여·교류'],
+['🤝','성장네트워크','멘토·전문가·기업·기관·성장 파트너를 연결합니다.','연결·협업'],
+['🎓','성장교육','AI·실무·창업·지역 교육과 추천 교육을 연결합니다.','배움'],
+['🚀','성장프로젝트','공동 프로젝트, 아이디어 모집, 참여자 모집, 연구모임을 운영합니다.','실행'],
+['🏁','성장챌린지·미션','목표 설정, 실천, 진행률, 성장 기록을 축적합니다.','실천'],
+['📊','성장리포트','활동과 경험을 개인 성장 포트폴리오로 확장합니다.','기록·분석'],
+['📖','성장스토리','성공·실패 경험, 노하우, 후기와 성장 사례를 공유합니다.','공유'],
+['🛍️','성장마켓','교육·컨설팅·재능·서비스를 향후 더착한쇼핑몰과 연결합니다.','경제활동'],
+['🌱','성장파트너','협회·단체·기업·기관의 성장 프로그램 참여를 지원합니다.','파트너'],
+['🌐','AI MetaZone','온라인 체험, 지역 체험센터, 행사·예약을 연결합니다.','체험'],
+['✨','AI 추천·코칭','챗도우미 AI Core를 통해 향후 맞춤 추천과 코칭을 제공합니다.','AI Core 연계'],
+];
+document.getElementById('cardGrid').innerHTML=services.map((x,i)=>`<article class="card" tabindex="0" onclick="openService(${i})"><div class="icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><span class="tag">${x[3]} →</span></article>`).join('');
+function openService(i){showToast('「'+services[i][1]+'」은 현재 MVP 임시 화면입니다. 향후 상세 페이지와 기능을 연결합니다.')}
+function showToast(msg){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#172033;color:#fff;padding:14px 20px;border-radius:13px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:99;font-size:14px';document.body.appendChild(t)}t.textContent=msg;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display='none',2600)}
+</script>
+</body></html>

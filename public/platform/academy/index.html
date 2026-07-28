@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI인생성장사관학교 | 나를 이해하고 함께 성장하는 학교</title>
+
+<style>
+:root{
+  --navy:#17324d;
+  --blue:#2467a8;
+  --sky:#eaf5ff;
+  --green:#2f8068;
+  --mint:#e9f7f1;
+  --orange:#ef8b3b;
+  --cream:#fffaf0;
+  --text:#24313d;
+  --sub:#64717d;
+  --line:#dfe7ec;
+  --white:#ffffff;
+  --shadow:0 12px 35px rgba(28,56,78,.10);
+  --radius:22px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  background:#f7fafc;
+  font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;
+  line-height:1.65;
+}
+
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+
+.container{
+  width:min(1180px,calc(100% - 36px));
+  margin:auto;
+}
+
+/* Header */
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(220,230,236,.9);
+}
+
+.header-inner{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  color:var(--navy);
+}
+
+.brand-mark{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),var(--green));
+  box-shadow:0 8px 20px rgba(36,103,168,.25);
+}
+
+.brand small{
+  display:block;
+  color:var(--green);
+  font-size:11px;
+  letter-spacing:.08em;
+}
+
+.brand strong{
+  display:block;
+  font-size:18px;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  color:#4f5e6b;
+  font-size:14px;
+  font-weight:700;
+}
+
+.nav a:hover{color:var(--blue)}
+
+.header-btn{
+  border:0;
+  color:#fff;
+  background:var(--navy);
+  padding:11px 17px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+/* Hero */
+.hero{
+  overflow:hidden;
+  position:relative;
+  padding:90px 0 80px;
+  background:
+    radial-gradient(circle at 88% 20%,rgba(93,177,139,.22),transparent 28%),
+    radial-gradient(circle at 8% 10%,rgba(59,138,210,.17),transparent 27%),
+    linear-gradient(135deg,#f7fbff,#eef8f4);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:55px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  color:var(--green);
+  background:#fff;
+  border:1px solid #d9eee5;
+  font-size:13px;
+  font-weight:850;
+}
+
+.hero h1{
+  margin:18px 0;
+  color:var(--navy);
+  font-size:clamp(38px,5vw,67px);
+  line-height:1.16;
+  letter-spacing:-.055em;
+}
+
+.hero h1 span{color:var(--green)}
+
+.hero p{
+  max-width:690px;
+  color:var(--sub);
+  font-size:18px;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:30px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:0 22px;
+  border-radius:15px;
+  border:1px solid transparent;
+  font-weight:850;
+}
+
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),var(--green));
+  box-shadow:0 12px 25px rgba(38,108,137,.22);
+}
+
+.btn-light{
+  color:var(--navy);
+  background:#fff;
+  border-color:#dce7ed;
+}
+
+.hero-card{
+  padding:28px;
+  border-radius:30px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:var(--shadow);
+}
+
+.hero-card h3{
+  margin:0 0 20px;
+  color:var(--navy);
+  font-size:20px;
+}
+
+.step-mini{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  gap:13px;
+  align-items:start;
+  margin:15px 0;
+}
+
+.step-num{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  color:#fff;
+  font-weight:900;
+  background:var(--green);
+}
+
+.step-mini strong{display:block}
+.step-mini span{
+  display:block;
+  color:var(--sub);
+  font-size:13px;
+}
+
+/* Common */
+.section{padding:90px 0}
+.section-soft{background:#fff}
+.section-mint{background:var(--mint)}
+.section-cream{background:var(--cream)}
+
+.eyebrow{
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.09em;
+}
+
+.section-title{
+  margin:8px 0 13px;
+  color:var(--navy);
+  font-size:clamp(29px,4vw,45px);
+  line-height:1.25;
+  letter-spacing:-.04em;
+}
+
+.section-desc{
+  max-width:760px;
+  color:var(--sub);
+  font-size:17px;
+}
+
+/* Philosophy */
+.philosophy{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  margin-top:38px;
+}
+
+.quote-card{
+  padding:34px;
+  color:#fff;
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,#183750,#286f73);
+}
+
+.quote-card p{
+  margin:0;
+  font-size:25px;
+  font-weight:850;
+  line-height:1.5;
+}
+
+.info-card{
+  padding:30px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+}
+
+.info-card h3{
+  margin-top:0;
+  color:var(--navy);
+}
+
+.info-card ul{
+  padding-left:20px;
+  margin-bottom:0;
+}
+
+.info-card li{margin:8px 0}
+
+/* Journey */
+.journey{
+  display:grid;
+  grid-template-columns:1fr 70px 1fr 70px 1fr;
+  align-items:stretch;
+  gap:12px;
+  margin-top:42px;
+}
+
+.journey-card{
+  padding:30px;
+  border-radius:25px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 8px 24px rgba(30,55,72,.06);
+}
+
+.journey-card .icon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  font-size:25px;
+  background:var(--sky);
+}
+
+.journey-card:nth-child(3) .icon{background:var(--mint)}
+.journey-card:nth-child(5) .icon{background:#fff1e4}
+
+.journey-card h3{
+  margin:18px 0 8px;
+  color:var(--navy);
+}
+
+.journey-card p{
+  margin:0;
+  color:var(--sub);
+  font-size:14px;
+}
+
+.arrow{
+  display:grid;
+  place-items:center;
+  color:var(--green);
+  font-size:32px;
+  font-weight:900;
+}
+
+/* Growth areas */
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+  margin-top:36px;
+}
+
+.growth-card{
+  padding:24px;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.growth-card b{
+  display:block;
+  color:var(--navy);
+  margin-bottom:7px;
+}
+
+.growth-card span{
+  color:var(--sub);
+  font-size:13px;
+}
+
+/* LifeMap */
+.lifemap-box{
+  display:grid;
+  grid-template-columns:1fr .9fr;
+  gap:45px;
+  align-items:center;
+  padding:42px;
+  margin-top:38px;
+  border-radius:30px;
+  color:#fff;
+  background:linear-gradient(135deg,#17324d,#225d72);
+}
+
+.lifemap-box h3{
+  margin:0 0 12px;
+  font-size:31px;
+}
+
+.lifemap-box p{color:#dcebf0}
+
+.profile-demo{
+  padding:25px;
+  border-radius:22px;
+  color:var(--text);
+  background:#fff;
+}
+
+.profile-demo h4{
+  margin:0 0 18px;
+  color:var(--navy);
+}
+
+.bar-row{margin:13px 0}
+
+.bar-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  font-weight:800;
+}
+
+.bar{
+  height:9px;
+  margin-top:7px;
+  overflow:hidden;
+  border-radius:99px;
+  background:#e6edf0;
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+}
+
+/* Regional */
+.region-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:38px;
+}
+
+.region-card{
+  padding:26px;
+  border-radius:21px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.region-card h3{
+  margin:0 0 8px;
+  color:var(--navy);
+}
+
+.region-card p{
+  color:var(--sub);
+  font-size:14px;
+}
+
+.tag{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:99px;
+  color:var(--green);
+  background:var(--mint);
+  font-size:11px;
+  font-weight:850;
+}
+
+/* Network */
+.network{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:13px;
+  margin-top:35px;
+}
+
+.network-item{
+  padding:21px 14px;
+  text-align:center;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.network-item strong{
+  display:block;
+  color:var(--navy);
+}
+
+.network-item span{
+  color:var(--sub);
+  font-size:12px;
+}
+
+/* Space campaign */
+.space-campaign{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:35px;
+  align-items:center;
+  padding:48px;
+  border-radius:32px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(255,255,255,.16),transparent 30%),
+    linear-gradient(135deg,#28634f,#17463c);
+}
+
+.space-campaign h2{
+  margin:10px 0;
+  font-size:40px;
+  line-height:1.25;
+}
+
+.space-campaign p{color:#d9eee6}
+
+.space-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.space-list div{
+  padding:13px;
+  border-radius:13px;
+  background:rgba(255,255,255,.11);
+  border:1px solid rgba(255,255,255,.15);
+  font-size:13px;
+}
+
+/* CTA */
+.final-cta{
+  padding:75px 20px;
+  text-align:center;
+  border-radius:34px;
+  color:#fff;
+  background:linear-gradient(135deg,#18334d,#276f71);
+}
+
+.final-cta h2{
+  margin:0 0 12px;
+  font-size:clamp(31px,4vw,48px);
+}
+
+.final-cta p{
+  max-width:680px;
+  margin:0 auto 28px;
+  color:#d9e8ed;
+}
+
+/* Footer */
+.footer{
+  padding:42px 0;
+  color:#aebbc4;
+  background:#132837;
+}
+
+.footer strong{color:#fff}
+
+.footer-grid{
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.footer small{
+  display:block;
+  margin-top:8px;
+}
+
+.mobile-menu{
+  display:none;
+  border:0;
+  background:#edf3f6;
+  padding:10px 12px;
+  border-radius:10px;
+}
+
+/* Responsive */
+@media(max-width:980px){
+  .nav{display:none}
+  .mobile-menu{display:block}
+  .hero-grid,
+  .philosophy,
+  .lifemap-box,
+  .space-campaign{
+    grid-template-columns:1fr;
+  }
+
+  .journey{
+    grid-template-columns:1fr;
+  }
+
+  .arrow{
+    height:35px;
+    transform:rotate(90deg);
+  }
+
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .region-grid{grid-template-columns:repeat(2,1fr)}
+  .network{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(max-width:620px){
+  .header-inner{min-height:68px}
+  .brand strong{font-size:15px}
+  .header-btn{display:none}
+
+  .hero{
+    padding:65px 0 60px;
+  }
+
+  .hero h1{font-size:40px}
+  .hero p{font-size:16px}
+
+  .section{padding:65px 0}
+
+  .grid-4,
+  .region-grid,
+  .network,
+  .space-list{
+    grid-template-columns:1fr;
+  }
+
+  .lifemap-box,
+  .space-campaign{
+    padding:27px;
+  }
+
+  .space-campaign h2{font-size:31px}
+
+  .footer-grid{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+
+    <a class="brand" href="#">
+      <div class="brand-mark">성</div>
+      <div>
+        <small>AI LIFE GROWTH ACADEMY</small>
+        <strong>AI인생성장사관학교</strong>
+      </div>
+    </a>
+
+    <nav class="nav">
+      <a href="#about">사관학교 소개</a>
+      <a href="#journey">성장과정</a>
+      <a href="#lifemap">AI LifeMap</a>
+      <a href="#campus">지역캠퍼스</a>
+      <a href="#space">성장공간 협력</a>
+    </nav>
+
+    <a class="header-btn" href="#admission">
+      입학 안내
+    </a>
+
+    <button class="mobile-menu" aria-label="메뉴">
+      ☰
+    </button>
+
+  </div>
+</header>
+
+
+<main>
+
+<!-- Hero -->
+<section class="hero">
+
+  <div class="container hero-grid">
+
+    <div>
+
+      <span class="badge">
+        ● AI성장플랫존 핵심 독립 프로젝트
+      </span>
+
+      <h1>
+        나를 이해하고<br>
+        사람과 함께 <span>성장하는 학교</span>
+      </h1>
+
+      <p>
+        AI LifeMap으로 자신의 강점과 성장 방향을 이해하고,
+        인성·관계·역량·실천을 함께 성장시키며
+        진로·일자리·창업·사업과 새로운 인연으로 연결합니다.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#lifemap">
+          AI LifeMap 성장점검 시작
+        </a>
+
+        <a class="btn btn-light" href="#journey">
+          1년 성장과정 보기
+        </a>
+      </div>
+
+    </div>
+
+    <aside class="hero-card">
+
+      <h3>인생성장사관학교 통합 과정</h3>
+
+      <div class="step-mini">
+        <div class="step-num">1</div>
+        <div>
+          <strong>온라인 성장과정</strong>
+          <span>자기이해·인성·관계·개인 성장계획</span>
+        </div>
+      </div>
+
+      <div class="step-mini">
+        <div class="step-num">2</div>
+        <div>
+          <strong>지역 오프라인 과정</strong>
+          <span>인맥·현장교육·협업·실천 프로젝트</span>
+        </div>
+      </div>
+
+      <div class="step-mini">
+        <div class="step-num">3</div>
+        <div>
+          <strong>졸업·평생성장 네트워크</strong>
+          <span>전국 성장동문·진로·일·창업·사업 연계</span>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+</section>
+
+
+<!-- Philosophy -->
+<section class="section section-soft" id="about">
+
+  <div class="container">
+
+    <span class="eyebrow">OUR PHILOSOPHY</span>
+
+    <h2 class="section-title">
+      교육보다 먼저 사람을 이해하고,<br>
+      성장보다 먼저 함께 성장할 기반을 만듭니다.
+    </h2>
+
+    <p class="section-desc">
+      AI인생성장사관학교는 단순 지식 전달이나 자격증 교육을 넘어,
+      개인의 삶·인성·관계·역량·실천을 통합하여
+      사회와 경제활동으로 연결하는 평생성장 플랫폼입니다.
+    </p>
+
+    <div class="philosophy">
+
+      <article class="quote-card">
+        <p>
+          “사람을 알고,<br>
+          인성을 키우고,<br>
+          역량을 배우며,<br>
+          함께 실천합니다.”
+        </p>
+      </article>
+
+      <article class="info-card">
+
+        <h3>우리의 관계 원칙</h3>
+
+        <ul>
+          <li>학연·지연·혈연 중심의 폐쇄적 인맥을 지향하지 않습니다.</li>
+          <li>지역은 가까이 만나기 위한 활동 거점입니다.</li>
+          <li>기수는 함께 성장한 기록일 뿐 특혜의 기준이 아닙니다.</li>
+          <li>성장·실천·협력·상호 존중으로 열린 인연을 만듭니다.</li>
+          <li>전국 모든 구성원이 하나의 통합 성장 네트워크로 연결됩니다.</li>
+        </ul>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Journey -->
+<section class="section section-mint" id="journey">
+
+  <div class="container">
+
+    <span class="eyebrow">ONE INTEGRATED JOURNEY</span>
+
+    <h2 class="section-title">
+      온라인에서 나를 준비하고,<br>
+      오프라인에서 사람과 함께 실천합니다.
+    </h2>
+
+    <p class="section-desc">
+      온라인과 오프라인은 별도의 학교가 아닙니다.
+      하나의 학번·성장 프로필·성장기록·인맥·동문 시스템 안에서
+      단계적으로 연결되는 통합 성장과정입니다.
+    </p>
+
+    <div class="journey">
+
+      <article class="journey-card">
+
+        <div class="icon">①</div>
+
+        <h3>온라인 1단계</h3>
+
+        <p>
+          AI LifeMap 성장점검,
+          자기이해, 인성·관계 성장,
+          개인별 성장계획,
+          온라인 성장공동체
+        </p>
+
+      </article>
+
+      <div class="arrow">→</div>
+
+      <article class="journey-card">
+
+        <div class="icon">②</div>
+
+        <h3>오프라인 2단계</h3>
+
+        <p>
+          지역 성장캠퍼스,
+          동기·멘토·협업자 만남,
+          현장교육, 워크숍,
+          공동체·프로젝트 활동
+        </p>
+
+      </article>
+
+      <div class="arrow">→</div>
+
+      <article class="journey-card">
+
+        <div class="icon">③</div>
+
+        <h3>졸업·평생성장</h3>
+
+        <p>
+          성장포트폴리오,
+          전국 성장동문,
+          진로·일자리·창업·사업·협업 연계,
+          지속적인 성장 지원
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Growth Areas -->
+<section class="section section-soft">
+
+  <div class="container">
+
+    <span class="eyebrow">GROWTH COMPETENCIES</span>
+
+    <h2 class="section-title">
+      인성은 평가와 서열이 아니라<br>
+      삶과 관계 속에서 함께 키우는 성장역량입니다.
+    </h2>
+
+    <div class="grid-4">
+
+      <article class="growth-card">
+        <b>자기이해</b>
+        <span>강점·관심·가치·삶의 방향 이해</span>
+      </article>
+
+      <article class="growth-card">
+        <b>자기관리</b>
+        <span>목표·시간·생활·감정 관리</span>
+      </article>
+
+      <article class="growth-card">
+        <b>책임과 실천</b>
+        <span>약속·행동·지속적인 성장</span>
+      </article>
+
+      <article class="growth-card">
+        <b>존중과 배려</b>
+        <span>다름을 이해하고 함께 살아가기</span>
+      </article>
+
+      <article class="growth-card">
+        <b>공감과 소통</b>
+        <span>경청·표현·갈등 조정·관계 회복</span>
+      </article>
+
+      <article class="growth-card">
+        <b>협력과 공동체</b>
+        <span>팀 활동·상호 도움·공동 목표</span>
+      </article>
+
+      <article class="growth-card">
+        <b>윤리와 공정성</b>
+        <span>정직·신뢰·공정한 기여</span>
+      </article>
+
+      <article class="growth-card">
+        <b>도전과 회복</b>
+        <span>실패를 배우고 다시 성장하기</span>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LifeMap -->
+<section class="section" id="lifemap">
+
+  <div class="container">
+
+    <span class="eyebrow">AI LIFEMAP CONNECTION</span>
+
+    <h2 class="section-title">
+      AI LifeMap은 입학시험이 아니라<br>
+      나에게 맞는 성장경로를 찾는 시작점입니다.
+    </h2>
+
+    <div class="lifemap-box">
+
+      <div>
+
+        <h3>나를 이해하고<br>나만의 성장과정을 설계합니다.</h3>
+
+        <p>
+          AI LifeMap의 자기이해·적성·관심·목표·성장영역 점검 결과를
+          사관학교의 개인 성장 프로필과 연결합니다.
+        </p>
+
+        <p>
+          결과가 높고 낮음에 따라 사람을 평가하거나 교육을 제한하지 않으며,
+          각자에게 필요한 성장 목표와 교육·실천 경로를 추천합니다.
+        </p>
+
+        <a class="btn btn-light" href="#admission">
+          LifeMap 성장점검 알아보기
+        </a>
+
+      </div>
+
+      <div class="profile-demo">
+
+        <h4>나의 성장 프로필 예시</h4>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>자기이해</span><span>성장 중</span>
+          </div>
+          <div class="bar"><i style="width:78%"></i></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>관계·소통</span><span>성장 목표</span>
+          </div>
+          <div class="bar"><i style="width:63%"></i></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>실천·지속성</span><span>강점</span>
+          </div>
+          <div class="bar"><i style="width:86%"></i></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>협력·공동체</span><span>성장 중</span>
+          </div>
+          <div class="bar"><i style="width:71%"></i></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Regional Campus -->
+<section class="section section-cream" id="campus">
+
+  <div class="container">
+
+    <span class="eyebrow">REGIONAL GROWTH CAMPUS</span>
+
+    <h2 class="section-title">
+      전국은 하나의 학교,<br>
+      지역은 가까이 만나기 위한 성장 거점입니다.
+    </h2>
+
+    <p class="section-desc">
+      광역권별 성장캠퍼스는 지역 출신을 구분하는 학교가 아니라,
+      오프라인 교육·인맥·협업·공동체 활동을 위한 지역 거점입니다.
+      모든 구성원은 전국 통합 성장 네트워크로 연결됩니다.
+    </p>
+
+    <div class="region-grid">
+
+      <article class="region-card">
+        <h3>수도권 성장캠퍼스</h3>
+        <p>
+          장기적으로 서부·동부·남부·북부 등
+          2~4개 지역 성장거점으로 확대합니다.
+        </p>
+        <span class="tag">2~4개 거점 확장</span>
+      </article>
+
+      <article class="region-card">
+        <h3>충청권 성장캠퍼스</h3>
+        <p>
+          지역 성장모임·현장교육·협업 프로젝트와
+          지역사회 연계 활동을 운영합니다.
+        </p>
+        <span class="tag">협력공간 모집 예정</span>
+      </article>
+
+      <article class="region-card">
+        <h3>강원권 성장캠퍼스</h3>
+        <p>
+          자연·지역환경과 연계한 성장·체험·공동체 프로그램을 준비합니다.
+        </p>
+        <span class="tag">단계적 확대</span>
+      </article>
+
+      <article class="region-card">
+        <h3>영남권 성장캠퍼스</h3>
+        <p>
+          대구·경북 및 부산·울산·경남 생활권과 연계해 확대합니다.
+        </p>
+        <span class="tag">지역 네트워크 구축</span>
+      </article>
+
+      <article class="region-card">
+        <h3>호남권 성장캠퍼스</h3>
+        <p>
+          광주·전남·전북 지역의 성장·교육·지역활성화 활동을 연결합니다.
+        </p>
+        <span class="tag">지역 협력 확대</span>
+      </article>
+
+      <article class="region-card">
+        <h3>제주·특별지역 과정</h3>
+        <p>
+          지역 특성과 자연환경을 활용한 집중 성장과정과 교류 프로그램을 운영합니다.
+        </p>
+        <span class="tag">특화 과정 준비</span>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Network -->
+<section class="section section-soft">
+
+  <div class="container">
+
+    <span class="eyebrow">OPEN GROWTH NETWORK</span>
+
+    <h2 class="section-title">
+      학연·지연이 아닌<br>
+      성장·실천·협력으로 연결되는 새로운 인연
+    </h2>
+
+    <div class="network">
+
+      <div class="network-item">
+        <strong>성장연</strong>
+        <span>함께 배우고 성장한 인연</span>
+      </div>
+
+      <div class="network-item">
+        <strong>실천연</strong>
+        <span>함께 목표를 실행한 인연</span>
+      </div>
+
+      <div class="network-item">
+        <strong>협력연</strong>
+        <span>프로젝트를 함께한 인연</span>
+      </div>
+
+      <div class="network-item">
+        <strong>가치연</strong>
+        <span>공통의 가치를 나눈 인연</span>
+      </div>
+
+      <div class="network-item">
+        <strong>성장동행</strong>
+        <span>서로의 삶을 응원하는 관계</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Space Campaign -->
+<section class="section section-mint" id="space">
+
+  <div class="container">
+
+    <div class="space-campaign">
+
+      <div>
+
+        <span class="eyebrow" style="color:#bde5d3">
+          AI통합홍보센터 연계
+        </span>
+
+        <h2>
+          지역 성장공간을<br>
+          함께 만들어 주세요
+        </h2>
+
+        <p>
+          사용하지 않는 폐교·교육시설·연수원·공공 및 민간 유휴공간을
+          사람의 성장과 지역의 미래를 위한
+          교육·인맥·일자리·창업·공동체 공간으로 함께 되살립니다.
+        </p>
+
+        <a class="btn btn-light" href="#admission">
+          성장공간 기부·협력 제안하기
+        </a>
+
+      </div>
+
+      <div class="space-list">
+
+        <div>🏫 폐교·유휴 학교시설</div>
+        <div>🏢 공공 유휴공간</div>
+        <div>🏠 민간 유휴 건물</div>
+        <div>🏬 기업·기관 교육공간</div>
+        <div>🤝 무상사용·장기 협력</div>
+        <div>🌿 자연·지역 체험공간</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Connection -->
+<section class="section section-soft">
+
+  <div class="container">
+
+    <span class="eyebrow">LIFE · WORK · BUSINESS</span>
+
+    <h2 class="section-title">
+      배움이 삶에서 끝나지 않고<br>
+      일·창업·사업·협력으로 이어집니다.
+    </h2>
+
+    <p class="section-desc">
+      취업이나 창업을 보장하는 방식이 아니라,
+      개인의 성장기록·역량·관심·활동을 바탕으로
+      진로·일자리·창업·사업·프로젝트·협업 기회를 탐색하고
+      관련 플랫폼·기관·기업·전문가와의 연결을 지원합니다.
+    </p>
+
+    <div class="grid-4">
+
+      <article class="growth-card">
+        <b>진로·직업</b>
+        <span>개인 성장 프로필 기반 진로 탐색</span>
+      </article>
+
+      <article class="growth-card">
+        <b>일자리·프로젝트</b>
+        <span>직무·기업·지역 프로젝트 연계</span>
+      </article>
+
+      <article class="growth-card">
+        <b>창업·사업</b>
+        <span>AI ItemZone·사업코칭 연계</span>
+      </article>
+
+      <article class="growth-card">
+        <b>홍보·판로</b>
+        <span>AI통합홍보센터·AI플랫마켓 연계</span>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Final CTA -->
+<section class="section" id="admission">
+
+  <div class="container">
+
+    <div class="final-cta">
+
+      <h2>
+        나를 이해하고,<br>
+        사람과 함께 성장할 준비가 되셨나요?
+      </h2>
+
+      <p>
+        AI LifeMap 성장점검부터 온라인 성장과정,
+        지역 오프라인 활동, 전국 성장동문 네트워크까지
+        하나의 성장 여정을 함께 만들어 갑니다.
+      </p>
+
+      <div class="hero-actions" style="justify-content:center">
+
+        <button class="btn btn-light"
+          onclick="showPreparing('입학 신청')">
+          입학 안내·신청
+        </button>
+
+        <button class="btn btn-light"
+          onclick="showPreparing('성장공간 기부·협력')">
+          성장공간 협력 제안
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+  <div class="container footer-grid">
+
+    <div>
+
+      <strong>AI인생성장사관학교</strong>
+
+      <small>
+        AI성장플랫존 핵심 독립 프로젝트<br>
+        AI플랫마켓 통합 성장 생태계
+      </small>
+
+    </div>
+
+    <div>
+
+      <small>
+        사람을 이해하고 · 인성을 키우고 · 함께 배우고 · 함께 실천합니다.
+      </small>
+
+      <small>
+        © AI Life Growth Academy. MVP Preview.
+      </small>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+function showPreparing(feature){
+  alert(
+    feature +
+    ' 기능은 현재 MVP 고도화 및 운영 준비 중입니다.\n\n' +
+    '현재는 인생성장사관학교의 전체 구조와 사용자 흐름을 먼저 구축하고 있습니다.'
+  );
+}
+</script>
+
+</body>
+</html>
