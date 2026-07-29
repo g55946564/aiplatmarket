@@ -805,6 +805,18 @@ app.get('/sitemap.xml', async (req, res) => {
     { loc:'/region/경기-성남시', priority:'0.7', freq:'weekly' },
   ];
 
+  // 독립 모듈 URL — 실제로 index.html이 존재하는 모듈만 포함한다
+  // (아직 "업그레이드 중" placeholder만 있는 모듈은 검색엔진에 노출하지 않음)
+  const moduleUrls = Object.entries(MODULE_MAP)
+    .filter(([id, mod]) => {
+      if (!mod.dir) return false; // community처럼 dir 없는 항목은 별도 정적 페이지로 취급 안 함
+      const htmlPath = path.join(__dirname, 'public', mod.group, mod.dir, 'index.html');
+      return fs.existsSync(htmlPath);
+    })
+    .map(([id]) => `
+  <url><loc>${BASE}/${id}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`)
+    .join('');
+
   let storeUrls = '';
   if (db) {
     try {
@@ -822,6 +834,7 @@ app.get('/sitemap.xml', async (req, res) => {
   res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticXml}
+${moduleUrls}
 ${storeUrls}
 </urlset>`);
 });
@@ -904,7 +917,7 @@ const MODULE_MAP = {
   lifemap:     { group: 'platform', dir: 'lifemap' },
   promotion:   { group: 'platform', dir: 'promotion' },
   // commerce/
-  growthmall:  { group: 'commerce', dir: 'growthmall' },
+  growplatzone: { group: 'platform', dir: 'growplatzone' },
   localfood:   { group: 'commerce', dir: 'localfood' },
   goodstore:   { group: 'commerce', dir: 'goodstore' },
   newproduct:  { group: 'commerce', dir: 'newproduct' },
