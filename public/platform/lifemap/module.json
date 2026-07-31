@@ -1,18 +1,72 @@
 {
   "id": "lifemap",
   "group": "platform",
-  "title": "AI인생·진로",
+  "title": "AI 인생·진로 체험센터",
+  "brand": "AI LifeMap",
   "icon": "🔮",
-  "description": "AI 진로 로드맵 생성",
-  "version": "0.0.1",
-  "status": "planned",
-  "routes": [
-    "/lifemap",
-    "/platform/lifemap/"
-  ],
+  "description": "심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼",
+  "tagline": "나를 이해하고, 삶을 탐색하고, 방향을 찾다",
+  "version": "1.0.0-preview",
+  "status": "dev",
+  "mode": "PREVIEW",
+  "routes": ["/lifemap", "/platform/lifemap/"],
   "subdomain": "lifemap.aiplatmarket.com",
   "framework_version": "1.0.0",
-  "ai_features": [],
+  "ai_core": {
+    "enabled": false,
+    "mode": "PREVIEW",
+    "engines": ["gemini", "gpt", "claude", "rule"],
+    "fallback": "rule",
+    "endpoint": "/api/life-analysis",
+    "note": "PREVIEW MODE에서는 AI Core 호출 0회. PRODUCTION 전환 시 활성화."
+  },
+  "disciplines": {
+    "psychology": [
+      "mbti","big5","tci","disc","enneagram","via","mi","holland","mmpi"
+    ],
+    "selfexplore": [
+      "character","potential","creativity","interest","aptitude","values"
+    ],
+    "career": [
+      "leadership","learning","jobOntology","startup","lifecycle"
+    ],
+    "eastern": [
+      "saju","ohang","sasang","fengshui","name_study"
+    ],
+    "western": [
+      "astrology","tarot","numerology","zodiac","physiognomy"
+    ],
+    "envbio": [
+      "environment","genetics","biorhythm"
+    ]
+  },
+  "courses": [
+    "ai_recommended","psychology","selfexplore","career","startup",
+    "eastern","western","comprehensive"
+  ],
+  "pricing": {
+    "model": "freemium",
+    "currency": "AI포인트(AP)",
+    "free_disciplines": [
+      "saju","ohang","astrology","zodiac","numerology","biorhythm",
+      "fengshui","tarot_basic","name_study"
+    ],
+    "preview_mode": "rule-based only, no AI calls",
+    "note": "1 AI포인트 = 1원, AI플랫마켓 통합 포인트 정책 적용"
+  },
+  "features": {
+    "manseok": true,
+    "image_upload": "planned",
+    "free_question_input": true,
+    "preview_signup": true,
+    "lifemap_metazone_link": "planned"
+  },
+  "preview": {
+    "signup_enabled": true,
+    "survey_enabled": true,
+    "beta_waitlist": true
+  },
   "owner": "형식",
-  "created": "2026-06-18"
+  "created": "2026-06-18",
+  "updated": "2026-07-22"
 }
