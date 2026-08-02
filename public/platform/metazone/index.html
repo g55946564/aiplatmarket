@@ -1,1092 +1,1116 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AI MetaZone | AI플랫마켓</title>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family:
-        "Pretendard",
-        "Noto Sans KR",
-        Arial,
-        sans-serif;
-    background: #f5f7fa;
-    color: #18212b;
-    line-height: 1.6;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-}
-
-/* =========================
-   Header
-========================= */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e5e8ec;
-}
-
-.nav {
-    max-width: 1280px;
-    margin: auto;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-}
-
-.logo {
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.logo span {
-    color: #4776e6;
-}
-
-.menu {
-    display: flex;
-    gap: 24px;
-    font-size: 14px;
-    color: #52606d;
-}
-
-.menu a:hover {
-    color: #4776e6;
-}
-
-.login {
-    padding: 9px 18px;
-    border: 1px solid #d9dee5;
-    border-radius: 20px;
-    background: white;
-}
-
-/* =========================
-   Hero
-========================= */
-
-.hero {
-    min-height: 600px;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(92,139,255,.18), transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(97,211,177,.16), transparent 35%),
-        linear-gradient(135deg,#eef4ff,#f8fbff 50%,#eefaf6);
-    display: flex;
-    align-items: center;
-}
-
-.hero-inner {
-    max-width: 1280px;
-    width: 100%;
-    margin: auto;
-    padding: 90px 24px;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.badge {
-    display: inline-block;
-    padding: 7px 13px;
-    background: white;
-    border: 1px solid #dfe6f0;
-    border-radius: 30px;
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-    font-size: clamp(38px,5vw,68px);
-    line-height: 1.15;
-    letter-spacing: -2px;
-    margin-bottom: 25px;
-}
-
-.hero h1 span {
-    color: #4776e6;
-}
-
-.hero p {
-    font-size: 18px;
-    color: #5b6875;
-    max-width: 650px;
-    margin-bottom: 32px;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.btn-primary,
-.btn-secondary {
-    padding: 14px 23px;
-    border-radius: 12px;
-    font-size: 15px;
-    border: none;
-}
-
-.btn-primary {
-    background: #4776e6;
-    color: white;
-}
-
-.btn-secondary {
-    background: white;
-    border: 1px solid #dce2e9;
-}
-
-/* =========================
-   Virtual World Preview
-========================= */
-
-.world-preview {
-    min-height: 380px;
-    border-radius: 28px;
-    background:
-        linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.25)),
-        radial-gradient(circle at 50% 40%,#dff3ff,#d8e7f4 50%,#cbd9df);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,.8);
-    box-shadow: 0 25px 60px rgba(53,72,93,.12);
-}
-
-.world-label {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255,255,255,.8);
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-}
-
-.world-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.7);
-    border: 2px solid rgba(71,118,230,.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: 700;
-    color: #4776e6;
-}
-
-.world-card {
-    position: absolute;
-    padding: 10px 14px;
-    background: rgba(255,255,255,.9);
-    border-radius: 14px;
-    font-size: 13px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.06);
-}
-
-.card-1 { top: 80px; left: 30px; }
-.card-2 { top: 70px; right: 25px; }
-.card-3 { bottom: 65px; left: 40px; }
-.card-4 { bottom: 45px; right: 30px; }
-
-/* =========================
-   Section
-========================= */
-
-.section {
-    max-width: 1280px;
-    margin: auto;
-    padding: 90px 24px;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.section-title h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.section-title p {
-    color: #687582;
-}
-
-/* =========================
-   4 Core Zones
-========================= */
-
-.core-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 18px;
-}
-
-.core-card {
-    background: white;
-    border-radius: 22px;
-    padding: 30px;
-    min-height: 260px;
-    border: 1px solid #e7ebef;
-    transition: .25s;
-}
-
-.core-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,.07);
-}
-
-.core-number {
-    font-size: 13px;
-    color: #4776e6;
-    margin-bottom: 18px;
-}
-
-.core-card h3 {
-    font-size: 23px;
-    margin-bottom: 10px;
-}
-
-.core-card p {
-    color: #66727d;
-    font-size: 14px;
-}
-
-/* =========================
-   Experience
-========================= */
-
-.experience {
-    background: white;
-}
-
-.experience-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 15px;
-}
-
-.exp-card {
-    padding: 24px;
-    min-height: 150px;
-    border-radius: 18px;
-    background: #f7f9fb;
-    border: 1px solid #e8edf1;
-}
-
-.exp-card h4 {
-    margin-bottom: 8px;
-}
-
-.exp-card p {
-    font-size: 13px;
-    color: #697681;
-}
-
-/* =========================
-   Productive Experience
-========================= */
-
-.production {
-    background: #f0f5ff;
-}
-
-.production-flow {
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 10px;
-    align-items: center;
-}
-
-.flow-box {
-    background: white;
-    padding: 24px 15px;
-    text-align: center;
-    border-radius: 16px;
-    border: 1px solid #dce5f3;
-}
-
-.arrow {
-    text-align: center;
-    font-size: 22px;
-    color: #4776e6;
-}
-
-/* =========================
-   User Roles
-========================= */
-
-.roles {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
-
-.role {
-    background: white;
-    border: 1px solid #dce2e8;
-    border-radius: 30px;
-    padding: 10px 18px;
-    font-size: 14px;
-}
-
-/* =========================
-   Ecosystem
-========================= */
-
-.ecosystem {
-    background: #18212b;
-    color: white;
-}
-
-.ecosystem .section-title p {
-    color: #b8c2cc;
-}
-
-.eco-grid {
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 14px;
-}
-
-.eco-card {
-    padding: 25px 18px;
-    border-radius: 16px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.1);
-    text-align: center;
-}
-
-.eco-card h4 {
-    margin-bottom: 8px;
-}
-
-.eco-card p {
-    font-size: 12px;
-    color: #bdc7d0;
-}
-
-/* =========================
-   Future
-========================= */
-
-.future-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 18px;
-}
-
-.future-card {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    border: 1px solid #e5e9ed;
-}
-
-.future-card h3 {
-    margin-bottom: 10px;
-}
-
-.future-card p {
-    font-size: 14px;
-    color: #66727d;
-}
-
-/* =========================
-   CTA
-========================= */
-
-.cta {
-    max-width: 1000px;
-    margin: 80px auto;
-    padding: 60px 30px;
-    text-align: center;
-    background: linear-gradient(135deg,#4776e6,#6c8ff0);
-    border-radius: 30px;
-    color: white;
-}
-
-.cta h2 {
-    font-size: 34px;
-    margin-bottom: 15px;
-}
-
-.cta p {
-    opacity: .9;
-    margin-bottom: 25px;
-}
-
-.cta button {
-    padding: 13px 24px;
-    border: none;
-    border-radius: 12px;
-    background: white;
-    color: #4776e6;
-}
-
-/* =========================
-   Footer
-========================= */
-
-footer {
-    background: #111820;
-    color: #aeb8c2;
-    padding: 40px 24px;
-    text-align: center;
-    font-size: 13px;
-}
-
-/* =========================
-   Responsive
-========================= */
-
-@media(max-width:900px) {
-
-    .hero-inner {
-        grid-template-columns: 1fr;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI MetaPlatZone | AI플랫마켓</title>
+  <style>
+    :root {
+      --navy:#0d1f35; --navy2:#1a3556; --red:#c0392b; --gold:#c9a84c;
+      --grn:#1a7a4a; --grn2:#0d5c36; --gnb-grn:#15603e; --gnb-grn2:#0e4a30;
+      --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
+      --bg:#06111f; --bg-2:#0a1930; --glass:rgba(255,255,255,.12);
+      --glass-strong:rgba(255,255,255,.18);
+      --line:rgba(255,255,255,.18); --text:#f7fbff; --muted:#97a6ba;
+      --r:18px; --fs:'Pretendard','Noto Sans KR',sans-serif;
+      --shadow:0 24px 80px rgba(0,0,0,.35);
     }
 
-    .core-grid,
-    .experience-grid,
-    .future-grid {
-        grid-template-columns: repeat(2,1fr);
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; font-family:var(--fs); color:var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(81,129,255,.25), transparent 20%),
+        radial-gradient(circle at 80% 5%, rgba(0,255,180,.15), transparent 25%),
+        linear-gradient(135deg, #050d1b, #0a1630 45%, #06121f 100%);
     }
 
-    .eco-grid {
-        grid-template-columns: repeat(2,1fr);
-    }
+    a { color:inherit; text-decoration:none; }
 
-    .production-flow {
-        grid-template-columns: 1fr;
-    }
+    nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
+    .gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
+    .gnb-top-scroll{padding-left:0px}
+    .gnb-top-scroll::-webkit-scrollbar{display:none}
+    .gnb-top-fixed{padding:4px 0 4px 2px}
+    .gnb-sub{padding:0;scrollbar-width:none}
+    .gnb-sub::-webkit-scrollbar{display:none}
+    .gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+    .gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
+    .gnb-cat-bar-wrap{position:relative}
+    .gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+    .gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+    .gnb-cat-bar::-webkit-scrollbar{display:none}
+    .gcat{position:relative;flex-shrink:0}
+    .gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+    .gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+    .caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+    .gcat.open .caret{transform:rotate(180deg)}
+    .gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+    .gcat.open .gcdrop{display:block}
+    .gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+    .gcdrop-list{display:flex;flex-direction:column;gap:2px}
+    .gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+    .gcdi:hover{background:#f0f4ff}
+    .gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+    .gcdi-txt{display:flex;flex-direction:column;min-width:0}
+    .gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+    .gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
+    .gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+    .gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+    .gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
+    .gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+    .gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+    .gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+    .gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+    .gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+    .gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+    .gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
 
-    .arrow {
-        transform: rotate(90deg);
-    }
+    footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+    .ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+    .ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+    .ft-copy{font-size:.7rem}
+    .ft-links{display:flex;gap:12px;flex-wrap:wrap}
+    .ft-links a{font-size:.73rem;transition:color .2s}
+    .ft-links a:hover{color:var(--gold)}
+    @keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
 
-    .menu {
-        display: none;
+    .page-shell { padding: 28px 18px 56px; }
+    .page-wrap { max-width: 1280px; margin: 0 auto; }
+    .hero { position:relative; overflow:hidden; background:linear-gradient(135deg, rgba(21,49,84,.9), rgba(5,13,22,.9)); border:1px solid rgba(255,255,255,.12); border-radius:28px; padding:30px; box-shadow:var(--shadow); }
+    .hero::before { content:''; position:absolute; inset:auto -20% -60% auto; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(83,154,255,.45), transparent 65%); filter:blur(10px); }
+    .hero-grid { display:grid; gap:20px; grid-template-columns:1.25fr .9fr; align-items:stretch; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); color:#b5c7df; font-size:.74rem; letter-spacing:.05em; }
+    h1 { font-size:clamp(2.2rem, 4vw, 4rem); line-height:1.05; margin:16px 0 12px; }
+    .hero p { margin:0; color:#b9c8dc; font-size:1rem; line-height:1.8; }
+    .cta-row { margin-top:20px; display:flex; gap:12px; flex-wrap:wrap; }
+    .hero-focus {
+      margin-top:16px; display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
+      border-radius:14px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
+      color:#d4e3f7; font-size:.78rem;
     }
-}
-
-@media(max-width:600px) {
-
-    .core-grid,
-    .experience-grid,
-    .future-grid {
-        grid-template-columns: 1fr;
+    .hero-focus strong { color:white; }
+    .btn { padding:12px 18px; border-radius:12px; font-size:.9rem; font-weight:800; border:1px solid transparent; }
+    .btn.primary { background:linear-gradient(135deg, #8ed2ff, #6f8bff); color:#02111e; }
+    .btn.secondary { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.12); color:white; }
+    .hero-stats { display:grid; gap:12px; grid-template-columns:repeat(3,1fr); margin-top:22px; }
+    .stat-card { padding:18px; border-radius:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); }
+    .stat-card strong { display:block; font-size:1.55rem; margin-bottom:4px; }
+    .stat-card span { color:#9fb0c4; font-size:.78rem; }
+    .orbit { position:relative; min-height:360px; border-radius:24px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.14); padding:18px; }
+    .orbit-shell { position:absolute; inset:28px; border-radius:50%; border:1px dashed rgba(141,196,255,.35); }
+    .orbit-shell::before, .orbit-shell::after { content:''; position:absolute; inset:18px; border-radius:50%; border:1px solid rgba(255,255,255,.08); }
+    .orbit-node { position:absolute; width:100px; height:100px; border-radius:50%; backdrop-filter:blur(14px); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; font-size:.78rem; }
+    .orbit-node.center { width:142px; height:142px; background:linear-gradient(135deg, rgba(119,228,255,.26), rgba(127,107,255,.2)); left:50%; top:50%; transform:translate(-50%, -50%); }
+    .orbit-node.n1 { left:7%; top:18%; }
+    .orbit-node.n2 { right:9%; top:15%; }
+    .orbit-node.n3 { left:10%; bottom:16%; }
+    .orbit-node.n4 { right:10%; bottom:15%; }
+    .glass-card { background:rgba(255,255,255,.08); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.14); border-radius:22px; box-shadow:var(--shadow); }
+    .clickable-card {
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      position:relative;
     }
-
-    .hero h1 {
-        font-size: 40px;
+    .clickable-card:hover,
+    .clickable-card:focus-visible {
+      transform:translateY(-3px);
+      border-color:rgba(140,220,255,.62);
+      box-shadow:0 30px 82px rgba(0,0,0,.42);
+      outline:none;
     }
-
-    .section {
-        padding: 60px 20px;
+    .clickable-card.active {
+      background:rgba(255,255,255,.13);
+      border-color:rgba(140,220,255,.85);
+      box-shadow:0 0 0 1px rgba(140,220,255,.25), 0 22px 74px rgba(0,0,0,.46);
     }
-
-    .world-preview {
-        min-height: 320px;
+    .modal-overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(1,8,18,.72);
+      backdrop-filter:blur(16px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:3000;
     }
-}
-</style>
+    .modal-overlay.show { display:flex; }
+    .modal-card {
+      width:min(680px, 100%);
+      background:linear-gradient(180deg, rgba(14,28,49,.95), rgba(8,16,32,.96));
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 24px 80px rgba(0,0,0,.45);
+    }
+    .modal-card h3 { margin:0 0 8px; font-size:1.4rem; }
+    .modal-card p { margin:0; color:#b9c8dc; line-height:1.8; }
+    .modal-actions { margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
+    .modal-actions button {
+      border:none; border-radius:12px; padding:10px 14px; cursor:pointer; font-weight:700;
+    }
+    .modal-actions button.primary { background:linear-gradient(135deg, #8ed2ff, #6f8bff); color:#03111d; }
+    .modal-actions button.secondary { background:rgba(255,255,255,.08); color:white; border:1px solid rgba(255,255,255,.14); }
+    .toast {
+      position:fixed; right:18px; bottom:20px; min-width:260px; max-width:360px;
+      background:rgba(5,12,24,.92); border:1px solid rgba(135,201,255,.35);
+      color:#f7faff; padding:12px 14px; border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,.42);
+      opacity:0; transform:translateY(12px); pointer-events:none; transition:.22s ease;
+      z-index:4000; font-size:.82rem;
+    }
+    .toast.show { opacity:1; transform:translateY(0); }
+    .section-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:18px; margin-top:22px; }
+    .col-span-4 { grid-column:span 4; }
+    .col-span-5 { grid-column:span 5; }
+    .col-span-6 { grid-column:span 6; }
+    .col-span-7 { grid-column:span 7; }
+    .col-span-8 { grid-column:span 8; }
+    .col-span-12 { grid-column:span 12; }
+    .panel { padding:22px; }
+    .panel h2 { margin:0 0 8px; font-size:1.15rem; }
+    .panel p, .panel li { color:#b5c5d8; line-height:1.7; font-size:.93rem; }
+    .mini-list { display:grid; gap:12px; }
+    .mini-card { padding:12px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); }
+    .tag-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .tag { padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); font-size:.72rem; color:#d6e4f4; }
+    .dashboard-grid { display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
+    .metric { padding:14px; border-radius:16px; background:rgba(255,255,255,.05); }
+    .metric .label { color:#9db1c8; font-size:.77rem; }
+    .metric strong { font-size:1.3rem; display:block; margin-top:4px; }
+    .progress { margin-top:10px; height:10px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; }
+    .progress span { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg, #7fe2ff, #7f92ff); }
+    .worlds { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .world-card { padding:16px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); min-height:160px; }
+    .world-card h3 { margin:3px 0 10px; font-size:1rem; }
+    .split-world { display:grid; grid-template-columns:1.05fr .95fr; gap:14px; margin-top:16px; }
+    .earth-panel, .planet-panel { padding:18px; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); }
+    .earth-panel h3, .planet-panel h3 { margin-top:0; margin-bottom:10px; }
+    .mini-row { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
+    .mini-pill { padding:12px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
+    .planet-visual {
+      margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center;
+    }
+    .real-globe {
+      position:relative; width:100%; max-width:240px; aspect-ratio:1; margin:0 auto;
+      border-radius:50%;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.22)),
+        url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80');
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      box-shadow:inset 0 0 22px rgba(255,255,255,.34), inset 0 -24px 44px rgba(0,0,0,.4), 0 24px 50px rgba(0,0,0,.38);
+      overflow:hidden;
+      filter:saturate(1.08) contrast(1.04);
+    }
+    .real-globe::before {
+      content:''; position:absolute; inset:14px; border-radius:50%; border:1px solid rgba(255,255,255,.32);
+      box-shadow:inset 0 0 24px rgba(255,255,255,.18);
+    }
+    .real-globe::after {
+      content:''; position:absolute; inset:0; background:
+        radial-gradient(circle at 28% 30%, rgba(255,255,255,.35), transparent 18%),
+        radial-gradient(circle at 75% 25%, rgba(255,255,255,.16), transparent 22%),
+        radial-gradient(circle at 45% 70%, rgba(14,58,120,.45), transparent 22%);
+      pointer-events:none;
+    }
+    .real-globe .globe-continents {
+      position:absolute; inset:0; border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 34%, rgba(255,255,255,.1), transparent 14%),
+        radial-gradient(circle at 60% 26%, rgba(255,255,255,.1), transparent 12%),
+        radial-gradient(circle at 64% 66%, rgba(255,255,255,.09), transparent 15%),
+        radial-gradient(circle at 40% 63%, rgba(255,255,255,.09), transparent 14%);
+      opacity:.5;
+      mix-blend-mode:screen;
+    }
+    .real-globe .globe-grid {
+      position:absolute; inset:0; border-radius:50%;
+      background:
+        linear-gradient(90deg, transparent 46%, rgba(255,255,255,.2) 46% 47%, transparent 47% 100%),
+        linear-gradient(180deg, transparent 44%, rgba(255,255,255,.16) 44% 45%, transparent 45% 100%);
+      opacity:.44;
+    }
+    .real-globe .globe-cloud {
+      position:absolute; width:58%; height:20%; border-radius:50%; background:rgba(255,255,255,.28);
+      filter:blur(8px); opacity:.45;
+    }
+    .real-globe .globe-cloud.c1 { top:16%; left:12%; }
+    .real-globe .globe-cloud.c2 { top:56%; right:10%; }
+    .avatar-marker {
+      position:absolute; width:64px; height:64px; border-radius:50%; display:flex;
+      align-items:center; justify-content:center; flex-direction:column; font-size:.67rem; font-weight:800;
+      border:2px solid rgba(255,255,255,.7); box-shadow:0 8px 22px rgba(0,0,0,.35);
+      background:rgba(255,255,255,.18); backdrop-filter:blur(14px);
+      color:#f8fbff;
+      text-align:center;
+    }
+    .avatar-marker.user { background:linear-gradient(135deg, rgba(150,244,255,.95), rgba(87,110,255,.95)); color:#041324; }
+    .avatar-marker.other { background:linear-gradient(135deg, rgba(148,255,220,.9), rgba(53,151,98,.95)); color:#041b11; }
+    .avatar-marker span { display:block; font-size:.56rem; opacity:.86; }
+    .orbit-planet {
+      position:relative; min-height:230px; border-radius:18px; background:
+        radial-gradient(circle at 50% 50%, rgba(117,207,255,.18), transparent 50%),
+        rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12); overflow:hidden;
+    }
+    .orbit-ring {
+      position:absolute; inset:16px; border:1px dashed rgba(145,199,255,.34); border-radius:50%;
+    }
+    .orbit-ring::before, .orbit-ring::after { content:''; position:absolute; inset:20px; border-radius:50%; border:1px solid rgba(255,255,255,.1); }
+    .orbit-planet .planet-core {
+      position:absolute; inset:50% auto auto 50%; width:112px; height:112px; transform:translate(-50%, -50%);
+      border-radius:50%; background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.9), rgba(130,234,255,.7) 14%, rgba(93,112,255,.92) 56%, rgba(16,29,71,.98) 100%);
+      box-shadow:inset 0 0 24px rgba(255,255,255,.32), 0 18px 32px rgba(0,0,0,.35);
+    }
+    .orbit-planet .planet-core::before {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      background:
+        radial-gradient(circle at 24% 66%, rgba(52,178,151,.88), transparent 14%),
+        radial-gradient(circle at 72% 26%, rgba(132,242,211,.72), transparent 12%),
+        radial-gradient(circle at 52% 44%, rgba(78,164,136,.88), transparent 14%);
+      opacity:.95;
+    }
+    .orbit-planet .planet-core::after {
+      content:''; position:absolute; inset:8px; border-radius:50%; border:1px solid rgba(255,255,255,.18);
+      box-shadow:inset 0 0 18px rgba(255,255,255,.18);
+    }
+    .orbit-planet .satellite {
+      position:absolute; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, rgba(169,242,255,.9), rgba(111,120,255,.9)); color:#041222; font-weight:900; box-shadow:0 12px 25px rgba(0,0,0,.32);
+    }
+    .orbit-planet .satellite.s1 { left:18%; top:22%; }
+    .orbit-planet .satellite.s2 { right:22%; top:16%; }
+    .orbit-planet .satellite.s3 { right:18%; bottom:16%; }
+    .orbit-planet .satellite.s4 { left:20%; bottom:18%; }
+    .world-explorer {
+      display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; align-items:stretch;
+    }
+    .zone-marker, .planet-marker {
+      position:absolute; border:none; cursor:pointer; border-radius:999px; color:#041323; font-weight:900;
+      padding:8px 10px; box-shadow:0 10px 26px rgba(0,0,0,.3);
+      transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+    .zone-marker:hover, .planet-marker:hover { transform:translateY(-2px) scale(1.03); filter:brightness(1.08); }
+    .zone-marker.real { background:linear-gradient(135deg, #8fe9ff, #9aa4ff); }
+    .zone-marker.virtual { background:linear-gradient(135deg, #a0ffd0, #79b2ff); }
+    .zone-marker span, .planet-marker span { font-size:.58rem; display:block; font-weight:700; }
+    .district-stage {
+      padding:14px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .cursor-hint {
+      position:fixed; z-index:2600; min-width:220px; max-width:280px; padding:10px 12px;
+      border-radius:12px; background:rgba(4,12,24,.95); border:1px solid rgba(140,208,255,.35);
+      box-shadow:0 18px 40px rgba(0,0,0,.42); color:#eff8ff; font-size:.62rem; line-height:1.5;
+      pointer-events:none; opacity:0; transform:translate(-8px, -8px); transition:opacity .12s ease;
+    }
+    .cursor-hint.show { opacity:1; }
+    .cursor-hint strong { display:block; margin-bottom:3px; font-size:.7rem; }
+    .cursor-hint a { color:#8fe9ff; text-decoration:none; }
+    .cursor-hint a:hover { text-decoration:underline; }
+    .district-header {
+      display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
+    }
+    .zone-pill {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px;
+      background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); font-size:.7rem; font-weight:800;
+    }
+    .zone-pill.reality { color:#8fe9ff; }
+    .zone-pill.virtual { color:#a0ffd0; }
+    .district-actions { display:flex; gap:8px; }
+    .explorer-action {
+      border:none; border-radius:10px; padding:8px 12px; cursor:pointer; font-weight:800; font-size:.74rem;
+    }
+    .explorer-action.enter { background:linear-gradient(135deg, #8fe9ff, #7e90ff); color:#03111f; }
+    .explorer-action.exit { background:rgba(255,255,255,.08); color:white; border:1px solid rgba(255,255,255,.14); }
+    .district-viewport {
+      position:relative; min-height:220px; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.14);
+      background:
+        linear-gradient(180deg, rgba(109,195,255,.16), rgba(4,14,28,.85)),
+        radial-gradient(circle at center, rgba(255,255,255,.12), rgba(255,255,255,.03));
+    }
+    .district-viewport::before {
+      content:''; position:absolute; inset:0; background:
+        linear-gradient(90deg, transparent 0 50%, rgba(255,255,255,.08) 50% 52%, transparent 52% 100%),
+        linear-gradient(180deg, transparent 0 52%, rgba(255,255,255,.08) 52% 54%, transparent 54% 100%);
+      opacity:.6;
+    }
+    .district-road {
+      position:absolute; inset:18px; border-radius:12px; background:
+        linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.04)),
+        repeating-linear-gradient(90deg, rgba(246,204,120,.5) 0 14px, rgba(12,24,43,.9) 14px 82px);
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);
+    }
+    .district-shop {
+      position:absolute; width:74px; height:48px; border-radius:10px; background:linear-gradient(135deg, rgba(130,255,224,.92), rgba(66,143,211,.92));
+      display:flex; align-items:center; justify-content:center; font-size:.66rem; font-weight:900; color:#04233e;
+      box-shadow:0 10px 20px rgba(0,0,0,.25);
+    }
+    .district-shop.shop-a { left:14%; top:28%; }
+    .district-shop.shop-b { right:14%; top:22%; }
+    .district-shop.shop-c { right:18%; bottom:18%; }
+    .district-shop.shop-d { left:22%; bottom:22%; }
+    .district-viewport.in-zoom .district-road {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.07)),
+        repeating-linear-gradient(90deg, rgba(246,204,120,.48) 0 10px, rgba(12,24,43,.85) 10px 62px);
+    }
+    .district-viewport.in-zoom::after {
+      content:'현실 동네 골목 / 차도 / 상점이 확대되어 입장 중입니다.';
+      position:absolute; right:10px; bottom:10px; padding:6px 10px; border-radius:999px; font-size:.65rem;
+      background:rgba(2,11,20,.8); border:1px solid rgba(255,255,255,.12); color:#ddedff;
+    }
+    .planet-map {
+      position:relative; min-height:200px; border-radius:16px; background:
+        radial-gradient(circle at 50% 50%, rgba(98,140,255,.18), transparent 60%),
+        rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+      overflow:hidden; margin-top:12px;
+    }
+    .planet-map::before {
+      content:''; position:absolute; inset:18px; border-radius:50%; border:1px dashed rgba(140,208,255,.4);
+    }
+    .planet-map::after {
+      content:''; position:absolute; inset:36px; border-radius:50%; background:radial-gradient(circle, rgba(128,255,222,.3), rgba(70,106,255,.15));
+    }
+    .planet-map .planet-sphere {
+      position:absolute; inset:24px; margin:auto; width:120px; height:120px; border-radius:50%;
+      background:
+        radial-gradient(circle at 35% 32%, rgba(255,255,255,.96), rgba(119,228,255,.64) 12%, transparent 13%),
+        radial-gradient(circle at 62% 64%, rgba(74,203,186,.75), rgba(82,101,255,.95) 55%, rgba(8,17,48,1) 100%);
+      box-shadow:inset 0 0 22px rgba(255,255,255,.3), 0 12px 30px rgba(0,0,0,.34);
+    }
+    .planet-map .planet-sphere::before {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      background:
+        radial-gradient(circle at 28% 36%, rgba(66,179,134,.86), transparent 16%),
+        radial-gradient(circle at 68% 32%, rgba(123,240,211,.75), transparent 11%),
+        radial-gradient(circle at 54% 64%, rgba(48,137,107,.9), transparent 16%);
+      opacity:.95;
+    }
+    .planet-map .planet-sphere::after {
+      content:''; position:absolute; inset:10px; border-radius:50%; border:1px solid rgba(255,255,255,.18);
+      box-shadow:inset 0 0 18px rgba(255,255,255,.18);
+    }
+    .planet-map .space-dots {
+      position:absolute; inset:0; background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 78% 24%, rgba(255,255,255,.72) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 38% 72%, rgba(255,255,255,.78) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 82% 76%, rgba(255,255,255,.9) 0 1px, transparent 1.5px);
+      opacity:.85;
+    }
+    .planet-summary {
+      margin-top:12px; padding:12px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+      color:#d4e3f8; font-size:.82rem; line-height:1.6;
+    }
+    .credit-panel { margin-top:18px; padding:16px; border-radius:18px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); }
+    .credit-progress { margin:10px 0 8px; height:12px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+    .credit-progress span { display:block; height:100%; width:75%; background:linear-gradient(90deg, #8fe6ff, #7d93ff); border-radius:inherit; }
+    .credit-meta { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:.78rem; color:#b8c8df; }
+    .timeline { padding-left:0; list-style:none; margin:12px 0 0; }
+    .timeline li { position:relative; padding:0 0 18px 30px; }
+    .timeline li::before { content:''; position:absolute; left:0; top:5px; width:12px; height:12px; border-radius:50%; background:linear-gradient(135deg, #85e5ff, #8b8dff); box-shadow:0 0 0 4px rgba(136,171,255,.16); }
+    .timeline li::after { content:''; position:absolute; left:5px; top:18px; bottom:-18px; width:2px; background:linear-gradient(180deg, rgba(136,171,255,.7), transparent); }
+    .timeline li:last-child::after { display:none; }
+    .lifemap { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .life-step { padding:16px; text-align:center; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); }
+    .life-step span { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #7fe6ff, #75a6ff); color:#042140; font-weight:900; margin-bottom:10px; }
+    .matrix-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .matrix-card h3 { margin-top:0; }
+    .flow { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; align-items:stretch; }
+    .flow-step { padding:16px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); text-align:center; }
+    .flow-step strong { display:block; margin:10px 0 6px; }
+    .flow-arrow { display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:#a9c7f6; }
+    .economy-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .ap { font-size:2rem; font-weight:900; background:linear-gradient(135deg, #9af8ff, #8dc1ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .xr-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .xr-chip { padding:18px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); }
+    .muted { color:var(--muted);} 
+    @media (max-width: 960px) {
+      .hero-grid, .section-grid, .worlds, .lifemap, .matrix-grid, .flow, .economy-grid, .xr-strip { grid-template-columns:1fr; }
+      .col-span-4,.col-span-5,.col-span-6,.col-span-7,.col-span-8,.col-span-12 { grid-column:span 12; }
+      .dashboard-grid { grid-template-columns:1fr; }
+      .hero-stats { grid-template-columns:1fr; }
+    }
+  </style>
 </head>
-
 <body>
-
-<header>
-
-<div class="nav">
-
-<div class="logo">
-AI<span>MetaZone</span>
-</div>
-
-<nav class="menu">
-<a href="#core">핵심 체험</a>
-<a href="#experience">현실 체험</a>
-<a href="#production">생산적 체험</a>
-<a href="#ecosystem">AI 생태계</a>
-<a href="#future">미래 확장</a>
-</nav>
-
-<button class="login">AI플랫마켓</button>
-
-</div>
-
-</header>
-
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-inner">
-
-<div>
-
-<div class="badge">
-AI플랫마켓 독립 프로젝트
-</div>
-
-<h1>
-나를 발견하고,<br>
-세상을 <span>직접 체험하다.</span>
-</h1>
-
-<p>
-AI LifeMap에서 나를 발견하고,
-AI Trust와 AI Boundary로 나의 가치와 경계를 이해하며,
-AI GrowthMap으로 발전하고 싶은 나를 찾습니다.
-그리고 AI MetaZone에서 실제 삶과 미래를 직접 체험합니다.
-</p>
-
-<div class="hero-buttons">
-
-<button class="btn-primary">
-AI MetaZone 시작하기
-</button>
-
-<button class="btn-secondary">
-AI LifeMap 먼저 알아보기
-</button>
-
-</div>
-
-</div>
-
-
-<div class="world-preview">
-
-<div class="world-label">
-Digital Twin · AI Virtual Experience
-</div>
-
-<div class="world-center">
-AI<br>
-MetaZone
-</div>
-
-<div class="world-card card-1">
-AI Trust
-</div>
-
-<div class="world-card card-2">
-AI Boundary
-</div>
-
-<div class="world-card card-3">
-AI GrowthMap
-</div>
-
-<div class="world-card card-4">
-AI Experience
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CORE -->
-
-<section class="section" id="core">
-
-<div class="section-title">
-
-<h2>AI MetaZone 핵심 체험</h2>
-
-<p>
-나를 이해하고, 가치와 경계를 발견하고,
-성장하며 직접 체험합니다.
-</p>
-
-</div>
-
-
-<div class="core-grid">
-
-<div class="core-card">
-
-<div class="core-number">01</div>
-
-<h3>AI Trust</h3>
-
-<p>
-나는 무엇을 신뢰하고 존경하는가?
-신뢰받는 사람과 조직의 행동,
-가치와 전문성을 탐색합니다.
-</p>
-
-</div>
-
-
-<div class="core-card">
-
-<div class="core-number">02</div>
-
-<h3>AI Boundary</h3>
-
-<p>
-나는 무엇에 경계를 두는가?
-불신·회피·위험·관계의 경계를
-상황 체험을 통해 이해합니다.
-</p>
-
-</div>
-
-
-<div class="core-card">
-
-<div class="core-number">03</div>
-
-<h3>AI GrowthMap</h3>
-
-<p>
-나는 무엇을 발전시키고 싶은가?
-나의 성향을 새로운 강점과 역량으로
-발전시키는 성장 체험입니다.
-</p>
-
-</div>
-
-
-<div class="core-card">
-
-<div class="core-number">04</div>
-
-<h3>AI Experience</h3>
-
-<p>
-직접 해보면 어떤가?
-직업·사업·농업·자연·스포츠·여행 등
-현실의 다양한 삶을 체험합니다.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- EXPERIENCE -->
-
-<section class="section experience" id="experience">
-
-<div class="section-title">
-
-<h2>현실의 모든 삶을 체험하다</h2>
-
-<p>
-도시뿐 아니라 자연과 지역,
-생산과 생활까지 다양한 현실을 경험합니다.
-</p>
-
-</div>
-
-
-<div class="experience-grid">
-
-<div class="exp-card">
-<h4>직업·사업</h4>
-<p>
-직장인 · 전문가 · 기업가 · 창업가 · 프리랜서
-</p>
-</div>
-
-<div class="exp-card">
-<h4>농업·농촌</h4>
-<p>
-농부 · 스마트팜 · 귀농 · 지역 농업
-</p>
-</div>
-
-<div class="exp-card">
-<h4>수산·어촌</h4>
-<p>
-어업 · 수산업 · 어촌 생활 · 해양산업
-</p>
-</div>
-
-<div class="exp-card">
-<h4>자연·환경</h4>
-<p>
-임업 · 산림 · 생태 · 자연생활
-</p>
-</div>
-
-<div class="exp-card">
-<h4>스포츠·건강</h4>
-<p>
-운동 · 건강관리 · 스포츠 · 웰니스
-</p>
-</div>
-
-<div class="exp-card">
-<h4>레저·여행</h4>
-<p>
-캠핑 · 여행 · 관광 · 다양한 라이프스타일
-</p>
-</div>
-
-<div class="exp-card">
-<h4>문화·예술</h4>
-<p>
-음악 · 미술 · 공연 · 영상 · 창작
-</p>
-</div>
-
-<div class="exp-card">
-<h4>미래산업</h4>
-<p>
-AI · 로봇 · 스마트시티 · 우주 · 미래모빌리티
-</p>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PRODUCTIVE EXPERIENCE -->
-
-<section class="section production" id="production">
-
-<div class="section-title">
-
-<h2>체험을 넘어 생산으로</h2>
-
-<p>
-AI MetaZone의 체험은 실제 결과물과 경제활동으로 연결될 수 있습니다.
-</p>
-
-</div>
-
-
-<div class="production-flow">
-
-<div class="flow-box">
-체험
-<br>
-Experience
-</div>
-
-<div class="arrow">→</div>
-
-<div class="flow-box">
-생산·창작
-<br>
-Create
-</div>
-
-<div class="arrow">→</div>
-
-<div class="flow-box">
-상품·서비스
-<br>
-Product
-</div>
-
-<div class="arrow">→</div>
-
-<div class="flow-box">
-판매·협업
-<br>
-Market
-</div>
-
-<div class="arrow">→</div>
-
-<div class="flow-box">
-성장·사업화
-<br>
-Growth
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ROLES -->
-
-<section class="section">
-
-<div class="section-title">
-
-<h2>누구나 여러 역할이 될 수 있습니다</h2>
-
-<p>
-하나의 이용자가 상황에 따라 다양한 역할로 참여합니다.
-</p>
-
-</div>
-
-
-<div class="roles">
-
-<div class="role">체험자</div>
-<div class="role">생산자</div>
-<div class="role">구매자</div>
-<div class="role">판매자</div>
-<div class="role">사업자</div>
-<div class="role">개발자</div>
-<div class="role">기획자</div>
-<div class="role">연구자</div>
-<div class="role">창작자</div>
-<div class="role">협업자</div>
-<div class="role">투자 참여자</div>
-
-</div>
-
-</section>
-
-
-<!-- ECOSYSTEM -->
-
-<section class="section ecosystem" id="ecosystem">
-
-<div class="section-title">
-
-<h2>AI플랫마켓 생태계 연결</h2>
-
-<p>
-체험에서 발견한 가능성을 실제 프로젝트와 시장으로 연결합니다.
-</p>
-
-</div>
-
-
-<div class="eco-grid">
-
-<div class="eco-card">
-<h4>AI LifeMap</h4>
-<p>나를 발견하고<br>인생·진로를 탐색</p>
-</div>
-
-<div class="eco-card">
-<h4>AI MetaZone</h4>
-<p>삶과 직업을<br>직접 체험</p>
-</div>
-
-<div class="eco-card">
-<h4>AI Simulation</h4>
-<p>선택과 결과를<br>가상으로 검증</p>
-</div>
-
-<div class="eco-card">
-<h4>AI ItemZone</h4>
-<p>아이디어와<br>시장성을 탐색</p>
-</div>
-
-<div class="eco-card">
-<h4>AI R&D</h4>
-<p>아이디어를<br>연구·개발</p>
-</div>
-
-</div>
-
-
-<div style="height:20px"></div>
-
-
-<div class="eco-grid">
-
-<div class="eco-card">
-<h4>AI 성장+마켓몰</h4>
-<p>개인과 사업의<br>성장을 현실화</p>
-</div>
-
-<div class="eco-card">
-<h4>AI플랫마켓</h4>
-<p>생산·구매·판매<br>협업·경제활동</p>
-</div>
-
-<div class="eco-card">
-<h4>AI Fusion</h4>
-<p>AI플랫마켓<br>데이터와 기능 연결</p>
-</div>
-
-<div class="eco-card">
-<h4>Digital Twin</h4>
-<p>실제 공간을<br>온라인으로 연결</p>
-</div>
-
-<div class="eco-card">
-<h4>AI 인생·진로 체험센터</h4>
-<p>온라인과 오프라인<br>현장 체험 연결</p>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FUTURE -->
-
-<section class="section" id="future">
-
-<div class="section-title">
-
-<h2>AI MetaZone의 미래</h2>
-
-<p>
-온라인 체험에서 실제 공간과 몰입형 미래 체험으로 확장합니다.
-</p>
-
-</div>
-
-
-<div class="future-grid">
-
-<div class="future-card">
-
-<h3>NOW</h3>
-
-<p>
-PC·모바일 기반
-AI 체험 콘텐츠
-</p>
-
-</div>
-
-<div class="future-card">
-
-<h3>3D</h3>
-
-<p>
-3D 가상공간
-AI 아바타
-AI 안내자
-</p>
-
-</div>
-
-<div class="future-card">
-
-<h3>VR · AR · XR</h3>
-
-<p>
-몰입형 직업·생활·산업 체험
-Digital Twin
-</p>
-
-</div>
-
-<div class="future-card">
-
-<h3>4D EXPERIENCE</h3>
-
-<p>
-온라인과 오프라인이 연결된
-미래형 체험센터
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CTA -->
-
-<div class="cta">
-
-<h2>
-당신은 어떤 삶을 살아보고 싶나요?
-</h2>
-
-<p>
-AI MetaZone에서 먼저 경험해 보세요.
-</p>
-
-<button>
-체험 시작하기
-</button>
-
-</div>
-
-
-<footer>
-
-AI MetaZone · AI플랫마켓 독립 프로젝트<br>
-나를 발견하고 · 세상을 체험하고 · 미래를 만들어가는 공간
-
-</footer>
-
-
-<script>
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-    anchor.addEventListener('click', function(e) {
-
-        e.preventDefault();
-
-        const target = document.querySelector(this.getAttribute('href'));
-
-        if(target) {
-
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy)">
+    <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
+    <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
+  </div>
+  <div class="gnb-cat-bar-wrap">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#promo-center','_blank');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#videocenter','_blank');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#newprod','_blank');closeCats()">🆕 더착한상품</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#recipe','_blank');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+            <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#create-sanglife','_blank');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+            <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">발라드</a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#travel','_blank');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#incident','_blank');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#global','_blank');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="window.open('https://aiplatmarket.com/#register','_blank')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
+    </div>
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+  </div>
+
+  <main class="page-shell">
+    <div class="page-wrap">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">AI MetaPlatZone • Open AI Digital Twin & Meta Civilization Platform</div>
+            <h1>현실을 이해하고, AI와 함께 미래 문명을 설계하는 디지털 트윈 플랫폼</h1>
+            <p>
+              AI메타플랫존은 단순한 메타버스가 아니라, 현실 데이터와 AI가 연결된 생태계입니다. 체험 → 결과물 → 상품화 → 협업 → 투자 → 실제 사업까지 이어지는 생산적 AI 체험 구조를 통해 참여자가 스스로 성장하고 경제적 가치를 창출합니다.
+            </p>
+            <div class="cta-row">
+              <a class="btn primary" href="#dashboard">Digital Twin Dashboard</a>
+              <a class="btn secondary" href="#creator-planet">Creator Planet</a>
+            </div>
+            <div class="hero-focus">
+              <span>현재 선택 모듈</span>
+              <strong id="focusLabel">AI Digital Twin Dashboard</strong>
+            </div>
+            <div class="credit-panel">
+              <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;">
+                <strong>Credit Progress</strong>
+                <span id="creditBadge" style="font-size:.74rem;color:#cbddf7">현재 75% · 다음 초기화 대기</span>
+              </div>
+              <div class="credit-progress"><span id="creditFill"></span></div>
+              <div class="credit-meta">
+                <span id="creditState">현재 크레딧 75% / 목표 100%</span>
+                <span id="resetInfo">100% 달성 시 다음 초기화 일시를 표시합니다.</span>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-card"><strong>Level 5</strong><span>Reality Connected Platform</span></div>
+              <div class="stat-card"><strong>AP Economy</strong><span>기여도 기반 보상 체계</span></div>
+              <div class="stat-card"><strong>36+</strong><span>AI Experience + Commerce Flow</span></div>
+            </div>
+          </div>
+
+          <div class="orbit">
+            <div class="orbit-shell"></div>
+            <div class="orbit-node n1">Reality<br/>Zone</div>
+            <div class="orbit-node n2">Meta<br/>Earth</div>
+            <div class="orbit-node n3">Meta<br/>Space</div>
+            <div class="orbit-node n4">Meta<br/>Universe</div>
+            <div class="orbit-node center">AI<br/>MetaPlatZone</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-grid">
+        <section id="dashboard" class="col-span-7 panel glass-card" data-modal-title="AI Digital Twin Dashboard" data-modal-text="AI메타플랫존의 중추 제어대입니다. 현실 데이터, Avatar, NPC, 커머스, 생산 경험이 연동되어 실시간 의사결정을 지원합니다.">
+          <h2>AI Digital Twin Dashboard</h2>
+          <p>현실과 가상을 연결하는 중심 제어대. 지도, 날씨, 교통, 환경, 산업, 교육, 창업 데이터를 한 번에 확인하며 Avatar와 NPC가 실시간 협업을 지원합니다.</p>
+          <div class="dashboard-grid" style="margin-top:16px;">
+            <div class="metric">
+              <div class="label">실시간 Reality Sync</div>
+              <strong>82%</strong>
+              <div class="progress"><span style="width:82%"></span></div>
+            </div>
+            <div class="metric">
+              <div class="label">AI Avatar 실행률</div>
+              <strong>91%</strong>
+              <div class="progress"><span style="width:91%"></span></div>
+            </div>
+            <div class="metric">
+              <div class="label">Creator Planet 설계 참여</div>
+              <strong>143건</strong>
+              <div class="progress"><span style="width:71%"></span></div>
+            </div>
+            <div class="metric">
+              <div class="label">AP Economy 거래량</div>
+              <strong>2,480 AP</strong>
+              <div class="progress"><span style="width:64%"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="col-span-5 panel glass-card">
+          <h2>AI Avatar 패널</h2>
+          <p>사용자는 AI Avatar를 생성하고 이동, 체험, 대화, 학습, 쇼핑, 생산, 창업, 투자까지 스스로 수행합니다. AI NPC가 안내와 협업을 돕습니다.</p>
+          <div class="mini-list">
+            <div class="mini-card"><strong>Avatar</strong><div class="muted">루나 / 탐험형 / 창업 지향</div></div>
+            <div class="mini-card"><strong>NPC Support</strong><div class="muted">도시 안내, 안전 경계 안내, 실시간 주제 추천</div></div>
+            <div class="mini-card"><strong>행동 경로</strong><div class="muted">체험 → 검증 → 생산 → 상품화 → 판매 → 투자</div></div>
+          </div>
+        </section>
+
+        <section class="col-span-4 panel glass-card">
+          <h2>Reality Sync 패널</h2>
+          <p>개인정보와 법률을 준수하며 공개 가능한 데이터만 단계적으로 연동합니다.</p>
+          <div class="tag-row">
+            <span class="tag">지도</span><span class="tag">위성</span><span class="tag">Street View</span><span class="tag">공개 WebCam</span>
+            <span class="tag">교통</span><span class="tag">날씨</span><span class="tag">환경정보</span><span class="tag">재난정보</span>
+          </div>
+        </section>
+
+        <section class="col-span-8 panel glass-card" data-modal-title="Level 1~5 발전 구조" data-modal-text="MVP 단계에서 시작해 실시간 디지털 트윈과 메타문명 플랫폼까지 확장하는 로드맵입니다. 각 단계는 현실 기반 데이터와 AI 융합을 통해 점진적으로 진화합니다.">
+          <h2>Level 1 ~ 5 발전 구조</h2>
+          <ul class="timeline">
+            <li><strong>Level 1</strong> — 지도·위성 기반 MVP</li>
+            <li><strong>Level 2</strong> — 공개 데이터(날씨·교통·웹캠) 연동</li>
+            <li><strong>Level 3</strong> — AI Digital Twin(Avatar·NPC·도시·농촌·산업)</li>
+            <li><strong>Level 4</strong> — Live Digital Twin(실시간 데이터 + AI 융합)</li>
+            <li><strong>Level 5</strong> — Reality Connected Platform + Meta Civilization + VR/AR/XR + Creator Planet</li>
+          </ul>
+        </section>
+
+        <section class="col-span-12 panel glass-card">
+          <h2>AI LifeMap</h2>
+          <div class="lifemap">
+            <div class="life-step"><span>1</span><strong>Discovery</strong><div class="muted">관심 영역 탐색</div></div>
+            <div class="life-step"><span>2</span><strong>Practice</strong><div class="muted">가상·현실 체험</div></div>
+            <div class="life-step"><span>3</span><strong>Production</strong><div class="muted">결과물 생성</div></div>
+            <div class="life-step"><span>4</span><strong>Scale</strong><div class="muted">상품화와 투자</div></div>
+          </div>
+        </section>
+
+        <section class="col-span-4 panel glass-card" data-modal-title="AI Trust" data-modal-text="신뢰와 존경받는 행동을 탐색하는 콘텐츠입니다. AI메타플랫존은 관계와 가치 기반의 협업 문화를 지향합니다.">
+          <h2>AI Trust</h2>
+          <p>신뢰와 존경받는 행동, 협업 기반의 가치 탐색을 중심에 둡니다.</p>
+        </section>
+        <section class="col-span-4 panel glass-card" data-modal-title="AI Boundary" data-modal-text="AI가 지나치게 개인을 대체하거나 위험한 행동을 유발하지 않도록 경계와 안전성을 명확히 정립합니다.">
+          <h2>AI Boundary</h2>
+          <p>위험 요소와 경계해야 할 행동을 사전에 검증하고 안전한 AI 체험을 설계합니다.</p>
+        </section>
+        <section class="col-span-4 panel glass-card" data-modal-title="AI GrowthMap" data-modal-text="성향과 역량을 늘리기 위한 성장 체험을 설계합니다. 개인의 약점과 강점을 점검하고 개선 루틴을 확립합니다.">
+          <h2>AI GrowthMap</h2>
+          <p>개인의 성향과 역량을 개선하기 위한 성장 체험과 학습 루틴을 구성합니다.</p>
+        </section>
+
+        <section class="col-span-6 panel glass-card" data-modal-title="AI Experience" data-modal-text="체험은 소비가 아니라 결과물 생성의 출발점입니다. 실험에서 상품화, 투자, 사업화까지 연결되는 생산적 체험 구조입니다.">
+          <h2>AI Experience</h2>
+          <p>모든 체험은 소비가 아니라 가치 창출의 시작입니다. 체험 후 결과물을 AI ItemZone, AI R&D, 투자, 판매까지 연결해 실질적인 사업화 흐름으로 이어집니다.</p>
+          <div class="tag-row"><span class="tag">체험</span><span class="tag">결과물</span><span class="tag">상품화</span><span class="tag">AI R&D</span><span class="tag">투자</span><span class="tag">사업화</span></div>
+        </section>
+
+        <section class="col-span-6 panel glass-card" data-modal-title="AI Strategy Lab" data-modal-text="손자병법을 포함한 다양한 전략 모델을 현실 문제 해결에 적용하는 실험 공간입니다. AI가 분석, 비교, 대안 제시를 수행합니다.">
+          <h2>AI Strategy Lab</h2>
+          <p>손자병법을 포함한 전략과 의사결정 모델을 현대 사회 문제 해결에 적용하며, AI가 상황 분석, 대안 제시, AI Simulation 연계까지 제공하는 실험형 공간입니다.</p>
+          <div class="tag-row"><span class="tag">전략 비교</span><span class="tag">의사결정</span><span class="tag">AI Simulation</span><span class="tag">실험</span></div>
+        </section>
+
+        <section class="col-span-12 panel glass-card" data-modal-title="생산적 체험 흐름" data-modal-text="체험 → 결과물 → 상품화 → AI ItemZone → AI R&D → 투자 → AI플랫마켓 판매 → 실제 사업으로 이어지는 경제적 체험 루프입니다.">
+          <h2>생산적 체험 흐름</h2>
+          <div class="flow">
+            <div class="flow-step"><div>🧭</div><strong>체험</strong><div class="muted">현실/가상 활동</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div>🧱</div><strong>결과물</strong><div class="muted">콘텐츠·데이터·산출물</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div>🛍️</div><strong>상품화</strong><div class="muted">AI ItemZone</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div>🚀</div><strong>투자·판매</strong><div class="muted">AI플랫마켓 연결</div></div>
+          </div>
+        </section>
+
+        <section class="col-span-6 panel glass-card" data-modal-title="Meta Commerce" data-modal-text="현실 상품 DB와 AI플랫마켓 DB를 기반으로 AI Avatar가 체험 후 실제 주문, 결제, 배송까지 연결되는 구조입니다.">
+          <h2>Meta Commerce</h2>
+          <p>현실 상품 DB와 AI플랫마켓 DB를 기반으로 아바타가 체험 후 실제 주문·결제·배송에 연결되는 구조를 설계합니다.</p>
+          <div class="tag-row"><span class="tag">현실 상품</span><span class="tag">AI플랫마켓 DB</span><span class="tag">Avatar 체험</span><span class="tag">결제</span><span class="tag">배송</span></div>
+        </section>
+
+        <section class="col-span-6 panel glass-card" data-modal-title="Avatar Commerce" data-modal-text="아바타는 단순 쇼핑을 넘어서 소비 예측, 추천, 재구매, 후속 생산까지 연결하는 상업적 행위를 수행합니다.">
+          <h2>Avatar Commerce</h2>
+          <p>아바타가 체험한 상품을 기반으로 쇼핑·주문·수요 예측까지 연결. 소비는 종료가 아니라 후속 생산과 성장으로 연결됩니다.</p>
+          <div class="tag-row"><span class="tag">추천</span><span class="tag">주문</span><span class="tag">결제</span><span class="tag">체험 후 재구매</span></div>
+        </section>
+
+        <section id="creator-planet" class="col-span-12 panel glass-card" data-modal-title="Creator Planet" data-modal-text="현실 지구와 가상 우주를 분리해 설계하며, 이용자와 팀이 스스로 새로운 행성을 만들고 운영하는 장기형 창조형 문명 플랫폼입니다.">
+          <h2>Creator Planet</h2>
+          <p>현실 지구와 기타 행성을 분리하여 각각의 운영 구조, 데이터 연동, 경제 흐름, 창조 기능을 명확하게 설계합니다. 현실 데이터 기반의 Digital Twin과 새로운 행성 설계 기능은 디지털 자산과 경제 생태계를 연결합니다.</p>
+          <div class="split-world">
+            <div class="earth-panel">
+              <h3>Reality Earth · Meta Earth</h3>
+              <p class="muted">공개 가능한 현실 데이터를 기반으로 실제 지역과 연결되는 체험 영역입니다.</p>
+              <div class="world-explorer">
+                <div class="real-globe">
+                  <div class="globe-continents"></div>
+                  <button class="zone-marker real" data-zone="부평 중앙골목" data-kind="reality" style="top:18%; left:12%;">골목<br><span>현실</span></button>
+                  <button class="zone-marker real" data-zone="동네상점가" data-kind="reality" style="top:28%; right:12%;">상점가<br><span>현실</span></button>
+                  <button class="zone-marker real" data-zone="시티차도" data-kind="reality" style="bottom:16%; left:26%;">차도<br><span>현실</span></button>
+                  <div class="avatar-marker user" style="top:18%; left:14%;">나<br><span>이용자</span></div>
+                  <div class="avatar-marker other" style="top:26%; right:14%;">A<br><span>동행자</span></div>
+                  <div class="avatar-marker other" style="bottom:18%; left:26%;">B<br><span>비즈니스</span></div>
+                </div>
+                <div class="district-stage">
+                  <div class="district-header">
+                    <div class="zone-pill reality">현실 영역 · 지구 확대</div>
+                    <div class="district-actions">
+                      <button class="explorer-action enter" id="enterDistrictBtn">입장</button>
+                      <button class="explorer-action exit" id="exitDistrictBtn">나가기</button>
+                    </div>
+                  </div>
+                  <div class="district-viewport" id="districtViewport">
+                    <div class="district-road"></div>
+                    <div class="district-shop shop-a" data-shop="아모레 패션스토어" data-building="M-플라자" data-address="인천광역시 부평구 항동로 33번길 36-11" data-contact="0505-505-9000">가게A</div>
+                    <div class="district-shop shop-b" data-shop="AI 커뮤니티 카페" data-building="글로벌 아르바이트센터" data-address="인천광역시 부평구 항동로 33번길 36-11 1층" data-contact="0505-505-9000">카페</div>
+                    <div class="district-shop shop-c" data-shop="로컬 경제 상점" data-building="AI플랫마켓 상가" data-address="인천광역시 부평구 항동로 33번길 36-11 2층" data-contact="0505-505-9000">상점</div>
+                    <div class="district-shop shop-d" data-shop="디지털 서점" data-building="부평 문화센터" data-address="인천광역시 부평구 항동로 33번길 36-11 3층" data-contact="0505-505-9000">도서관</div>
+                  </div>
+                  <div class="cursor-hint" id="cursorHint" aria-hidden="true"></div>
+                </div>
+              </div>
+              <div class="mini-row">
+                <div class="mini-pill"><strong>도시</strong><div class="muted">도시·농촌·어촌·산업 기반 체험</div></div>
+                <div class="mini-pill"><strong>지역 기반</strong><div class="muted">지역경제, 무역, 생활, 문화 연결</div></div>
+                <div class="mini-pill"><strong>Reality Sync</strong><div class="muted">지도·위성·교통·날씨·환경·재난</div></div>
+                <div class="mini-pill"><strong>주거·산업</strong><div class="muted">실제 산업·사업장·체험센터 연계</div></div>
+              </div>
+            </div>
+            <div class="planet-panel">
+              <h3>Meta Space · Meta Universe</h3>
+              <p class="muted">현실의 한계를 넘어 새로운 행성, 별, 문명, 천체 산업을 설계하는 확장 영역입니다.</p>
+              <div class="planet-map">
+                <div class="space-dots"></div>
+                <div class="planet-sphere"></div>
+                <button class="planet-marker virtual" data-zone="달 기반 허브" data-kind="virtual" style="top:18%; left:18%;">달<br><span>가상</span></button>
+                <button class="planet-marker virtual" data-zone="화성 생태도시" data-kind="virtual" style="top:22%; right:16%;">화성<br><span>가상</span></button>
+                <button class="planet-marker virtual" data-zone="새 행성 창조존" data-kind="virtual" style="bottom:20%; left:24%;">행성<br><span>가상</span></button>
+                <button class="planet-marker virtual" data-zone="우주상점 허브" data-kind="virtual" style="bottom:18%; right:18%;">상점<br><span>가상</span></button>
+              </div>
+              <div class="planet-summary" id="planetSummary">
+                현실의 실제 지구와 별의 가상 구역은 분리되어 있으며, 접근은 동일한 탐험 루틴으로 움직입니다. 지역 선택 → 확대 → 입장 → 상점/쇼핑/교육/공간 이동 → 복귀의 흐름을 구현합니다.
+              </div>
+              <div class="mini-row">
+                <div class="mini-pill"><strong>달 / 화성</strong><div class="muted">우주 자원·미래 산업·행성개발</div></div>
+                <div class="mini-pill"><strong>새 행성</strong><div class="muted">기후·중력·생태계·경제 설계</div></div>
+                <div class="mini-pill"><strong>Creator Planet</strong><div class="muted">AI NPC, 도시, 교육, 문화, 산업</div></div>
+                <div class="mini-pill"><strong>디지털 자산</strong><div class="muted">가상 토지·건축물·운영권·거래</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="worlds" style="margin-top:14px;">
+            <div class="world-card"><strong>Reality Zone</strong><div class="muted">현실 Digital Twin, 도시·농촌·어촌·산업·생활</div></div>
+            <div class="world-card"><strong>Meta Earth</strong><div class="muted">현실 지구 확장, 국가·도시·지역·자연</div></div>
+            <div class="world-card"><strong>Meta Space</strong><div class="muted">달·화성·우주정거장·태양계</div></div>
+            <div class="world-card"><strong>Meta Universe</strong><div class="muted">새 행성, 새로운 문명, Creator Planet</div></div>
+          </div>
+        </section>
+
+        <section class="col-span-5 panel glass-card" data-modal-title="Meta Economy / AP Economy" data-modal-text="참여자 모두가 체험자이자 생산자, 구매자, 판매자, 개발자, 투자자, 창업자가 되는 생태계를 목표로 합니다. AP는 보상과 거래의 핵심 수단입니다.">
+          <h2>Meta Economy / AP Economy</h2>
+          <p>참여자 모두가 체험자이자 생산자·구매자·판매자·개발자·투자자·창업자가 될 수 있는 생태계를 목표로 합니다. AP는 기여도와 보상, 거래를 위한 플랫폼 내 경제 수단입니다.</p>
+          <div class="economy-grid">
+            <div class="metric"><div class="label">AP 수요</div><div class="ap">AP</div><div class="muted">기여도·보상·거래</div></div>
+            <div class="metric"><div class="label">운영 구조</div><strong>Eco Loop</strong><div class="muted">체험 → 수익 → 재투자 → 생태계 확장</div></div>
+          </div>
+        </section>
+
+        <section class="col-span-7 panel glass-card" data-modal-title="AI Society & Meta Civilization" data-modal-text="AI와 인간이 협력하며 다양한 사회 모델을 실험하고 학습하는 공간입니다. 정답을 주고 끝내는 구조보다 진화하는 문명형 실험을 지향합니다.">
+          <h2>지속 가능한 AI Society & Meta Civilization</h2>
+          <p>AI와 인간이 함께 협력하며 새로운 사회와 문명을 연구하고 발전시키는 공간입니다. 정답을 주는 것이 아니라 다양한 모델을 실험하고 학습하는 문명형 플랫폼을 지향합니다.</p>
+          <div class="tag-row"><span class="tag">AI Society</span><span class="tag">Meta Civilization</span><span class="tag">지속가능한 발전</span><span class="tag">실험 기반 학습</span></div>
+        </section>
+
+        <section class="col-span-12 panel glass-card" data-modal-title="VR·AR·XR 확장 영역" data-modal-text="향후 확장 가능한 인터랙션 레이어입니다. 메타플랫폼은 현실 공간과 가상 공간을 연결하며 XR 몰입 경험으로 발전합니다.">
+          <h2>VR·AR·XR 확장 영역</h2>
+          <div class="xr-strip">
+            <div class="xr-chip"><strong>VR</strong><div class="muted">가상 공간 실감 체험</div></div>
+            <div class="xr-chip"><strong>AR</strong><div class="muted">현실 공간과 디지털 정보 결합</div></div>
+            <div class="xr-chip"><strong>XR</strong><div class="muted">미래형 현실-가상 인터페이스</div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="detailModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">AI MetaPlatZone</h3>
+      <p id="modalText">설명을 확인할 수 있습니다.</p>
+      <div class="modal-actions">
+        <button class="primary" onclick="closeModal()">확인</button>
+        <button class="secondary" onclick="closeModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <footer>
+    <div class="ft-outer">
+      <div class="ft">
+        <div style="min-width:240px">
+          <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+          <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+          <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+            © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+            대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+            사업자등록번호: 227-18-34338<br>
+            주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+            TEL: 0505-505-9000<br>
+            <span style="position:relative;display:inline-block">
+              <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+              <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+                <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span></a>
+                <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span></a>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+          <div class="ft-links">
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#about','_blank');return false">서비스 소개</a>
+            <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#terms','_blank');return false">이용약관</a>
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#privacy','_blank');return false">개인정보처리방침</a>
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#adcontact','_blank');return false">광고문의</a>
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#register','_blank');return false">입점문의</a>
+            <a href="#" onclick="window.open('https://aiplatmarket.com/#community','_blank');return false">커뮤니티</a>
+            <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+          </div>
+          <a href="/admin" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none" onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'" title="관리자 대시보드">⚙️ 관리자 대시보드</a>
+          <div style="position:relative" id="viewModeDdw">
+            <button onclick="toggleViewModeDd()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px" id="viewModeBtn"><span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾</button>
+            <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+              <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span></div>
+              <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const clickableCardSelectors = '.glass-card, .metric, .mini-card, .world-card, .life-step, .flow-step, .xr-chip, .stat-card';
+    const modal = document.getElementById('detailModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalText = document.getElementById('modalText');
+    const cards = Array.from(document.querySelectorAll(clickableCardSelectors));
+    const zoneMarkers = Array.from(document.querySelectorAll('.zone-marker, .planet-marker'));
+    const toast = document.getElementById('toast');
+    const focusLabel = document.getElementById('focusLabel');
+    const creditFill = document.getElementById('creditFill');
+    const creditState = document.getElementById('creditState');
+    const resetInfo = document.getElementById('resetInfo');
+    const creditBadge = document.getElementById('creditBadge');
+    const districtViewport = document.getElementById('districtViewport');
+    const planetSummary = document.getElementById('planetSummary');
+    const enterDistrictBtn = document.getElementById('enterDistrictBtn');
+    const exitDistrictBtn = document.getElementById('exitDistrictBtn');
+    const cursorHint = document.getElementById('cursorHint');
+
+    function showToast(message) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function openModal(title, text) {
+      if (!modal || !modalTitle || !modalText) return;
+      modalTitle.textContent = title || 'AI MetaPlatZone';
+      modalText.textContent = text || '설명을 확인할 수 있습니다.';
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      if (focusLabel) focusLabel.textContent = title;
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function refreshCreditStatus(progress) {
+      const current = Math.max(0, Math.min(100, progress));
+      if (creditFill) creditFill.style.width = current + '%';
+      if (creditState) creditState.textContent = current >= 100
+        ? '현재 크레딧 100% / 리셋 준비 완료'
+        : '현재 크레딧 ' + current + '% / 목표 100%';
+      if (creditBadge) creditBadge.textContent = current >= 100
+        ? '크레딧 100% 달성 · 다음 초기화 대기'
+        : '현재 ' + current + '% · 다음 초기화 대기';
+      if (resetInfo) {
+        if (current >= 100) {
+          const nextReset = new Date();
+          nextReset.setHours(24, 0, 0, 0);
+          resetInfo.textContent = '다음 초기화: ' + nextReset.toLocaleString('ko-KR');
+        } else {
+          resetInfo.textContent = '100% 달성 시 다음 초기화 일시를 표시합니다.';
         }
+      }
+    }
 
+    function updatePlanetSummary(zoneName, kind) {
+      if (!planetSummary) return;
+      const label = kind === 'virtual' ? '가상 우주 영역' : '현실 지구 영역';
+      planetSummary.textContent = zoneName + ' 위치를 선택했습니다. ' + label + '에서 확대 관찰, 상점 입장, 소셜 이동, 복귀까지 연결하는 인터랙션입니다.';
+    }
+
+    function renderCursorHint(shop, building, address, contact, x, y) {
+      if (!cursorHint) return;
+      const telHref = 'tel:' + contact.replace(/[^0-9+]/g, '');
+      cursorHint.innerHTML = [
+        '<strong>' + shop + '</strong>',
+        '건물명: ' + building + '<br>',
+        '주소: ' + address + '<br>',
+        '연락처: <a href="' + telHref + '" target="_self">' + contact + '</a>'
+      ].join('');
+      cursorHint.style.left = (x + 14) + 'px';
+      cursorHint.style.top = (y + 14) + 'px';
+      cursorHint.classList.add('show');
+      cursorHint.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideCursorHint() {
+      if (!cursorHint) return;
+      cursorHint.classList.remove('show');
+      cursorHint.setAttribute('aria-hidden', 'true');
+    }
+
+    function enterDistrictView() {
+      if (!districtViewport) return;
+      districtViewport.classList.add('in-zoom');
+      showToast('현실 지구 내부로 입장했습니다. 골목·상점·차도를 탐색할 수 있습니다.');
+    }
+
+    function exitDistrictView() {
+      if (!districtViewport) return;
+      districtViewport.classList.remove('in-zoom');
+      showToast('현실 지구에서 나와 메인 탐색 화면으로 복귀했습니다.');
+    }
+
+    function setActiveCard(card) {
+      cards.forEach((item) => item.classList.remove('active'));
+      card.classList.add('active');
+    }
+
+    cards.forEach((card) => {
+      card.classList.add('clickable-card');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.addEventListener('click', () => {
+        setActiveCard(card);
+        const title = card.dataset.modalTitle || card.querySelector('h2, h3, strong')?.textContent || 'AI MetaPlatZone';
+        const text = card.dataset.modalText || card.querySelector('p')?.textContent || '상세 설명이 준비되어 있습니다.';
+        openModal(title, text);
+        showToast('모듈 선택: ' + title);
+        const target = card.closest('section');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          card.click();
+        }
+      });
     });
 
-});
-
-
-document.querySelectorAll('button').forEach(button => {
-
-    button.addEventListener('click', () => {
-
-        alert(
-            'AI MetaZone MVP 체험 기능은 현재 준비 중입니다.'
-        );
-
+    zoneMarkers.forEach((marker) => {
+      marker.addEventListener('click', () => {
+        const zoneName = marker.dataset.zone || '지역';
+        const kind = marker.dataset.kind || 'reality';
+        updatePlanetSummary(zoneName, kind);
+        if (kind === 'reality') {
+          showToast('현실 영역 선택: ' + zoneName + ' · 확대 준비 완료');
+          openModal('Reality Region Explorer', zoneName + '을(를) 선택했습니다. 골목·상점·차도로 입장해 실제 유사 공간을 탐색할 수 있습니다.');
+        } else {
+          showToast('가상 영역 선택: ' + zoneName + ' · 행성 탐험 시작');
+          openModal('Meta Space Explorer', zoneName + '을(를) 선택했습니다. 별, 행성, 우주상점, 신규 문명 구성 요소를 우주형 체험 구조로 살펴볼 수 있습니다.');
+        }
+      });
     });
 
-});
+    districtViewport?.addEventListener('mousemove', (event) => {
+      const targetShop = event.target.closest('.district-shop');
+      if (!targetShop) {
+        hideCursorHint();
+        return;
+      }
+      const shop = targetShop.dataset.shop || targetShop.textContent.trim();
+      const building = targetShop.dataset.building || '건물 정보 없음';
+      const address = targetShop.dataset.address || '주소 정보 없음';
+      const contact = targetShop.dataset.contact || '연락처 정보 없음';
+      renderCursorHint(shop, building, address, contact, event.clientX, event.clientY);
+    });
 
-</script>
+    districtViewport?.addEventListener('mouseleave', hideCursorHint);
+    enterDistrictBtn?.addEventListener('click', enterDistrictView);
+    exitDistrictBtn?.addEventListener('click', exitDistrictView);
 
+    refreshCreditStatus(75);
+
+    setTimeout(() => {
+      if (cards.length > 0) {
+        const initialCards = cards.slice(0, 5);
+        initialCards.forEach((card) => card.classList.add('active'));
+        if (focusLabel) focusLabel.textContent = initialCards[0]?.dataset.modalTitle || 'AI Digital Twin Dashboard';
+      }
+    }, 80);
+
+    modal?.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal?.classList.contains('show')) closeModal();
+    });
+
+    function toggleCat(id, e) {
+      if (e) e.stopPropagation();
+      const cat = document.getElementById('gcat-' + id);
+      if (!cat) return;
+      const isOpen = cat.classList.contains('open');
+      closeCats();
+      if (isOpen) return;
+      cat.classList.add('open');
+      const btn = cat.querySelector('.gcbtn');
+      const drop = cat.querySelector('.gcdrop');
+      if (!btn || !drop) return;
+      const r = btn.getBoundingClientRect();
+      drop.style.top = (r.bottom + 1) + 'px';
+      drop.style.left = r.left + 'px';
+      drop.style.right = 'auto';
+      requestAnimationFrame(() => {
+        const dr = drop.getBoundingClientRect();
+        if (dr.right > window.innerWidth - 8) {
+          drop.style.left = 'auto';
+          drop.style.right = '8px';
+        }
+        if (dr.bottom > window.innerHeight - 8) {
+          drop.style.top = (r.top - dr.height - 1) + 'px';
+        }
+      });
+    }
+    window.addEventListener('scroll', () => closeCats(), { passive: true });
+    window.addEventListener('resize', () => closeCats());
+    function closeCats() {
+      document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open'));
+    }
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.gcat')) closeCats();
+    });
+    function updateGnbScrollHint(bar) {
+      const hint = document.getElementById('gnbScrollHint');
+      const hintL = document.getElementById('gnbScrollHintLeft');
+      if (!hint) return;
+      const canScrollMore = bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4;
+      const canScrollBack = bar.scrollLeft > 4;
+      hint.classList.toggle('show', canScrollMore);
+      if (hintL) hintL.classList.toggle('show', canScrollBack);
+    }
+    window.addEventListener('load', () => {
+      const bar = document.getElementById('gnbCatBar');
+      if (bar) updateGnbScrollHint(bar);
+    });
+    function toggleFtEmail() {
+      const dd = document.getElementById('ftEmailDd');
+      if (!dd) return;
+      dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+    }
+    function toggleViewModeDd() {
+      const dd = document.getElementById('viewModeDd');
+      dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+    }
+    function switchToPcMode() { document.getElementById('viewModeLbl').textContent = 'PC 버전'; document.getElementById('viewModeIco').textContent = '🖥'; toggleViewModeDd(); }
+    function switchToMobileMode() { document.getElementById('viewModeLbl').textContent = '모바일 버전'; document.getElementById('viewModeIco').textContent = '📱'; toggleViewModeDd(); }
+    if (typeof toast === 'undefined') {
+      window.toast = function(msg) { console.log('[toast]', msg); };
+    }
+  </script>
 </body>
 </html>
