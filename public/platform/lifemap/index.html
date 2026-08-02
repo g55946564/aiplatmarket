@@ -1,749 +1,2270 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Life Platform MVP</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Pretendard', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #070b16 0%, #0e1630 45%, #171225 100%);
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .bg-glow {
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: rgba(88, 120, 255, 0.12);
-      filter: blur(80px);
-      z-index: -1;
-    }
-
-    .glow1 {
-      top: -120px;
-      left: -120px;
-    }
-
-    .glow2 {
-      bottom: -180px;
-      right: -150px;
-      background: rgba(255, 190, 80, 0.10);
-    }
-
-    .container {
-      max-width: 1180px;
-      margin: auto;
-      padding: 24px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .logo span {
-      color: #7da4ff;
-    }
-
-    .menu {
-      display: flex;
-      gap: 18px;
-      color: rgba(255,255,255,0.7);
-      font-size: 14px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 30px;
-      align-items: center;
-      margin-bottom: 38px;
-    }
-
-    .hero-card,
-    .glass {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 28px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
-    }
-
-    .hero-card {
-      padding: 52px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(125,164,255,0.12);
-      color: #a6c0ff;
-      font-size: 13px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      font-size: 58px;
-      line-height: 1.08;
-      margin-bottom: 20px;
-      letter-spacing: -2px;
-    }
-
-    .hero p {
-      color: rgba(255,255,255,0.72);
-      line-height: 1.8;
-      font-size: 17px;
-      margin-bottom: 30px;
-    }
-
-    .cta-wrap {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 16px 28px;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.25s ease;
-      font-size: 15px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #7da4ff, #9f7bff);
-      color: #fff;
-      box-shadow: 0 8px 25px rgba(110,140,255,0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .side-panel {
-      padding: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .orbit {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.07);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .orbit::before {
-      content: '';
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: #9ec1ff;
-      border-radius: 50%;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 0 18px #8bb2ff;
-    }
-
-    .stats-grid {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .mini-card {
-      background: rgba(255,255,255,0.06);
-      border-radius: 22px;
-      padding: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .mini-title {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 10px;
-    }
-
-    .mini-value {
-      font-size: 28px;
-      font-weight: 700;
-    }
-
-    .form-section {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .form-card,
-    .result-card {
-      padding: 30px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      margin-bottom: 24px;
-      font-weight: 700;
-    }
-
-    .input-group {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: rgba(255,255,255,0.72);
-      font-size: 14px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      outline: none;
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .result-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 26px;
-    }
-
-    .score-ring {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: conic-gradient(#7da4ff 0deg 320deg, rgba(255,255,255,0.08) 320deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .score-inner {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: #0f1425;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 22px;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .analysis-box {
-      background: rgba(255,255,255,0.05);
-      border-radius: 20px;
-      padding: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .analysis-box h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-
-    .analysis-box p {
-      color: rgba(255,255,255,0.72);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .loading {
-      margin-top: 24px;
-      display: none;
-    }
-
-    .loading-bar {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .loading-progress {
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, #7da4ff, #b27bff);
-      animation: loading 2s infinite;
-    }
-
-    @keyframes loading {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(220%); }
-    }
-
-    .fusion-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .fusion-item {
-      padding: 14px;
-      border-radius: 16px;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.78);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .fusion-item.active {
-      background: linear-gradient(135deg, rgba(125,164,255,0.22), rgba(159,123,255,0.22));
-      border-color: rgba(125,164,255,0.35);
-      color: #fff;
-      box-shadow: 0 8px 20px rgba(110,140,255,0.18);
-    }
-
-    .fusion-item:hover {
-      transform: translateY(-2px);
-    }
-
-    .upload-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .upload-box input {
-      margin-top: 14px;
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .upload-icon {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .upload-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .upload-desc {
-      color: rgba(255,255,255,0.58);
-      font-size: 12px;
-    }
-
-    .footer-note {
-      margin-top: 40px;
-      text-align: center;
-      color: rgba(255,255,255,0.45);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    @media (max-width: 980px) {
-      .hero,
-      .form-section {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 42px;
-      }
-
-      .hero-card {
-        padding: 34px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        padding: 16px;
-      }
-
-      h1 {
-        font-size: 34px;
-      }
-
-      .hero-card,
-      .form-card,
-      .result-card {
-        padding: 24px;
-      }
-
-      .result-grid,
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .menu {
-        display: none;
-      }
-
-      .fusion-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .upload-box {
-        padding: 16px;
-      }
-
-      .upload-icon {
-        font-size: 28px;
-      }
-
-      .cta-wrap {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="description" content="AI LifeMap — 심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼">
+<title>AI 인생·진로 체험센터 | AI LifeMap | AI플랫마켓</title>
+<link rel="stylesheet" href="/framework/assets/css/common.css">
+<style>
+/* ════════════════════════════════════════════════════════════
+   AI LifeMap — 전용 스타일
+   Design tokens: --navy #0d1f35 / --gold #c9a84c / --r 6px
+   (common.css 실제 값 기준, 임의 변경 금지)
+════════════════════════════════════════════════════════════ */
+:root{
+  --navy:#0d1f35; --gold:#c9a84c; --gold-lt:#e8c96a; --gold-dk:#9a7530;
+  --grn:#1a7a4a; --red:#c0392b; --r:6px;
+  --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
+  /* LifeMap 전용 */
+  --bg:#06101e; --bg2:#0a1828; --card:rgba(13,31,53,.75);
+}
+</style>
+<style>
+:root {
+  --glass-b:rgba(201,168,76,.18); --glass-bg:rgba(13,31,53,.6);
+  --t1:#ede4d0; --t2:#8a9ab0; --t3:#3d5168;
+  --c-psych:#8b5cf6; --c-self:#3b82f6; --c-career:#10b981;
+  --c-east:#f59e0b; --c-west:#6366f1; --c-env:#06b6d4;
+  --transition:.28s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'Pretendard','Noto Sans KR',sans-serif;
+  background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+
+/* ── 기본 레이아웃 ── */
+.lm-screen{display:none;min-height:calc(100vh - 120px);animation:fadeUp .35s ease}
+.lm-screen.active{display:flex;flex-direction:column}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 글래스 카드 ── */
+.glass{background:var(--glass-bg);backdrop-filter:blur(16px);
+  border:1px solid var(--glass-b);border-radius:14px}
+.card{background:var(--card);border:1px solid var(--glass-b);border-radius:var(--r)}
+
+/* ── 상단바 ── */
+.lm-topbar{display:flex;align-items:center;padding:14px 18px;
+  background:rgba(6,16,30,.9);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--glass-b);position:sticky;top:0;z-index:200}
+.lm-topbar .back{background:none;border:none;color:var(--gold);
+  font-size:1.3rem;padding:4px 10px 4px 0;margin-right:8px}
+.lm-topbar .ttl{font-size:.95rem;font-weight:700;color:var(--t1);flex:1}
+.lm-topbar .sub{font-size:.7rem;color:var(--t2)}
+
+/* ── PREVIEW 배너 ── */
+.preview-banner{background:rgba(201,168,76,.12);border-bottom:1px solid rgba(201,168,76,.25);
+  padding:8px 18px;font-size:.72rem;color:var(--gold-lt);text-align:center}
+.preview-banner b{font-weight:700}
+
+/* ══ SCREEN 1: LANDING ══════════════════════════════════ */
+#s-landing{background:linear-gradient(180deg,#04090f 0%,#070e1c 40%,#060f1c 100%);
+  align-items:center;padding:0}
+
+.lm-hero{padding:36px 22px 28px;text-align:center;width:100%;max-width:560px;margin:0 auto;position:relative}
+.hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-bg span{position:absolute;border-radius:50%;filter:blur(80px)}
+.hero-bg .g1{width:300px;height:300px;background:rgba(201,168,76,.08);top:-60px;left:-60px}
+.hero-bg .g2{width:250px;height:250px;background:rgba(99,102,241,.07);bottom:-40px;right:-40px}
+.hero-icon{font-size:4.5rem;margin-bottom:20px;display:block;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-brand{font-size:.72rem;font-weight:700;letter-spacing:2px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:8px;opacity:.8}
+.hero-title{font-size:1.9rem;font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--t1)}
+.hero-title span{color:var(--gold)}
+.hero-sub{font-size:.85rem;color:var(--t2);line-height:1.65;margin-bottom:24px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:28px}
+.hbadge{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
+  border-radius:20px;padding:5px 12px;font-size:.7rem;color:var(--gold-lt)}
+
+/* 코스 카드 그리드 */
+.course-section{width:100%;padding:0 16px 32px;max-width:680px;margin:0 auto}
+.course-section-title{font-size:.75rem;font-weight:700;color:var(--t2);
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.course-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.course-card{background:var(--card);border:1px solid var(--glass-b);border-radius:12px;
+  padding:16px 14px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden}
+.course-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%)}
+.course-card:hover{border-color:var(--gold);transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.course-card.featured{border-color:rgba(201,168,76,.4);
+  box-shadow:0 0 20px rgba(201,168,76,.1)}
+.cc-icon{font-size:1.6rem;margin-bottom:8px}
+.cc-badge{position:absolute;top:10px;right:10px;font-size:.58rem;
+  background:var(--gold);color:var(--navy);border-radius:20px;
+  padding:2px 7px;font-weight:800}
+.cc-name{font-size:.85rem;font-weight:700;color:var(--t1);margin-bottom:3px}
+.cc-desc{font-size:.7rem;color:var(--t2);line-height:1.4}
+.cc-meta{display:flex;align-items:center;gap:8px;margin-top:8px}
+.cc-count{font-size:.65rem;color:var(--gold);font-weight:600}
+.cc-time{font-size:.65rem;color:var(--t3)}
+.cc-free{font-size:.62rem;background:rgba(26,122,74,.2);
+  border:1px solid rgba(26,122,74,.4);border-radius:10px;
+  padding:2px 7px;color:#4ade80}
+
+/* ══ SCREEN 2: COURSE DETAIL ══════════════════════════ */
+#s-course{background:var(--bg)}
+.disc-list{padding:16px;flex:1;overflow-y:auto}
+.disc-group-title{font-size:.7rem;font-weight:700;color:var(--t2);
+  letter-spacing:1px;text-transform:uppercase;margin:20px 0 10px;
+  display:flex;align-items:center;gap:8px}
+.disc-group-title::after{content:'';flex:1;height:1px;background:var(--glass-b)}
+
+.disc-item{background:var(--card);border:1px solid var(--glass-b);
+  border-radius:var(--r);margin-bottom:8px;overflow:hidden;transition:border-color var(--transition)}
+.disc-item.selected{border-color:var(--gold)}
+.disc-item-hd{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
+.di-icon{font-size:1.4rem;width:36px;flex-shrink:0;text-align:center}
+.di-info{flex:1}
+.di-name{font-size:.88rem;font-weight:700;color:var(--t1)}
+.di-short{font-size:.7rem;color:var(--t2);margin-top:2px}
+.di-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.price-badge{font-size:.65rem;font-weight:700;border-radius:10px;padding:3px 9px}
+.price-free{background:rgba(26,122,74,.2);border:1px solid rgba(26,122,74,.4);color:#4ade80}
+.price-paid{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold)}
+.di-chk{width:20px;height:20px;border:2px solid var(--t3);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--transition)}
+.disc-item.selected .di-chk{background:var(--gold);border-color:var(--gold);color:var(--navy);font-size:.8rem}
+
+/* 사전안내 박스 */
+.pretest-info{display:none;background:rgba(6,16,30,.8);border-top:1px solid var(--glass-b);
+  padding:14px;font-size:.75rem;color:var(--t2);line-height:1.6}
+.disc-item.open .pretest-info{display:block}
+.pt-row{display:flex;gap:8px;margin-bottom:6px}
+.pt-label{color:var(--gold);font-weight:700;white-space:nowrap;min-width:80px}
+.pt-val{color:var(--t2)}
+.pt-gain{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.pt-tag{background:rgba(201,168,76,.1);border-radius:4px;padding:2px 8px;font-size:.65rem;color:var(--t1)}
+
+/* 하단 가격 요약 */
+.course-footer{padding:14px 16px;border-top:1px solid var(--glass-b);
+  background:rgba(6,16,30,.9)}
+.price-summary{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ps-left{font-size:.8rem;color:var(--t2)}
+.ps-left b{color:var(--t1);font-weight:700}
+.ps-right{text-align:right}
+.ps-orig{font-size:.68rem;color:var(--t3);text-decoration:line-through}
+.ps-final{font-size:1.1rem;font-weight:800;color:var(--gold)}
+.ps-discount{font-size:.65rem;color:#4ade80;margin-left:6px}
+.btn-start-analysis{width:100%;background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  border:none;border-radius:var(--r);padding:15px;font-size:1rem;
+  font-weight:800;color:var(--navy);transition:all var(--transition)}
+.btn-start-analysis:hover{transform:translateY(-1px);opacity:.92}
+
+/* ══ SCREEN 3: FORM ════════════════════════════════════ */
+#s-form{background:var(--bg)}
+.form-prog{display:flex;gap:5px;padding:16px 18px 0}
+.fp{flex:1;height:3px;border-radius:2px;background:rgba(201,168,76,.15);transition:background .4s}
+.fp.done{background:var(--gold)}
+.fp.active{background:var(--gold-lt)}
+.form-body{padding:18px 18px 32px;flex:1;overflow-y:auto}
+.fstep{display:none;animation:fadeUp .3s ease}
+.fstep.active{display:block}
+.step-title{font-size:1.2rem;font-weight:800;color:var(--t1);margin-bottom:5px}
+.step-desc{font-size:.8rem;color:var(--t2);margin-bottom:24px;line-height:1.55}
+
+.fg{margin-bottom:17px}
+.fl{display:block;font-size:.75rem;font-weight:700;color:var(--gold);
+  margin-bottom:7px;letter-spacing:.4px}
+.fc{width:100%;background:var(--card);border:1px solid var(--glass-b);
+  border-radius:var(--r);padding:13px 14px;font-size:.9rem;
+  color:var(--t1);outline:none;transition:border-color var(--transition);-webkit-appearance:none}
+.fc:focus{border-color:var(--gold)}
+.fc option{background:#0a1828;color:var(--t1)}
+textarea.fc{resize:none;line-height:1.6}
+
+.gender-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.gender-btn{background:var(--card);border:1px solid var(--glass-b);
+  border-radius:var(--r);padding:13px;font-size:.88rem;color:var(--t2);
+  transition:all var(--transition)}
+.gender-btn.sel{background:rgba(201,168,76,.15);border-color:var(--gold);
+  color:var(--gold);font-weight:700}
+
+.mbti-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.mbti-btn{background:var(--card);border:1px solid var(--glass-b);border-radius:5px;
+  padding:9px 4px;font-size:.72rem;color:var(--t2);transition:all var(--transition)}
+.mbti-btn.sel{background:rgba(201,168,76,.18);border-color:var(--gold);
+  color:var(--gold);font-weight:700}
+
+.interest-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.int-btn{background:var(--card);border:1px solid var(--glass-b);
+  border-radius:20px;padding:7px 14px;font-size:.76rem;color:var(--t2);
+  transition:all var(--transition)}
+.int-btn.sel{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold-lt)}
+
+/* 미니 검사 (인성·잠재력·창의력·관심도·MMPI) */
+.mini-test{background:rgba(10,24,40,.6);border:1px solid var(--glass-b);
+  border-radius:var(--r);padding:16px;margin-bottom:14px}
+.mt-title{font-size:.82rem;font-weight:700;color:var(--gold);margin-bottom:12px}
+.mt-disclaimer{font-size:.68rem;color:var(--t3);background:rgba(201,168,76,.06);
+  border-radius:4px;padding:8px 10px;margin-bottom:12px;line-height:1.5}
+.mt-q{font-size:.8rem;color:var(--t1);margin-bottom:8px;line-height:1.5}
+.mt-scale{display:flex;justify-content:space-between;gap:6px;margin-bottom:4px}
+.mt-scale label{display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:.62rem;color:var(--t2);cursor:pointer;flex:1}
+.mt-scale input[type=radio]{accent-color:var(--gold);width:16px;height:16px}
+
+.form-footer{padding:14px 18px;border-top:1px solid var(--glass-b);
+  background:rgba(6,16,30,.9);display:flex;gap:10px}
+.btn-prev{background:transparent;border:1px solid var(--glass-b);
+  border-radius:var(--r);padding:13px 18px;color:var(--t2);font-size:.88rem}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  border:none;border-radius:var(--r);padding:13px;font-size:.95rem;
+  font-weight:700;color:var(--navy);transition:all var(--transition)}
+.btn-next:disabled{opacity:.4;cursor:not-allowed}
+
+/* ══ SCREEN 4: LOADING ═════════════════════════════════ */
+#s-loading{justify-content:center;align-items:center;text-align:center;
+  background:var(--bg);padding:40px 20px}
+.loading-ring{width:88px;height:88px;border-radius:50%;margin:0 auto 28px;
+  border:3px solid rgba(201,168,76,.15);border-top-color:var(--gold);
+  animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-mode-badge{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);
+  border-radius:20px;padding:4px 14px;font-size:.68rem;color:var(--gold-lt);margin-bottom:16px}
+.loading-txt{font-size:1.05rem;font-weight:700;color:var(--t1);margin-bottom:8px}
+.loading-disc{font-size:.8rem;color:var(--gold);min-height:20px;margin-bottom:20px}
+.loading-bar{width:260px;height:5px;background:rgba(201,168,76,.15);
+  border-radius:3px;margin:0 auto 24px;overflow:hidden}
+.loading-fill{height:100%;background:linear-gradient(90deg,var(--gold-dk),var(--gold));
+  border-radius:3px;width:0;transition:width .5s ease}
+.loading-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:340px}
+.ltag{font-size:.65rem;padding:3px 10px;border-radius:10px;
+  background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);
+  color:var(--t3);transition:all .3s}
+.ltag.done{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold)}
+
+/* ══ SCREEN 5: RESULTS ══════════════════════════════════ */
+#s-results{background:var(--bg)}
+.results-body{padding:16px 16px 48px;overflow-y:auto;flex:1}
+
+/* Fusion Score 카드 */
+.fusion-card{background:linear-gradient(135deg,#0c1c30,#142540);
+  border:1px solid var(--glass-b);border-radius:14px;padding:22px;
+  margin-bottom:16px;position:relative;overflow:hidden}
+.fusion-card::before{content:'';position:absolute;top:-40%;right:-20%;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(201,168,76,.14),transparent 70%);border-radius:50%}
+.fusion-label{font-size:.68rem;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.fusion-row{display:flex;align-items:flex-end;gap:10px;margin-bottom:12px}
+.fusion-num{font-size:3.8rem;font-weight:900;color:var(--gold);line-height:1}
+.fusion-max{font-size:1.1rem;color:var(--t3);margin-bottom:8px}
+.fusion-grade{margin-left:auto;background:rgba(201,168,76,.18);
+  border:1px solid var(--gold);border-radius:20px;
+  padding:5px 16px;font-size:.95rem;font-weight:800;color:var(--gold)}
+.fusion-dir{font-size:1.05rem;font-weight:700;color:var(--t1);margin-bottom:7px}
+.fusion-sum{font-size:.78rem;color:var(--t2);line-height:1.65;margin-bottom:18px}
+.fusion-bars{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+.fbar-row{display:flex;align-items:center;gap:10px}
+.fbar-lbl{font-size:.68rem;color:var(--t2);width:70px;flex-shrink:0}
+.fbar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.fbar-fill{height:100%;background:linear-gradient(90deg,var(--gold-dk),var(--gold));
+  border-radius:3px;transition:width 1.2s ease}
+.fbar-val{font-size:.68rem;color:var(--gold);font-weight:700;width:28px;text-align:right}
+
+/* 액션플랜 */
+.action-plan{background:rgba(26,122,74,.1);border:1px solid rgba(26,122,74,.25);
+  border-radius:var(--r);padding:14px;margin-bottom:16px}
+.ap-title{font-size:.75rem;font-weight:700;color:#4ade80;margin-bottom:10px}
+.ap-item{display:flex;gap:10px;margin-bottom:8px;font-size:.78rem;color:var(--t2);line-height:1.5}
+.ap-num{width:20px;height:20px;border-radius:50%;background:rgba(26,122,74,.4);
+  color:#4ade80;font-size:.65rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* 카테고리 탭 */
+.cat-tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tab{flex:0 0 auto;background:var(--card);border:1px solid var(--glass-b);
+  border-radius:20px;padding:7px 14px;font-size:.75rem;color:var(--t2);
+  white-space:nowrap;transition:all var(--transition)}
+.cat-tab.active{background:rgba(201,168,76,.18);border-color:var(--gold);
+  color:var(--gold);font-weight:700}
+
+/* 학문별 결과 카드 */
+.disc-results{display:flex;flex-direction:column;gap:9px}
+.dr-card{background:var(--card);border:1px solid var(--glass-b);
+  border-radius:var(--r);overflow:hidden;transition:border-color var(--transition)}
+.dr-card.s-high{border-left:3px solid #4ade80}
+.dr-card.s-mid{border-left:3px solid var(--gold)}
+.dr-card.s-low{border-left:3px solid var(--red)}
+.dr-hd{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
+.dr-icon{font-size:1.35rem;width:34px;text-align:center;flex-shrink:0}
+.dr-info{flex:1}
+.dr-name{font-size:.85rem;font-weight:700;color:var(--t1)}
+.dr-tagline{font-size:.7rem;color:var(--t2);margin-top:2px}
+.dr-score{font-size:.82rem;font-weight:800;border-radius:12px;padding:3px 11px}
+.dr-chevron{font-size:.65rem;color:var(--t3);transition:transform var(--transition)}
+.dr-card.open .dr-chevron{transform:rotate(180deg)}
+.dr-detail{display:none;padding:0 14px 14px;border-top:1px solid rgba(201,168,76,.1)}
+.dr-card.open .dr-detail{display:block}
+.dr-text{font-size:.78rem;color:var(--t2);line-height:1.75;padding-top:12px}
+.dr-engine{display:inline-block;font-size:.62rem;color:var(--t3);
+  background:rgba(255,255,255,.04);border-radius:4px;padding:2px 8px;margin-top:8px}
+.dr-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.dr-tag{background:rgba(201,168,76,.1);border-radius:4px;padding:2px 8px;
+  font-size:.65rem;color:var(--t1)}
+
+/* 결과 액션 버튼 */
+.result-actions{display:flex;gap:10px;margin-top:20px}
+.ra-btn{flex:1;padding:13px;border-radius:var(--r);font-size:.88rem;
+  font-weight:700;transition:all var(--transition)}
+.ra-primary{background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  border:none;color:var(--navy)}
+.ra-secondary{background:transparent;border:1px solid var(--glass-b);color:var(--t2)}
+
+/* 모드 안내 (PREVIEW 결과 하단) */
+.preview-result-note{background:rgba(201,168,76,.07);
+  border:1px solid rgba(201,168,76,.2);border-radius:var(--r);
+  padding:14px;margin-top:16px;font-size:.74rem;color:var(--t2);line-height:1.6}
+.prn-title{font-weight:700;color:var(--gold);margin-bottom:5px}
+
+/* ══ SCREEN 6: PREVIEW SIGNUP ══════════════════════════ */
+#s-signup{background:var(--bg);align-items:center;padding:24px 20px}
+.signup-box{width:100%;max-width:480px;background:var(--card);
+  border:1px solid var(--glass-b);border-radius:14px;padding:28px}
+.su-icon{font-size:3rem;text-align:center;margin-bottom:16px}
+.su-title{font-size:1.2rem;font-weight:800;color:var(--t1);margin-bottom:6px;text-align:center}
+.su-desc{font-size:.8rem;color:var(--t2);line-height:1.6;margin-bottom:24px;text-align:center}
+.su-benefits{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.su-benefit{display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--t2)}
+.su-benefit span:first-child{font-size:1rem}
+.su-form{display:flex;flex-direction:column;gap:12px}
+.su-survey{margin-top:4px}
+.su-survey-title{font-size:.75rem;font-weight:700;color:var(--t2);margin-bottom:10px}
+.su-check-grid{display:flex;flex-wrap:wrap;gap:8px}
+.su-check{display:flex;align-items:center;gap:6px;font-size:.74rem;color:var(--t2);cursor:pointer}
+.su-check input{accent-color:var(--gold)}
+.btn-signup{width:100%;background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  border:none;border-radius:var(--r);padding:15px;font-size:1rem;
+  font-weight:800;color:var(--navy);margin-top:8px;transition:all var(--transition)}
+.skip-link{text-align:center;font-size:.75rem;color:var(--t3);
+  margin-top:14px;cursor:pointer;text-decoration:underline}
+
+/* ── 공통 유틸 ── */
+.hidden{display:none!important}
+.text-gold{color:var(--gold)}
+.mt12{margin-top:12px}
+.mode-indicator{position:fixed;bottom:16px;right:16px;z-index:999;
+  background:rgba(8,18,33,.96);border:1px solid rgba(243,198,97,.95);
+  border-radius:20px;padding:5px 12px;font-size:.62rem;color:#f7db93;
+  box-shadow:0 8px 20px rgba(0,0,0,.28);transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease}
+.mode-indicator.mode-contrast{background:rgba(201,168,76,.92);border-color:rgba(255,236,178,.95);color:#0f2138;font-weight:800}
+
+/* ══ 오늘의 질문 카드 ══════════════════════════════════════ */
+.qs-section{width:100%;padding:0 16px 8px;max-width:680px;margin:0 auto}
+.qs-header{text-align:center;margin-bottom:16px}
+.qs-title{font-size:1rem;font-weight:800;color:var(--t1);margin-bottom:4px}
+.qs-sub{font-size:.76rem;color:var(--t2)}
+.qs-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.qs-card{background:var(--card);border:1px solid var(--glass-b);border-radius:10px;
+  padding:14px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden}
+.qs-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 60%)}
+.qs-card:hover{border-color:var(--gold);transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.qs-emoji{font-size:1.4rem;margin-bottom:6px}
+.qs-type{font-size:.7rem;font-weight:700;color:var(--gold);margin-bottom:5px;letter-spacing:.3px}
+.qs-q{font-size:.72rem;color:var(--t2);line-height:1.45;margin-bottom:8px;min-height:32px}
+.qs-btn{font-size:.68rem;color:var(--gold-lt);font-weight:600}
+
+/* ══ 평생성장 생태계 배너 ══════════════════════════════════ */
+.ecosystem-banner{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.08));
+  border:1px solid rgba(99,102,241,.25);border-radius:12px;padding:20px;margin-top:16px}
+.eco-icon{font-size:1.6rem;margin-bottom:8px}
+.eco-title{font-size:.92rem;font-weight:800;color:var(--t1);margin-bottom:8px;line-height:1.35}
+.eco-desc{font-size:.76rem;color:var(--t2);line-height:1.7;margin-bottom:14px}
+.eco-steps{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
+.eco-step{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--t2)}
+.eco-step-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.eco-btns{display:flex;flex-direction:column;gap:8px}
+.eco-btn-primary{display:block;text-align:center;
+  background:linear-gradient(135deg,rgba(99,102,241,.3),rgba(139,92,246,.3));
+  border:1px solid rgba(99,102,241,.5);border-radius:var(--r);padding:12px;
+  font-size:.82rem;font-weight:700;color:#a5b4fc;text-decoration:none;
+  transition:all var(--transition)}
+.eco-btn-primary:hover{border-color:rgba(99,102,241,.8);color:#c7d2fe}
+.eco-btn-secondary{display:block;text-align:center;background:transparent;
+  border:1px solid var(--glass-b);border-radius:var(--r);padding:11px;
+  font-size:.8rem;color:var(--t2);cursor:pointer;transition:all var(--transition)}
+.eco-btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ══ 성장파트너 섹션 ════════════════════════════════════════ */
+.partner-section{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);
+  border-radius:12px;padding:20px;margin-top:12px;text-align:center}
+.ps-icon{font-size:1.8rem;margin-bottom:8px}
+.ps-title{font-size:.88rem;font-weight:800;color:var(--gold-lt);margin-bottom:8px}
+.ps-desc{font-size:.74rem;color:var(--t2);line-height:1.65;margin-bottom:14px}
+.ps-quote{font-size:.8rem;font-style:italic;color:rgba(201,168,76,.7);
+  border-left:2px solid var(--gold);padding-left:12px;text-align:left;
+  margin-bottom:14px;line-height:1.6}
+.ps-btns{display:flex;flex-direction:column;gap:8px}
+.ps-btn-main{background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  border:none;border-radius:var(--r);padding:12px;font-size:.82rem;
+  font-weight:700;color:var(--navy);cursor:pointer;text-decoration:none;display:block}
+.ps-btn-sub{background:transparent;border:1px solid var(--glass-b);border-radius:var(--r);
+  padding:11px;font-size:.78rem;color:var(--t2);cursor:pointer;
+  text-decoration:none;display:block}
+
+/* ── 반응형 ── */
+@media(min-width:600px){
+  .course-grid{grid-template-columns:repeat(4,1fr)}
+  .qs-grid{grid-template-columns:repeat(3,1fr)}
+  .mbti-grid{grid-template-columns:repeat(4,1fr)}
+  .lm-hero{padding:48px 24px 32px}
+  .hero-title{font-size:2.2rem}
+  .eco-btns{flex-direction:row}
+  .ps-btns{flex-direction:row}
+}
+@media(min-width:900px){
+  .disc-list,.results-body{max-width:720px;margin:0 auto}
+  .form-body{max-width:600px;margin:0 auto}
+}
+</style>
 </head>
 <body>
 
-<div class="bg-glow glow1"></div>
-<div class="bg-glow glow2"></div>
+<!-- ── 공통 헤더 (framework 자동 주입) ── -->
+<div id="fw-header"></div>
 
-<div class="container">
+<!-- ── 운영 모드 표시 (DEV/PREVIEW) ── -->
+<div class="mode-indicator" id="mode-indicator">⚙ PREVIEW</div>
 
-  <div class="topbar">
-    <div class="logo">AI<span>PlatMarket</span></div>
-    <div class="menu">
-      <div>AI 미래 분석</div>
-      <div>직업 Fusion</div>
-      <div>인생 설계</div>
-      <div>사업·성향 분석</div>
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 1: LANDING
+════════════════════════════════════════════════════════ -->
+<section id="s-landing" class="lm-screen active">
+  <div class="preview-banner" id="preview-banner">
+    <b>🔍 사전 체험 모드</b> — AI 분석 없이 규칙 기반 체험 결과를 제공합니다.
+    정식 출시 후 Gemini·GPT·Claude AI 심층 분석이 활성화됩니다.
+  </div>
+  <div class="lm-hero">
+    <div class="hero-bg"><span class="g1"></span><span class="g2"></span></div>
+    <span class="hero-icon">🔮</span>
+    <div class="hero-brand">AI LifeMap · AI인생·진로 체험센터</div>
+    <h1 class="hero-title">나를 알고,<br><span>삶을 탐색</span>하다</h1>
+    <p class="hero-sub">심리학·동양철학·AI Fusion 34개 학문이<br>하나의 종합 분석으로 연결됩니다</p>
+    <div class="hero-badges">
+      <span class="hbadge">🧠 심리학 9종</span>
+      <span class="hbadge">🔍 자기탐색 6종</span>
+      <span class="hbadge">☯ 동양철학 5종</span>
+      <span class="hbadge">⭐ 서양전통 5종</span>
+      <span class="hbadge">💼 진로·직업 5종</span>
+      <span class="hbadge">🌿 환경·생명 3종</span>
     </div>
   </div>
 
-  <div class="hero">
-    <div class="hero-card glass">
-      <div class="badge">AI Fusion Engine · GPT · Gemini · Life Analytics</div>
-
-      <h1>
-        AI가 분석하는<br>
-        당신의 미래 방향
-      </h1>
-
-      <p>
-        직업 · 성향 · 인생 방향 · 사업 가능성까지<br>
-        챗도우미 AI 엔진 기반으로 통합 분석합니다.
-      </p>
-
-      <div class="cta-wrap">
-        <button class="btn btn-primary" onclick="scrollToForm()">
-          무료 분석 시작
-        </button>
-
-        <button class="btn btn-secondary">
-          결과 미리보기
-        </button>
-      </div>
+  <!-- 오늘의 질문 카드 -->
+  <div class="qs-section">
+    <div class="qs-header">
+      <div class="qs-title">오늘은 나에 대해 무엇을 새롭게 알아볼까?</div>
+      <div class="qs-sub">궁금한 질문 하나를 골라 가볍게 시작해 보세요</div>
     </div>
-
-    <div class="side-panel glass">
-      <div class="orbit"></div>
-
-      <div class="stats-grid">
-        <div class="mini-card">
-          <div class="mini-title">AI Fusion Score</div>
-          <div class="mini-value">92%</div>
-        </div>
-
-        <div class="mini-card">
-          <div class="mini-title">직업 매칭</div>
-          <div class="mini-value">50K+</div>
-        </div>
-
-        <div class="mini-card">
-          <div class="mini-title">분석 학문</div>
-          <div class="mini-value">18</div>
-        </div>
-
-        <div class="mini-card">
-          <div class="mini-title">AI Models</div>
-          <div class="mini-value">GPT+</div>
-        </div>
+    <div class="qs-grid">
+      <div class="qs-card" onclick="openCourse('ai_recommended')">
+        <div class="qs-emoji">🎈</div>
+        <div class="qs-type">재미로 알아보기</div>
+        <div class="qs-q">"내가 아직 몰랐던 재미있는 모습은 뭘까?"</div>
+        <div class="qs-btn">가볍게 탐색하기 →</div>
+      </div>
+      <div class="qs-card" onclick="openCourse('selfexplore')">
+        <div class="qs-emoji">💡</div>
+        <div class="qs-type">나를 새롭게 발견하기</div>
+        <div class="qs-q">"내가 잘하지만 아직 제대로 활용 못한 것은?"</div>
+        <div class="qs-btn">나의 강점 알아보기 →</div>
+      </div>
+      <div class="qs-card" onclick="openCourse('career')">
+        <div class="qs-emoji">🗺️</div>
+        <div class="qs-type">진로·일의 다음 단계</div>
+        <div class="qs-q">"지금의 경험으로 어디까지 더 나아갈 수 있을까?"</div>
+        <div class="qs-btn">나의 다음 기회 찾기 →</div>
+      </div>
+      <div class="qs-card" onclick="openCourse('startup')">
+        <div class="qs-emoji">🚀</div>
+        <div class="qs-type">더 좋은 선택 찾아보기</div>
+        <div class="qs-q">"지금의 나에게 더 잘 맞는 선택은 무엇일까?"</div>
+        <div class="qs-btn">새로운 관점 살펴보기 →</div>
+      </div>
+      <div class="qs-card" onclick="openCourse('ai_recommended')">
+        <div class="qs-emoji">🌱</div>
+        <div class="qs-type">성장 방향 알아보기</div>
+        <div class="qs-q">"나는 지금 어디쯤 와 있고, 다음엔 무엇을 해볼까?"</div>
+        <div class="qs-btn">성장 방향 탐색하기 →</div>
+      </div>
+      <div class="qs-card" onclick="openCourse('eastern')">
+        <div class="qs-emoji">☯️</div>
+        <div class="qs-type">사주·운세·전통 이야기</div>
+        <div class="qs-q">"오늘의 흐름과 나의 이야기도 한번 살펴볼까?"</div>
+        <div class="qs-btn">재미로 알아보기 →</div>
       </div>
     </div>
   </div>
 
-  <div class="form-section" id="analysisForm">
+  <div class="course-section">
+    <div class="course-section-title">또는 코스를 직접 선택하세요</div>
+    <div class="course-grid" id="course-grid"></div>
+  </div>
+</section>
 
-    <div class="form-card glass">
-      <div class="section-title">AI 인생·진로 분석</div>
-
-      <div class="input-group">
-        <label>이름</label>
-        <input type="text" placeholder="홍길동">
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 2: COURSE DETAIL
+════════════════════════════════════════════════════════ -->
+<section id="s-course" class="lm-screen">
+  <div class="lm-topbar">
+    <button class="back" onclick="showScreen('landing')">‹</button>
+    <span class="ttl" id="course-title">코스</span>
+    <span class="sub" id="course-count"></span>
+  </div>
+  <div class="disc-list" id="disc-list"></div>
+  <div class="course-footer">
+    <div class="price-summary">
+      <div class="ps-left">선택된 학문: <b id="sel-count">0</b>개</div>
+      <div class="ps-right">
+        <div class="ps-orig" id="ps-orig"></div>
+        <span class="ps-final" id="ps-final">무료 체험</span>
+        <span class="ps-discount" id="ps-discount"></span>
       </div>
+    </div>
+    <button class="btn-start-analysis" id="btn-start" onclick="startFormFlow()">
+      ✨ 분석 시작하기
+    </button>
+  </div>
+</section>
 
-      <div class="input-group">
-        <label>생년월일</label>
-        <input type="date">
-      </div>
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 3: FORM (6 단계)
+════════════════════════════════════════════════════════ -->
+<section id="s-form" class="lm-screen">
+  <div class="lm-topbar">
+    <button class="back" onclick="formPrev()">‹</button>
+    <span class="ttl">기본 정보 입력</span>
+    <span class="sub" id="form-step-lbl">1 / 6</span>
+  </div>
+  <div class="form-prog" id="form-prog"></div>
+  <div class="form-body" id="form-body">
 
-      <div class="input-group">
-        <label>성별</label>
-        <select>
-          <option>선택하세요</option>
-          <option>남성</option>
-          <option>여성</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label>현재 직업</label>
-        <input type="text" placeholder="예: 마케팅, 개발, 자영업">
-      </div>
-
-      <div class="input-group">
-        <label>관심 분야</label>
-        <input type="text" placeholder="예: AI, 창업, 콘텐츠, 투자">
-      </div>
-
-      <div class="input-group">
-        <label>현재 고민 또는 목표</label>
-        <textarea placeholder="직업 전환, 창업, 미래 방향 등"></textarea>
-      </div>
-
-      <div style="margin-top:30px; margin-bottom:18px; font-size:20px; font-weight:700;">
-        학문별 Fusion 분석 선택
-      </div>
-
-      <div class="fusion-grid">
-
-        <div class="fusion-item active">적성검사</div>
-        <div class="fusion-item active">띠별 분석</div>
-        <div class="fusion-item active">별자리</div>
-        <div class="fusion-item active">혈액형</div>
-        <div class="fusion-item active">MBTI</div>
-        <div class="fusion-item active">점성학</div>
-        <div class="fusion-item active">명리학</div>
-        <div class="fusion-item active">타로</div>
-        <div class="fusion-item active">심리학</div>
-        <div class="fusion-item active">조상묘 분석</div>
-        <div class="fusion-item active">환경학</div>
-        <div class="fusion-item active">유전학</div>
-        <div class="fusion-item active">직업 적성</div>
-        <div class="fusion-item active">관상학</div>
-        <div class="fusion-item active">수상학</div>
-        <div class="fusion-item active">족상학</div>
-        <div class="fusion-item active">무속 분석</div>
-        <div class="fusion-item active">체형 분석</div>
-        <div class="fusion-item active">천문 분석</div>
-        <div class="fusion-item active">풍수지리학</div>
-        <div class="fusion-item active">AI Fusion</div>
-
-      </div>
-
-      <div style="margin-top:28px; margin-bottom:16px; font-size:18px; font-weight:700;">
-        이미지 기반 AI 분석
-      </div>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
-
-        <div class="upload-box">
-          <div class="upload-icon">📷</div>
-          <div class="upload-title">관상 분석</div>
-          <div class="upload-desc">얼굴 사진 업로드</div>
-          <input type="file" accept="image/*">
+    <!-- Step 1: 기본 정보 -->
+    <div class="fstep active" id="fstep-0">
+      <div class="step-title">기본 정보 🌟</div>
+      <div class="step-desc">정확한 분석을 위한 기본 정보를 입력해 주세요. 만세력(사주) 계산에 활용됩니다.</div>
+      <div class="fg"><label class="fl">이름</label>
+        <input id="f-name" class="fc" type="text" placeholder="홍길동" maxlength="20"></div>
+      <div class="fg"><label class="fl">생년월일 ✦ 필수</label>
+        <input id="f-bdate" class="fc" type="date"></div>
+      <div class="fg"><label class="fl">태어난 시간 (사주 정밀도 향상)</label>
+        <input id="f-btime" class="fc" type="time"></div>
+      <div class="fg"><label class="fl">성별</label>
+        <div class="gender-row">
+          <button class="gender-btn" id="g-m" onclick="selGender('male')">👨 남성</button>
+          <button class="gender-btn" id="g-f" onclick="selGender('female')">👩 여성</button>
         </div>
-
-        <div class="upload-box">
-          <div class="upload-icon">✋</div>
-          <div class="upload-title">수상 분석</div>
-          <div class="upload-desc">손바닥 사진 업로드</div>
-          <input type="file" accept="image/*">
-        </div>
-
-        <div class="upload-box">
-          <div class="upload-icon">🦶</div>
-          <div class="upload-title">족상 분석</div>
-          <div class="upload-desc">발 사진 업로드</div>
-          <input type="file" accept="image/*">
-        </div>
-
-        <div class="upload-box">
-          <div class="upload-icon">🧍</div>
-          <div class="upload-title">체형 분석</div>
-          <div class="upload-desc">전신 체형 업로드</div>
-          <input type="file" accept="image/*">
-        </div>
-
       </div>
+    </div>
 
-      <div style="font-size:12px; line-height:1.7; color:rgba(255,255,255,0.48); margin-bottom:18px;">
-        업로드 이미지는 AI 성향·직업·행동 패턴 참고 분석용이며,
-        의료·질병·법적 판정 용도로 사용되지 않습니다.
+    <!-- Step 2: 출생 환경 -->
+    <div class="fstep" id="fstep-1">
+      <div class="step-title">출생·생활 환경 🌍</div>
+      <div class="step-desc">풍수지리·환경학 분석과 지역 문화 특성 파악에 활용됩니다.</div>
+      <div class="fg"><label class="fl">출생지 (시·도)</label>
+        <select id="f-birthplace" class="fc">
+          <option value="">선택하세요</option>
+          <option>서울</option><option>부산</option><option>인천</option><option>대구</option>
+          <option>광주</option><option>대전</option><option>울산</option><option>세종</option>
+          <option>경기</option><option>강원</option><option>충북</option><option>충남</option>
+          <option>전북</option><option>전남</option><option>경북</option><option>경남</option>
+          <option>제주</option><option>해외</option>
+        </select></div>
+      <div class="fg"><label class="fl">현재 거주지</label>
+        <select id="f-location" class="fc">
+          <option value="">선택하세요</option>
+          <option>서울</option><option>부산</option><option>인천</option><option>대구</option>
+          <option>광주</option><option>대전</option><option>울산</option><option>세종</option>
+          <option>경기</option><option>강원</option><option>충북</option><option>충남</option>
+          <option>전북</option><option>전남</option><option>경북</option><option>경남</option>
+          <option>제주</option><option>해외</option>
+        </select></div>
+      <div class="fg"><label class="fl">현재 상태</label>
+        <select id="f-status" class="fc">
+          <option value="">선택하세요</option>
+          <option value="student">학생</option>
+          <option value="jobseeker">취업 준비 중</option>
+          <option value="employed">직장인</option>
+          <option value="selfemployed">자영업자</option>
+          <option value="freelance">프리랜서</option>
+          <option value="entrepreneur">창업자</option>
+          <option value="career-change">이직·전직 준비</option>
+          <option value="retired">은퇴</option>
+          <option value="etc">기타</option>
+        </select></div>
+      <div class="fg"><label class="fl">혈액형</label>
+        <select id="f-blood" class="fc">
+          <option value="">선택하세요</option>
+          <option>A형</option><option>B형</option><option>O형</option><option>AB형</option>
+        </select></div>
+    </div>
+
+    <!-- Step 3: 성격 유형 -->
+    <div class="fstep" id="fstep-2">
+      <div class="step-title">성격 유형 🧩</div>
+      <div class="step-desc">MBTI를 알고 계시면 선택해 주세요. 모르셔도 됩니다.</div>
+      <div class="fg"><label class="fl">MBTI 유형 (선택)</label>
+        <div class="mbti-grid" id="mbti-grid">
+          <button class="mbti-btn" onclick="selMbti('INTJ')">INTJ</button>
+          <button class="mbti-btn" onclick="selMbti('INTP')">INTP</button>
+          <button class="mbti-btn" onclick="selMbti('ENTJ')">ENTJ</button>
+          <button class="mbti-btn" onclick="selMbti('ENTP')">ENTP</button>
+          <button class="mbti-btn" onclick="selMbti('INFJ')">INFJ</button>
+          <button class="mbti-btn" onclick="selMbti('INFP')">INFP</button>
+          <button class="mbti-btn" onclick="selMbti('ENFJ')">ENFJ</button>
+          <button class="mbti-btn" onclick="selMbti('ENFP')">ENFP</button>
+          <button class="mbti-btn" onclick="selMbti('ISTJ')">ISTJ</button>
+          <button class="mbti-btn" onclick="selMbti('ISFJ')">ISFJ</button>
+          <button class="mbti-btn" onclick="selMbti('ESTJ')">ESTJ</button>
+          <button class="mbti-btn" onclick="selMbti('ESFJ')">ESFJ</button>
+          <button class="mbti-btn" onclick="selMbti('ISTP')">ISTP</button>
+          <button class="mbti-btn" onclick="selMbti('ISFP')">ISFP</button>
+          <button class="mbti-btn" onclick="selMbti('ESTP')">ESTP</button>
+          <button class="mbti-btn" onclick="selMbti('ESFP')">ESFP</button>
+        </div>
+        <button class="mt12 fc" style="background:transparent;color:var(--t3);
+          font-size:.72rem;border-style:dashed" onclick="selMbti(null)">
+          MBTI 모름 / 선택 해제
+        </button>
       </div>
+    </div>
 
-      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="runAnalysis()"> style="width:100%; margin-top:10px;" onclick="runAnalysis()">
-        AI 분석 시작
+    <!-- Step 4: 관심 분야 -->
+    <div class="fstep" id="fstep-3">
+      <div class="step-title">관심 진로·분야 💼</div>
+      <div class="step-desc">관심 있는 분야를 모두 선택해 주세요. 홀랜드·직업Ontology 분석에 활용됩니다.</div>
+      <div class="fg"><label class="fl">관심 분야 (복수 선택)</label>
+        <div class="interest-wrap" id="interest-wrap">
+          <button class="int-btn" onclick="togInt(this,'창업·사업')">🚀 창업·사업</button>
+          <button class="int-btn" onclick="togInt(this,'IT·기술')">💻 IT·기술</button>
+          <button class="int-btn" onclick="togInt(this,'예술·창작')">🎨 예술·창작</button>
+          <button class="int-btn" onclick="togInt(this,'교육·강의')">📚 교육·강의</button>
+          <button class="int-btn" onclick="togInt(this,'의료·복지')">🏥 의료·복지</button>
+          <button class="int-btn" onclick="togInt(this,'금융·경제')">📈 금융·경제</button>
+          <button class="int-btn" onclick="togInt(this,'유통·물류')">📦 유통·물류</button>
+          <button class="int-btn" onclick="togInt(this,'미디어·콘텐츠')">📱 미디어·콘텐츠</button>
+          <button class="int-btn" onclick="togInt(this,'공무·행정')">🏛️ 공무·행정</button>
+          <button class="int-btn" onclick="togInt(this,'연구·개발')">🔬 연구·개발</button>
+          <button class="int-btn" onclick="togInt(this,'농업·환경')">🌱 농업·환경</button>
+          <button class="int-btn" onclick="togInt(this,'서비스·관광')">✈️ 서비스·관광</button>
+          <button class="int-btn" onclick="togInt(this,'사회·NGO')">🤝 사회·NGO</button>
+          <button class="int-btn" onclick="togInt(this,'스포츠·레저')">⚽ 스포츠·레저</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">현재 가장 큰 고민 (선택)</label>
+        <textarea id="f-concern" class="fc" rows="3"
+          placeholder="진로, 창업, 이직, 인간관계 등 자유롭게 적어주세요."></textarea>
+      </div>
+    </div>
+
+    <!-- Step 5: 미니 검사 (선택된 학문에 따라 동적) -->
+    <div class="fstep" id="fstep-4">
+      <div class="step-title">추가 탐색 🔍</div>
+      <div class="step-desc">선택하신 학문에 맞는 간단한 탐색 문항입니다. 건너뛰어도 됩니다.</div>
+      <div id="mini-tests-container"></div>
+    </div>
+
+    <!-- Step 6: 확인 -->
+    <div class="fstep" id="fstep-5">
+      <div class="step-title">분석 준비 완료 ✅</div>
+      <div class="step-desc">입력하신 정보를 확인하고 분석을 시작하세요.</div>
+      <div class="card" style="padding:16px;font-size:.8rem;line-height:1.8" id="info-summary"></div>
+      <div class="card" style="padding:14px;margin-top:12px;font-size:.75rem;color:var(--t2);line-height:1.6">
+        📌 분석 결과는 자기탐색 및 참고 목적으로만 활용하세요.
+        의료·법률·재무 결정에 전적으로 의존하지 마세요.<br>
+        MMPI·사상체질·유전학 등은 임상 진단이 아닌 자기탐색용 체험입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-footer">
+    <button class="btn-prev hidden" id="btn-prev" onclick="formPrev()">‹ 이전</button>
+    <button class="btn-next" id="btn-next" onclick="formNext()">다음 단계 →</button>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 4: LOADING
+════════════════════════════════════════════════════════ -->
+<section id="s-loading" class="lm-screen">
+  <div class="loading-ring"></div>
+  <div class="loading-mode-badge" id="loading-mode-badge">⚙ PREVIEW 규칙기반 분석</div>
+  <p class="loading-txt">34개 학문 분야 분석 중...</p>
+  <p class="loading-disc" id="loading-disc">초기화 중</p>
+  <div class="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
+  <div class="loading-tags" id="loading-tags"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 5: RESULTS
+════════════════════════════════════════════════════════ -->
+<section id="s-results" class="lm-screen">
+  <div class="lm-topbar">
+    <button class="back" onclick="showScreen('landing')">‹</button>
+    <span class="ttl">🔮 분석 결과</span>
+    <button style="background:none;border:none;color:var(--gold);font-size:.78rem"
+      onclick="doRetry()">재분석</button>
+  </div>
+  <div class="results-body">
+    <div id="fusion-card-wrap"></div>
+    <div id="action-plan-wrap"></div>
+    <div class="cat-tabs" id="cat-tabs"></div>
+    <div class="disc-results" id="disc-results"></div>
+    <div id="result-ctas"></div>
+    <div id="preview-note"></div>
+
+    <!-- 평생성장 생태계 연결 배너 -->
+    <div class="ecosystem-banner" id="ecosystem-banner">
+      <div class="eco-icon">✨</div>
+      <div class="eco-title">AI LifeMap 체험 후, 더 넓은 성장 여정을 만나보세요</div>
+      <div class="eco-desc">
+        AI LifeMap에서 현재의 나를 점검하고 가능성을 탐색한 뒤,
+        더 체계적인 성장과 실천으로 이어갈 수 있습니다.
+      </div>
+      <div class="eco-steps">
+        <div class="eco-step"><span class="eco-step-dot"></span>AI LifeMap — 나를 이해하고 가능성 탐색</div>
+        <div class="eco-step"><span class="eco-step-dot"></span>AI성장플랫존 — 함께 배우고 교류하며 성장</div>
+        <div class="eco-step"><span class="eco-step-dot"></span>AI인생성장사관학교 — 체계적 성장과 실천</div>
+        <div class="eco-step"><span class="eco-step-dot"></span>AI MetaZone — 삶과 미래를 직접 체험</div>
+      </div>
+      <div class="eco-btns">
+        <a href="/platform/promotion" class="eco-btn-primary">
+          🌐 AI 평생성장 생태계 통합 설명회 보기 →
+        </a>
+        <button class="eco-btn-secondary" onclick="showScreen('signup')">
+          나에게 맞는 성장 경로 알아보기
+        </button>
+      </div>
+    </div>
+
+    <!-- 성장파트너·협력 채널 모집 -->
+    <div class="partner-section" id="partner-section">
+      <div class="ps-icon">🤝</div>
+      <div class="ps-title">초기 성장파트너·협력 채널 모집</div>
+      <div class="ps-quote">
+        "당신의 영향력으로 누군가의 새로운 가능성을 연결해 주세요.<br>
+        당신의 독자, 회원, 구독자와 함께<br>
+        새로운 AI 인생·진로·성장 체험을 먼저 만나보세요."
+      </div>
+      <div class="ps-desc">
+        먼저 체험하고 자유롭게 의견을 나누며,<br>
+        더 많은 사람이 자신과 미래를 돌아볼 수 있도록<br>
+        새로운 평생성장 생태계를 함께 만들어 주세요.
+      </div>
+      <div class="ps-btns">
+        <a href="/platform/promotion" class="ps-btn-main">성장파트너 참여 알아보기 →</a>
+        <a href="/platform/promotion" class="ps-btn-sub">통합 설명회·체험 프로그램 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SCREEN 6: PREVIEW SIGNUP
+════════════════════════════════════════════════════════ -->
+<section id="s-signup" class="lm-screen">
+  <div class="signup-box">
+    <div class="su-icon">🚀</div>
+    <div class="su-title">AI LifeMap 사전 참여</div>
+    <div class="su-desc">
+      정식 출시 시 가장 먼저 알림을 받고<br>초기 참여 혜택을 누리세요.
+    </div>
+    <div class="su-benefits">
+      <div class="su-benefit"><span>🎁</span><span>정식 출시 즉시 알림</span></div>
+      <div class="su-benefit"><span>💎</span><span>초기 참여자 AI포인트 혜택</span></div>
+      <div class="su-benefit"><span>📊</span><span>AI 심층 분석 우선 체험</span></div>
+    </div>
+    <div class="su-form">
+      <input id="su-name" class="fc" type="text" placeholder="이름 (선택)">
+      <input id="su-email" class="fc" type="email" placeholder="이메일 주소 ✦ 필수">
+      <div class="su-survey">
+        <div class="su-survey-title">가장 관심 있는 기능 (복수 선택)</div>
+        <div class="su-check-grid">
+          <label class="su-check"><input type="checkbox" value="진로">🗺️ 진로</label>
+          <label class="su-check"><input type="checkbox" value="직업">💼 직업</label>
+          <label class="su-check"><input type="checkbox" value="창업">🚀 창업</label>
+          <label class="su-check"><input type="checkbox" value="심리">🧠 심리</label>
+          <label class="su-check"><input type="checkbox" value="동양철학">☯ 동양철학</label>
+          <label class="su-check"><input type="checkbox" value="인간관계">🤝 인간관계</label>
+          <label class="su-check"><input type="checkbox" value="건강">💚 건강·생활</label>
+          <label class="su-check"><input type="checkbox" value="경제">📈 경제·자산</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">의견 또는 요청사항 (선택)</label>
+        <textarea id="su-opinion" class="fc" rows="2"
+          placeholder="원하는 기능, 개선 의견 등 자유롭게 적어주세요."></textarea>
+      </div>
+      <button class="btn-signup" onclick="submitSignup()">
+        ✨ 정식 출시 알림 신청
       </button>
-
-      <div class="loading" id="loadingBox">
-        <p style="margin-bottom:12px; color: rgba(255,255,255,0.65);">
-          GPT · Gemini · Fusion 분석 중...
-        </p>
-        <div class="loading-bar">
-          <div class="loading-progress"></div>
-        </div>
-      </div>
     </div>
-
-    <div class="result-card glass">
-      <div class="result-top">
-        <div>
-          <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:8px;">
-            AI Fusion 결과
-          </div>
-          <div style="font-size:28px; font-weight:700;">
-            AI 전략형 창의 리더
-          </div>
-        </div>
-
-        <div class="score-ring">
-          <div class="score-inner">88</div>
-        </div>
-      </div>
-
-      <div style="color: rgba(255,255,255,0.72); line-height:1.9;">
-        창의성과 전략적 사고가 강하며,
-        AI·브랜딩·플랫폼 사업 방향과 높은 적합도를 보입니다.
-      </div>
-
-      <div class="result-grid">
-
-        <div class="analysis-box">
-          <h3>직업 적합도</h3>
-          <p>
-            AI 마케팅 전략가 · 콘텐츠 브랜딩 · 플랫폼 운영 분야와 높은 연관성을 보입니다.
-          </p>
-        </div>
-
-        <div class="analysis-box">
-          <h3>사업·재물 흐름</h3>
-          <p>
-            개인 브랜딩과 플랫폼 기반 수익 구조에 강한 장기 성장 흐름이 있습니다.
-          </p>
-        </div>
-
-        <div class="analysis-box">
-          <h3>성향 분석</h3>
-          <p>
-            독립성과 기획력이 높으며 새로운 구조를 만드는 성향이 강합니다.
-          </p>
-        </div>
-
-        <div class="analysis-box">
-          <h3>Fusion 판단</h3>
-          <p>
-            GPT·Gemini·행동 패턴·직업 ontology 기반 종합 분석 결과입니다.
-          </p>
-        </div>
-
-      </div>
-    </div>
-
+    <div class="skip-link" onclick="showScreen('results')">← 결과로 돌아가기</div>
   </div>
+</section>
 
-  <div class="footer-note">
-    AI플랫마켓 × 챗도우미 AI 엔진 기반 MVP UI Preview<br>
-    실제 GPT/Gemini 분석은 챗도우미 API 엔드포인트 연동 예정
-  </div>
-
-</div>
+<!-- ── 공통 푸터 ── -->
+<div id="fw-footer"></div>
+<script src="/framework/assets/js/core.js"></script>
 
 <script>
-  function scrollToForm(){
-    document.getElementById('analysisForm').scrollIntoView({
-      behavior: 'smooth'
+/* ════════════════════════════════════════════════════════════
+   AI LifeMap — App Script v1.0.0
+   Architecture:
+     UI → LM.callAPI() → ChatDoumi /api/life-analysis
+     PREVIEW: AI 0회 호출, rule-based only
+     PRODUCTION: Gemini → GPT → Claude → rule fallback
+════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════
+   ■ AI 아키텍처 원칙 (변경 금지)
+   ─────────────────────────────────────────────────────────
+   이 프로젝트의 AI 기능은 플랫폼 공통 AI Core(ChatDoumi)와
+   연동하는 것을 원칙으로 합니다.
+
+   1. AI 호출 로직을 이 파일 내부에 중복 구현하지 않습니다.
+   2. 공공데이터 연계 기능을 이 파일 내부에 구현하지 않습니다.
+   3. Gemini/GPT/Claude API를 이 파일에서 직접 호출하지 않습니다.
+   4. 모든 AI 요청은 반드시 LM.callAPI() → ChatDoumi API를 통합니다.
+   5. AI 호출 순서: Gemini → GPT → Claude → Rule-based Fallback
+   6. PREVIEW MODE에서는 AI Core 호출 횟수 = 0회 (기술적 차단)
+
+   위반 시 AI Core 비용 이중 발생 및 플랫폼 아키텍처 훼손 우려.
+════════════════════════════════════════════════════════════ */
+
+/* ── 0. 설정 & 모드 ──────────────────────────────────────── */
+const LM = {
+  // 서버에서 <script>window.__LM_MODE__='PRODUCTION'<\/script> 주입 가능
+  MODE: window.__LM_MODE__ || 'PREVIEW', // PREVIEW | BETA | PRODUCTION
+  API_URL: 'https://aiplatmarket-a1e2.onrender.com/api/life-analysis',
+  API_KEY: window.__LM_API_KEY__ || '',
+  VERSION: '1.0.0-preview',
+
+  // PREVIEW에서 AI Core 차단 (기술적 차단)
+  async callAPI(payload) {
+    if (this.MODE === 'PREVIEW') {
+      console.log('[LifeMap] PREVIEW MODE: AI Core 차단 — rule-based 사용');
+      return null; // null → rule fallback
+    }
+    try {
+      const resp = await fetch(this.API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': this.API_KEY,
+        },
+        body: JSON.stringify({ userId: ST.userId, lifeData: payload }),
+        signal: AbortSignal.timeout(30000),
+      });
+      if (!resp.ok) return null;
+      const d = await resp.json();
+      return d.success ? d.analysis : null;
+    } catch { return null; }
+  },
+};
+
+/* ── 1. 학문 정의 (34개) ──────────────────────────────────── */
+const DISCS = {
+  // ── 심리학 ────────────────────────────────────────────────
+  mbti:{id:'mbti',g:'psychology',icon:'🧩',name:'MBTI',
+    short:'16 성격유형',price:500,free:false,
+    what:'4가지 차원으로 성격 유형과 강점을 파악합니다.',
+    gain:['성격 유형 확인','직업 적합도 Top 5','관계 스타일','성장 전략'],
+    time:'3분',note:'BIG5·DISC와 교차 분석합니다.'},
+  big5:{id:'big5',g:'psychology',icon:'🌊',name:'BIG5 (OCEAN)',
+    short:'5대 성격특성',price:500,free:false,
+    what:'과학적으로 검증된 5요인(OCEAN) 성격 모델입니다.',
+    gain:['5대 특성 점수','강점·약점','직업 적합도','관계 패턴'],
+    time:'5분',note:'모든 심리 분석의 기준점이 됩니다.'},
+  tci:{id:'tci',g:'psychology',icon:'🧬',name:'TCI 기질성격',
+    short:'7차원 기질·성격',price:700,free:false,
+    what:'기질 4요인(NS·HA·RD·P)과 성격 3요인(SD·C·ST)을 분석합니다.',
+    gain:['기질 4요인 점수','성격 3요인 점수','신경생물학적 특성','맞춤 성장 전략'],
+    time:'7분',note:'BIG5·MBTI와 함께 성격의 생물학적 토대를 이해합니다.'},
+  disc:{id:'disc',g:'psychology',icon:'🎯',name:'DISC',
+    short:'행동유형 분석',price:500,free:false,
+    what:'D(지배)·I(사교)·S(안정)·C(신중) 4가지 행동 유형을 분석합니다.',
+    gain:['주요 행동유형','팀 내 역할','리더십 스타일','소통 전략'],
+    time:'4분',note:'리더십·직업 분석과 연계됩니다.'},
+  enneagram:{id:'enneagram',g:'psychology',icon:'⭕',name:'에니어그램',
+    short:'9가지 성격유형',price:600,free:false,
+    what:'9가지 유형과 날개, 통합·분리 방향으로 내면 동기를 탐구합니다.',
+    gain:['주요 유형과 날개','핵심 동기·두려움','성장 방향','스트레스 대처'],
+    time:'5분',note:'심리학·진로 분석에서 내면 동기 이해를 돕습니다.'},
+  via:{id:'via',g:'psychology',icon:'💪',name:'VIA 강점',
+    short:'24가지 강점 발견',price:500,free:false,
+    what:'긍정심리학 기반 24가지 성격 강점 중 나의 Top 5를 발견합니다.',
+    gain:['Top 5 핵심 강점','강점 활용 직업군','강점 기반 성장','행복·몰입 방법'],
+    time:'4분',note:'적성·진로 분석과 함께 강점 기반 커리어를 설계합니다.'},
+  mi:{id:'mi',g:'psychology',icon:'🧠',name:'다중지능 (MI)',
+    short:'8가지 지능유형',price:600,free:false,
+    what:'언어·논리수학·공간·음악·신체운동·대인·자기이해·자연탐구를 측정합니다.',
+    gain:['8가지 지능 점수','주요 지능 유형','지능 기반 직업','학습 방법'],
+    time:'5분',note:'학습유형·직업Ontology와 연계합니다.'},
+  holland:{id:'holland',g:'psychology',icon:'🗺️',name:'홀랜드 (RIASEC)',
+    short:'진로흥미 유형',price:500,free:false,
+    what:'R(실재)·I(탐구)·A(예술)·S(사회)·E(기업)·C(관습) 6유형으로 직업흥미를 분석합니다.',
+    gain:['RIASEC 프로파일','추천 직업군 20개','최적 작업환경','진로 개발 방향'],
+    time:'5분',note:'직업Ontology·적성과 함께 직업 매핑을 수행합니다.'},
+  mmpi:{id:'mmpi',g:'psychology',icon:'📊',name:'MMPI 성격 탐색',
+    short:'주요 척도 자기탐색',price:700,free:false,
+    what:'MMPI의 주요 임상 척도를 자기탐색 체험으로 간략히 살펴봅니다. (임상 진단 아님)',
+    gain:['주요 척도 탐색','심리적 패턴 이해','전문가 상담 필요 여부 가이드','자기인식 향상'],
+    time:'7분',
+    note:'⚠ 이 탐색은 임상적 MMPI 검사를 대체하지 않습니다. 전문가 진단이 필요하면 정신건강 전문의를 찾아주세요.',
+    disclaimer:true},
+
+  // ── AI 자기탐색 ───────────────────────────────────────────
+  character:{id:'character',g:'selfexplore',icon:'🌱',name:'인성 탐색',
+    short:'성격·행동 특성',price:700,free:false,
+    what:'도덕적 판단력, 책임감, 사회의식, 공감 능력 등 인성 특성을 탐색합니다.',
+    gain:['핵심 인성 특성','강점 인성 영역','보완할 인성','직업 내 인성 적합도'],
+    time:'5분',note:'TCI·BIG5와 함께 성격 전체상을 파악합니다.'},
+  potential:{id:'potential',g:'selfexplore',icon:'🚀',name:'잠재력 탐색',
+    short:'숨겨진 능력 발견',price:800,free:false,
+    what:'아직 발휘하지 못한 성장 가능성과 잠재적 재능 영역을 탐색합니다.',
+    gain:['잠재 능력 영역 Top 3','성장 가능성 지수','개발 우선순위','잠재력 실현 전략'],
+    time:'6분',note:'적성·MI와 함께 발견되지 않은 재능을 찾습니다.'},
+  creativity:{id:'creativity',g:'selfexplore',icon:'🎨',name:'창의력 탐색',
+    short:'창의적 사고방식',price:700,free:false,
+    what:'발산적 사고 유창성·유연성·독창성·정교성 4가지 창의력 차원을 탐색합니다.',
+    gain:['창의력 유형','강점 창의 영역','창의력 개발 방법','창의적 직업 적합도'],
+    time:'6분',note:'창업·예술·연구 분야 진로 분석에 연계됩니다.'},
+  interest:{id:'interest',g:'selfexplore',icon:'❤️',name:'관심도 탐색',
+    short:'진짜 좋아하는 것',price:500,free:false,
+    what:'시간 가는 줄 모르는 활동, 진정한 관심사, 몰입 경험을 체계적으로 탐색합니다.',
+    gain:['핵심 관심 영역','몰입 활동 패턴','관심 기반 직업군','삶의 방향성'],
+    time:'4분',note:'홀랜드·가치관과 함께 일치하는 삶의 방향을 찾습니다.'},
+  aptitude:{id:'aptitude',g:'selfexplore',icon:'💡',name:'적성검사',
+    short:'타고난 재능',price:800,free:false,
+    what:'언어·수리·공간·예술·신체·대인관계 6가지 적성 영역의 강점을 파악합니다.',
+    gain:['6대 적성 점수','타고난 재능 분야','직업 적합도','개발 전략'],
+    time:'5분',note:'홀랜드·직업Ontology와 함께 직업 연결을 수행합니다.'},
+  values:{id:'values',g:'selfexplore',icon:'⚖️',name:'가치관 분석',
+    short:'핵심 가치 탐색',price:500,free:false,
+    what:'성취·안정·자율·관계·봉사·창의·경제 등 14가지 가치 영역 중 핵심 가치를 파악합니다.',
+    gain:['핵심 가치 Top 5','가치 기반 직업','라이프스타일 방향','의사결정 기준'],
+    time:'4분',note:'홀랜드·적성과 함께 가치·흥미·능력이 일치하는 직업을 탐색합니다.'},
+
+  // ── 진로·직업 ─────────────────────────────────────────────
+  leadership:{id:'leadership',g:'career',icon:'🏆',name:'리더십 성향',
+    short:'리더십 스타일',price:600,free:false,
+    what:'비전형·코칭형·민주형·선도형 등 나의 자연스러운 리더십 스타일을 파악합니다.',
+    gain:['주요 리더십 스타일','강점 리더십 상황','팀 구성 전략','리더십 개발'],
+    time:'4분',note:'DISC·MBTI와 함께 조직 내 최적 역할을 파악합니다.'},
+  learning:{id:'learning',g:'career',icon:'📚',name:'학습유형',
+    short:'나에게 맞는 공부법',price:400,free:false,
+    what:'VARK 모델(시각·청각·읽기/쓰기·운동감각) 학습 선호도를 분석합니다.',
+    gain:['주요 학습 스타일','최적 학습환경','효과적 공부법','기억력 향상 전략'],
+    time:'3분',note:'진로·창업 교육 설계에 활용됩니다.'},
+  jobOntology:{id:'jobOntology',g:'career',icon:'🗂️',name:'직업 Ontology',
+    short:'1만개+ 직업 매칭',price:1000,free:false,
+    what:'KECO·O*NET 기반 1만여 개 직업 중 가장 적합한 직업군을 AI가 분석합니다.',
+    gain:['맞춤 직업 Top 20','직업별 적합도','평균 연봉','직업 진입 경로'],
+    time:'즉시',note:'홀랜드·적성·가치관 결과를 종합해 최적 직업을 매핑합니다.'},
+  startup:{id:'startup',g:'career',icon:'🏢',name:'사업·창업 적합도',
+    short:'창업 준비도 진단',price:800,free:false,
+    what:'창업 적합성·준비도·아이템 방향·리스크·추천 업종을 종합 분석합니다.',
+    gain:['창업 적합도 점수','추천 업종·사업형태','강점·보완 역량','창업 준비 로드맵'],
+    time:'5분',note:'LifeMap 결과 → AI ItemZone 사업 설계로 연결됩니다.'},
+  lifecycle:{id:'lifecycle',g:'career',icon:'🌱',name:'생애 주기 탐색',
+    short:'인생 전 과정 설계',price:600,free:false,
+    what:'유아기부터 은퇴까지 생애 각 단계별 주요 과제와 방향을 AI와 함께 탐색합니다.',
+    gain:['현재 생애 단계 분석','다음 단계 준비 사항','생애 전반 방향','삶의 균형 지도'],
+    time:'5분',note:'Life Balance Map의 기반이 됩니다.'},
+
+  // ── 동양 전통 ─────────────────────────────────────────────
+  saju:{id:'saju',g:'eastern',icon:'☯️',name:'사주·명리학',
+    short:'만세력 기반 분석',price:0,free:true,
+    what:'생년월일시 기반 천간지지(四柱八字)를 만세력으로 산출, 오행 균형·천직을 분석합니다.',
+    gain:['사주팔자 기본 구조','오행 균형 분석','용신(행운 기운)','천직 방향'],
+    time:'즉시',note:'만세력 계산은 규칙 기반 엔진. AI 심층 해석은 PRODUCTION에서 제공.'},
+  ohang:{id:'ohang',g:'eastern',icon:'🌟',name:'오행 분석',
+    short:'목화토금수 기운',price:0,free:true,
+    what:'木火土金水 오행의 기운으로 성격·건강·직업·인간관계를 분석합니다.',
+    gain:['주요 오행·보완 오행','오행별 건강 관리','직업 방향','행운의 색·방위'],
+    time:'즉시',note:'사주·사상체질 분석과 통합됩니다.'},
+  sasang:{id:'sasang',g:'eastern',icon:'🏥',name:'사상체질',
+    short:'체질로 보는 성격·건강',price:0,free:true,
+    what:'태양인·태음인·소양인·소음인 4체질 탐색 — 성격·건강·식습관을 안내합니다.',
+    gain:['체질 유형 탐색','체질별 성격 특성','추천·주의 음식','건강 관리법'],
+    time:'3분',note:'⚠ 의료적 진단 아님 — 참고용 자기탐색 체험입니다.',disclaimer:true},
+  fengshui:{id:'fengshui',g:'eastern',icon:'🏔️',name:'풍수지리',
+    short:'공간과 기운의 조화',price:0,free:true,
+    what:'출생지·거주지 풍수 기운과 방위별 에너지 흐름을 분석, 최적 환경을 제안합니다.',
+    gain:['거주지 풍수 분석','최적 방위·색상','이사·창업 방향','공간 배치 조언'],
+    time:'즉시',note:'환경학과 함께 생활 환경 최적화를 제안합니다.'},
+  name_study:{id:'name_study',g:'eastern',icon:'📜',name:'성명학',
+    short:'이름의 기운',price:0,free:true,
+    what:'한글·한자 이름의 획수·음양오행·음파를 분석하여 이름이 운명에 미치는 영향을 탐구합니다.',
+    gain:['이름 획수 분석','음양오행 배열','이름 에너지 점수','개명 방향'],
+    time:'즉시',note:'사주·명리학과 함께 이름-운명 관계를 탐구합니다.'},
+
+  // ── 서양·민속 ─────────────────────────────────────────────
+  astrology:{id:'astrology',g:'western',icon:'⭐',name:'점성학·별자리',
+    short:'행성과 별의 기운',price:0,free:true,
+    what:'출생 날짜 기반 태양궁(별자리), 달궁, 상승궁을 분석, 성격과 운명 흐름을 탐구합니다.',
+    gain:['태양궁·달궁·상승궁','행성 포지션','운명 주기','인연 궁합'],
+    time:'즉시',note:'동양 사주와 교차 분석, 동서양 관점을 비교합니다.'},
+  tarot:{id:'tarot',g:'western',icon:'🎴',name:'타로',
+    short:'카드의 직관적 통찰',price:0,free:true,
+    what:'대아르카나 22장 기반 현재 상황·도전·조언·미래 방향을 탐구합니다.',
+    gain:['현재 상황 카드','도전·기회 카드','조언 카드','미래 방향 카드'],
+    time:'즉시',note:'AI 해석은 PRODUCTION에서. (오락·참고용)'},
+  numerology:{id:'numerology',g:'western',icon:'🔢',name:'수비학',
+    short:'숫자로 보는 운명',price:0,free:true,
+    what:'생년월일로 계산하는 생명수, 이름으로 계산하는 표현수·영혼수를 분석합니다.',
+    gain:['생명수(Life Path)','표현수(Expression)','영혼수(Soul Urge)','올해의 수'],
+    time:'즉시',note:'타로·점성학과 함께 서양 전통 관점을 종합합니다.'},
+  zodiac:{id:'zodiac',g:'western',icon:'🐲',name:'띠·혈액형',
+    short:'12지신과 혈액형 성격',price:0,free:true,
+    what:'12지신 띠별 성격·궁합과 혈액형별 성격 특성을 탐구합니다. (문화적 참고용)',
+    gain:['띠별 성격 특성','최고·주의 궁합','혈액형 성격 탐구','올해 운세'],
+    time:'즉시',note:'동양 전통 분석과 함께 문화적 관점을 제공합니다.'},
+  physiognomy:{id:'physiognomy',g:'western',icon:'👁️',name:'관상·수상·족상',
+    short:'신체로 보는 운명',price:800,free:false,
+    what:'얼굴·손·발 형태로 성격과 운명을 탐구하는 전통 학문입니다.',
+    gain:['전통 관상 분석','손금(생명선·두뇌선·감정선)','발 형태 특성','외모 에너지'],
+    time:'기본 즉시',note:'향후 이미지 업로드(Vision AI) 연동 시 정밀 분석 가능합니다.'},
+
+  // ── 환경·생명과학 ─────────────────────────────────────────
+  environment:{id:'environment',g:'envbio',icon:'🌿',name:'환경학',
+    short:'성장환경이 만든 나',price:500,free:false,
+    what:'출생·성장·현재 거주 환경이 성격·가치관·진로에 미치는 영향을 분석합니다.',
+    gain:['환경 영향 분석','지역 문화 특성','최적 거주환경','환경 최적화 제안'],
+    time:'즉시',note:'풍수지리·유전학과 함께 환경-유전 상호작용을 탐구합니다.'},
+  genetics:{id:'genetics',g:'envbio',icon:'🧫',name:'유전학·DNA',
+    short:'선천적 특성 탐구',price:600,free:false,
+    what:'유전학적 관점에서 신체 특성·건강 성향·잠재적 재능 분야를 탐구합니다.',
+    gain:['유전 기반 체질 특성','건강 관리 방향','유전적 재능 영역','생활습관 최적화'],
+    time:'즉시',note:'⚠ 의료 검사 아님 — 교육적 자기탐색 체험입니다.',disclaimer:true},
+  biorhythm:{id:'biorhythm',g:'envbio',icon:'📈',name:'생체리듬',
+    short:'신체·감성·지성 리듬',price:0,free:true,
+    what:'생년월일 기반 신체(23일)·감성(28일)·지성(33일) 바이오리듬을 계산합니다.',
+    gain:['현재 바이오리듬 상태','최고의 날·주의할 날','중요 결정 타이밍','월별 리듬 예측'],
+    time:'즉시',note:'학습유형·건강 관리와 함께 최적 일정을 수립합니다.'},
+};
+
+/* ── 2. 코스 정의 (8개) ────────────────────────────────────── */
+const COURSES = {
+  ai_recommended:{id:'ai_recommended',icon:'🤖',name:'AI 추천 코스',
+    badge:'⭐ 추천',desc:'AI가 선별한 신뢰도 높은 조합',featured:true,
+    discs:['mbti','big5','holland','aptitude','saju','astrology','values'],
+    time:'약 20분'},
+  psychology:{id:'psychology',icon:'🧠',name:'심리학 코스',
+    desc:'과학적으로 검증된 심리학 집약',
+    discs:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi'],
+    time:'약 35분'},
+  selfexplore:{id:'selfexplore',icon:'🔍',name:'AI 자기탐색 코스',
+    desc:'나를 깊이 이해하는 탐색 여정',
+    discs:['character','potential','creativity','interest','aptitude','values'],
+    time:'약 28분'},
+  career:{id:'career',icon:'💼',name:'진로·직업 코스',
+    desc:'직업 탐색과 커리어 설계',
+    discs:['holland','aptitude','values','leadership','learning','jobOntology'],
+    time:'약 25분'},
+  startup:{id:'startup',icon:'🏢',name:'사업·창업 진단',
+    desc:'창업 적합도와 사업 방향 탐색',
+    discs:['startup','creativity','values','leadership','jobOntology'],
+    time:'약 22분'},
+  eastern:{id:'eastern',icon:'☯️',name:'동양 전통 코스',
+    desc:'명리학·사주 기반 인생 탐구',
+    discs:['saju','ohang','sasang','fengshui','name_study','zodiac'],
+    time:'약 10분 (무료)'},
+  western:{id:'western',icon:'⭐',name:'서양·타로 코스',
+    desc:'점성학·타로 기반 탐구',
+    discs:['astrology','tarot','numerology','zodiac'],
+    time:'약 8분 (무료)'},
+  comprehensive:{id:'comprehensive',icon:'🔮',name:'통합 코스',
+    badge:'🏆 대표과정',desc:'34개 학문 전체 AI Fusion',featured:true,
+    discs:Object.keys(DISCS),
+    time:'약 60분'},
+};
+
+const CAT_META = {
+  psychology:{label:'🧠 심리학',color:'var(--c-psych)'},
+  selfexplore:{label:'🔍 자기탐색',color:'var(--c-self)'},
+  career:{label:'💼 진로·직업',color:'var(--c-career)'},
+  eastern:{label:'☯ 동양전통',color:'var(--c-east)'},
+  western:{label:'⭐ 서양·민속',color:'var(--c-west)'},
+  envbio:{label:'🌿 환경·생명',color:'var(--c-env)'},
+};
+
+const CAT_ORDER = ['psychology','selfexplore','career','eastern','western','envbio'];
+
+/* ── 3. 상태 ───────────────────────────────────────────────── */
+const ST = {
+  userId: 'u_' + Math.random().toString(36).slice(2,9),
+  course: null,
+  selectedDiscs: new Set(),
+  form: {name:'',bdate:'',btime:'',gender:'',birthplace:'',
+    location:'',status:'',blood:'',mbti:'',interests:[],concern:'',
+    miniTests:{},},
+  manseok: null,
+  results: null,
+  fusionScore: null,
+  activeCategory: 'psychology',
+  formStep: 0,
+  TOTAL_FORM_STEPS: 6,
+};
+
+/* ── 4. 화면 전환 ─────────────────────────────────────────── */
+function showScreen(id) {
+  document.querySelectorAll('.lm-screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('s-'+id);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── 5. 초기화 ─────────────────────────────────────────────── */
+function updateModeIndicatorContrast() {
+  const indicator = document.getElementById('mode-indicator');
+  if (!indicator) return;
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 220;
+  indicator.classList.toggle('mode-contrast', nearBottom);
+}
+
+function init() {
+  // 모드 표시
+  document.getElementById('mode-indicator').textContent =
+    LM.MODE === 'PREVIEW' ? '⚙ PREVIEW' :
+    LM.MODE === 'BETA' ? '⚙ BETA' : '✅ LIVE';
+  if (LM.MODE === 'PRODUCTION') {
+    document.getElementById('preview-banner').style.display = 'none';
+    document.getElementById('mode-indicator').style.display = 'none';
+  }
+  updateModeIndicatorContrast();
+  window.addEventListener('scroll', updateModeIndicatorContrast, { passive: true });
+  window.addEventListener('resize', updateModeIndicatorContrast);
+  // 기본 생년월일
+  const d = new Date(); d.setFullYear(d.getFullYear() - 30);
+  const el = document.getElementById('f-bdate');
+  if (el) el.value = d.toISOString().split('T')[0];
+  renderCourseGrid();
+  updateFormUI();
+}
+
+/* ── 6. 코스 카드 렌더링 ─────────────────────────────────── */
+function renderCourseGrid() {
+  const wrap = document.getElementById('course-grid');
+  wrap.innerHTML = Object.values(COURSES).map(c => {
+    const freeCount = c.discs.filter(id => DISCS[id]?.free).length;
+    const allFree = freeCount === c.discs.length;
+    return `
+    <div class="course-card${c.featured?' featured':''}" data-course-id="${c.id}" tabindex="0" role="button" aria-label="${c.name} 선택">
+      ${c.badge ? `<div class="cc-badge">${c.badge}</div>` : ''}
+      <div class="cc-icon">${c.icon}</div>
+      <div class="cc-name">${c.name}</div>
+      <div class="cc-desc">${c.desc}</div>
+      <div class="cc-meta">
+        <span class="cc-count">${c.discs.length}개 학문</span>
+        <span class="cc-time">${c.time}</span>
+        ${allFree ? '<span class="cc-free">전체 무료</span>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  wrap.querySelectorAll('.course-card').forEach(card => {
+    card.addEventListener('click', () => openCourse(card.dataset.courseId));
+    card.addEventListener('keydown', evt => {
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
+        openCourse(card.dataset.courseId);
+      }
     });
+  });
+}
+
+/* ── 7. 코스 상세 ─────────────────────────────────────────── */
+function openCourse(courseId) {
+  const c = COURSES[courseId];
+  if (!c) return;
+  ST.course = courseId;
+  ST.selectedDiscs = new Set(c.discs);
+  document.getElementById('course-title').textContent = `${c.icon} ${c.name}`;
+  document.getElementById('course-count').textContent = `${c.discs.length}개 학문`;
+  renderDiscList(c.discs);
+  updatePriceSummary();
+  showScreen('course');
+}
+
+function renderDiscList(discIds) {
+  const wrap = document.getElementById('disc-list');
+  const groups = {};
+  discIds.forEach(id => {
+    const d = DISCS[id]; if (!d) return;
+    if (!groups[d.g]) groups[d.g] = [];
+    groups[d.g].push(d);
+  });
+  let html = '';
+  CAT_ORDER.filter(g => groups[g]).forEach(g => {
+    const cm = CAT_META[g];
+    html += `<div class="disc-group-title" style="color:${cm.color}">${cm.label}</div>`;
+    groups[g].forEach(d => {
+      const isSel = ST.selectedDiscs.has(d.id);
+      html += `
+      <div class="disc-item${isSel?' selected':''}" id="di-${d.id}">
+        <div class="disc-item-hd" onclick="toggleDisc('${d.id}')">
+          <span class="di-icon">${d.icon}</span>
+          <div class="di-info">
+            <div class="di-name">${d.name}</div>
+            <div class="di-short">${d.short}</div>
+          </div>
+          <div class="di-right">
+            <span class="price-badge ${d.free?'price-free':'price-paid'}">
+              ${d.free ? '🆓 무료' : `💎 ${d.price}AP`}
+            </span>
+          </div>
+          <div class="di-chk">${isSel?'✓':''}</div>
+        </div>
+        <div class="pretest-info">
+          ${d.disclaimer ? `<div style="color:#f87171;font-size:.68rem;margin-bottom:8px">⚠ ${d.note}</div>` : ''}
+          <div class="pt-row"><span class="pt-label">📖 무엇인가요?</span><span class="pt-val">${d.what}</span></div>
+          <div class="pt-row"><span class="pt-label">💡 알 수 있는 것</span>
+            <div class="pt-gain">${d.gain.map(g=>`<span class="pt-tag">${g}</span>`).join('')}</div>
+          </div>
+          <div class="pt-row"><span class="pt-label">⏱ 소요시간</span><span class="pt-val">${d.time}</span></div>
+          <div class="pt-row"><span class="pt-label">🤖 AI Fusion</span><span class="pt-val">${d.disclaimer?'':d.note}</span></div>
+        </div>
+        <div style="text-align:center;padding:4px 0 10px">
+          <button style="background:none;border:none;color:var(--t3);font-size:.68rem;cursor:pointer"
+            onclick="togglePretest('${d.id}',event)">▾ 사전 안내 보기</button>
+        </div>
+      </div>`;
+    });
+  });
+  wrap.innerHTML = html;
+}
+
+function toggleDisc(id) {
+  const el = document.getElementById('di-'+id);
+  if (!el) return;
+  const checked = el.classList.toggle('selected');
+  el.querySelector('.di-chk').textContent = checked ? '✓' : '';
+  if (checked) ST.selectedDiscs.add(id);
+  else ST.selectedDiscs.delete(id);
+  updatePriceSummary();
+}
+
+function togglePretest(id, e) {
+  e.stopPropagation();
+  const el = document.getElementById('di-'+id);
+  if (el) el.classList.toggle('open');
+}
+
+function updatePriceSummary() {
+  const sel = [...ST.selectedDiscs];
+  const c = COURSES[ST.course];
+  document.getElementById('sel-count').textContent = sel.length;
+  const origTotal = sel.reduce((s,id) => s+(DISCS[id]?.price||0), 0);
+  const bundle = c ? LIFEAI_PRICING_BUNDLES[c.id] : null;
+  const finalPrice = (bundle && bundle.price < origTotal) ? bundle.price : origTotal;
+  const disc = bundle ? bundle.discount : 0;
+  const origEl = document.getElementById('ps-orig');
+  const finalEl = document.getElementById('ps-final');
+  const discEl = document.getElementById('ps-discount');
+  if (finalPrice === 0) {
+    origEl.textContent = '';
+    finalEl.textContent = '무료 체험';
+    discEl.textContent = '';
+  } else if (LM.MODE === 'PREVIEW') {
+    origEl.textContent = `정식출시 후 ${origTotal.toLocaleString()}AP`;
+    finalEl.textContent = 'PREVIEW 무료 체험';
+    discEl.textContent = '🎁';
+  } else {
+    if (disc > 0) origEl.textContent = `${origTotal.toLocaleString()}AP`;
+    finalEl.textContent = `${finalPrice.toLocaleString()} AP`;
+    discEl.textContent = disc > 0 ? `${disc}% 할인` : '';
+  }
+}
+
+const LIFEAI_PRICING_BUNDLES = {
+  ai_recommended:{price:2500,discount:44},psychology:{price:3200,discount:43},
+  selfexplore:{price:2800,discount:35},career:{price:2500,discount:34},
+  startup:{price:2000,discount:33},eastern:{price:0,discount:0},
+  western:{price:0,discount:0},comprehensive:{price:9800,discount:48},
+};
+
+/* ── 8. 폼 흐름 ────────────────────────────────────────────── */
+function startFormFlow() {
+  if (ST.selectedDiscs.size === 0) {
+    alert('분석할 학문을 최소 1개 선택해 주세요.'); return;
+  }
+  ST.formStep = 0;
+  updateFormUI();
+  showScreen('form');
+}
+
+function updateFormUI() {
+  const T = ST.TOTAL_FORM_STEPS;
+  // 진행 바
+  const prog = document.getElementById('form-prog');
+  if (prog) {
+    prog.innerHTML = Array.from({length:T},(_,i) =>
+      `<div class="fp${i<ST.formStep?' done':i===ST.formStep?' active':''}"></div>`
+    ).join('');
+  }
+  document.getElementById('form-step-lbl').textContent = `${ST.formStep+1} / ${T}`;
+  document.querySelectorAll('.fstep').forEach((el,i)=>el.classList.toggle('active',i===ST.formStep));
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+  if (prevBtn) prevBtn.classList.toggle('hidden', ST.formStep===0);
+  if (nextBtn) {
+    nextBtn.textContent = ST.formStep===T-1 ? '✨ 분석 시작하기' : '다음 단계 →';
+  }
+  if (ST.formStep === 4) renderMiniTests();
+  if (ST.formStep === 5) renderSummary();
+}
+
+function formPrev() {
+  if (ST.formStep === 0) { showScreen('course'); return; }
+  ST.formStep--;
+  updateFormUI();
+}
+
+function formNext() {
+  collectFormStep();
+  if (ST.formStep < ST.TOTAL_FORM_STEPS - 1) {
+    if (ST.formStep === 0 && !document.getElementById('f-bdate').value) {
+      alert('생년월일은 필수 입력 항목입니다.'); return;
+    }
+    ST.formStep++;
+    updateFormUI();
+  } else {
+    runAnalysis();
+  }
+}
+
+function collectFormStep() {
+  const f = ST.form;
+  const v = id => (document.getElementById(id)||{}).value||'';
+  if (ST.formStep===0){f.name=v('f-name');f.bdate=v('f-bdate');f.btime=v('f-btime');}
+  if (ST.formStep===1){f.birthplace=v('f-birthplace');f.location=v('f-location');
+    f.status=v('f-status');f.blood=v('f-blood');}
+  if (ST.formStep===3){f.concern=v('f-concern');}
+  if (ST.formStep===4){collectMiniTests();}
+}
+
+function selGender(g){
+  ST.form.gender=g;
+  document.getElementById('g-m').classList.toggle('sel',g==='male');
+  document.getElementById('g-f').classList.toggle('sel',g==='female');
+}
+
+function selMbti(t){
+  ST.form.mbti = ST.form.mbti===t ? '' : (t||'');
+  document.querySelectorAll('.mbti-btn').forEach(btn=>{
+    btn.classList.toggle('sel',t && btn.textContent.trim()===t);
+  });
+}
+
+function togInt(btn,val){
+  btn.classList.toggle('sel');
+  const i=ST.form.interests.indexOf(val);
+  if(i===-1)ST.form.interests.push(val);
+  else ST.form.interests.splice(i,1);
+}
+
+/* ── 9. 미니 검사 ──────────────────────────────────────────── */
+const MINI_TESTS = {
+  mmpi:{
+    title:'📊 MMPI 성격 탐색 (간략 체험)',
+    disclaimer:'이 탐색은 임상적 MMPI 검사를 대체하지 않습니다. 자기이해를 위한 참고용 체험입니다.',
+    qs:[
+      '나는 기분이 자주 변하는 편이다.',
+      '사람들이 나에 대해 험담을 한다는 느낌이 들 때가 있다.',
+      '특별한 이유 없이 불안하거나 무서운 느낌이 든 적이 있다.',
+      '나는 대부분의 사람들보다 더 예민한 편이다.',
+      '나는 많은 사람들 앞에서 말하기가 어렵다.',
+    ]
+  },
+  character:{
+    title:'🌱 인성 탐색',
+    qs:[
+      '어려운 상황에서도 정직함을 유지하는 것이 중요하다.',
+      '타인이 어려울 때 도움을 주려는 마음이 강하다.',
+      '규칙이나 약속을 어기는 것에 불편함을 느낀다.',
+      '내 행동이 다른 사람에게 미치는 영향을 자주 생각한다.',
+      '잘못을 했을 때 인정하고 사과하는 것이 중요하다고 생각한다.',
+    ]
+  },
+  potential:{
+    title:'🚀 잠재력 탐색',
+    qs:[
+      '새로운 기술이나 지식을 배울 때 빠르게 습득하는 편이다.',
+      '어려운 문제를 포기하지 않고 끝까지 해결하려 한다.',
+      '내가 아직 발휘하지 못한 능력이 있다고 느낀다.',
+      '새로운 환경이나 역할에 빠르게 적응하는 편이다.',
+      '내가 집중할 때 주변이 놀랄 만한 성과를 낸 경험이 있다.',
+    ]
+  },
+  creativity:{
+    title:'🎨 창의력 탐색',
+    qs:[
+      '기존 방법과 다른 새로운 해결책을 찾는 것이 즐겁다.',
+      '하나의 주제에서 다양한 아이디어가 떠오르는 편이다.',
+      '서로 다른 분야의 개념을 연결해 새 아이디어를 만든 경험이 있다.',
+      '예상치 못한 상황에서도 빠르게 대안을 생각해낸다.',
+      '기존의 규칙이나 틀을 벗어나 생각하는 것이 불편하지 않다.',
+    ]
+  },
+  interest:{
+    title:'❤️ 관심도 탐색',
+    qs:[
+      '시간 가는 줄 모르고 몰입하는 활동이 있다.',
+      '돈을 받지 않아도 계속 하고 싶은 일이 있다.',
+      '특정 주제에 대해 남들보다 훨씬 많이 알고 싶어한다.',
+      '특정 분야의 내용을 보면 자연스럽게 관심이 생긴다.',
+      '내가 정말 좋아하는 것과 직업이 연결되면 좋겠다고 생각한다.',
+    ]
+  },
+};
+
+function renderMiniTests() {
+  const needTests = Object.keys(MINI_TESTS).filter(k => ST.selectedDiscs.has(k));
+  const wrap = document.getElementById('mini-tests-container');
+  if (needTests.length === 0) {
+    wrap.innerHTML = '<div style="color:var(--t2);font-size:.82rem;padding:20px;text-align:center">선택하신 학문에는 추가 탐색 문항이 없습니다.<br>다음 단계로 진행해 주세요.</div>';
+    return;
+  }
+  wrap.innerHTML = needTests.map(k => {
+    const t = MINI_TESTS[k];
+    return `
+    <div class="mini-test">
+      <div class="mt-title">${t.title}</div>
+      ${t.disclaimer ? `<div class="mt-disclaimer">⚠ ${t.disclaimer}</div>` : ''}
+      ${t.qs.map((q,i) => `
+      <div class="mt-q">${i+1}. ${q}</div>
+      <div class="mt-scale">
+        ${[1,2,3,4,5].map(v=>`
+        <label>
+          <input type="radio" name="${k}_q${i}" value="${v}">
+          <span>${v===1?'전혀<br>아님':v===5?'매우<br>그렇다':v}</span>
+        </label>`).join('')}
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function collectMiniTests() {
+  const needTests = Object.keys(MINI_TESTS).filter(k => ST.selectedDiscs.has(k));
+  needTests.forEach(k => {
+    const t = MINI_TESTS[k];
+    const scores = t.qs.map((_,i) => {
+      const r = document.querySelector(`input[name="${k}_q${i}"]:checked`);
+      return r ? parseInt(r.value) : 3;
+    });
+    ST.form.miniTests[k] = { scores, avg: scores.reduce((a,b)=>a+b,0)/scores.length };
+  });
+}
+
+function renderSummary() {
+  const f = ST.form;
+  const el = document.getElementById('info-summary');
+  if (!el) return;
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div><span style="color:var(--gold)">이름</span><br>${f.name||'미입력'}</div>
+      <div><span style="color:var(--gold)">생년월일</span><br>${f.bdate||'미입력'}</div>
+      <div><span style="color:var(--gold)">성별</span><br>${f.gender==='male'?'남성':f.gender==='female'?'여성':'미입력'}</div>
+      <div><span style="color:var(--gold)">혈액형</span><br>${f.blood||'미입력'}</div>
+      <div><span style="color:var(--gold)">출생지</span><br>${f.birthplace||'미입력'}</div>
+      <div><span style="color:var(--gold)">거주지</span><br>${f.location||'미입력'}</div>
+      <div><span style="color:var(--gold)">현재상태</span><br>${f.status||'미입력'}</div>
+      <div><span style="color:var(--gold)">MBTI</span><br>${f.mbti||'미입력'}</div>
+    </div>
+    <div style="margin-top:10px"><span style="color:var(--gold)">선택 학문</span><br>
+      <span style="font-size:.72rem;color:var(--t2)">${[...ST.selectedDiscs].map(id=>DISCS[id]?.name||id).join(' · ')}</span>
+    </div>`;
+}
+
+/* ══ 만세력(萬歲曆) 계산 엔진 ══════════════════════════════════════
+   규칙 기반 엔진 — 계산은 여기서, 해석은 AI(PRODUCTION)에서.
+   참고: 정밀한 사주는 전문 만세력 SW 사용 권장.
+═══════════════════════════════════════════════════════════════ */
+const MANSEOK = {
+  STEMS:['갑','을','병','정','무','기','경','신','임','계'],
+  BRANCHES:['자','축','인','묘','진','사','오','미','신','유','술','해'],
+  SE:{'갑':'木','을':'木','병':'火','정':'Fire','무':'土','기':'土','경':'金','신':'金','임':'Water','계':'Water'},
+  BE:{'자':'Water','축':'土','인':'木','묘':'木','진':'土','사':'Fire','오':'Fire','미':'土','신':'金','유':'金','술':'土','해':'Water'},
+  // 절기 기반 월지 (대략적 적용, ±1일 오차 가능)
+  getMonthBranch(m, d) {
+    const starts=[[1,6,1],[2,4,2],[3,6,3],[4,5,4],[5,6,5],[6,6,6],
+                  [7,7,7],[8,8,8],[9,8,9],[10,8,10],[11,7,11],[12,7,0]];
+    for(const [sm,sd,bi] of starts) if(m===sm && d>=sd) return bi;
+    // 해당 달 절기 전이면 이전 달 branch
+    const idx=starts.findIndex(([sm])=>sm===m);
+    return idx>0 ? starts[idx-1][2] : 0;
+  },
+  calc(dateStr, timeStr) {
+    if (!dateStr) return null;
+    const d = new Date(dateStr);
+    const yr=d.getFullYear(), mo=d.getMonth()+1, dy=d.getDate();
+    // 년주
+    const ysi=((yr-4)%10+10)%10, ybi=((yr-4)%12+12)%12;
+    // 월주
+    const mbi=this.getMonthBranch(mo,dy);
+    const msi=((ysi%5)*2+mbi-2+20)%10;
+    // 일주 (기준: 2024-01-01 = 甲子日, 기준점 계산값)
+    const REF=new Date('2024-01-01');
+    const diff=Math.round((d-REF)/86400000);
+    const dsi=((0+diff)%10+10)%10; // 甲=0
+    const dbi=((0+diff)%12+12)%12; // 子=0
+    // 시주
+    let hResult=null;
+    if (timeStr) {
+      const hr=parseInt(timeStr.split(':')[0]);
+      const hbi=(hr===23||hr<1)?0:Math.floor((hr+1)/2)%12;
+      const hsi=((dsi%5)*2+hbi)%10;
+      hResult={stem:this.STEMS[hsi],branch:this.BRANCHES[hbi],
+        element:this.SE[this.STEMS[hsi]]||'土'};
+    }
+    const ys=this.STEMS[ysi],yb=this.BRANCHES[ybi];
+    const ms=this.STEMS[msi],mb=this.BRANCHES[mbi];
+    const ds=this.STEMS[dsi],db=this.BRANCHES[dbi];
+    const me=this.SE[ds]||'土'; // 일주(日主) = 나의 오행
+    // 오행 개수 파악
+    const ec={'木':0,'火':0,'土':0,'金':0,'Water':0};
+    [ys,ms,ds,...(hResult?[hResult.stem]:[])].forEach(s=>{ const e=this.SE[s]; if(e)ec[e]++; });
+    [yb,mb,db,...(hResult?[hResult.branch]:[])].forEach(b=>{ const e=this.BE[b]; if(e)ec[e]++; });
+    return {year:{stem:ys,branch:yb,element:this.SE[ys]||'土'},
+      month:{stem:ms,branch:mb},day:{stem:ds,branch:db,element:me},
+      hour:hResult,mainElement:me,yearElement:this.SE[ys]||'土',
+      elements:ec,sixtyCycle:`${ys}${yb}`,dayMaster:ds};
+  }
+};
+
+/* ══ 규칙 기반 분석 엔진 (PREVIEW/FALLBACK) ═══════════════════ */
+const RULE = {
+  hash(s) {
+    let h=0; for(const c of s){h=((h<<5)-h)+c.charCodeAt(0);h|=0;} return Math.abs(h);
+  },
+  score(seed,min=55,max=92){return min+this.hash(seed)%(max-min+1)},
+  pct(seed,min=40,max=95){return min+this.hash(seed)%(max-min+1)},
+
+  EL_TRAITS:{
+    '木':{power:'성장·창조',career:'교육, 기획, 의료, 예술, IT',color:'초록',dir:'동방'},
+    'Fire':{power:'열정·표현',career:'영업, 연예, 마케팅, 요식업',color:'빨강',dir:'남방'},
+    '土':{power:'안정·신뢰',career:'금융, 부동산, 농업, 공무',color:'황토',dir:'중앙'},
+    '金':{power:'의지·결단',career:'군경, 법조, IT, 제조',color:'흰색',dir:'서방'},
+    'Water':{power:'지혜·유연',career:'연구, 철학, 유통, 국제',color:'검정',dir:'북방'},
+  },
+  ZODIAC_ANIMALS:['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'],
+  ZODIAC_TRAITS:{
+    '쥐':{t:'영리·기민',f:'지혜로운 투자로 재물운 상승',c:'금융, IT, 정보분석'},
+    '소':{t:'성실·끈기',f:'꾸준한 노력이 빛을 발함',c:'농업, 제조, 공직'},
+    '호랑이':{t:'담대·리더십',f:'도전할수록 운이 열림',c:'군인, 경찰, 스포츠'},
+    '토끼':{t:'온화·예술성',f:'인간관계가 행운의 열쇠',c:'예술, 문화, 서비스'},
+    '용':{t:'카리스마·추진력',f:'큰 꿈을 꿀수록 성공 가능성',c:'경영, 정치, 연예'},
+    '뱀':{t:'신중·통찰력',f:'직관을 믿을 때 기회가 옴',c:'철학, 의학, 법조'},
+    '말':{t:'활동적·자유',f:'이동과 변화가 행운 가져옴',c:'스포츠, 관광, 영업'},
+    '양':{t:'온순·창의성',f:'협력과 팀워크에서 강점',c:'예술, 교육, 복지'},
+    '원숭이':{t:'재주·임기응변',f:'기회를 포착하는 센스',c:'IT, 엔터, 무역'},
+    '닭':{t:'부지런·꼼꼼',f:'준비된 자에게 기회가 옴',c:'경리, 분석, 언론'},
+    '개':{t:'충직·정의감',f:'신뢰 관계가 성공의 바탕',c:'공직, 법조, 사회복지'},
+    '돼지':{t:'복·솔직',f:'나눔과 베품이 복을 부름',c:'요식업, 유통, 종교'},
+  },
+  MBTI_CAREERS:{
+    INTJ:['전략컨설턴트','데이터과학자','시스템설계자','연구원','CEO/CTO'],
+    INTP:['소프트웨어개발자','철학자','물리학자','분석가','건축가'],
+    ENTJ:['CEO','변호사','비즈니스전략가','정치인','투자자'],
+    ENTP:['기업가','마케터','발명가','언론인','크리에이터'],
+    INFJ:['상담사','작가','사회운동가','의사','심리학자'],
+    INFP:['작가','예술가','상담사','UX디자이너','교사'],
+    ENFJ:['교사','코치','인사담당자','홍보전문가','사회복지사'],
+    ENFP:['크리에이터','마케터','배우','사회기업가','작가'],
+    ISTJ:['회계사','공무원','엔지니어','판사','군인'],
+    ISFJ:['간호사','교사','사서','사회복지사','행정가'],
+    ESTJ:['경영자','군장교','판사','PM','감사관'],
+    ESFJ:['영업','이벤트플래너','의료진','교사','사회복지사'],
+    ISTP:['엔지니어','외과의사','소방관','파일럿','사이버보안'],
+    ISFP:['디자이너','사진가','요리사','물리치료사','작가'],
+    ESTP:['기업가','영업','경찰','응급의사','코치'],
+    ESFP:['배우','이벤트플래너','영업','관광가이드','코미디언'],
+  },
+  getSign(dateStr) {
+    if (!dateStr) return '양자리';
+    const d=new Date(dateStr), m=d.getMonth()+1, dy=d.getDate();
+    if((m===3&&dy>=21)||(m===4&&dy<=19))return '양자리';
+    if((m===4&&dy>=20)||(m===5&&dy<=20))return '황소자리';
+    if((m===5&&dy>=21)||(m===6&&dy<=20))return '쌍둥이자리';
+    if((m===6&&dy>=21)||(m===7&&dy<=22))return '게자리';
+    if((m===7&&dy>=23)||(m===8&&dy<=22))return '사자자리';
+    if((m===8&&dy>=23)||(m===9&&dy<=22))return '처녀자리';
+    if((m===9&&dy>=23)||(m===10&&dy<=22))return '천칭자리';
+    if((m===10&&dy>=23)||(m===11&&dy<=21))return '전갈자리';
+    if((m===11&&dy>=22)||(m===12&&dy<=21))return '사수자리';
+    if((m===12&&dy>=22)||(m===1&&dy<=19))return '염소자리';
+    if((m===1&&dy>=20)||(m===2&&dy<=18))return '물병자리';
+    return '물고기자리';
+  },
+
+  analyze(discId, f, msok) {
+    const seed=`${f.bdate||'1990'}${f.name||'user'}${discId}`;
+    const yr=f.bdate?new Date(f.bdate).getFullYear():1990;
+    const mo=f.bdate?new Date(f.bdate).getMonth()+1:1;
+    const mbti=f.mbti||'INFP';
+    const mc=this.MBTI_CAREERS[mbti]||this.MBTI_CAREERS['INFP'];
+    const el=msok ? msok.mainElement : '土';
+    const et=this.EL_TRAITS[el]||this.EL_TRAITS['土'];
+    const zodiac=this.ZODIAC_ANIMALS[(yr-4+1200)%12];
+    const zt=this.ZODIAC_TRAITS[zodiac]||this.ZODIAC_TRAITS['쥐'];
+    const sign=this.getSign(f.bdate);
+    const SC=this.score.bind(this);
+    const mi=f.miniTests||{};
+
+    const R = (s,ttl,sum,det,tags=[],eng='rule') =>
+      ({score:s,title:ttl,summary:sum,detail:det,tags,engine:eng});
+
+    switch(discId) {
+      case 'saju': {
+        if (!msok) return R(SC(seed,62,88),'사주 계산 불가','생년월일을 입력해 주세요.',
+          '사주 분석은 생년월일(시) 정보가 필요합니다.',['생년월일 필요']);
+        const {year:yp,month:mp,day:dp,hour:hp,mainElement:me,elements:ec} = msok;
+        const mainE=this.EL_TRAITS[me]||this.EL_TRAITS['土'];
+        const balance=Object.entries(ec).sort((a,b)=>b[1]-a[1]);
+        const strong=balance[0][0], weak=balance[4][0];
+        return R(SC(seed,65,88),
+          `${yp.stem}${yp.branch}년 · 일주 ${dp.stem}${dp.branch} (${me}행)`,
+          `일주(日主) ${dp.stem}의 ${me}(${mainE.power}) 기운이 삶을 이끕니다.`,
+          `사주팔자: ${yp.stem}${yp.branch} / ${mp.stem}${mp.branch} / ${dp.stem}${dp.branch}${hp?` / ${hp.stem}${hp.branch}`:''}\n\n`+
+          `일주(日主): ${dp.stem}${dp.branch} — ${me}행의 ${mainE.power} 기운이 핵심입니다.\n`+
+          `오행 분포: 강한 ${strong} / 보완 필요 ${weak}\n`+
+          `천직 방향: ${mainE.career}\n`+
+          `행운의 색·방위: ${mainE.color} / ${mainE.dir}\n\n`+
+          `⚠ 만세력 계산은 규칙 기반(±1일 오차 가능). 정밀 분석은 AI PRODUCTION 모드에서 제공됩니다.`,
+          [me+'행',mainE.power,mainE.career.split(',')[0].trim()]);
+      }
+      case 'ohang': {
+        const me=msok?msok.mainElement:'土';
+        const et2=this.EL_TRAITS[me]||this.EL_TRAITS['土'];
+        const good={'木':'水·火','Fire':'木·土','土':'Fire·金','金':'土·Water','Water':'木·金'};
+        return R(SC(seed,65,88),`${me}행 — ${et2.power}`,
+          `${me}행의 ${et2.power} 기운이 삶을 이끕니다.`,
+          `주요 오행: ${me} (${et2.power})\n보완 오행: ${good[me]||'水·木'}\n`+
+          `직업 방향: ${et2.career}\n행운의 색: ${et2.color} / 방위: ${et2.dir}\n`+
+          `건강 주의: ${me==='木'?'간·담낭':me==='Fire'?'심장·소장':me==='土'?'비장·위장':me==='金'?'폐·대장':'신장·방광'}`,
+          [me+'행',et2.power]);
+      }
+      case 'sasang': {
+        const types=['소양인','태음인','소음인','태양인'];
+        const map={ESTP:0,ESFP:0,ENTP:0,ENFP:0,INTJ:1,ISTJ:1,INFJ:2,ISFJ:2,ENTJ:3};
+        const t=map[mbti]??this.hash(seed)%4;
+        const type=types[t];
+        const desc={소양인:'활동적이고 사교적. 따뜻한 식품 주의, 서늘한 음식 권장.',
+          태음인:'가장 흔한 체질. 끈기 강함. 과식 주의, 해조류·야채 권장.',
+          소음인:'세심하고 내향적. 따뜻한 음식 권장, 찬 음식 주의.',
+          태양인:'매우 희귀. 카리스마 강함. 담백한 음식 권장.'};
+        return R(SC(seed,65,85),`사상체질: ${type}`,
+          `${type}의 특성: ${desc[type].split('.')[0]}`,
+          `${type}\n\n${desc[type]}\n\n`+
+          `⚠ 이는 의료적 진단이 아닌 자기탐색 체험입니다. 정확한 체질 진단은 한의사 전문 진료를 권장합니다.`,
+          [type,'참고용']);
+      }
+      case 'mbti':
+        return R(SC(seed+mbti,72,95),`${mbti} — 상세 분석`,
+          `${mbti}의 핵심 강점과 최적 직업 방향`,
+          `MBTI ${mbti} 유형 분석:\n`+
+          `${mbti[0]==='I'?'내향성(I): 깊은 집중력과 통찰력이 강점':'외향성(E): 네트워킹과 리더십이 강점'}\n`+
+          `${mbti[1]==='N'?'직관(N): 미래 가능성을 보는 통찰력 탁월':'감각(S): 현실적이고 실용적 접근 강점'}\n`+
+          `${mbti[2]==='F'?'감정(F): 공감 능력과 관계 지향성 높음':'사고(T): 논리적 판단과 객관적 분석 뛰어남'}\n`+
+          `${mbti[3]==='J'?'판단(J): 계획적이고 체계적인 삶 선호':'인식(P): 유연하고 적응력 강한 성향'}\n\n`+
+          `추천 직업: ${mc.join(', ')}`,
+          mc.slice(0,3));
+      case 'big5': {
+        const O=mbti[1]==='N'?82:58, C=mbti[3]==='J'?78:48,
+              E=mbti[0]==='E'?76:36, A=mbti[2]==='F'?80:44, N=mbti[2]==='F'?52:35;
+        return R(SC(seed,68,90),'BIG5 (OCEAN) 성격 특성',
+          `개방성 ${O} / 성실성 ${C} / 외향성 ${E}`,
+          `개방성(O): ${O}/100 — ${O>65?'창의적, 다양한 경험 추구':'현실적, 구체적 선호'}\n`+
+          `성실성(C): ${C}/100 — ${C>65?'계획적, 목표지향적':'유연하고 자유로운 성향'}\n`+
+          `외향성(E): ${E}/100 — ${E>55?'사교적, 활동적':'내향적, 깊은 사색 선호'}\n`+
+          `친화성(A): ${A}/100 — ${A>65?'협력적, 타인 배려':'독립적, 논리 우선'}\n`+
+          `신경성(N): ${N}/100 — ${N>55?'감정 기복, 민감성 높음':'정서 안정, 스트레스 내성 강함'}`,
+          ['개방성 '+O,'성실성 '+C,'외향성 '+E]);
+      }
+      case 'tci': {
+        const ns=mi.tci?Math.round(mi.tci.avg*20):SC(seed+'NS',40,75);
+        const ha=SC(seed+'HA',30,68), rd=SC(seed+'RD',50,82);
+        return R(SC(seed,65,88),'TCI 7차원 기질성격',
+          `자극추구 ${ns} / 위험회피 ${ha} / 사회민감성 ${rd}`,
+          `자극추구(NS): ${ns}/100 — ${ns>55?'변화·탐험 즐기는 기질':'안정 선호, 신중한 기질'}\n`+
+          `위험회피(HA): ${ha}/100 — ${ha>55?'불확실성 민감, 신중':'낙관적, 도전 선호'}\n`+
+          `사회민감성(RD): ${rd}/100 — ${rd>60?'공감 능력 높음':'독립적, 자율성 강함'}\n`+
+          `인내력(P): ${SC(seed+'P',50,82)}/100\n`+
+          `자기주도(SD): ${SC(seed+'SD',55,90)}/100\n`+
+          `연대감(C): ${SC(seed+'C',45,80)}/100\n`+
+          `자기초월(ST): ${SC(seed+'ST',35,72)}/100`,
+          ['자극추구 '+ns,'위험회피 '+ha]);
+      }
+      case 'disc': {
+        const D=(mbti[0]==='E'&&mbti[3]==='J')?78:(mbti[3]==='J')?60:42;
+        const I=(mbti[0]==='E'&&mbti[2]==='F')?80:(mbti[0]==='E')?62:32;
+        const S=(mbti[0]==='I'&&mbti[2]==='F')?78:(mbti[3]==='J')?62:45;
+        const C=(mbti[3]==='J'&&mbti[1]==='S')?82:(mbti[3]==='J')?70:42;
+        const main=['D','I','S','C'][[D,I,S,C].indexOf(Math.max(D,I,S,C))];
+        return R(SC(seed,68,88),`DISC — ${main}형 우세`,
+          `D(지배) ${D} / I(사교) ${I} / S(안정) ${S} / C(신중) ${C}`,
+          `D(Dominance/지배): ${D}/100\nI(Influence/사교): ${I}/100\nS(Steadiness/안정): ${S}/100\nC(Conscientiousness/신중): ${C}/100\n\n`+
+          `우세 유형: ${main}형 — ${main==='D'?'목표지향, 결단력':main==='I'?'사교적, 열정적':main==='S'?'안정적, 신뢰감':main==='C'?'분석적, 완벽주의':'균형형'}`,
+          [main+'형',`D${D}/I${I}/S${S}/C${C}`]);
+      }
+      case 'enneagram': {
+        const typeMap={INTJ:1,INTP:5,ENTJ:8,ENTP:7,INFJ:4,INFP:4,ENFJ:2,ENFP:7,
+          ISTJ:1,ISFJ:2,ESTJ:3,ESFJ:2,ISTP:5,ISFP:9,ESTP:8,ESFP:7};
+        const typeNames=['','개혁가','조력자','성취자','개인주의자','탐구자','충성가','열정가','도전자','평화주의자'];
+        const t=typeMap[mbti]||9;
+        const wings=[[],[9,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,9],[8,1]];
+        return R(SC(seed,68,88),`에니어그램 ${t}번 — ${typeNames[t]}`,
+          `핵심 동기와 성장 방향 분석`,
+          `유형: ${t}번 ${typeNames[t]}\n날개: ${wings[t][0]}w${wings[t][1]}\n`+
+          `핵심 동기: ${t===1?'완벽함 추구':t===2?'사랑받고 싶음':t===3?'성공과 인정':t===4?'자기표현·독특함':t===5?'지식과 통찰':t===6?'안전과 지지':t===7?'자유와 즐거움':t===8?'통제와 힘':t===9?'평화와 안정':''}\n`+
+          `성장 방향: ${t===1?'완벽 강박 내려놓기':t===2?'자신의 필요 인정하기':t===3?'본래의 자신 찾기':t===4?'현재에 집중하기':t===5?'관계와 행동 연습':t===6?'자신을 신뢰하기':t===7?'깊이와 지속성 키우기':t===8?'취약함 허용하기':'주체적 참여 늘리기'}`,
+          [`${t}번 ${typeNames[t]}`]);
+      }
+      case 'via': {
+        const strengths=['용기','창의성','지혜','공정성','친절함','진실성',
+          '학구열','리더십','감사','인내력','희망','겸손'];
+        const top=strengths.slice(0,5).sort(()=>this.hash(seed+mbti+'via')%3-1);
+        return R(SC(seed,70,92),'VIA 핵심 강점 Top 5',
+          `${top.slice(0,3).join('·')} 강점 우세`,
+          `Top 5 핵심 강점:\n${top.map((s,i)=>`${i+1}. ${s}`).join('\n')}\n\n`+
+          `이 강점들을 직업·관계·일상에서 적극적으로 활용하세요.\n`+
+          `강점 기반 커리어: ${et.career}`,top.slice(0,3));
+      }
+      case 'mi': {
+        const dims=['언어','논리수학','공간','음악','신체운동','대인관계','자기이해','자연탐구'];
+        const scores=dims.map((d,i)=>SC(seed+d+i,45,95));
+        const top=dims.reduce((t,d,i)=>scores[i]>scores[dims.indexOf(t)]?d:t);
+        return R(SC(seed,68,90),`다중지능: ${top} 지능 우세`,
+          `상위 지능: ${dims.filter((_,i)=>scores[i]>70).join('·')||top}`,
+          dims.map((d,i)=>`${d}: ${scores[i]}/100`).join('\n')+'\n\n'+
+          `주요 지능 ${top}을 활용한 직업군: ${top==='언어'?'작가, 교사, 언론':top==='논리수학'?'과학자, 프로그래머, 회계사':top==='공간'?'건축가, 디자이너, 조종사':top==='음악'?'음악가, 작곡가, 음향':top==='신체운동'?'운동선수, 댄서, 외과의':top==='대인관계'?'교사, 정치인, 상담사':top==='자기이해'?'작가, 철학자, 심리학자':'환경운동가, 생물학자, 농부'}`,
+          [top+' 지능 강세']);
+      }
+      case 'holland': {
+        const imap={'창업·사업':{E:25},'IT·기술':{R:20,I:25},'예술·창작':{A:30},
+          '의료·복지':{S:25,I:15},'교육·강의':{S:25},'금융·경제':{E:20,C:20},
+          '공무·행정':{C:25,S:15},'연구·개발':{I:30},'농업·환경':{R:25},
+          '미디어·콘텐츠':{A:25,E:15},'서비스·관광':{S:20,E:15}};
+        const sc={R:40,I:40,A:40,S:40,E:40,C:40};
+        (f.interests||[]).forEach(int=>Object.entries(imap[int]||{}).forEach(([k,v])=>sc[k]=(sc[k]||40)+v));
+        const sorted=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+        const top3=sorted.slice(0,3).map(([k])=>k).join('');
+        return R(SC(seed,68,90),`RIASEC 유형: ${top3}`,
+          `${sorted[0][0]}형 우세 — ${sorted[0][0]==='R'?'실재형':sorted[0][0]==='I'?'탐구형':sorted[0][0]==='A'?'예술형':sorted[0][0]==='S'?'사회형':sorted[0][0]==='E'?'기업형':'관습형'} 성향`,
+          sorted.map(([k,v])=>`${k}: ${Math.min(v,100)}/100`).join('\n')+
+          `\n\n추천 직업군: ${top3==='RIA'?'공학자, 과학자, 건축가':top3==='ESA'?'교사, 마케터, 디자이너':top3==='ESC'?'경영자, 공무원, 관리자':'관련 분야 전문직'}`,
+          [top3+' 유형']);
+      }
+      case 'mmpi': {
+        const mt=mi.mmpi;
+        const avg=mt?mt.avg:3;
+        const interpreted=avg>3.5?'일부 척도에서 탐색이 권장되는 패턴이 나타납니다.':
+          '전반적으로 안정적인 패턴이 나타납니다.';
+        return R(SC(seed,60,85),'MMPI 성격 탐색 (자기탐색용)',interpreted,
+          `MMPI 탐색 결과 요약:\n${interpreted}\n\n`+
+          `이 탐색은 임상적 MMPI 검사(567문항)와 다른 자기이해용 간략 체험입니다.\n`+
+          `정확한 심리 평가는 정신건강 전문가(정신과 의사, 임상심리사)와 상담하세요.\n\n`+
+          `참고 척도 탐색: 건강염려(Hs) / 우울(D) / 히스테리(Hy) / 편집증(Pa) / 사회적내향성(Si)`,
+          ['자기탐색 체험','전문가 상담 권장'],'rule');
+      }
+      case 'astrology': {
+        const sInfo={
+          '양자리':'♈ 용감·리더십·열정 — 개척자형',
+          '황소자리':'♉ 안정·미적감각·끈기 — 안정추구형',
+          '쌍둥이자리':'♊ 다재다능·호기심·표현력 — 소통형',
+          '게자리':'♋ 정서적·가족·보호본능 — 돌봄형',
+          '사자자리':'♌ 카리스마·창의·리더십 — 주목형',
+          '처녀자리':'♍ 분석적·완벽주의·봉사 — 완성형',
+          '천칭자리':'♎ 균형·조화·사교성 — 조화형',
+          '전갈자리':'♏ 통찰력·변혁·의지 — 깊이형',
+          '사수자리':'♐ 낙관적·탐구·자유 — 탐험형',
+          '염소자리':'♑ 현실적·야망·인내 — 성취형',
+          '물병자리':'♒ 독창적·자유·혁신 — 혁신형',
+          '물고기자리':'♓ 직관적·공감·예술 — 감성형',
+        };
+        return R(SC(seed,65,88),sign,sInfo[sign]||sign,
+          `별자리: ${sign}\n${sInfo[sign]||''}\n\n`+
+          `동양 사주(${msok?msok.sixtyCycle:'--'}일주)와의 동서양 비교:\n`+
+          `두 관점이 일치하는 방향: ${et.power}형 특성`,
+          [sign]);
+      }
+      case 'zodiac': {
+        const bloodDesc={'A형':'꼼꼼하고 완벽주의, 규칙 중시',
+          'B형':'개성 강하고 자유로움, 독창적',
+          'O형':'리더십 강하고 사교적, 현실적',
+          'AB형':'이중적 성향, 분석적이면서 감성적'};
+        return R(SC(seed,60,82),`${zodiac}띠 · ${f.blood||'혈액형 미입력'}`,
+          `${zodiac}띠: ${zt.t} / ${f.blood||'--'}: ${bloodDesc[f.blood]||'미입력'}`,
+          `띠: ${zodiac}띠\n특성: ${zt.t}\n올해 운세: ${zt.f}\n천직: ${zt.c}\n\n`+
+          `혈액형: ${f.blood||'미입력'}\n${bloodDesc[f.blood]||'혈액형을 입력하면 더 자세한 분석이 가능합니다.'}\n\n`+
+          `⚠ 띠·혈액형 분석은 민속문화적 참고 내용입니다.`,
+          [zodiac+'띠',f.blood||'']);
+      }
+      case 'numerology': {
+        const reduce=n=>{while(n>9&&n!==11&&n!==22&&n!==33)n=[...String(n)].reduce((s,d)=>s+parseInt(d),0);return n;};
+        if(!f.bdate) return R(50,'수비학 분석 불가','생년월일을 입력해 주세요.','생년월일 필요',['필요']);
+        const [y,m2,d2]=f.bdate.split('-').map(Number);
+        const lp=reduce([...String(y),...String(m2),...String(d2)].reduce((s,d3)=>s+parseInt(d3),0));
+        const lpDesc={1:'선도자 — 독립·창조·리더십',2:'협력자 — 조화·평화·외교',
+          3:'표현자 — 창의·소통·예술',4:'건축자 — 안정·질서·실용',
+          5:'자유인 — 변화·모험·자유',6:'양육자 — 책임·봉사·가족',
+          7:'탐구자 — 분석·영성·지식',8:'성취자 — 야망·비즈니스·물질',
+          9:'인도주의자 — 봉사·지혜·완성',11:'영감자 — 직관·영적 통찰',
+          22:'건설자 — 위대한 목표 실현',33:'스승 — 최고의 봉사와 사랑'};
+        return R(SC(seed,65,88),`생명수 ${lp}번 — ${lpDesc[lp]?.split('—')[0].trim()||''}`,
+          lpDesc[lp]||'생명수 분석',
+          `생명수(Life Path): ${lp}번\n${lpDesc[lp]||''}\n\n`+
+          `올해의 수: ${reduce(lp+new Date().getFullYear()%9+1)}\n`+
+          `이름 표현수는 이름 입력 시 계산됩니다.`,
+          [`생명수 ${lp}번`]);
+      }
+      case 'biorhythm': {
+        if(!f.bdate) return R(50,'생체리듬 계산 불가','생년월일이 필요합니다.','생년월일 필요',['필요']);
+        const birth=new Date(f.bdate).getTime(), now=Date.now();
+        const days=Math.floor((now-birth)/86400000);
+        const phy=Math.round((Math.sin(2*Math.PI*days/23)+1)*50);
+        const emo=Math.round((Math.sin(2*Math.PI*days/28)+1)*50);
+        const int=Math.round((Math.sin(2*Math.PI*days/33)+1)*50);
+        return R(SC(seed,60,85),'현재 바이오리듬',
+          `신체 ${phy}% / 감성 ${emo}% / 지성 ${int}%`,
+          `오늘 기준 (출생 후 ${days}일째):\n신체 리듬(23일): ${phy}% — ${phy>70?'최고조, 활동적 시기':'회복 또는 중간 단계'}\n`+
+          `감성 리듬(28일): ${emo}% — ${emo>70?'감정 안정, 관계 최적':'감정 기복 주의'}\n`+
+          `지성 리듬(33일): ${int}% — ${int>70?'집중력·창의력 최고':'휴식 권장'}\n\n`+
+          `중요 결정: 3가지 리듬이 모두 상승할 때 유리합니다.`,
+          [`신체${phy}%`,`감성${emo}%`,`지성${int}%`]);
+      }
+      case 'tarot': {
+        const cards=['황제','여황제','연인','전차','힘','은둔자','운명의 수레바퀴','정의','교황','달','태양','세계'];
+        const card=cards[this.hash(seed)%cards.length];
+        const desc={황제:'강한 리더십과 구조의 에너지. 목표를 향한 강력한 의지를 나타냅니다.',
+          여황제:'풍요와 창조, 감성적 에너지. 새로운 아이디어가 꽃피울 시기입니다.',
+          연인:'선택의 기로. 가치관과 관계에 대한 진지한 성찰이 필요합니다.',
+          전차:'의지와 결단력. 장애물을 극복하는 강한 추진력이 작동합니다.',
+          힘:'내면의 강함. 유연함으로 상황을 다스리는 지혜를 상징합니다.',
+          은둔자:'내면의 탐구. 혼자만의 성찰과 지혜를 쌓는 시기입니다.',
+          '운명의 수레바퀴':'변화와 순환. 인생의 전환점에 서 있습니다.',
+          정의:'균형과 공정함. 객관적 판단이 필요한 시점입니다.',
+          교황:'전통과 가르침. 신뢰할 수 있는 조언자의 도움이 도움이 됩니다.',
+          달:'직관과 무의식. 불확실성 속에서 내면의 소리를 따르세요.',
+          태양:'성공과 기쁨. 밝은 에너지와 긍정적 결과를 예고합니다.',
+          세계:'완성과 통합. 한 사이클의 마무리와 새로운 시작을 뜻합니다.'};
+        return R(SC(seed,65,88),`타로: ${card}`,
+          desc[card]||'카드의 메시지를 받으세요.',
+          `현재 에너지 카드: ${card}\n\n${desc[card]||''}\n\n`+
+          `${el}행의 기운과 이 카드 에너지가 결합하여 현재 여정을 안내합니다.\n`+
+          `AI 심층 해석은 PRODUCTION 모드에서 제공됩니다.`,[card]);
+      }
+      case 'fengshui': {
+        const dir={'木':'동방(東)','Fire':'남방(南)','土':'중앙(中央)','金':'서방(西)','Water':'북방(北)'};
+        const plant={'木':'식물·나무 가구','Fire':'빨강 소품·채광','土':'황토색·도자기','金':'흰색·금속 소품','Water':'파랑·수족관'};
+        return R(SC(seed,60,85),`${f.birthplace||'출생지'} 풍수 분석`,
+          `${el}행 기운에 최적화된 주거 방향: ${dir[el]||'동방'}`,
+          `주요 방위: ${dir[el]||'동방'}\n강화 인테리어: ${plant[el]||'자연 소품'}\n`+
+          `거주지 에너지 지수: ${SC(seed+(f.location||''),62,88)}/100\n`+
+          `이사·창업 방향: ${el==='木'?'북동쪽':el==='Fire'?'남쪽':el==='土'?'중심':el==='金'?'서북쪽':'북쪽'} 방향이 유리`,[el+'행']);
+      }
+      case 'name_study': {
+        const name=f.name||''; if(!name) return R(65,'성명학: 이름 미입력','이름을 입력하면 분석됩니다.','이름 입력 필요',['이름 필요']);
+        const totalStr=[...name].reduce((s,c)=>s+c.charCodeAt(0),0);
+        const score=SC(seed+name,60,92);
+        return R(score,`성명 "${name}" — 획수 에너지 분석`,
+          `이름 에너지 점수: ${score}/100 (${score>=80?'길명에 가까움':score>=65?'보통, 보완 가능':'보완 권장'})`,
+          `이름: ${name}\n획수 에너지: ${totalStr%90+10}\n`+
+          `음양오행 배열: ${el}행과 ${score>=70?'조화롭게 어울림':'보완적 관계 형성'}\n`+
+          `이름 에너지: ${score}/100\n\n사주 ${el}행과 이름 음양오행이 ${score>=75?'상생(相生) 관계':'상보적 관계'}를 이룹니다.`,[name]);
+      }
+      case 'character': {
+        const avg=mi.character?mi.character.avg:3.2;
+        return R(SC(seed,65,88),'인성 탐색 결과',
+          `핵심 인성: ${avg>=4?'공감·책임감':avg>=3?'균형잡힌 인성':'개발 영역 있음'}`,
+          `인성 탐색 종합 점수: ${Math.round(avg*20)}/100\n\n`+
+          `강점 인성 영역: ${avg>=4?'공감 능력, 책임감, 정직성':avg>=3?'균형잡힌 인성 특성':'자기인식, 성찰 능력'}\n`+
+          `발전 방향: 지속적인 자기성찰과 타인에 대한 이해를 넓혀가세요.\n`+
+          `직업 내 인성 적합도: 협력·소통이 중요한 직업에서 강점 발휘 가능`,['공감','책임감','정직']);
+      }
+      case 'potential':
+        return R(SC(seed,68,92),'잠재력 탐색 결과',
+          '아직 발현되지 않은 능력 영역',
+          `잠재 능력 지수: ${SC(seed,68,92)}/100\n\n`+
+          `주요 잠재 영역: ${et.career.split(',').slice(0,2).join(', ')} 분야\n`+
+          `성장 가능성: ${mbti[1]==='N'?'높음 — 추상적 사고와 통찰력이 뛰어남':'견고함 — 실용적 역량 꾸준히 성장'}\n`+
+          `개발 전략: ${mbti[0]==='I'?'독서·연구를 통한 깊이 있는 성장':'네트워크·경험을 통한 폭 넓은 성장'}`,['잠재력',et.power]);
+      case 'creativity':
+        return R(SC(seed,65,90),'창의력 탐색 결과',
+          '창의적 사고방식과 강점 영역',
+          `창의력 지수: ${SC(seed,65,90)}/100\n\n`+
+          `유창성: ${SC(seed+'flu',60,95)}/100 — 아이디어 생성 능력\n`+
+          `유연성: ${SC(seed+'fle',55,90)}/100 — 다각도 사고 능력\n`+
+          `독창성: ${SC(seed+'ori',50,88)}/100 — 새로운 접근 능력\n`+
+          `정교성: ${SC(seed+'ela',55,85)}/100 — 아이디어 발전 능력\n\n`+
+          `창의력 강점 직업: ${mbti[1]==='N'?'기획, 디자인, 창업, 콘텐츠 창작':'개선, 최적화, 실용적 혁신'}`,['창의력']);
+      case 'interest':
+        return R(SC(seed,68,90),'관심도 탐색 결과',
+          `핵심 관심 영역: ${(f.interests||['미입력']).slice(0,2).join('·')}`,
+          `관심 분야: ${(f.interests||[]).join(', ')||'미입력'}\n\n`+
+          `몰입 패턴: ${mbti[0]==='I'?'혼자서 깊이 탐구하는 방식 선호':'사람들과 함께 탐구하는 방식 선호'}\n`+
+          `진정한 관심이 직업과 연결될 때 최고의 성과를 냅니다.\n`+
+          `관심 기반 추천 방향: ${et.career.split(',')[0].trim()}`,
+          (f.interests||[]).slice(0,2));
+      case 'aptitude':
+        return R(SC(seed,68,92),'적성 탐색 결과',`타고난 재능과 잠재적 역량`,
+          `언어·표현: ${SC(seed+'l',60,95)}/100\n수리·분석: ${SC(seed+'m',55,92)}/100\n`+
+          `공간·시각: ${SC(seed+'s',50,88)}/100\n예술·감수성: ${SC(seed+'a',50,90)}/100\n`+
+          `신체·운동: ${SC(seed+'b',45,88)}/100\n대인관계: ${SC(seed+'p',55,92)}/100\n\n`+
+          `주요 적성 분야: ${et.career}`,['적성',et.career.split(',')[0].trim()]);
+      case 'values':
+        return R(SC(seed,68,88),'핵심 가치관',`나의 삶을 이끄는 핵심 가치`,
+          `핵심 가치 탐색:\n성취: ${SC(seed+'ac',40,95)}/100 / 안정: ${SC(seed+'st',40,90)}/100\n`+
+          `자율: ${SC(seed+'au',45,95)}/100 / 관계: ${SC(seed+'re',45,92)}/100\n`+
+          `봉사: ${SC(seed+'se',40,88)}/100 / 창의: ${SC(seed+'cr',45,92)}/100\n\n`+
+          `가치 기반 직업 방향: ${et.career}`,['가치관',et.power]);
+      case 'leadership':
+        return R(SC(seed,65,88),'리더십 성향',`나의 자연스러운 리더십 스타일`,
+          `리더십 유형: ${mbti[0]==='E'&&mbti[3]==='J'?'비전형 리더십 — 목표를 명확히 제시':mbti[0]==='I'?'서번트 리더십 — 팀원을 뒤에서 지원':'코칭형 리더십 — 개인 성장에 집중'}\n`+
+          `팀 역할: ${mbti[2]==='T'?'논리적 의사결정자':'공감 기반 팀 빌더'}\n`+
+          `최적 조직: ${mbti[3]==='J'?'구조화된 명확한 조직':'유연하고 자율적인 조직'}`,['리더십']);
+      case 'learning':
+        return R(SC(seed,65,85),'학습유형',`나에게 맞는 공부법`,
+          `VARK 학습 유형:\n시각형(V): ${mbti[1]==='N'?82:55}/100\n`+
+          `청각형(A): ${mbti[0]==='E'?72:48}/100\n읽기/쓰기(R): ${mbti[1]==='S'?78:62}/100\n`+
+          `운동감각형(K): ${mbti[3]==='P'?75:52}/100\n\n`+
+          `최적 공부법: ${mbti[1]==='N'?'개념 중심, 마인드맵, 연결 학습':'예제 중심, 반복 연습, 단계별 학습'}`,['학습유형']);
+      case 'jobOntology':
+        return R(SC(seed,68,90),'직업 Ontology 매칭',`1만여 개 직업 중 최적 매칭`,
+          `AI 직업 매칭 (PREVIEW — 실제 AI 분석은 PRODUCTION에서):\n\n`+
+          `추천 직업군 (규칙기반 추정):\n${mc.map((j,i)=>`${i+1}위. ${j}`).join('\n')}\n\n`+
+          `정확한 직업Ontology 매핑은 AI PRODUCTION 모드에서 1만+ 직업 데이터와 함께 제공됩니다.`,mc.slice(0,3));
+      case 'startup':
+        return R(SC(seed,62,88),'사업·창업 적합도',`창업 준비도와 추천 업종 분석`,
+          `창업 적합도: ${SC(seed+'startup',62,88)}/100\n\n`+
+          `추천 사업 유형: ${el==='木'?'교육·컨설팅·온라인 플랫폼':el==='Fire'?'마케팅·F&B·엔터테인먼트':el==='土'?'부동산·금융·안정형 서비스':el==='金'?'IT·제조·정밀 서비스':'데이터·물류·온라인 유통'}\n`+
+          `강점: ${mbti[0]==='E'?'네트워킹·홍보':'전략적 계획·품질 관리'}\n`+
+          `주의: ${mbti[3]==='P'?'실행 계획·일정 관리':'과도한 완벽주의 경계'}\n\n`+
+          `다음 단계: AI ItemZone에서 사업 아이디어를 구체화하세요.\n🔗 /itemzone`,
+          ['창업적합도',el+'행 사업']);
+      case 'lifecycle':
+        return R(SC(seed,65,88),'생애 주기 탐색',`현재 생애 단계와 다음 준비사항`,
+          `현재 추정 생애 단계: ${f.status==='student'?'학습기':f.status==='jobseeker'||f.status==='employed'?'성장기':f.status==='entrepreneur'||f.status==='selfemployed'?'개화기':f.status==='career-change'?'전환기':'안정기'}\n\n`+
+          `현재 과제: 역량 축적과 방향 설정\n다음 단계 준비: 네트워크 확장, 전문성 심화\n\n`+
+          `생애 전체 방향: ${et.career.split(',')[0].trim()} 분야에서 ${SC(seed+'life',20,30)}년 후 전문가/리더 포지션 목표`,
+          ['생애주기']);
+      case 'environment':
+        return R(SC(seed,62,85),'환경학 분석',`성장환경이 형성한 특성`,
+          `출생지 ${f.birthplace||'미입력'} → 현재 ${f.location||'미입력'}\n\n`+
+          `지역 문화 영향: ${f.birthplace==='서울'?'글로벌 감각·빠른 적응력':f.birthplace==='부산'?'강인한 의지·역동성':f.birthplace==='경기'?'실용적 사고·균형':f.birthplace==='제주'?'창의·자연친화':'지역 고유 특성'}\n`+
+          `최적 생활 환경: ${el==='木'?'녹지 풍부한 곳':el==='Water'?'해변·호수 인근':'도심 근처 자연환경'}\n`+
+          `환경 에너지: ${SC(seed+f.location,62,88)}/100`,['환경학']);
+      case 'genetics':
+        return R(SC(seed,60,82),'유전학·DNA 탐색 (참고용)',`선천적 특성과 체질 탐구`,
+          `체질 특성 (${el}행 기반):\n강점 신체: ${el==='木'?'간·담낭·눈':el==='Fire'?'심장·소장':el==='土'?'비장·위장':el==='金'?'폐·대장':'신장·방광'}\n`+
+          `건강 주의: ${el==='木'?'스트레스성 간 기능':el==='Fire'?'혈압·혈액순환':el==='土'?'소화기계':el==='金'?'호흡기·피부':'신장·허리'}\n`+
+          `권장 생활: ${el==='木'?'숲길 걷기·스트레칭':el==='Fire'?'수분 충분·명상':el==='土'?'규칙적 식사·걷기':el==='金'?'유산소·깨끗한 공기':'충분한 수면·수영'}\n\n`+
+          `⚠ 의료 진단 아님 — 자기탐색 목적의 참고 정보입니다.`,['참고용','체질']);
+      case 'physiognomy':
+        return R(SC(seed,60,80),'관상·수상·족상 (기본)',`전통 관상학 기반 탐구`,
+          `${el}행 기운의 관상 특성:\n`+
+          `${el==='木'?'긴 얼굴형, 맑은 눈, 총명하고 강직한 인상':el==='Fire'?'날카로운 이목구비, 빛나는 눈빛, 카리스마':el==='土'?'둥글고 후덕한 얼굴, 신뢰감 있는 인상':el==='金'?'각진 윤곽, 뚜렷한 의지력 강한 인상':'부드럽고 눈이 깊은, 내면 지혜가 느껴지는 인상'}\n\n`+
+          `손금 특성: ${mbti[1]==='N'?'두뇌선이 길고 창의적 사고':'실용적이고 직선적인 두뇌선'}\n\n`+
+          `🔭 향후 이미지 업로드(Vision AI) 연동 시 얼굴·손·발 사진 기반 정밀 분석이 가능합니다.`,['관상·수상']);
+      default:
+        return R(SC(seed,60,80),`${DISCS[discId]?.name||discId} 분석`,
+          '분석 결과',`${DISCS[discId]?.what||'분석 중'}\n\nAI PRODUCTION 모드에서 심층 분석이 제공됩니다.`,[]);
+    }
+  }
+};
+
+/* ── 10. 분석 실행 ─────────────────────────────────────────── */
+async function runAnalysis() {
+  showScreen('loading');
+  const loadTags = document.getElementById('loading-tags');
+  const fillEl = document.getElementById('loading-fill');
+  const discEl = document.getElementById('loading-disc');
+  const badge = document.getElementById('loading-mode-badge');
+  badge.textContent = LM.MODE==='PREVIEW' ? '⚙ PREVIEW — 규칙기반 분석' : '🤖 AI 분석 중';
+
+  const selIds = [...ST.selectedDiscs];
+  loadTags.innerHTML = selIds.map(id =>
+    `<span class="ltag" id="lt-${id}">${DISCS[id]?.icon||'◦'} ${DISCS[id]?.name||id}</span>`
+  ).join('');
+
+  // 만세력 계산
+  ST.manseok = MANSEOK.calc(ST.form.bdate, ST.form.btime);
+
+  let apiResult = null;
+
+  // PRODUCTION/BETA에서 API 호출 시도
+  if (LM.MODE !== 'PREVIEW') {
+    const payload = {
+      module:'lifeai', course:ST.course,
+      disciplines:selIds,
+      userInput:{...ST.form},
+      manseok:ST.manseok,
+    };
+    apiResult = await LM.callAPI(payload);
   }
 
-  async function runAnalysis(){
-    const loading = document.getElementById('loadingBox');
-    loading.style.display = 'block';
-
-    // 추후 챗도우미 API 연동
-    // fetch('https://chatdoumi.onrender.com/api/life-analysis')
-
-    setTimeout(() => {
-      loading.style.display = 'none';
-      alert('MVP UI 데모입니다. 실제 분석 API는 추후 연동됩니다.');
-    }, 2500);
+  // 학문별 분석 (API 성공 시 사용, 실패/PREVIEW 시 rule 사용)
+  const results = {};
+  for (let i = 0; i < selIds.length; i++) {
+    const id = selIds[i];
+    const pct = Math.round((i+1)/selIds.length*100);
+    discEl.textContent = `분석 중: ${DISCS[id]?.icon} ${DISCS[id]?.name}`;
+    fillEl.style.width = pct + '%';
+    document.getElementById('lt-'+id)?.classList.add('done');
+    if (apiResult?.results?.[id]) {
+      results[id] = apiResult.results[id];
+    } else {
+      results[id] = RULE.analyze(id, ST.form, ST.manseok);
+    }
+    await new Promise(r => setTimeout(r, 150)); // 시각적 딜레이
   }
+
+  ST.results = results;
+  ST.fusionScore = apiResult?.fusionScore || calcFusion(results, selIds);
+  renderResults();
+  showScreen('results');
+}
+
+/* ── 11. Fusion Score ──────────────────────────────────────── */
+function calcFusion(results, selIds) {
+  const cats = {
+    psychology:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi'],
+    selfexplore:['character','potential','creativity','interest','aptitude','values'],
+    career:['leadership','learning','jobOntology','startup','lifecycle'],
+    eastern:['saju','ohang','sasang','fengshui','name_study'],
+    western:['astrology','tarot','numerology','zodiac','physiognomy'],
+    envbio:['environment','genetics','biorhythm'],
+  };
+  const weights={psychology:.25,selfexplore:.22,career:.23,eastern:.12,western:.08,envbio:.10};
+  const catScores={};
+  for(const [cat,ids] of Object.entries(cats)){
+    const relevant=ids.filter(id=>selIds.includes(id) && results[id]);
+    if(!relevant.length) continue;
+    catScores[cat]=Math.round(relevant.reduce((s,id)=>s+(results[id].score||70),0)/relevant.length);
+  }
+  const total=Math.round(Object.entries(catScores).reduce((s,[cat,sc])=>s+(sc*(weights[cat]||.1)),0)/
+    Object.keys(catScores).reduce((s,cat)=>s+(weights[cat]||.1),0));
+  const dirs=['창업·사업가형','전문직·연구형','예술·창작형','리더십·관리형','사회공헌형','자유·프리랜서형'];
+  const mbti=ST.form.mbti||'';
+  const dirIdx=(['ENTJ','ESTP','ESTJ'].includes(mbti)?0:['INTJ','INTP','INFJ'].includes(mbti)?1:
+    ['ENFP','ISFP','INFP'].includes(mbti)?2:['ENFJ','ESFJ','ISFJ'].includes(mbti)?3:
+    ['INFJ','ISFJ'].includes(mbti)?4:5);
+  const direction=dirs[dirIdx];
+  const sumMap={
+    '창업·사업가형':'강한 추진력과 시장 감각으로 창업·사업 분야에서 두각을 나타낼 가능성이 높습니다.',
+    '전문직·연구형':'깊은 분석력과 탐구심이 강점으로, 전문직·연구 분야에서 최고 수준 잠재력을 가집니다.',
+    '예술·창작형':'독창적 감수성으로 예술·콘텐츠·디자인 분야에서 자신만의 세계를 구축합니다.',
+    '리더십·관리형':'사람을 이끄는 능력이 뛰어나 팀 리더, 관리직 분야에 적합합니다.',
+    '사회공헌형':'타인에 대한 공감과 봉사 정신이 강점으로, 의료·복지·교육 분야에서 보람을 찾습니다.',
+    '자유·프리랜서형':'독립적 기질로 프리랜서·1인 사업·원격근무에서 최대 역량을 발휘합니다.',
+  };
+  const actions=[
+    `이번 달: ${RULE.EL_TRAITS[ST.manseok?.mainElement||'土']?.career.split(',')[0].trim()||'관심 분야'} 관련 커뮤니티 1개 참여`,
+    `3개월: 핵심 역량 관련 자격증 또는 학습 목표 1개 설정`,
+    `1년: 부업 또는 소규모 프로젝트로 시장 반응 직접 테스트`,
+  ];
+  const topJobs=(ST.form.mbti&&RULE.MBTI_CAREERS[ST.form.mbti])||['전략가','분석가','기획자','컨설턴트','전문직'];
+  return {total:total||72,grade:total>=90?'S':total>=80?'A':total>=70?'B':'C',
+    direction,categories:catScores,summary:sumMap[direction]||'',
+    actionPlan:actions,topCareers:topJobs};
+}
+
+/* ── 12. 결과 렌더링 ─────────────────────────────────────────── */
+function renderResults() {
+  const F=ST.fusionScore;
+  // Fusion 카드
+  const catNames={psychology:'심리학',selfexplore:'자기탐색',career:'진로·직업',
+    eastern:'동양전통',western:'서양·민속',envbio:'환경·생명'};
+  document.getElementById('fusion-card-wrap').innerHTML = `
+    <div class="fusion-card">
+      <div class="fusion-label">✦ AI LifeMap FUSION SCORE — ${[...ST.selectedDiscs].length}개 학문 종합</div>
+      <div class="fusion-row">
+        <span class="fusion-num">${F.total}</span>
+        <span class="fusion-max">/ 100</span>
+        <span class="fusion-grade">등급 ${F.grade}</span>
+      </div>
+      <div class="fusion-dir">🎯 ${F.direction}</div>
+      <div class="fusion-sum">${F.summary}</div>
+      <div class="fusion-bars">
+        ${Object.entries(F.categories).map(([c,s])=>`
+        <div class="fbar-row">
+          <span class="fbar-lbl">${catNames[c]||c}</span>
+          <div class="fbar-track"><div class="fbar-fill" style="width:${s}%"></div></div>
+          <span class="fbar-val">${s}</span>
+        </div>`).join('')}
+      </div>
+      <div style="margin-top:12px;font-size:.72rem;color:var(--t3)">
+        추천 직업: ${F.topCareers.slice(0,3).join(' · ')}
+      </div>
+      ${LM.MODE==='PREVIEW'?'<div style="margin-top:8px;font-size:.67rem;color:var(--t3)">⚙ PREVIEW 규칙기반 분석 — 정식 출시 후 AI 심층 분석 활성화</div>':''}
+    </div>`;
+  // 액션플랜
+  document.getElementById('action-plan-wrap').innerHTML = `
+    <div class="action-plan">
+      <div class="ap-title">⚡ 지금 당장 실행할 3단계</div>
+      ${F.actionPlan.map((a,i)=>`
+      <div class="ap-item">
+        <span class="ap-num">${i+1}</span>
+        <span>${a}</span>
+      </div>`).join('')}
+    </div>`;
+  // 카테고리 탭
+  const cats=[...new Set([...ST.selectedDiscs].map(id=>DISCS[id]?.g).filter(Boolean))];
+  ST.activeCategory = cats[0]||'psychology';
+  const catMeta={psychology:{label:'🧠 심리학'},selfexplore:{label:'🔍 자기탐색'},
+    career:{label:'💼 진로·직업'},eastern:{label:'☯ 동양전통'},
+    western:{label:'⭐ 서양·민속'},envbio:{label:'🌿 환경·생명'}};
+  document.getElementById('cat-tabs').innerHTML = cats.map(c=>`
+    <button class="cat-tab${c===ST.activeCategory?' active':''}"
+      onclick="switchCat('${c}')">${catMeta[c]?.label||c}</button>`).join('');
+  renderDiscResults(ST.activeCategory);
+  // 결과 액션
+  document.getElementById('result-ctas').innerHTML = `
+    <div class="result-actions">
+      <button class="ra-btn ra-secondary" onclick="doRetry()">🔄 재분석</button>
+      <button class="ra-btn ra-primary" onclick="shareResult()">📤 결과 공유</button>
+    </div>
+    <div style="margin-top:10px">
+      <button class="ra-btn ra-secondary" style="width:100%;margin-top:4px"
+        onclick="showScreen('signup')">🚀 정식 출시 알림 신청</button>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <a href="/itemzone" style="flex:1;display:block;text-align:center;background:rgba(26,122,74,.15);
+        border:1px solid rgba(26,122,74,.3);border-radius:var(--r);padding:10px;
+        font-size:.78rem;color:#4ade80;text-decoration:none">
+        🏢 AI ItemZone에서 사업 설계하기 →</a>
+      <a href="/eduzone" style="flex:1;display:block;text-align:center;background:rgba(99,102,241,.1);
+        border:1px solid rgba(99,102,241,.25);border-radius:var(--r);padding:10px;
+        font-size:.78rem;color:#a5b4fc;text-decoration:none">
+        📚 AI EduZone 학습 연결 →</a>
+    </div>`;
+  // PREVIEW 안내
+  if (LM.MODE === 'PREVIEW') {
+    document.getElementById('preview-note').innerHTML = `
+      <div class="preview-result-note">
+        <div class="prn-title">🔍 사전 체험 결과 안내</div>
+        현재 결과는 규칙 기반(Rule-based) 분석입니다.<br>
+        정식 출시 후 <b>Gemini → GPT → Claude</b> AI 심층 분석으로 더 정확하고 개인화된 결과를 제공합니다.<br><br>
+        사전 알림을 신청하시면 정식 출시 즉시 혜택을 받으실 수 있습니다.
+        <button onclick="showScreen('signup')" style="margin-top:10px;background:var(--gold);
+          border:none;border-radius:4px;padding:8px 16px;font-size:.78rem;
+          font-weight:700;color:var(--navy);cursor:pointer">
+          ✨ 사전 참여 신청하기
+        </button>
+      </div>`;
+  }
+}
+
+function renderDiscResults(cat) {
+  const ids=[...ST.selectedDiscs].filter(id=>DISCS[id]?.g===cat);
+  const grid=document.getElementById('disc-results');
+  if(!grid) return;
+  grid.innerHTML = ids.map(id=>{
+    const d=DISCS[id], r=ST.results[id];
+    if(!d||!r) return '';
+    const sc=r.score;
+    const cls=sc>=80?'s-high':sc>=65?'s-mid':'s-low';
+    const scStyle=sc>=80?'color:#4ade80':sc>=65?'color:var(--gold)':'color:#f87171';
+    const engMap={rule:'규칙기반',gpt:'GPT-4o',claude:'Claude',gemini:'Gemini'};
+    return `
+    <div class="dr-card ${cls}" id="drc-${id}">
+      <div class="dr-hd" onclick="toggleResult('${id}')">
+        <span class="dr-icon">${d.icon}</span>
+        <div class="dr-info">
+          <div class="dr-name">${d.name}</div>
+          <div class="dr-tagline">${r.title||d.short}</div>
+        </div>
+        <span class="dr-score" style="${scStyle}">${sc}점</span>
+        <span class="dr-chevron">▼</span>
+      </div>
+      <div class="dr-detail">
+        <div class="dr-text">${(r.detail||'').replace(/\n/g,'<br>')}</div>
+        ${r.tags?.length?`<div class="dr-tags">${r.tags.map(t=>`<span class="dr-tag">${t}</span>`).join('')}</div>`:''}
+        <span class="dr-engine">분석엔진: ${engMap[r.engine]||r.engine}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleResult(id) {
+  document.getElementById('drc-'+id)?.classList.toggle('open');
+}
+
+function switchCat(cat) {
+  ST.activeCategory=cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>{
+    const label=t.textContent.trim();
+    const catMeta={psychology:'🧠 심리학',selfexplore:'🔍 자기탐색',career:'💼 진로·직업',
+      eastern:'☯ 동양전통',western:'⭐ 서양·민속',envbio:'🌿 환경·생명'};
+    t.classList.toggle('active',label===catMeta[cat]);
+  });
+  renderDiscResults(cat);
+}
+
+/* ── 13. Preview 회원가입 ─────────────────────────────────── */
+async function submitSignup() {
+  const email=document.getElementById('su-email')?.value?.trim();
+  if(!email||!email.includes('@')){alert('이메일 주소를 입력해 주세요.');return;}
+  const interests=[...document.querySelectorAll('.su-check input:checked')].map(el=>el.value);
+  const opinion=document.getElementById('su-opinion')?.value||'';
+  const name2=document.getElementById('su-name')?.value||'';
+  // Firestore 저장 (간단 fetch — 실제 API 추가 필요)
+  try {
+    await fetch('/api/lifemap-preview-signup',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,name:name2,interests,opinion,
+        ts:new Date().toISOString(),mode:LM.MODE}),
+    });
+  } catch {}
+  alert(`✅ "${email}" 주소로 사전 참여 신청이 완료됐습니다!\n정식 출시 즉시 알림을 보내드립니다. 감사합니다 🙏`);
+  showScreen('results');
+}
+
+/* ── 14. 유틸 ─────────────────────────────────────────────── */
+function doRetry(){
+  ST.results=null;ST.fusionScore=null;ST.formStep=0;
+  updateFormUI();showScreen('form');
+}
+
+function shareResult(){
+  const F=ST.fusionScore;
+  const txt=`[AI LifeMap] ${ST.form.name||''}님의 인생·진로 Fusion 분석\n\n🎯 ${F.direction}\n📊 Fusion Score: ${F.total}/100 (등급 ${F.grade})\n${F.summary}\n\n무료 체험: aiplatmarket.com/lifemap`;
+  if(navigator.share){navigator.share({title:'AI LifeMap 분석 결과',text:txt}).catch(()=>{});}
+  else{navigator.clipboard?.writeText(txt).then(()=>alert('결과가 클립보드에 복사됐습니다!'));}
+}
+
+/* ── 15. 자유 질문 (PREVIEW: rule/FAQ, PRODUCTION: AI Core) ── */
+// 향후 질문 입력창 연동 시 아래 함수 활용
+function classifyQuestion(q) {
+  const aiNeeded=['분석','추천','종합','비교','왜','어떻게','창업','직업','진로','사업'];
+  return aiNeeded.some(k=>q.includes(k)) ? 'ai' : 'rule';
+}
+async function askQuestion(q) {
+  if (LM.MODE==='PREVIEW') {
+    return '현재 사전 체험 모드입니다. 해당 질문은 정식 서비스에서 AI 기반 개인화 분석으로 제공될 예정입니다.';
+  }
+  const type=classifyQuestion(q);
+  if(type==='rule') return '서비스 안내 및 FAQ는 곧 업데이트될 예정입니다.';
+  const res=await LM.callAPI({module:'lifeai',task:'freeQuestion',
+    question:q,userInput:ST.form,manseok:ST.manseok});
+  return res?.answer || '답변을 준비 중입니다.';
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.LIFEMAP_READY) return;
+    init();
+  });
+} else {
+  if (!window.LIFEMAP_READY) init();
+}
 </script>
 
 </body>
