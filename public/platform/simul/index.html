@@ -2,22 +2,57 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI시뮬레이션 · AI플랫마켓</title>
-<link rel="stylesheet" href="/framework/assets/css/common.css">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simul v1.0 | AI Simulation Engine</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="fw-header"></div>
+<header>
+<h1>SIMUL 1.0</h1>
+<p>AI Simulation Engine (AI 시뮬레이션 엔진)</p>
+</header>
 
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px;font-family:'Pretendard',sans-serif">
-  <div style="font-size:3.5rem;margin-bottom:14px">🧪</div>
-  <h1 style="font-size:1.3rem;font-weight:900;color:#0d1f35;margin:0 0 8px">AI시뮬레이션</h1>
-  <p style="font-size:.88rem;color:#888;margin:0 0 20px;max-width:320px;line-height:1.6">사업·투자 시뮬레이션 엔진<br>곧 만나보실 수 있습니다.</p>
-  <div style="background:#0d1f35;color:#fff;padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:24px">🔧 업그레이드 중 · v0.0.0</div>
-  <a href="/" style="background:#0d1f35;color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none">← AI플랫마켓 홈으로</a>
+<section class="hero">
+<h2>무엇이든 만들기 전에 먼저 시뮬레이션합니다.</h2>
+<p>아이디어 · 연구 · 제품 · 서비스 · 정책 · 창업을 AI 기반으로 다각도 분석하는 공통 시뮬레이션 플랫폼입니다.</p>
+</section>
+
+<section class="grid">
+<div class="card">
+<h3>① 연구 입력</h3>
+<textarea placeholder="연구 과제 또는 아이디어를 입력하세요."></textarea>
+<button id="runBtn">시뮬레이션 실행(Prototype)</button>
 </div>
 
-<div id="fw-footer"></div>
-<script src="/framework/assets/js/core.js"></script>
+<div class="card">
+<h3>② AI 평가 항목</h3>
+<ul>
+<li>기술 실현 가능성</li>
+<li>시장성</li>
+<li>사업성</li>
+<li>사회적 영향</li>
+<li>위험 요소</li>
+<li>환경 영향</li>
+<li>예상 개발기간</li>
+<li>AI Confidence(신뢰도)</li>
+</ul>
+</div>
+</section>
+
+<section class="card">
+<h3>Simulation Result (Prototype)</h3>
+<table>
+<tr><th>항목</th><th>결과</th></tr>
+<tr><td>기술 실현 가능성</td><td id="tech">-</td></tr>
+<tr><td>시장성</td><td id="market">-</td></tr>
+<tr><td>사업성</td><td id="biz">-</td></tr>
+<tr><td>AI Confidence</td><td id="conf">-</td></tr>
+<tr><td>권장등급</td><td id="grade">-</td></tr>
+</table>
+<p class="note">※ Version 1.0은 UI 프로토타입입니다. 향후 ChatDoumi AI Core와 연결하여 GPT·Claude 등 여러 AI 분석 결과를 통합하도록 확장할 예정입니다.</p>
+</section>
+
+<footer>SIMUL Version 1.0 Prototype © AIplatmarket</footer>
+<script src="app.js"></script>
 </body>
 </html>
