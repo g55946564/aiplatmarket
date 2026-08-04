@@ -3,21 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIR&D · AI플랫마켓</title>
-<link rel="stylesheet" href="/framework/assets/css/common.css">
+<title>AIR&D | AI Future Civilization Institute</title>
+<meta name="description" content="AI플랫마켓 AIR&D - AI 미래문명연구소">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="fw-header"></div>
 
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px;font-family:'Pretendard',sans-serif">
-  <div style="font-size:3.5rem;margin-bottom:14px">🔬</div>
-  <h1 style="font-size:1.3rem;font-weight:900;color:#0d1f35;margin:0 0 8px">AIR&D</h1>
-  <p style="font-size:.88rem;color:#888;margin:0 0 20px;max-width:320px;line-height:1.6">AI 연구·개발 플랫폼<br>곧 만나보실 수 있습니다.</p>
-  <div style="background:#0d1f35;color:#fff;padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:24px">🔧 업그레이드 중 · v0.0.0</div>
-  <a href="/" style="background:#0d1f35;color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none">← AI플랫마켓 홈으로</a>
-</div>
+<header class="topbar">
+  <div class="logo">AIR&D</div>
+  <nav>
+    <a href="#">Research</a>
+    <a href="#">Projects</a>
+    <a href="/simul/">Simul</a>
+    <a href="#">About</a>
+  </nav>
+</header>
 
-<div id="fw-footer"></div>
-<script src="/framework/assets/js/core.js"></script>
+<section class="hero">
+  <span class="badge">AI Future Civilization Institute (AI 미래문명연구소)</span>
+  <h1 data-i18n="hero_title">미래를 예측하는 것이 아니라<br>미래를 설계합니다.</h1>
+  <p>
+    AI플랫마켓 AIR&D는 아이디어를 연구하고,
+    AI 시뮬레이션으로 검증하며,
+    사업화와 협업으로 연결하는 미래 혁신 플랫폼입니다.
+  </p>
+  <div class="buttons">
+    <button>연구 시작</button>
+    <button class="secondary">AI Simulation</button>
+  </div>
+</section>
+
+<section class="charter card">
+<h2>Platform Charter (플랫폼 헌장)</h2>
+<ul>
+<li>사람 중심 AI</li>
+<li>연구 → AI 검증 → 사업화 → 협업 → 지속 지원</li>
+<li>인류와 사회에 기여하는 혁신 연구</li>
+<li>글로벌 확장을 고려한 개방형 플랫폼</li>
+</ul>
+</section>
+
+<section class="dashboard">
+<div class="card"><h3>진행중 연구</h3><strong>32</strong></div>
+<div class="card"><h3>Simulation</h3><strong>218</strong></div>
+<div class="card"><h3>AII</h3><strong>91.8</strong></div>
+<div class="card"><h3>사업화</h3><strong>12</strong></div>
+</section>
+
+<section class="card">
+<h2>Innovation Pipeline (혁신 파이프라인)</h2>
+<p>Idea → Research → Simulation → Validation → Business → Partnership → Real World</p>
+</section>
+
+<footer>
+<p>© AIR&D Version 1.0 Prototype</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
