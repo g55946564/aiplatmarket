@@ -3278,6 +3278,109 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div style="text-align:center"><button onclick="showPage('home')" style="background:var(--g1);border:var(--bd);color:var(--g4);padding:9px 22px;border-radius:20px;font-size:.84rem;cursor:pointer">← 홈으로</button></div>
   </div>
 </div>
+
+<!-- ==================== AI플랫마켓 챗도우미 (내부 대화) ==================== -->
+<div id="page-ai-assistant" class="pg">
+  <div class="aic-shell">
+    <!-- 좌측: 대화 기록 -->
+    <aside class="aic-side aic-left" id="aicLeft">
+      <div class="aic-side-hd">
+        <strong>대화</strong>
+        <button class="aic-icon-btn aic-mobile-only" onclick="aicCloseDrawers()">✕</button>
+      </div>
+      <button class="aic-new-chat" onclick="aicNewChat()">＋ 새 대화</button>
+      <div class="aic-search">
+        <span>🔍</span>
+        <input id="aicHistorySearch" type="search" placeholder="대화 검색" oninput="aicRenderHistory(this.value)">
+      </div>
+      <div class="aic-history-list" id="aicHistoryList"></div>
+      <div class="aic-side-bottom">
+        <button onclick="toast('설정 — 준비 중입니다')">⚙ 설정</button>
+        <button onclick="toast('도움말 — 준비 중입니다')">ⓘ 도움말</button>
+      </div>
+    </aside>
+
+    <!-- 중앙: 대화 영역 -->
+    <section class="aic-main">
+      <div class="aic-topbar">
+        <div>
+          <div class="aic-assistant-name"><span class="aic-status-dot"></span> AI플랫마켓 챗도우미</div>
+          <div class="aic-assistant-sub">플랫폼 안내 · 일반 AI 상담</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="aic-icon-btn aic-mobile-only" onclick="aicOpenDrawer('left')">☰</button>
+          <button class="aic-icon-btn aic-mobile-only" onclick="aicOpenDrawer('right')">⊞</button>
+        </div>
+      </div>
+
+      <div class="aic-messages" id="aicMessages">
+        <section class="aic-welcome" id="aicWelcome">
+          <div class="aic-bot-avatar">AI</div>
+          <h1>무엇을 도와드릴까요?</h1>
+          <p>AI플랫마켓 서비스 안내부터 일반적인 AI 상담까지 도와드립니다.</p>
+          <div class="aic-suggestions">
+            <button data-prompt="AI플랫마켓은 어떤 곳인가요?">AI플랫마켓은 어떤 곳인가요?</button>
+            <button data-prompt="나에게 맞는 서비스를 찾아주세요.">나에게 맞는 서비스를 찾아주세요.</button>
+            <button data-prompt="AI 서비스를 추천해주세요.">AI 서비스를 추천해주세요.</button>
+            <button data-prompt="AI인생·진로 탐색존이 무엇인가요?">AI인생·진로 탐색존이 무엇인가요?</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="aic-composer-wrap">
+        <div class="aic-composer">
+          <button class="aic-attach-btn" title="향후 파일첨부 연동">＋</button>
+          <textarea id="aicPromptInput" rows="1" placeholder="질문을 입력하세요..." oninput="aicResizeInput()"></textarea>
+          <button class="aic-send-btn" id="aicSendBtn" onclick="aicSendMessage()" aria-label="전송">➤</button>
+        </div>
+        <div class="aic-composer-note">AI플랫마켓 챗도우미는 ChatDoumi AI Core를 통해 응답합니다.</div>
+      </div>
+    </section>
+
+    <!-- 우측: 플랫폼 서비스 -->
+    <aside class="aic-side aic-right" id="aicRight">
+      <div class="aic-side-hd">
+        <strong>AI플랫마켓</strong>
+        <button class="aic-icon-btn aic-mobile-only" onclick="aicCloseDrawers()">✕</button>
+      </div>
+
+      <section class="aic-tool-section">
+        <div class="aic-section-title">🧭 플랫폼 서비스</div>
+        <a class="aic-service-card" href="/lifemap" target="_blank" rel="noopener"><b>🔮 AI인생·진로 탐색존</b><small>인생·진로 탐색</small></a>
+        <a class="aic-service-card" href="/itemzone" target="_blank" rel="noopener"><b>📦 AI아이템존</b><small>사업·창업 분석</small></a>
+        <a class="aic-service-card" href="#" onclick="showPage('promo-center');return false"><b>🎯 AI통합홍보센터</b><small>홍보·마케팅</small></a>
+        <a class="aic-service-card" href="/growth" target="_blank" rel="noopener"><b>🌱 AI성장플랫존</b><small>성장·교육·활동</small></a>
+        <a class="aic-service-card" href="/metazone" target="_blank" rel="noopener"><b>🌐 AI메타플랫존</b><small>가상 체험 공간</small></a>
+        <a class="aic-service-card" href="/shop" target="_blank" rel="noopener"><b>🛍️ 더착한쇼핑(몰)</b><small>쇼핑·멤버십</small></a>
+      </section>
+
+      <section class="aic-tool-section">
+        <div class="aic-section-title">🤖 외부 AI 도구</div>
+        <div style="font-size:.68rem;color:var(--g4);margin-bottom:8px">AI플랫마켓과 별개인 외부 서비스입니다 · 새 탭에서 열립니다</div>
+        <button class="aic-tool-link" onclick="showPage('ai-hub')" style="width:100%;border:1px solid var(--g2);background:#fff;cursor:pointer;font-family:inherit">🧭 AI 서비스 전체보기 <span>→</span></button>
+      </section>
+
+      <section class="aic-business-card">
+        <div class="aic-business-icon">🧑‍💼</div>
+        <b>소상공인이라면</b>
+        <p>사업관리와 운영에 특화된 내 사업 내비서를 이용해 보세요.</p>
+        <a href="https://chatdoumi.com" target="_blank" rel="noopener">내 사업 내비서 이용하기 →</a>
+      </section>
+    </aside>
+  </div>
+</div>
+<div class="aic-scrim" id="aicScrim" onclick="aicCloseDrawers()"></div>
+
+<!-- ==================== AI 서비스 전체보기 (외부 AI 도구) ==================== -->
+<div id="page-ai-hub" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div class="sh"><div class="sh-t">🧭 AI 서비스 전체보기</div><span class="sh-m" onclick="showPage('ai-assistant')">← 챗도우미로</span></div>
+    <p style="font-size:.8rem;color:var(--g4);margin:8px 0 20px">아래 서비스들은 AI플랫마켓과 별개로 운영되는 <b>외부 AI 서비스</b>입니다. 클릭하면 새 탭에서 공식 사이트로 이동합니다.</p>
+
+    <div id="aiHubGrid"></div>
+  </div>
+</div>
+
 <div id="page-videocenter" class="pg">
   <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
     <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a8a);border-radius:var(--r);padding:28px 22px;margin-bottom:22px;text-align:center;color:#fff">
