@@ -1,0 +1,18 @@
+{
+  "id": "promotion",
+  "group": "platform",
+  "title": "AI통합홍보센터",
+  "icon": "🎯",
+  "description": "AI 마케팅 자동화",
+  "version": "0.0.1",
+  "status": "planned",
+  "routes": [
+    "/promotion",
+    "/platform/promotion/"
+  ],
+  "subdomain": "promotion.aiplatmarket.com",
+  "framework_version": "1.0.0",
+  "ai_features": [],
+  "owner": "형식",
+  "created": "2026-06-18"
+}
