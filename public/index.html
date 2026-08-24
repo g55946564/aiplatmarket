@@ -6902,6 +6902,224 @@ function renderWriteBox(menuId, placeholder='내용을 입력하세요...') {
       <div style="text-align:center;padding:16px;color:var(--g4);font-size:.78rem">첫 번째 게시물을 작성해보세요 🖊</div>
     </div>`;
 }
+
+/* ══════════════════════════════════════════════
+   🤖 AI플랫마켓 챗도우미 — 3단 UI 동작 로직
+   중앙 대화는 ChatDoumi AI Core(AICore.process)를 통해서만 응답한다.
+   좌측 대화기록은 MVP 단계라 세션 메모리로 관리 (Firestore 연동은 향후 확장).
+═══════════════════════════════════════════════ */
+const AIC = {
+  messages: [],
+  history: [
+    { id: 1, group: '오늘', title: 'AI플랫마켓 이용방법' },
+    { id: 2, group: '오늘', title: 'AI 서비스 추천' },
+    { id: 3, group: '어제', title: 'AI인생·진로 탐색존 질문' },
+  ],
+};
+
+function aicOpenDrawer(side) {
+  const el = document.getElementById(side === 'left' ? 'aicLeft' : 'aicRight');
+  const scrim = document.getElementById('aicScrim');
+  if (el) el.classList.add('open');
+  if (scrim) scrim.classList.add('show');
+}
+function aicCloseDrawers() {
+  document.getElementById('aicLeft')?.classList.remove('open');
+  document.getElementById('aicRight')?.classList.remove('open');
+  document.getElementById('aicScrim')?.classList.remove('show');
+}
+
+function aicRenderHistory(filter = '') {
+  const list = document.getElementById('aicHistoryList');
+  if (!list) return;
+  list.innerHTML = '';
+  const groups = ['오늘', '어제', '최근 7일'];
+  groups.forEach(group => {
+    const items = AIC.history.filter(x => x.group === group && x.title.toLowerCase().includes(filter.toLowerCase()));
+    if (!items.length) return;
+    const label = document.createElement('div');
+    label.className = 'aic-history-group';
+    label.textContent = group;
+    list.appendChild(label);
+    items.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'aic-history-item';
+      btn.textContent = item.title;
+      btn.onclick = () => { toast('MVP에서는 대화 기록 화면만 제공됩니다'); aicCloseDrawers(); };
+      list.appendChild(btn);
+    });
+  });
+}
+
+function aicNewChat() {
+  AIC.messages = [];
+  const msgEl = document.getElementById('aicMessages');
+  if (msgEl) msgEl.innerHTML = aicWelcomeHTML();
+  aicCloseDrawers();
+}
+function aicWelcomeHTML() {
+  return `<section class="aic-welcome" id="aicWelcome">
+    <div class="aic-bot-avatar">AI</div>
+    <h1>무엇을 도와드릴까요?</h1>
+    <p>AI플랫마켓 서비스 안내부터 일반적인 AI 상담까지 도와드립니다.</p>
+    <div class="aic-suggestions">
+      <button onclick="aicSendMessage('AI플랫마켓은 어떤 곳인가요?')">AI플랫마켓은 어떤 곳인가요?</button>
+      <button onclick="aicSendMessage('나에게 맞는 서비스를 찾아주세요.')">나에게 맞는 서비스를 찾아주세요.</button>
+      <button onclick="aicSendMessage('AI 서비스를 추천해주세요.')">AI 서비스를 추천해주세요.</button>
+      <button onclick="aicSendMessage('AI인생·진로 탐색존이 무엇인가요?')">AI인생·진로 탐색존이 무엇인가요?</button>
+    </div>
+  </section>`;
+}
+
+function aicResizeInput() {
+  const el = document.getElementById('aicPromptInput');
+  if (!el) return;
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function aicAddMessage(role, text) {
+  document.getElementById('aicWelcome')?.remove();
+  const msgEl = document.getElementById('aicMessages');
+  const row = document.createElement('div');
+  row.className = `aic-message-row ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'aic-avatar';
+  avatar.textContent = role === 'user' ? '나' : 'AI';
+  const bubble = document.createElement('div');
+  bubble.className = 'aic-bubble';
+  bubble.textContent = text;
+  row.append(avatar, bubble);
+  msgEl.appendChild(row);
+  msgEl.scrollTop = msgEl.scrollHeight;
+  AIC.messages.push({ role, content: text, timestamp: Date.now() });
+  return bubble;
+}
+
+async function aicSendMessage(presetText) {
+  const inputEl = document.getElementById('aicPromptInput');
+  const sendBtn = document.getElementById('aicSendBtn');
+  const message = (presetText ?? inputEl.value).trim();
+  if (!message || sendBtn.disabled) return;
+
+  if (!presetText) { inputEl.value = ''; aicResizeInput(); }
+  aicAddMessage('user', message);
+
+  sendBtn.disabled = true;
+  const thinkingBubble = aicAddMessage('assistant', 'AI가 답변을 준비하고 있습니다...');
+
+  try {
+    // ChatDoumi AI Core 경유 — 메인은 AI를 직접 호출하지 않는다
+    const res = await fetch('/api/ai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, context: 'aiplatmarket-assistant' }),
+    });
+    if (!res.ok) throw new Error('AI Core 응답 실패');
+    const data = await res.json();
+    thinkingBubble.textContent = data.answer || data.response || '응답을 받지 못했습니다.';
+    AIC.messages[AIC.messages.length - 1].content = thinkingBubble.textContent;
+  } catch (e) {
+    thinkingBubble.textContent = 'AI플랫마켓 안내 도우미 연결을 확인하고 있습니다. 우측의 서비스 목록에서 원하시는 프로젝트를 직접 선택하실 수도 있습니다.';
+  } finally {
+    sendBtn.disabled = false;
+    inputEl?.focus();
+  }
+}
+
+document.addEventListener('keydown', function (e) {
+  if (e.target && e.target.id === 'aicPromptInput' && e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    aicSendMessage();
+  }
+});
+
+/* ══════════════════════════════════════════════
+   🧭 AI 서비스 전체보기 — 외부 AI 서비스 분류·링크
+   AI플랫마켓과 별개인 외부 서비스만 모아둔 디렉토리.
+   실제 존재가 확인된 공식 서비스만 등록 (URL 임의 생성 금지).
+═══════════════════════════════════════════════ */
+const AI_HUB_CATEGORIES = [
+  {
+    icon: '💬', name: '대화형 AI',
+    services: [
+      { name: 'ChatGPT', url: 'https://chatgpt.com' },
+      { name: 'Claude', url: 'https://claude.ai' },
+      { name: 'Gemini', url: 'https://gemini.google.com' },
+      { name: 'Perplexity', url: 'https://www.perplexity.ai' },
+      { name: 'Copilot', url: 'https://copilot.microsoft.com' },
+      { name: 'Grok', url: 'https://grok.com' },
+      { name: '클로바X', url: 'https://clova-x.naver.com' },
+      { name: '뤼튼', url: 'https://wrtn.ai' },
+    ],
+  },
+  {
+    icon: '🖼', name: '이미지·디자인 AI',
+    services: [
+      { name: 'Canva', url: 'https://www.canva.com' },
+      { name: 'Midjourney', url: 'https://www.midjourney.com' },
+      { name: 'DALL·E', url: 'https://openai.com/dall-e-3' },
+      { name: 'Stable Diffusion', url: 'https://stability.ai' },
+      { name: 'Adobe Firefly', url: 'https://www.adobe.com/products/firefly.html' },
+      { name: 'Ideogram', url: 'https://ideogram.ai' },
+      { name: 'Leonardo AI', url: 'https://leonardo.ai' },
+    ],
+  },
+  {
+    icon: '🎬', name: '영상·음악 AI',
+    services: [
+      { name: 'Sora', url: 'https://openai.com/sora' },
+      { name: 'Runway', url: 'https://runwayml.com' },
+      { name: 'Pika', url: 'https://pika.art' },
+      { name: 'HeyGen', url: 'https://www.heygen.com' },
+      { name: 'Suno', url: 'https://suno.com' },
+      { name: 'Udio', url: 'https://www.udio.com' },
+      { name: 'ElevenLabs', url: 'https://elevenlabs.io' },
+    ],
+  },
+  {
+    icon: '💼', name: '업무·코딩·설계 AI',
+    services: [
+      { name: 'GitHub Copilot', url: 'https://github.com/features/copilot' },
+      { name: 'Cursor', url: 'https://www.cursor.com' },
+      { name: 'Notion AI', url: 'https://www.notion.so/product/ai' },
+      { name: 'Gamma(PPT)', url: 'https://gamma.app' },
+      { name: 'Beautiful.AI', url: 'https://www.beautiful.ai' },
+      { name: 'Autodesk AI', url: 'https://www.autodesk.com/solutions/ai' },
+    ],
+  },
+  {
+    icon: '🇰🇷', name: '국내 특화 AI',
+    services: [
+      { name: '클로바X', url: 'https://clova-x.naver.com' },
+      { name: '뤼튼', url: 'https://wrtn.ai' },
+      { name: 'AskUp', url: 'https://askup.channel.io' },
+      { name: '타입캐스트', url: 'https://typecast.ai' },
+      { name: '딥브레인AI', url: 'https://www.deepbrain.io' },
+      { name: '카카오브레인', url: 'https://www.kakaobrain.com' },
+    ],
+  },
+];
+
+function renderAiHub() {
+  const grid = document.getElementById('aiHubGrid');
+  if (!grid) return;
+  grid.innerHTML = AI_HUB_CATEGORIES.map(cat => `
+    <div style="margin-bottom:26px">
+      <div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+        <span>${cat.icon}</span><span>${cat.name}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px">
+        ${cat.services.map(s => `
+          <a href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border:var(--bd);border-radius:10px;text-decoration:none;color:var(--text);text-align:center;transition:all .15s" onmouseover="this.style.borderColor='var(--navy)';this.style.background='var(--g1)'" onmouseout="this.style.borderColor='var(--g2)';this.style.background='#fff'">
+            <span style="font-size:.78rem;font-weight:700">${s.name}</span>
+            <span style="font-size:.62rem;color:var(--g4)">외부 서비스 ↗</span>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
 </script>
 
 <!-- ═══════════════════════════════════════════
