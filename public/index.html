@@ -5214,6 +5214,19 @@ function showPage(id) {
   if (id === 'sports') {
     setTimeout(() => { loadSportsNews(); loadHealthNews(); }, 100);
   }
+  if (id === 'ai-hub') {
+    setTimeout(() => { renderAiHub(); }, 30);
+  }
+  if (id === 'ai-assistant') {
+    setTimeout(() => {
+      aicRenderHistory();
+      // 이미 대화 중이 아니면 환영 화면 유지 (재진입 시 대화 초기화 방지)
+      const msgEl = document.getElementById('aicMessages');
+      if (msgEl && !msgEl.querySelector('.aic-message-row') && !document.getElementById('aicWelcome')) {
+        msgEl.innerHTML = aicWelcomeHTML();
+      }
+    }, 30);
+  }
   document.querySelectorAll('.gnb-top .gi, .gnb-sub .gi').forEach(e=>e.classList.remove('act'));
   const gMap={home:0,news:1};
   const gis=document.querySelectorAll('.gnb-top .gi');
