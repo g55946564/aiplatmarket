@@ -572,9 +572,9 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 @media(max-width:700px){
   .aic-mobile-only{display:flex;align-items:center;justify-content:center}
   .aic-shell{display:block;position:relative;height:calc(100vh - 200px);overflow:hidden}
-  .aic-side{position:absolute;top:0;bottom:0;width:min(84vw,300px);z-index:20;box-shadow:0 0 24px rgba(0,0,0,.15);transition:transform .2s ease}
+  .aic-side{position:absolute;top:0;bottom:0;width:min(84vw,300px);z-index:4600;box-shadow:0 0 24px rgba(0,0,0,.15);transition:transform .2s ease}
   .aic-left{left:0;transform:translateX(-105%)}
-  .aic-right{right:0;transform:translateX(105%);border-left:var(--bd)}
+  .aic-right{display:flex;right:0;transform:translateX(105%);border-left:var(--bd)}
   .aic-left.open,.aic-right.open{transform:translateX(0)}
   .aic-messages{padding:18px 12px}
   .aic-welcome{margin-top:4vh}
