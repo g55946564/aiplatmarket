@@ -499,8 +499,8 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .sp-page{padding:22px var(--pad)}
 
 /* ══════════ AI플랫마켓 챗도우미 (내부 대화) — 3단 레이아웃 ══════════ */
-.aic-shell{height:calc(100vh - 260px);min-height:560px;display:grid;grid-template-columns:220px minmax(0,1fr) 260px;background:#fff}
-.aic-side{background:#fff;min-width:0;display:flex;flex-direction:column;overflow:auto}
+.aic-shell{height:calc(100vh - 260px);min-height:560px;display:grid;grid-template-columns:220px minmax(0,1fr) 260px;background:#fff;position:relative;overflow:hidden}
+.aic-side{background:#fff;min-width:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;height:100%}
 .aic-left{border-right:var(--bd)}
 .aic-right{border-left:var(--bd)}
 .aic-side-hd{height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:var(--bd);font-weight:800;font-size:.86rem;color:var(--navy)}
