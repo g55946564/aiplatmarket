@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/framework/assets/css/common.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Gothic+Coding&display=swap');
 /* ⚠ "아시아폰트 각헤드 B"는 상업용 폰트라 Google Fonts에 없어 웹에 바로 불러올 수 없습니다.
    타이틀은 요청하신 스펙대로 'Noto Sans KR' Black(900)을 사용합니다.
    위 @import가 900 두께를 함께 불러오므로 별도 @font-face 없이 바로 적용됩니다.
@@ -2145,7 +2145,28 @@ document.getElementById('portalSearchBtn').addEventListener('click', openSearchP
 /* ══════════════════════════════════════════════════════════════
    3) 지난 신문 보기 화면
 ════════════════════════════════════════════════════════════════ */
-const ISSUES = [
+/* ══════════════════════════════════════════════════════════════
+   신문 데이터 구조 (다권 지원)
+   ------------------------------------------------------------
+   GitHub 파일 크기 제한(25MB) 대응을 위해, 신문 1건이 여러 권(PDF)으로
+   나뉠 수 있도록 설계했습니다. volumes 배열에 1부/2부/3부/부록 등을
+   원하는 만큼 추가하면 됩니다. PDF·썸네일 파일명은 각 volume 안에서만
+   설정하면 되므로 하드코딩된 경로 규칙에 의존하지 않습니다.
+
+   기존(단일 PDF) 형식 데이터도 volumes 없이 그대로 두면
+   normalizeIssue()가 자동으로 1권짜리 volumes로 변환해주므로
+   하위 호환됩니다 — 기존 항목을 고칠 필요가 없습니다.
+════════════════════════════════════════════════════════════════ */
+const ISSUES_RAW = [
+  // 예시: 신문 1건 = 여러 권(1부/2부)인 경우
+  {
+    id:"202608", title:"국민경제㊉나눔 2026년 8월호", date:"2026.08", region:"인천", isNew:true,
+    volumes:[
+      { label:"1부", pdf:"archive/202608_1.pdf", thumb:"assets/thumb_201605.jpg", pages:16 },
+      { label:"2부", pdf:"archive/202608_2.pdf", thumb:"assets/thumb_201605.jpg", pages:16 }
+    ]
+  },
+  // 이하 기존(단일 PDF) 형식 — 그대로 유지, 자동 변환됨
   { id:"201605", title:"국민경제㊉나눔 2016년 5월호", date:"2016.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202601", title:"국민경제㊉나눔 2026년 1월호", date:"2026.01", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202602", title:"국민경제㊉나눔 2026년 2월호", date:"2026.02", region:"서울", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
@@ -2153,7 +2174,7 @@ const ISSUES = [
   { id:"202604", title:"국민경제㊉나눔 2026년 4월호", date:"2026.04", region:"부산", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202605", title:"국민경제㊉나눔 2026년 5월호", date:"2026.05", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202606", title:"국민경제㊉나눔 2026년 6월호", date:"2026.06", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202607", title:"국민경제㊉나눔 2026년 7월호", date:"2026.07", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:true },
+  { id:"202607", title:"국민경제㊉나눔 2026년 7월호", date:"2026.07", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202512", title:"국민경제㊉나눔 2025년 12월호", date:"2025.12", region:"광주", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202511", title:"국민경제㊉나눔 2025년 11월호", date:"2025.11", region:"대전", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
   { id:"202510", title:"국민경제㊉나눔 2025년 10월호", date:"2025.10", region:"강원", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
@@ -2168,6 +2189,40 @@ const ISSUES = [
   { id:"202501", title:"국민경제㊉나눔 2025년 1월호", date:"2025.01", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false }
 ];
 
+/* 기존(단일 PDF) 형식 → volumes 배열 형식으로 자동 변환 (하위 호환) */
+function normalizeIssue(raw){
+  if(Array.isArray(raw.volumes) && raw.volumes.length){
+    return raw;
+  }
+  return Object.assign({}, raw, {
+    volumes: [{
+      label: '',
+      pdf: raw.pdf || `archive/${raw.id}.pdf`,
+      thumb: raw.thumb,
+      pages: raw.pages || 16
+    }]
+  });
+}
+
+/* 신문 목록 화면에는 각 권(volume)을 개별 카드로 펼쳐서 보여줌
+   (신문 1건이 1부/2부로 나뉘어 있으면 카드 2개로 표시) */
+function getIssueCards(){
+  return ISSUES_RAW.flatMap(raw => {
+    const issue = normalizeIssue(raw);
+    return issue.volumes.map((vol, vIdx) => ({
+      issueId: issue.id,
+      cardId: `${issue.id}_${vIdx}`,
+      title: vol.label ? `${issue.title} ${vol.label}` : issue.title,
+      date: issue.date,
+      region: issue.region,
+      isNew: !!issue.isNew, // 여러 권이면 모두 "최신호" 배지(같은 호이므로)
+      thumb: vol.thumb,
+      pdf: vol.pdf,
+      pages: vol.pages
+    }));
+  });
+}
+
 const grid = document.getElementById('issueGrid');
 const emptyState = document.getElementById('emptyState');
 const resultCount = document.getElementById('resultCount');
@@ -2175,39 +2230,39 @@ const resultCount = document.getElementById('resultCount');
 function renderIssues(list){
   grid.innerHTML = '';
   emptyState.style.display = list.length === 0 ? 'block' : 'none';
-  resultCount.textContent = `총 ${list.length}호`;
-  list.forEach(issue => {
-    const card = document.createElement('div');
-    card.className = 'issue-card';
-    card.innerHTML = `
+  resultCount.textContent = `총 ${list.length}권`;
+  list.forEach(card => {
+    const el = document.createElement('div');
+    el.className = 'issue-card';
+    el.innerHTML = `
       <div class="issue-thumb">
-        ${issue.isNew ? '<span class="badge">최신호</span>' : ''}
-        <img src="${issue.thumb}" alt="${issue.title} 표지" loading="lazy">
+        ${card.isNew ? '<span class="badge">최신호</span>' : ''}
+        <img src="${card.thumb}" alt="${card.title} 표지" loading="lazy">
       </div>
       <div class="issue-meta">
-        <p class="issue-title">${issue.title}</p>
-        <div class="issue-date">${issue.date} · ${issue.region}</div>
+        <p class="issue-title">${card.title}</p>
+        <div class="issue-date">${card.date} · ${card.region}</div>
       </div>
     `;
-    card.addEventListener('click', () => openViewer(issue));
-    grid.appendChild(card);
+    el.addEventListener('click', () => openViewer(card));
+    grid.appendChild(el);
   });
 }
 
 function currentFilter(){
   const activeRegion = document.querySelector('.region-item.active').dataset.region;
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  return ISSUES
-    .filter(issue => {
-      const regionOk = activeRegion === '전체' || issue.region === activeRegion;
-      const qOk = !q || issue.title.toLowerCase().includes(q) || issue.date.includes(q) || issue.region.toLowerCase().includes(q);
+  return getIssueCards()
+    .filter(card => {
+      const regionOk = activeRegion === '전체' || card.region === activeRegion;
+      const qOk = !q || card.title.toLowerCase().includes(q) || card.date.includes(q) || card.region.toLowerCase().includes(q);
       return regionOk && qOk;
     })
-    // 최신호가 항상 맨 앞(그리드 상단 좌측)에 오도록 id(발행년월) 기준 내림차순 정렬
-    .sort((a, b) => parseInt(b.id, 10) - parseInt(a.id, 10));
+    // 최신호가 항상 맨 앞(그리드 상단 좌측)에 오도록 issueId(발행년월) 기준 내림차순, 같은 호는 권 순서 유지
+    .sort((a, b) => parseInt(b.issueId, 10) - parseInt(a.issueId, 10) || a.cardId.localeCompare(b.cardId));
 }
 function applyFilter(){ renderIssues(currentFilter()); }
-renderIssues(ISSUES);
+renderIssues(currentFilter());
 
 document.querySelectorAll('.region-item').forEach(item => {
   item.addEventListener('click', () => {
