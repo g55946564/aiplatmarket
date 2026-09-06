@@ -121,6 +121,7 @@ button{ font-family:inherit; }
 }
 .ham-btn span{ display:block; width:22px; height:2.4px; background:var(--acc-deep); border-radius:2px; }
 .brand-center{ flex:1; text-align:center; cursor:pointer; }
+.brand-inner{ display:inline-block; text-align:left; }
 .eco-pre{ font-size:11px; letter-spacing:.2em; color:var(--ink-soft); margin-bottom:4px; }
 .eco-main{
   font-family:'Noto Sans KR', sans-serif; font-weight:900; font-size:40px;
@@ -640,8 +641,10 @@ button{ font-family:inherit; }
   <div class="brand-row">
     <button class="ham-btn" id="btnLeftNav" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
     <div class="brand-center" onclick="goHome()" title="메인으로">
-      <div class="eco-pre">국민에 의한 국민을 위한</div>
-      <div class="eco-main">국민경제<span class="plus-red">㊉</span></div>
+      <div class="brand-inner">
+        <div class="eco-pre">사람+AI 성장 언론</div>
+        <div class="eco-main">국민경제<span class="plus-red">㊉</span></div>
+      </div>
     </div>
     <button class="ham-btn" id="quickFab" aria-label="실시간 소식 열기"><span></span><span></span><span></span></button>
   </div>
