@@ -1,1 +1,0 @@
-console.log("AIplat v1.0");
