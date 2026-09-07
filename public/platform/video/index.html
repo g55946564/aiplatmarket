@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 영상생성센터 | AI플랫마켓</title>
+
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: Arial, sans-serif;
+  background:#f5f7fa;
+  color:#222;
+}
+
+header {
+  height:70px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  padding:0 5%;
+  gap:30px;
+}
+
+.logo {
+  font-size:20px;
+  font-weight:bold;
+}
+
+.gnb {
+  display:flex;
+  gap:20px;
+}
+
+.gnb a {
+  text-decoration:none;
+  color:#444;
+}
+
+.container {
+  width:90%;
+  max-width:1400px;
+  margin:auto;
+}
+
+.hero {
+  margin-top:30px;
+  padding:60px 30px;
+  background:#fff;
+  border-radius:20px;
+  text-align:center;
+}
+
+.hero h1 {
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+.hero p {
+  color:#666;
+  margin-bottom:30px;
+}
+
+.start-box {
+  max-width:700px;
+  margin:auto;
+  display:flex;
+  gap:10px;
+}
+
+.start-box input {
+  flex:1;
+  padding:16px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.btn {
+  padding:15px 25px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  background:#222;
+  color:#fff;
+}
+
+.section {
+  margin-top:35px;
+}
+
+.section-title {
+  margin-bottom:18px;
+}
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+
+.card {
+  background:#fff;
+  padding:25px 15px;
+  border-radius:15px;
+  border:1px solid #e5e5e5;
+  cursor:pointer;
+  text-align:center;
+}
+
+.card:hover {
+  transform:translateY(-2px);
+}
+
+.workspace {
+  display:grid;
+  grid-template-columns:180px 1fr 260px;
+  gap:15px;
+  margin-top:20px;
+}
+
+.panel {
+  background:#fff;
+  border-radius:15px;
+  padding:20px;
+  min-height:300px;
+}
+
+.steps div {
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:8px;
+}
+
+.steps .active {
+  background:#eee;
+  font-weight:bold;
+}
+
+.projects {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.project {
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+}
+
+@media(max-width:900px) {
+  .cards {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .workspace {
+    grid-template-columns:1fr;
+  }
+
+  .projects {
+    grid-template-columns:1fr;
+  }
+
+  .gnb {
+    display:none;
+  }
+}
+
+@media(max-width:600px) {
+  .hero h1 {
+    font-size:27px;
+  }
+
+  .start-box {
+    flex-direction:column;
+  }
+
+  .cards {
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AI플랫마켓</div>
+
+  <nav class="gnb">
+    <a href="#">AI 영상생성센터</a>
+    <a href="#">제작</a>
+    <a href="#">편집</a>
+    <a href="#">썸네일</a>
+    <a href="#">성장</a>
+    <a href="#">교육</a>
+    <a href="#">내 콘텐츠</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>아이디어를 영상으로 만들어보세요</h1>
+
+    <p>
+      AI 영상 제작부터 쇼츠, 유튜브 콘텐츠, 홍보와 성장까지
+    </p>
+
+    <div class="start-box">
+      <input
+        type="text"
+        placeholder="무엇을 만들고 싶으신가요?"
+      >
+
+      <button class="btn">
+        AI 영상 만들기
+      </button>
+    </div>
+  </section>
+
+
+  <!-- QUICK START -->
+  <section class="section">
+
+    <h2 class="section-title">빠른 시작</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>🎬</h3>
+        <p>AI 영상</p>
+      </div>
+
+      <div class="card">
+        <h3>📱</h3>
+        <p>AI 쇼츠</p>
+      </div>
+
+      <div class="card">
+        <h3>▶</h3>
+        <p>유튜브 영상</p>
+      </div>
+
+      <div class="card">
+        <h3>🛍</h3>
+        <p>상품 홍보영상</p>
+      </div>
+
+      <div class="card">
+        <h3>✨</h3>
+        <p>자유 제작</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CREATOR TOOLS -->
+  <section class="section">
+
+    <h2 class="section-title">제작 도구</h2>
+
+    <div class="cards">
+
+      <div class="card">콘텐츠 기획</div>
+      <div class="card">AI 대본</div>
+      <div class="card">영상 편집</div>
+      <div class="card">썸네일 제작</div>
+      <div class="card">AI 음성·음악</div>
+
+    </div>
+  </section>
+
+
+  <!-- WORKSPACE PREVIEW -->
+  <section class="section">
+
+    <h2 class="section-title">영상 제작 Workspace</h2>
+
+    <div class="workspace">
+
+      <!-- STEP -->
+      <aside class="panel steps">
+
+        <div class="active">1. 콘텐츠 기획</div>
+        <div>2. 대본</div>
+        <div>3. 스토리보드</div>
+        <div>4. 영상 제작</div>
+        <div>5. 편집</div>
+        <div>6. 썸네일</div>
+        <div>7. 완성</div>
+
+      </aside>
+
+
+      <!-- MAIN WORK AREA -->
+      <section class="panel">
+
+        <h2>콘텐츠 기획</h2>
+
+        <br>
+
+        <textarea
+          style="width:100%;height:180px;padding:15px;"
+          placeholder="영상의 주제나 아이디어를 입력하세요."
+        ></textarea>
+
+        <br><br>
+
+        <button class="btn">
+          다음 단계
+        </button>
+
+      </section>
+
+
+      <!-- PREVIEW / OPTION -->
+      <aside class="panel">
+
+        <h3>미리보기</h3>
+
+        <br>
+
+        <div style="
+          height:180px;
+          background:#eee;
+          border-radius:10px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+        ">
+          영상 미리보기
+        </div>
+
+      </aside>
+
+    </div>
+
+  </section>
+
+
+  <!-- MY PROJECTS -->
+  <section class="section">
+
+    <h2 class="section-title">내 프로젝트</h2>
+
+    <div class="projects">
+
+      <div class="project">
+        <h3>유튜브 콘텐츠 01</h3>
+        <p>제작 중 · 60%</p>
+      </div>
+
+      <div class="project">
+        <h3>쇼츠 프로젝트</h3>
+        <p>완성</p>
+      </div>
+
+      <div class="project">
+        <h3>상품 홍보영상</h3>
+        <p>기획 단계</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- GROWTH -->
+  <section class="section">
+
+    <h2 class="section-title">유튜브 성장지원</h2>
+
+    <div class="cards">
+
+      <div class="card">채널 분석</div>
+      <div class="card">콘텐츠 분석</div>
+      <div class="card">제목 분석</div>
+      <div class="card">썸네일 분석</div>
+      <div class="card">성장 전략</div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer style="
+  margin-top:50px;
+  padding:30px;
+  background:#222;
+  color:#fff;
+  text-align:center;
+">
+  AI플랫마켓 · AI 영상생성센터
+</footer>
+
+</body>
+</html>
+```
