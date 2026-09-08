@@ -5,1615 +5,1342 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>더착한쇼핑 | AI가 연결하는 대한민국 생활경제 플랫폼</title>
 <meta name="description" content="생산자·상품·가게·소비자·AI를 연결하는 대한민국 생활경제 상생 플랫폼">
-<meta property="og:title" content="더착한쇼핑 | AI플랫마켓">
-<meta property="og:description" content="AI가 연결하는 대한민국 생활경제 플랫폼">
-<meta name="theme-color" content="#0d1f35">
-<link rel="canonical" href="https://aiplatmarket.com/shop">
-<!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<!-- Bootstrap 5 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<!-- 공통 프레임워크 (선택적) -->
-<link rel="stylesheet" href="/framework/assets/css/common.css" onerror="this.remove()">
 
 <style>
-/* ================================================================
-   더착한쇼핑 디자인 시스템
-   AI플랫마켓 기존 토큰 완전 호환
-   ================================================================ */
+/* ══════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS — AI플랫마켓 실제 운영 기준 (공통 + GNB)
+══════════════════════════════════════════════════════════════ */
 :root{
-  /* AI플랫마켓 공통 토큰 */
-  --navy:#0d1f35;--navy2:#1a3556;--navy3:#243d5c;
-  --gold:#c9a84c;--gold2:#b8935a;
-  --grn:#1a7a4a;--grn2:#0d5c36;--grn3:#22a05a;
-  --red:#c0392b;
-  --g1:#f4f6f9;--g2:#e8ecf1;--g3:#b0bac7;--g4:#6b7a8d;
-  --text:#1c2635;--white:#fff;
-  --bd:1px solid #dde2ea;
-  --sh:0 2px 12px rgba(13,31,53,.08);
-  --r:6px;
+  --navy:#0d1f35;--navy2:#1a3556;--red:#c0392b;--gold:#c9a84c;
+  --grn:#1a7a4a;--grn2:#0d5c36;--gnb-grn:#15603e;--gnb-grn2:#0e4a30;
+  --g1:#f5f6f8;--g2:#e8eaed;--g3:#c4c8cd;--g4:#8a8f98;
+  --bd:1px solid var(--g2);--r:10px;
   --fn:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --fs:'Noto Serif KR','AppleMyungjo',Georgia,serif;
-  --pad:15px;
-  /* 더착한쇼핑 확장 토큰 */
-  --ap:var(--gold);           /* AP Point 색상 */
-  --ap-bg:rgba(201,168,76,.1);
-  --live-red:#e63946;
-  --story-bg:#f6f2ec;         /* 스토리 따뜻한 배경 */
-  --cr:10px;                  /* 카드 라운드 */
+  --pad:16px;
+  /* 쇼핑 확장 토큰 */
+  --ap:var(--gold);--ap-bg:rgba(201,168,76,.1);
+  --live:#e63946;--story:#f6f2ec;--cr:10px;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{overflow-x:hidden;scroll-behavior:smooth}
-body{margin:0;font-family:var(--fn);background:var(--g1);color:var(--text);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+html{overflow-x:hidden}
+body{margin:0;font-family:var(--fn);background:var(--g1);color:#1c2635;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
-img{max-width:100%}
 
-/* ── 래퍼 ─────────────────────────────── */
-.shop-wrap{max-width:1280px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 60px rgba(13,31,53,.07)}
+/* ══════════════════════════════════════════════════════════════
+   2. AI플랫마켓 실제 GNB 스타일 (AIPLATMARKET_HEADER_FOOTER.html 그대로)
+══════════════════════════════════════════════════════════════ */
+.gnb-cat-bar-wrap{position:relative}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{display:none}
+.gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+.gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+.gnb-scroll-hint.show{display:flex}
+.gcat{position:relative;flex-shrink:0}
+.gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+.gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+.caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+.gcat.open .caret{transform:rotate(180deg)}
+.gcdrop{display:none;position:fixed;background:#fff;border:.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcat.open .gcdrop{display:block}
+.gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gcdrop-list{display:flex;flex-direction:column;gap:2px}
+.gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+.gcdi:hover{background:#f0f4ff}
+.gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+.gcdi-txt{display:flex;flex-direction:column;min-width:0}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+.gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+.gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+.gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+.gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
+@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
 
-/* ── 뷰 전환 ──────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   3. 쇼핑 서브 헤더 (검색 + AP + 장바구니 + 로그인)
+   ⚠️ 핵심: 전체 너비 유지를 위해 body 최상단에 위치
+══════════════════════════════════════════════════════════════ */
+.shop-subhdr{
+  width:100%;background:#fff;border-bottom:3px solid var(--navy);
+  box-shadow:0 2px 8px rgba(13,31,53,.07);
+}
+.shop-subhdr-in{
+  max-width:1280px;margin:0 auto;padding:10px var(--pad);
+  display:flex;align-items:center;gap:10px;
+}
+.sh-brand{flex-shrink:0;cursor:pointer;line-height:1.15}
+.sh-brand-sub{font-size:.58rem;color:var(--g4);letter-spacing:1.5px;display:block;text-transform:uppercase}
+.sh-brand-main{font-family:var(--fs);font-size:1.25rem;font-weight:900;color:var(--navy);display:block}
+.sh-brand-main b{color:var(--grn)}
+.sh-search{flex:1;position:relative;min-width:0}
+.sh-search input{width:100%;border:2px solid var(--g2);border-radius:22px;padding:8px 40px 8px 14px;font-size:.86rem;font-family:var(--fn);outline:none;background:var(--g1);transition:border-color .2s}
+.sh-search input:focus{border-color:var(--grn);background:#fff}
+.sh-search button{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--navy)}
+.sh-icons{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.sh-btn{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:.57rem;color:var(--g4);padding:4px 7px;border-radius:6px;cursor:pointer;transition:color .2s;white-space:nowrap}
+.sh-btn:hover{color:var(--navy);background:var(--g1)}
+.sh-btn .ico{font-size:1.15rem;display:block}
+.sh-btn.ap{color:var(--gold);font-weight:700}
+.sh-btn.login{color:var(--grn);font-weight:700}
+
+/* ══════════════════════════════════════════════════════════════
+   4. 쇼핑 카테고리 탭 (전체 너비)
+══════════════════════════════════════════════════════════════ */
+.shop-cats{width:100%;background:var(--navy);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.shop-cats::-webkit-scrollbar{display:none}
+.sc-inner{display:inline-flex;padding:0 8px;min-width:100%}
+.sctab{display:inline-flex;align-items:center;gap:3px;padding:9px 10px;font-size:.74rem;color:rgba(255,255,255,.6);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;font-weight:500}
+.sctab:hover{color:#fff}
+.sctab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:700}
+
+/* ══════════════════════════════════════════════════════════════
+   5. 광고 슬롯 시스템 (관리자에서 설정)
+══════════════════════════════════════════════════════════════ */
+.ad-slot{width:100%;overflow:hidden}
+.ad-slot-inner{max-width:1280px;margin:0 auto;padding:8px var(--pad)}
+.ad-banner{
+  border-radius:var(--cr);overflow:hidden;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;min-height:72px;
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;font-size:.84rem;font-weight:700;
+  border:2px dashed rgba(201,168,76,.3);
+  transition:opacity .2s;
+}
+.ad-banner:hover{opacity:.9}
+.ad-banner.hidden{display:none} /* 관리자에서 광고 미등록 시 숨김 */
+
+/* ══════════════════════════════════════════════════════════════
+   6. 콘텐츠 래퍼 (max-width 중앙 정렬)
+══════════════════════════════════════════════════════════════ */
+.shop-content{max-width:1280px;margin:0 auto;background:#fff;min-height:60vh}
 .view{display:none}.view.on{display:block}
 
-/* ================================================================
-   사이트바
-   ================================================================ */
-.site-bar{
-  background:var(--navy);color:rgba(255,255,255,.65);
-  font-size:.72rem;padding:5px var(--pad);
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-}
-.site-bar a{color:var(--gold);font-weight:700;transition:opacity .2s}
-.site-bar a:hover{opacity:.75}
-.sb-right{display:flex;gap:12px;align-items:center}
-.sb-right a{color:rgba(255,255,255,.55);transition:color .2s}
-.sb-right a:hover{color:#fff}
-.sb-ap{
-  display:flex;align-items:center;gap:4px;
-  background:var(--ap-bg);border:1px solid rgba(201,168,76,.3);
-  padding:2px 9px;border-radius:12px;cursor:pointer;
-  color:var(--gold);font-weight:700;font-size:.72rem;transition:all .2s;
-}
-.sb-ap:hover{background:rgba(201,168,76,.2)}
-.sb-ap-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-right:1px}
-
-/* ================================================================
-   헤더
-   ================================================================ */
-.shop-hdr{background:#fff;border-bottom:3px solid var(--navy);position:sticky;top:0;z-index:900}
-
-.hdr-top{padding:10px var(--pad);display:flex;align-items:center;gap:10px}
-
-/* 브랜드 */
-.hdr-brand{flex-shrink:0;cursor:pointer;line-height:1.15}
-.hdr-brand-sub{font-size:.6rem;color:var(--g4);letter-spacing:1.5px;display:block;text-transform:uppercase}
-.hdr-brand-main{font-family:var(--fs);font-size:1.3rem;font-weight:900;color:var(--navy);display:block;letter-spacing:-.3px}
-.hdr-brand-main b{color:var(--grn)}
-
-/* 검색 */
-.hdr-search{flex:1;position:relative;min-width:0}
-.hdr-search input{
-  width:100%;border:2px solid var(--g2);border-radius:22px;
-  padding:8px 40px 8px 15px;font-size:.86rem;font-family:var(--fn);
-  outline:none;background:var(--g1);transition:border-color .2s;
-}
-.hdr-search input:focus{border-color:var(--grn);background:#fff}
-.hdr-search button{
-  position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  font-size:1rem;padding:3px;color:var(--navy);
-}
-
-/* 헤더 아이콘 */
-.hdr-icons{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.hdr-btn{
-  display:flex;flex-direction:column;align-items:center;gap:1px;
-  font-size:.58rem;color:var(--g4);padding:4px 7px;border-radius:var(--r);
-  cursor:pointer;transition:color .2s;white-space:nowrap;
-}
-.hdr-btn:hover{color:var(--navy);background:var(--g1)}
-.hdr-btn .ico{font-size:1.2rem;display:block}
-.hdr-btn.ap-btn .ico,.hdr-btn.ap-btn{color:var(--gold);font-weight:700}
-.hdr-btn.login-btn{color:var(--grn);font-weight:700}
-
-/* 카테고리 탭 */
-.cat-nav{
-  background:var(--navy);overflow-x:auto;white-space:nowrap;
-  scrollbar-width:none;-webkit-overflow-scrolling:touch;
-}
-.cat-nav::-webkit-scrollbar{display:none}
-.cat-inner{display:inline-flex;padding:0 8px;min-width:100%}
-.cat-tab{
-  display:inline-flex;align-items:center;gap:3px;padding:9px 11px;
-  font-size:.76rem;color:rgba(255,255,255,.6);cursor:pointer;
-  border-bottom:2px solid transparent;transition:all .2s;
-  white-space:nowrap;font-weight:500;
-}
-.cat-tab:hover{color:#fff}
-.cat-tab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:700}
-
-/* ================================================================
-   공통 섹션 헤더
-   ================================================================ */
+/* ══════════════════════════════════════════════════════════════
+   7. 공통 섹션 헤더
+══════════════════════════════════════════════════════════════ */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 12px}
-.sec-title{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;color:var(--navy);letter-spacing:-.4px}
-.sec-more{font-size:.76rem;color:var(--g4);cursor:pointer;display:flex;align-items:center;gap:2px;transition:color .2s}
+.sec-t{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;color:var(--navy);letter-spacing:-.4px}
+.sec-more{font-size:.76rem;color:var(--g4);cursor:pointer;transition:color .2s}
 .sec-more:hover{color:var(--navy)}
-.badge-ai{display:inline-flex;align-items:center;gap:2px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-size:.58rem;font-weight:800;padding:2px 7px;border-radius:10px;vertical-align:middle}
-.badge-live{background:var(--live-red);color:#fff;font-size:.58rem;font-weight:800;padding:2px 7px;border-radius:10px;animation:blink 1.4s ease-in-out infinite}
-.badge-new{background:var(--red);color:#fff;font-size:.58rem;font-weight:800;padding:2px 7px;border-radius:10px}
-.badge-cert{background:var(--grn);color:#fff;font-size:.58rem;font-weight:700;padding:2px 6px;border-radius:4px}
+.badge-ai{background:linear-gradient(135deg,var(--gold),#b8935a);color:#fff;font-size:.57rem;font-weight:800;padding:2px 7px;border-radius:10px}
+.badge-live{background:var(--live);color:#fff;font-size:.57rem;font-weight:800;padding:2px 7px;border-radius:10px;animation:blink 1.4s ease-in-out infinite}
+.badge-new{background:var(--red);color:#fff;font-size:.57rem;font-weight:800;padding:2px 7px;border-radius:10px}
+.badge-cert{background:var(--grn);color:#fff;font-size:.57rem;font-weight:700;padding:2px 6px;border-radius:4px}
+.ap-chip{display:inline-flex;align-items:center;gap:2px;background:var(--ap-bg);color:#8a6810;font-size:.61rem;font-weight:700;padding:2px 7px;border-radius:8px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.65}}
 
-/* AP 적립 칩 */
-.ap-chip{
-  display:inline-flex;align-items:center;gap:2px;
-  background:var(--ap-bg);color:#8a6810;
-  font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:8px;
-}
-
-/* ================================================================
-   히어로
-   ================================================================ */
-.hero{
-  background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);
-  color:#fff;padding:28px var(--pad) 24px;position:relative;overflow:hidden;
-}
-.hero::before,.hero::after{
-  content:'';position:absolute;border-radius:50%;
-}
-.hero::before{top:-40px;right:-20px;width:220px;height:220px;background:rgba(201,168,76,.1)}
-.hero::after{bottom:-50px;left:30px;width:180px;height:180px;background:rgba(26,122,74,.15)}
-.hero-in{position:relative;z-index:1}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.35);
-  color:var(--gold);font-size:.68rem;font-weight:700;padding:3px 10px;
-  border-radius:20px;margin-bottom:10px;letter-spacing:.3px;
-}
-.hero-title{font-family:var(--fs);font-size:1.5rem;font-weight:900;line-height:1.25;margin:0 0 8px;letter-spacing:-.5px}
-.hero-sub{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:14px}
-.hero-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.btn-gold{background:var(--gold);color:var(--navy);padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:800;transition:all .2s}
-.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:600;transition:all .2s}
+/* ══════════════════════════════════════════════════════════════
+   8. 히어로
+══════════════════════════════════════════════════════════════ */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);color:#fff;padding:28px var(--pad) 24px;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%}
+.hero::before{top:-40px;right:-20px;width:200px;height:200px;background:rgba(201,168,76,.1)}
+.hero::after{bottom:-50px;left:40px;width:160px;height:160px;background:rgba(26,122,74,.15)}
+.hero-in{position:relative;z-index:1;max-width:860px}
+.h-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.35);color:var(--gold);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.3px}
+.h-title{font-family:var(--fs);font-size:1.5rem;font-weight:900;line-height:1.25;margin:0 0 8px;letter-spacing:-.5px}
+.h-sub{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:14px}
+.h-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.btn-gold{background:var(--gold);color:var(--navy);padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:800;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);padding:8px 18px;border-radius:20px;font-size:.82rem;cursor:pointer;font-family:inherit;transition:all .2s}
 .btn-gold:hover,.btn-ghost:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.22)}
-/* AP Point 환영 배너 */
-.hero-ap{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.25);
-  border-radius:var(--r);padding:10px 14px;
-}
+.hero-ap{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:10px 14px;margin-bottom:14px}
 .hero-ap-ico{font-size:1.5rem}
-.hero-ap-txt{font-size:.8rem;line-height:1.5}
-.hero-ap-txt strong{color:var(--gold)}
-/* 통계 */
-.hero-stats{display:flex;gap:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);margin-top:14px}
-.hero-stat{text-align:center}
-.hs-num{font-family:var(--fs);font-size:1.25rem;font-weight:900;color:var(--gold);display:block;line-height:1}
-.hs-lbl{font-size:.62rem;color:rgba(255,255,255,.55);margin-top:2px;display:block}
+.hero-ap-t{font-size:.8rem;line-height:1.5}
+.hero-ap-t strong{color:var(--gold)}
+.h-stats{display:flex;gap:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
+.hs{text-align:center}
+.hs-n{font-family:var(--fs);font-size:1.2rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.hs-l{font-size:.62rem;color:rgba(255,255,255,.55);margin-top:2px;display:block}
 
-/* ================================================================
-   상품 카드 (소형)
-   ================================================================ */
+/* ══════════════════════════════════════════════════════════════
+   9. 상품 카드
+══════════════════════════════════════════════════════════════ */
 .prod-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
 .prod-scroll::-webkit-scrollbar{display:none}
 .prod-row{display:flex;gap:10px;width:max-content}
-
-.pc{
-  width:148px;flex-shrink:0;background:#fff;border-radius:var(--cr);
-  border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden;
-}
+/* 소형 */
+.pc{width:148px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
 .pc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,53,.1)}
-.pc-thumb{
-  width:100%;height:148px;background:var(--g1);display:flex;
-  align-items:center;justify-content:center;font-size:2.8rem;
-  position:relative;overflow:hidden;
-}
-.pc-thumb .badge-cert{position:absolute;top:6px;left:6px}
-.pc-thumb .badge-ai{position:absolute;top:6px;right:6px}
-.pc-body{padding:8px 9px 10px}
-.pc-seller{font-size:.6rem;color:var(--g4);margin-bottom:2px}
-.pc-name{font-size:.82rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
-.pc-price-row{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
-.pc-price{font-size:.92rem;font-weight:800;color:var(--navy)}
-.pc-orig{font-size:.7rem;color:var(--g3);text-decoration:line-through}
-.pc-dc{font-size:.7rem;font-weight:700;color:var(--red)}
+.pc-th{width:100%;height:148px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative}
+.pc-bd{padding:8px 9px 10px}
+.pc-sel{font-size:.6rem;color:var(--g4);margin-bottom:2px}
+.pc-nm{font-size:.82rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
+.pc-pr{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.pc-p{font-size:.92rem;font-weight:800;color:var(--navy)}
+.pc-o{font-size:.7rem;color:var(--g3);text-decoration:line-through}
+.pc-d{font-size:.7rem;font-weight:700;color:var(--red)}
+/* 그리드 */
+.pg{background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
+.pg:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,53,.1)}
+.pg-th{height:140px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+.pg-bd{padding:10px 10px 12px}
+.pg-meta{font-size:.62rem;color:var(--g4);margin-bottom:2px}
+.pg-nm{font-size:.85rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
+.pg-pr{display:flex;align-items:baseline;gap:4px;margin-bottom:5px}
+.pg-p{font-size:.95rem;font-weight:800;color:var(--navy)}
+.pg-o{font-size:.7rem;color:var(--g3);text-decoration:line-through}
+.pg-d{font-size:.7rem;font-weight:700;color:var(--red)}
+.pg-reason{font-size:.64rem;color:var(--g4);margin-top:4px}
 
-/* 상품 카드 (그리드용) */
-.pgc{
-  background:#fff;border-radius:var(--cr);border:var(--bd);
-  cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden;
-}
-.pgc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,53,.1)}
-.pgc-thumb{height:140px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
-.pgc-thumb .badge-cert{position:absolute;top:6px;left:6px}
-.pgc-thumb .badge-ai{position:absolute;top:6px;right:6px}
-.pgc-body{padding:10px 10px 12px}
-.pgc-meta{font-size:.62rem;color:var(--g4);margin-bottom:2px}
-.pgc-name{font-size:.85rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
-.pgc-price-row{display:flex;align-items:baseline;gap:4px;margin-bottom:5px}
-.pgc-price{font-size:.95rem;font-weight:800;color:var(--navy)}
-.pgc-orig{font-size:.7rem;color:var(--g3);text-decoration:line-through}
-.pgc-dc{font-size:.7rem;font-weight:700;color:var(--red)}
+/* ══════════════════════════════════════════════════════════════
+   10. 그리드 레이아웃
+══════════════════════════════════════════════════════════════ */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
+.g3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
+@media(min-width:640px){.g3{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:960px){.g2{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(4,1fr)}}
 
-/* ================================================================
-   AI 추천 섹션
-   ================================================================ */
-.ai-reason{
-  background:var(--ap-bg);border-left:3px solid var(--gold);
-  padding:8px 12px;margin:0 var(--pad) 12px;border-radius:0 var(--r) var(--r) 0;
-  font-size:.76rem;color:#6b5410;line-height:1.5;
-}
-.ai-reason strong{color:var(--navy);font-weight:700}
-
-/* ================================================================
-   더착한 스토리 섹션 (핵심 차별화)
-   ================================================================ */
-.story-sec{background:var(--story-bg);padding-bottom:20px}
-.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px}
+/* ══════════════════════════════════════════════════════════════
+   11. 더착한 스토리 카드
+══════════════════════════════════════════════════════════════ */
+.story-sec{background:var(--story);padding-bottom:4px}
+.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px;background:var(--story)}
 .story-scroll::-webkit-scrollbar{display:none}
 .story-row{display:flex;gap:12px;width:max-content}
-
-.sc{
-  width:260px;flex-shrink:0;background:#fff;border-radius:var(--cr);
-  border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden;
-}
+.sc{width:258px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
 .sc:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(13,31,53,.1)}
-.sc-media{
-  height:150px;background:var(--g2);display:flex;align-items:center;
-  justify-content:center;font-size:3.2rem;position:relative;
-}
-.sc-type{
-  position:absolute;bottom:8px;left:8px;font-size:.62rem;font-weight:700;
-  padding:2px 8px;border-radius:10px;
-}
+.sc-m{height:150px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+.sc-type{position:absolute;bottom:8px;left:8px;font-size:.61rem;font-weight:700;padding:2px 8px;border-radius:10px}
 .sc-type.producer{background:rgba(26,122,74,.9);color:#fff}
 .sc-type.store{background:rgba(13,31,53,.85);color:#fff}
 .sc-type.buyer{background:rgba(201,168,76,.9);color:#1c2635}
 .sc-type.product{background:rgba(192,57,43,.85);color:#fff}
 .sc-type.local{background:rgba(123,45,139,.85);color:#fff}
-.sc-body{padding:12px}
-.sc-author{display:flex;align-items:center;gap:7px;margin-bottom:8px}
-.sc-avatar{width:28px;height:28px;border-radius:50%;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-.sc-aname{font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.2}
-.sc-arole{font-size:.62rem;color:var(--g4)}
-.sc-title{font-size:.88rem;font-weight:700;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px}
+.sc-bd{padding:12px}
+.sc-au{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.sc-av{width:28px;height:28px;border-radius:50%;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.sc-an{font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.2}
+.sc-ar{font-size:.62rem;color:var(--g4)}
+.sc-ti{font-size:.88rem;font-weight:700;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px}
 .sc-ex{font-size:.76rem;color:var(--g4);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
-.sc-meta{display:flex;align-items:center;gap:8px;font-size:.68rem;color:var(--g4)}
-.sc-ai{margin-left:auto;background:var(--ap-bg);color:#8a6810;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:8px}
+.sc-mt{display:flex;align-items:center;gap:8px;font-size:.68rem;color:var(--g4)}
+.sc-ai-chip{margin-left:auto;background:var(--ap-bg);color:#8a6810;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:8px}
+/* 풀 스토리 카드 */
+.sf{background:#fff;border-radius:var(--cr);border:var(--bd);overflow:hidden;cursor:pointer;transition:transform .2s;margin-bottom:12px}
+.sf:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(13,31,53,.08)}
+.sf-m{height:180px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
 
-/* 스토리 풀카드 */
-.sc-full{background:#fff;border-radius:var(--cr);border:var(--bd);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-bottom:12px}
-.sc-full:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(13,31,53,.08)}
-.sc-full-media{height:180px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
-
-/* ================================================================
-   가게 카드
-   ================================================================ */
-.stores-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 16px}
-
+/* ══════════════════════════════════════════════════════════════
+   12. 가게 카드
+══════════════════════════════════════════════════════════════ */
 .stc{background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
 .stc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,53,.1)}
-.stc-top{height:90px;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative}
-.stc-cert{position:absolute;top:6px;right:6px;background:var(--grn);color:#fff;font-size:.58rem;font-weight:700;padding:2px 6px;border-radius:4px}
-.stc-body{padding:10px 10px 12px}
-.stc-name{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:2px}
+.stc-t{height:90px;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative}
+.stc-cert{position:absolute;top:6px;right:6px;background:var(--grn);color:#fff;font-size:.57rem;font-weight:700;padding:2px 6px;border-radius:4px}
+.stc-bd{padding:10px 10px 12px}
+.stc-nm{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:2px}
 .stc-cat{font-size:.68rem;color:var(--g4);margin-bottom:5px}
-.stc-rating{display:flex;align-items:center;gap:4px;font-size:.72rem}
-.stc-stars{color:var(--gold)}
-.stc-region{font-size:.64rem;color:var(--g4);margin-top:3px}
+.stc-rt{display:flex;align-items:center;gap:4px;font-size:.72rem}
+.stc-rg{font-size:.64rem;color:var(--g4);margin-top:3px}
 
-/* ================================================================
-   라이브 카드
-   ================================================================ */
-.live-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
-.live-scroll::-webkit-scrollbar{display:none}
-.live-row{display:flex;gap:12px;width:max-content}
-
+/* ══════════════════════════════════════════════════════════════
+   13. 라이브 카드
+══════════════════════════════════════════════════════════════ */
+.lv-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
+.lv-scroll::-webkit-scrollbar{display:none}
+.lv-row{display:flex;gap:12px;width:max-content}
 .lvc{width:220px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
 .lvc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,53,.1)}
-.lvc-thumb{height:130px;background:linear-gradient(135deg,#1a3556,#0d5c36);display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative}
-.live-badge{position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:4px;background:var(--live-red);color:#fff;font-size:.64rem;font-weight:800;padding:3px 8px;border-radius:10px}
-.live-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s ease-in-out infinite}
-.live-viewers{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:.64rem;padding:2px 7px;border-radius:8px}
-.live-sched{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:10px}
-.lvc-body{padding:10px}
-.lvc-seller{font-size:.68rem;color:var(--g4);margin-bottom:3px}
-.lvc-title{font-size:.84rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lvc-t{height:130px;background:linear-gradient(135deg,#1a3556,#0d5c36);display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative}
+.lv-bx{position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:4px;background:var(--live);color:#fff;font-size:.63rem;font-weight:800;padding:3px 8px;border-radius:10px}
+.lv-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s ease-in-out infinite}
+.lv-vw{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:.63rem;padding:2px 7px;border-radius:8px}
+.lv-sch{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:10px}
+.lvc-bd{padding:10px}
+.lvc-sel{font-size:.68rem;color:var(--g4);margin-bottom:3px}
+.lvc-ti{font-size:.84rem;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* ================================================================
-   입점 모집 배너
-   ================================================================ */
-.recruit-banner{
-  margin:0 var(--pad) 16px;
-  background:linear-gradient(135deg,var(--grn2),var(--grn));
-  border-radius:var(--cr);padding:20px var(--pad);color:#fff;
-  cursor:pointer;position:relative;overflow:hidden;transition:transform .2s;
-}
-.recruit-banner:hover{transform:translateY(-2px)}
-.recruit-banner::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:rgba(255,255,255,.4)}
-.rb-label{font-size:.66rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.75);margin-bottom:4px}
-.rb-title{font-family:var(--fs);font-size:1.1rem;font-weight:900;margin-bottom:4px}
-.rb-sub{font-size:.78rem;color:rgba(255,255,255,.8)}
-
-/* ================================================================
-   에코시스템 연계
-   ================================================================ */
+/* ══════════════════════════════════════════════════════════════
+   14. 입점 모집 배너 / 에코시스템 / 혜택
+══════════════════════════════════════════════════════════════ */
+.rec-banner{margin:0 var(--pad) 16px;background:linear-gradient(135deg,var(--grn2),var(--grn));border-radius:var(--cr);padding:20px var(--pad);color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
+.rec-banner:hover{transform:translateY(-2px)}
+.rec-banner::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:rgba(255,255,255,.4)}
+.rb-lb{font-size:.66rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.75);margin-bottom:4px}
+.rb-ti{font-family:var(--fs);font-size:1.1rem;font-weight:900;margin-bottom:4px}
+.rb-sb{font-size:.78rem;color:rgba(255,255,255,.8)}
 .eco-sec{background:var(--navy);padding:20px var(--pad)}
-.eco-label{font-size:.76rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:12px}
+.eco-lb{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:12px}
 .eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.eco-chip{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:var(--r);padding:10px 6px;text-align:center;cursor:pointer;
-  transition:all .2s;color:rgba(255,255,255,.7);font-size:.67rem;
-}
-.eco-chip:hover{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
+.eco-ch{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.7);font-size:.67rem}
+.eco-ch:hover{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
 .eco-ico{font-size:1.2rem;display:block;margin-bottom:4px}
-
-/* ================================================================
-   혜택 카드
-   ================================================================ */
-.benefits-row{display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;margin-bottom:4px}
-.benefits-row::-webkit-scrollbar{display:none}
 .bfc{flex-shrink:0;border-radius:var(--cr);padding:14px 15px;min-width:150px;cursor:pointer;transition:transform .2s;color:#fff}
 .bfc:hover{transform:translateY(-2px)}
-.bfc.navy{background:linear-gradient(135deg,var(--navy),var(--navy2))}
-.bfc.gold{background:linear-gradient(135deg,#7a5a10,var(--gold))}
-.bfc.green{background:linear-gradient(135deg,var(--grn2),var(--grn))}
-.bfc-ico{font-size:1.4rem;margin-bottom:6px}
-.bfc-lbl{font-size:.66rem;color:rgba(255,255,255,.7)}
-.bfc-val{font-size:1rem;font-weight:800;color:#fff}
 
-/* ================================================================
-   뷰 헤더
-   ================================================================ */
+/* ══════════════════════════════════════════════════════════════
+   15. 카테고리 분류 시스템 (동적 대/중/소분류)
+══════════════════════════════════════════════════════════════ */
+.cat-browse{padding:var(--pad)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cat-card{background:var(--g1);border:var(--bd);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.cat-card:hover,.cat-card.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cat-ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.cat-lbl{font-size:.72rem;font-weight:700;line-height:1.3}
+.sub-cats{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding:10px;background:var(--g1);border-radius:8px}
+.sub-cat-btn{background:#fff;border:var(--bd);border-radius:14px;padding:4px 12px;font-size:.74rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.sub-cat-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ══════════════════════════════════════════════════════════════
+   16. 판매자 요금제 (Settlement Engine)
+══════════════════════════════════════════════════════════════ */
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad)}
+@media(min-width:768px){.plan-grid{grid-template-columns:repeat(4,1fr)}}
+.plan-card{border-radius:var(--cr);overflow:hidden;border:2px solid var(--g2);transition:all .2s;cursor:pointer}
+.plan-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,31,53,.12)}
+.plan-card.best{border-color:var(--gold)}
+.plan-head{padding:16px 14px;text-align:center;position:relative}
+.plan-best-badge{position:absolute;top:-1px;right:-1px;background:var(--gold);color:var(--navy);font-size:.58rem;font-weight:800;padding:3px 8px;border-radius:0 var(--cr) 0 8px}
+.plan-name{font-size:1rem;font-weight:800;margin-bottom:4px}
+.plan-fee{font-size:.72rem;font-weight:600;margin-top:4px}
+.plan-price{font-family:var(--fs);font-size:1.5rem;font-weight:900;line-height:1;margin-top:6px}
+.plan-price small{font-size:.72rem;font-weight:500}
+.plan-body{padding:12px 14px}
+.plan-item{display:flex;align-items:center;gap:6px;font-size:.76rem;padding:4px 0;border-bottom:.5px solid var(--g2)}
+.plan-item:last-child{border:none}
+.plan-check{color:var(--grn);font-weight:700}
+/* 수수료 계산기 */
+.fee-calc{background:var(--g1);border-radius:var(--cr);padding:var(--pad);margin:0 var(--pad) 16px}
+.fee-calc-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.fee-input{width:100%;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.86rem;font-family:var(--fn);outline:none;margin-bottom:10px}
+.fee-result{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.fee-item{background:#fff;border-radius:8px;padding:10px 12px;border:var(--bd)}
+.fee-item-plan{font-size:.68rem;color:var(--g4);margin-bottom:2px}
+.fee-item-val{font-size:.92rem;font-weight:800;color:var(--navy)}
+.fee-item-settle{font-size:.76rem;font-weight:700;color:var(--grn);margin-top:2px}
+.fee-item.highlight{border-color:var(--gold);background:rgba(201,168,76,.05)}
+
+/* ══════════════════════════════════════════════════════════════
+   17. FCS (공정기여도) / AP 시스템
+══════════════════════════════════════════════════════════════ */
+.fcs-level-bar{display:flex;gap:0;margin:0 var(--pad) 16px;border-radius:var(--cr);overflow:hidden;border:var(--bd)}
+.fcs-lv{flex:1;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--g1);border-right:var(--bd);font-size:.72rem;font-weight:700}
+.fcs-lv:last-child{border-right:none}
+.fcs-lv.on{background:var(--navy);color:#fff}
+.fcs-lv-ico{display:block;font-size:1rem;margin-bottom:3px}
+.fcs-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 var(--pad) 16px}
+@media(min-width:640px){.fcs-items{grid-template-columns:repeat(3,1fr)}}
+.fcs-item{background:#fff;border:var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
+.fcs-item:hover{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.fcs-item-ico{font-size:1.4rem;margin-bottom:4px}
+.fcs-item-lbl{font-size:.76rem;font-weight:700;color:var(--navy);margin-bottom:2px}
+.fcs-item-ap{font-size:.68rem;color:var(--gold);font-weight:700}
+.fcs-item-sub{font-size:.62rem;color:var(--g4)}
+.ap-phases{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 8px}
+.ap-phases::-webkit-scrollbar{display:none}
+.ap-phase{flex-shrink:0;background:#fff;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.7rem;text-align:center;min-width:110px}
+.ap-phase.cur{border-color:var(--gold);background:var(--ap-bg)}
+.ap-phase-lb{color:var(--g4);font-size:.6rem;margin-bottom:2px}
+.ap-phase-v{font-weight:800;color:var(--navy);font-size:.8rem}
+.ap-phase.cur .ap-phase-v{color:var(--gold)}
+
+/* ══════════════════════════════════════════════════════════════
+   18. AI 검색 패널
+══════════════════════════════════════════════════════════════ */
+.search-panel{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:var(--bd);border-radius:0 0 var(--cr) var(--cr);box-shadow:0 8px 24px rgba(13,31,53,.12);z-index:800;padding:12px var(--pad)}
+.search-panel.on{display:block}
+.sp-title{font-size:.72rem;font-weight:700;color:var(--g4);margin-bottom:8px}
+.sp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.sp-tag{background:var(--g1);border:var(--bd);border-radius:14px;padding:3px 10px;font-size:.74rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.sp-tag:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ══════════════════════════════════════════════════════════════
+   19. 뷰 헤더 / 필터 / 셀러센터 / 입점신청
+══════════════════════════════════════════════════════════════ */
 .vhd{padding:22px var(--pad) 18px;color:#fff}
 .vhd.navy{background:linear-gradient(135deg,var(--navy),var(--navy2))}
 .vhd.green{background:linear-gradient(135deg,var(--grn2),var(--grn))}
 .vhd.gold{background:linear-gradient(135deg,#7a5a10,var(--gold))}
-.vhd.live{background:linear-gradient(135deg,#6b0000,var(--live-red))}
-.vhd.story{background:var(--story-bg);border-bottom:var(--bd)}
-.vhd.story .vhd-title{color:var(--navy)}
-.vhd.story .vhd-sub{color:var(--g4)}
-.vhd-title{font-family:var(--fs);font-size:1.28rem;font-weight:900;margin-bottom:4px}
-.vhd-sub{font-size:.8rem;opacity:.8}
-
-/* 필터 바 */
-.filter-bar{
-  padding:10px var(--pad);background:#fff;border-bottom:var(--bd);
-  display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;
-}
+.vhd.live{background:linear-gradient(135deg,#6b0000,var(--live))}
+.vhd.story{background:var(--story);border-bottom:var(--bd)}
+.vhd.story .vhd-ti,.vhd.story .vhd-sb{color:var(--navy)!important;opacity:1}
+.vhd-ti{font-family:var(--fs);font-size:1.28rem;font-weight:900;margin-bottom:4px}
+.vhd-sb{font-size:.8rem;opacity:.8}
+.filter-bar{padding:10px var(--pad);background:#fff;border-bottom:var(--bd);display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
 .filter-bar::-webkit-scrollbar{display:none}
-.fbtn{
-  flex-shrink:0;padding:5px 13px;border-radius:16px;font-size:.74rem;
-  font-family:var(--fn);cursor:pointer;transition:all .2s;white-space:nowrap;border:var(--bd);
-  background:var(--g1);color:var(--text);
-}
+.fbtn{flex-shrink:0;padding:5px 12px;border-radius:16px;font-size:.74rem;font-family:var(--fn);cursor:pointer;transition:all .2s;white-space:nowrap;border:var(--bd);background:var(--g1)}
 .fbtn.on,.fbtn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
-
-/* 상품·가게 그리드 */
-.item-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad)}
-
-/* ================================================================
-   업그레이드 중 박스
-   ================================================================ */
 .upg{text-align:center;padding:36px 20px;color:var(--g4)}
-.upg-ico{font-size:2.2rem;margin-bottom:10px}
+.upg-ico{font-size:2rem;margin-bottom:10px}
 .upg-txt{font-size:.84rem;line-height:1.7;margin-bottom:12px}
 .upg-badge{display:inline-block;background:var(--navy);color:#fff;font-size:.72rem;font-weight:700;padding:4px 16px;border-radius:20px}
-
-/* ================================================================
-   인증 절차
-   ================================================================ */
+.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad)}
+.sm-i{background:#fff;border:var(--bd);border-radius:var(--cr);padding:16px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.sm-i:hover{border-color:var(--grn);background:rgba(26,122,74,.04)}
+.sm-ico{font-size:1.5rem;margin-bottom:6px}
+.sm-lb{font-size:.75rem;font-weight:700;color:var(--navy)}
+.ai-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) var(--pad) 0}
+.ai-box-t{font-size:.84rem;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.ai-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.ai-chip{background:#fff;border:var(--bd);border-radius:12px;padding:3px 10px;font-size:.7rem;color:var(--g4);font-weight:600}
+.finput{width:100%;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.86rem;font-family:var(--fn);outline:none;transition:border-color .2s;margin-bottom:14px}
+.finput:focus{border-color:var(--grn)}
+.flbl{font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:5px}
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.type-card{border:2px solid var(--g2);border-radius:8px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .2s}
+.type-card.on,.type-card:hover{border-color:var(--grn);background:rgba(26,122,74,.05)}
+.type-ico{font-size:1.3rem;margin-bottom:4px}
+.type-lbl{font-size:.72rem;font-weight:700;color:var(--navy)}
+.btn-sub{width:100%;background:var(--grn);color:#fff;border:none;padding:14px;border-radius:8px;font-size:.94rem;font-weight:800;cursor:pointer;font-family:var(--fn);transition:background .2s;margin-top:4px}
+.btn-sub:hover{background:var(--grn2)}
 .cert-steps{display:flex;overflow-x:auto;scrollbar-width:none;padding:16px var(--pad)}
 .cert-steps::-webkit-scrollbar{display:none}
-.cert-step{display:flex;flex-direction:column;align-items:center;min-width:76px;text-align:center;position:relative}
-.cert-step:not(:last-child)::after{content:'';position:absolute;top:20px;right:-18px;width:36px;height:2px;background:var(--g2)}
-.cs-ico{width:42px;height:42px;border-radius:50%;background:var(--g2);border:2px solid var(--g2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:6px}
-.cert-step.done .cs-ico{background:var(--grn);border-color:var(--grn);color:#fff}
-.cs-lbl{font-size:.62rem;color:var(--g4);font-weight:600;line-height:1.4}
+.cst{display:flex;flex-direction:column;align-items:center;min-width:76px;text-align:center;position:relative}
+.cst:not(:last-child)::after{content:'';position:absolute;top:20px;right:-18px;width:36px;height:2px;background:var(--g2)}
+.cst-ico{width:42px;height:42px;border-radius:50%;background:var(--g2);border:2px solid var(--g2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:6px}
+.cst.done .cst-ico{background:var(--grn);border-color:var(--grn);color:#fff}
+.cst-lb{font-size:.62rem;color:var(--g4);font-weight:600;line-height:1.4}
 
-/* ================================================================
-   셀러센터
-   ================================================================ */
-.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad)}
-.sm-item{
-  background:#fff;border:var(--bd);border-radius:var(--cr);
-  padding:16px 8px;text-align:center;cursor:pointer;transition:all .2s;
-}
-.sm-item:hover{border-color:var(--grn);background:rgba(26,122,74,.04)}
-.sm-ico{font-size:1.5rem;margin-bottom:6px}
-.sm-lbl{font-size:.75rem;font-weight:700;color:var(--navy)}
-.ai-support-box{
-  background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));
-  border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) var(--pad) 0;
-}
-.ai-support-title{font-size:.84rem;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.ai-support-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.ai-chip{background:#fff;border:var(--bd);border-radius:12px;padding:3px 10px;font-size:.7rem;color:var(--g4);font-weight:600}
-
-/* ================================================================
-   입점신청
-   ================================================================ */
-.apply-wrap{padding:var(--pad)}
-.flbl{font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:5px}
-.finput{
-  width:100%;border:var(--bd);border-radius:var(--r);padding:10px 12px;
-  font-size:.86rem;font-family:var(--fn);outline:none;transition:border-color .2s;margin-bottom:14px;
-}
-.finput:focus{border-color:var(--grn)}
-.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.type-card{border:2px solid var(--g2);border-radius:var(--r);padding:12px 6px;text-align:center;cursor:pointer;transition:all .2s}
-.type-card.on,.type-card:hover{border-color:var(--grn);background:rgba(26,122,74,.05)}
-.type-ico{font-size:1.35rem;margin-bottom:4px}
-.type-lbl{font-size:.72rem;font-weight:700;color:var(--navy)}
-.agree-box{background:var(--g1);border-radius:var(--r);padding:12px;margin-bottom:14px;font-size:.75rem;color:var(--g4);line-height:1.7}
-.agree-title{font-weight:800;color:var(--navy);display:block;margin-bottom:4px}
-.btn-submit{
-  width:100%;background:var(--grn);color:#fff;border:none;
-  padding:14px;border-radius:var(--r);font-size:.94rem;font-weight:800;
-  cursor:pointer;font-family:var(--fn);transition:background .2s;margin-top:4px;
-}
-.btn-submit:hover{background:var(--grn2)}
-
-/* ================================================================
-   AP Point 모달
-   ================================================================ */
-.ap-modal{
-  position:fixed;inset:0;z-index:9000;display:none;
-  align-items:flex-end;justify-content:center;
-  background:rgba(13,31,53,.45);
-}
+/* ══════════════════════════════════════════════════════════════
+   20. AP Point 모달
+══════════════════════════════════════════════════════════════ */
+.ap-modal{position:fixed;inset:0;z-index:9000;display:none;align-items:flex-end;justify-content:center;background:rgba(13,31,53,.45)}
 .ap-modal.on{display:flex}
-.ap-modal-box{
-  width:100%;max-width:460px;background:#fff;border-radius:16px 16px 0 0;
-  padding:24px var(--pad) 32px;animation:slideUp .28s ease;
-}
+.ap-box{width:100%;max-width:460px;background:#fff;border-radius:16px 16px 0 0;padding:24px var(--pad) 32px;animation:slideUp .28s ease}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.apm-handle{width:36px;height:4px;background:var(--g2);border-radius:2px;margin:0 auto 18px}
-.apm-title{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:var(--navy);margin-bottom:4px}
-.apm-sub{font-size:.78rem;color:var(--g4);margin-bottom:16px}
-.apm-balance{
-  background:linear-gradient(135deg,var(--navy),var(--navy2));
-  border-radius:var(--cr);padding:18px;color:#fff;margin-bottom:14px;text-align:center;
-}
-.apm-bal-lbl{font-size:.74rem;color:rgba(255,255,255,.6);margin-bottom:4px}
-.apm-bal-num{font-family:var(--fs);font-size:2rem;font-weight:900;color:var(--gold)}
-.apm-notice{font-size:.74rem;color:var(--g4);line-height:1.7;background:var(--g1);border-radius:var(--r);padding:10px 12px;margin-bottom:12px}
-.apm-phases{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:4px}
-.apm-phases::-webkit-scrollbar{display:none}
-.apm-phase{flex-shrink:0;background:#fff;border:var(--bd);border-radius:var(--r);padding:8px 12px;font-size:.7rem;text-align:center;min-width:90px}
-.apm-phase.current{border-color:var(--gold);background:var(--ap-bg)}
-.apm-phase-lbl{color:var(--g4);font-size:.6rem;margin-bottom:2px}
-.apm-phase-val{font-weight:800;color:var(--navy);font-size:.8rem}
-.apm-phase.current .apm-phase-val{color:var(--gold)}
+.ap-handle{width:36px;height:4px;background:var(--g2);border-radius:2px;margin:0 auto 18px}
+.ap-bal{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--cr);padding:18px;color:#fff;text-align:center;margin-bottom:14px}
+.ap-bal-lb{font-size:.74rem;color:rgba(255,255,255,.6);margin-bottom:4px}
+.ap-bal-n{font-family:var(--fs);font-size:2rem;font-weight:900;color:var(--gold)}
+.ap-notice{font-size:.74rem;color:var(--g4);line-height:1.7;background:var(--g1);border-radius:8px;padding:10px 12px;margin-bottom:12px}
 
-/* ================================================================
-   더착한가게 지도 안내
-   ================================================================ */
-.map-cta{
-  margin:0 var(--pad) 12px;background:var(--g1);border:var(--bd);
-  border-radius:var(--cr);padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;
-}
-.map-cta:hover{border-color:var(--grn)}
-.map-cta-txt{font-size:.82rem;color:var(--navy);font-weight:600}
-.map-cta-sub{font-size:.72rem;color:var(--g4);margin-top:1px}
-
-/* ================================================================
-   푸터
-   ================================================================ */
-.shop-footer{background:var(--navy);color:rgba(255,255,255,.55);padding:24px var(--pad) 36px}
-.sf-brand{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:4px}
-.sf-brand b{color:var(--gold)}
-.sf-desc{font-size:.76rem;line-height:1.8;color:rgba(255,255,255,.5);margin-bottom:14px}
-.sf-links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
-.sf-links a{font-size:.74rem;color:rgba(255,255,255,.45);transition:color .2s}
-.sf-links a:hover{color:var(--gold)}
-.sf-copy{font-size:.68rem;color:rgba(255,255,255,.28);border-top:1px solid rgba(255,255,255,.07);padding-top:12px}
-
-/* ================================================================
-   토스트
-   ================================================================ */
-#toast{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);
-  background:var(--navy);color:#fff;padding:9px 20px;border-radius:20px;
-  font-size:.82rem;font-weight:600;z-index:9999;pointer-events:none;
-  transition:transform .3s ease;white-space:nowrap;
-}
+/* ══════════════════════════════════════════════════════════════
+   21. 토스트
+══════════════════════════════════════════════════════════════ */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--navy);color:#fff;padding:9px 20px;border-radius:20px;font-size:.82rem;font-weight:600;z-index:9999;pointer-events:none;transition:transform .3s ease;white-space:nowrap}
 #toast.on{transform:translateX(-50%) translateY(0)}
 
-/* ================================================================
-   반응형
-   ================================================================ */
-@media(min-width:640px){
-  .stores-grid,.item-grid{grid-template-columns:repeat(3,1fr)}
-  .hero-title{font-size:1.7rem}
-}
-@media(min-width:960px){
-  .stores-grid,.item-grid{grid-template-columns:repeat(4,1fr)}
-  .hero-title{font-size:2rem}
-  .hdr-top{padding:14px 24px}
-}
+/* ══════════════════════════════════════════════════════════════
+   22. AI플랫마켓 표준 푸터 (AIPLATMARKET_HEADER_FOOTER.html)
+══════════════════════════════════════════════════════════════ */
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box}
+.ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-logo{font-family:var(--fn);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+.ft-copy{font-size:.7rem}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap}
+.ft-links a{font-size:.73rem;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
 </style>
 </head>
 <body>
-<div class="shop-wrap">
 
-<!-- ================================================================
-     사이트바
-     ================================================================ -->
-<div class="site-bar">
-  <div style="display:flex;align-items:center;gap:8px">
-    <a href="/" onclick="goMain();return false">← AI플랫마켓</a>
-    <span style="opacity:.25">|</span>
-    <span>더착한쇼핑</span>
+<!-- ══════════════════════════════════════════════════════════════
+     전체 헤더 STICKY WRAPPER
+     ⚠️ body 최상단 · max-width 없음 → 항상 전체 너비 유지
+══════════════════════════════════════════════════════════════ -->
+<div id="all-hdr" style="position:sticky;top:0;z-index:900;box-shadow:0 2px 10px rgba(13,31,53,.1)">
+
+  <!-- ① AI플랫마켓 탑바 (실제 코드 그대로) -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 16px;background:var(--navy)">
+    <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
+    <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
   </div>
-  <div class="sb-right">
-    <div class="sb-ap" onclick="openApModal()" title="AP Point 정보">
-      <div class="sb-ap-dot"></div>
-      <span id="sb-ap-val">AP 0P</span>
+
+  <!-- ② AI플랫마켓 GNB 카테고리 바 (실제 코드 그대로) -->
+  <div class="gnb-cat-bar-wrap">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
+      <div class="gcat" id="gcat-ai"><button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai"><div class="gcdrop-grid">
+          <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+          <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+          <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#promo-center','_blank');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
+          <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        </div></div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-comm"><button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm"><div class="gcdrop-list">
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
+          <a class="gcdi" href="/shop" style="font-weight:700;color:var(--grn)" onclick="closeCats()">🛍️ 더착한쇼핑 <span class="gcdi-badge">독립</span></a>
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
+        </div></div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-biz"><button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz"><div class="gcdrop-list">
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업</a>
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터</a>
+        </div></div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-cmt"><button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt"><div class="gcdrop-list">
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티</a>
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
+        </div></div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-media"><button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media"><div class="gcdrop-list">
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
+        </div></div>
+      </div>
+      <div class="gcat-div"></div>
+      <div class="gcat" id="gcat-life"><button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life"><div class="gcdrop-list">
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
+          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
+        </div></div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="showV('apply')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="toast('의견 보내기 준비 중')">💡 의견</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
     </div>
-    <a href="#" onclick="showV('seller');return false">셀러센터</a>
-    <a href="#" onclick="showV('apply');return false">입점신청</a>
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+  </div>
+
+  <!-- ③ 더착한쇼핑 서브헤더 (검색 + AP + 장바구니 + 로그인) -->
+  <div class="shop-subhdr">
+    <div class="shop-subhdr-in">
+      <div class="sh-brand" onclick="showV('home')">
+        <span class="sh-brand-sub">AI PLATMARKET</span>
+        <span class="sh-brand-main">더<b>착</b>한쇼핑</span>
+      </div>
+      <div class="sh-search" style="position:relative">
+        <input type="search" id="q" placeholder="상품·가게·생산자·스토리 검색..."
+               onfocus="showSearchPanel()" onblur="setTimeout(hideSearchPanel,200)"
+               onkeydown="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()">🔍</button>
+        <!-- AI 검색 패널 -->
+        <div class="search-panel" id="searchPanel">
+          <div class="sp-title">🔥 인기 검색어</div>
+          <div class="sp-tags" id="popularSearches"></div>
+          <div class="sp-title">🕐 최근 검색</div>
+          <div class="sp-tags" id="recentSearches"></div>
+        </div>
+      </div>
+      <div class="sh-icons">
+        <div class="sh-btn ap" onclick="openApModal()"><span class="ico">💎</span><span id="ap-hdr">AP 0P</span></div>
+        <div class="sh-btn" onclick="toast('장바구니 기능 준비 중')"><span class="ico">🛒</span><span>장바구니</span></div>
+        <div class="sh-btn login" onclick="doLogin()"><span class="ico">👤</span><span>로그인</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 쇼핑 카테고리 탭 -->
+  <nav class="shop-cats">
+    <div class="sc-inner" id="shopCats">
+      <div class="sctab on"  data-v="home"     onclick="showV('home')">🏠 홈</div>
+      <div class="sctab"     data-v="products"  onclick="showV('products')">🛍 더착한상품</div>
+      <div class="sctab"     data-v="ai"        onclick="showV('ai')">⭐ AI추천</div>
+      <div class="sctab"     data-v="stores"    onclick="showV('stores')">🏪 더착한가게</div>
+      <div class="sctab"     data-v="stories"   onclick="showV('stories')">📖 더착한스토리</div>
+      <div class="sctab"     data-v="live"      onclick="showV('live')">🎥 라이브</div>
+      <div class="sctab"     data-v="cat"       onclick="showV('cat')">📂 전체카테고리</div>
+      <div class="sctab"     data-v="local"     onclick="showV('local')">🌾 지역특산품</div>
+      <div class="sctab"     data-v="korea"     onclick="showV('korea')">🇰🇷 국산관</div>
+      <div class="sctab"     data-v="global"    onclick="showV('global')">🌍 글로벌관</div>
+      <div class="sctab"     data-v="rental"    onclick="showV('rental')">🚚 렌탈</div>
+      <div class="sctab"     data-v="cert"      onclick="showV('cert')">🏅 더착한인증</div>
+      <div class="sctab"     data-v="plans"     onclick="showV('plans')">📋 요금제</div>
+      <div class="sctab"     data-v="fcs"       onclick="showV('fcs')">💎 AP시스템</div>
+      <div class="sctab"     data-v="seller"    onclick="showV('seller')">🛒 셀러센터</div>
+      <div class="sctab"     data-v="apply"     onclick="showV('apply')">📢 입점신청</div>
+    </div>
+  </nav>
+
+</div><!-- /all-hdr -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     광고 슬롯 — 상단 배너 (관리자에서 설정)
+══════════════════════════════════════════════════════════════ -->
+<div class="ad-slot" id="ad-top" style="background:#fff">
+  <div class="ad-slot-inner">
+    <div class="ad-banner" onclick="toast('광고 문의: shop@aiplatmarket.com')">
+      <div style="text-align:center">
+        <div style="font-size:.68rem;color:rgba(255,255,255,.6);margin-bottom:4px">광고 슬롯 [TOP-BANNER-1] · 관리자에서 설정</div>
+        <div style="font-size:.9rem;font-weight:800">더착한쇼핑 오픈 기념 — 입점 셀러 모집 중 📢</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ================================================================
-     헤더
-     ================================================================ -->
-<header class="shop-hdr">
-  <div class="hdr-top">
-    <div class="hdr-brand" onclick="showV('home')">
-      <span class="hdr-brand-sub">AI PLATMARKET</span>
-      <span class="hdr-brand-main">더<b>착</b>한쇼핑</span>
-    </div>
-    <div class="hdr-search">
-      <input type="search" id="q" placeholder="상품·가게·생산자·스토리 검색..." onkeydown="if(event.key==='Enter')doSearch()">
-      <button onclick="doSearch()">🔍</button>
-    </div>
-    <div class="hdr-icons">
-      <div class="hdr-btn ap-btn" onclick="openApModal()">
-        <span class="ico">💎</span>
-        <span id="hdr-ap-val">AP 0P</span>
-      </div>
-      <div class="hdr-btn" onclick="toast('장바구니 기능을 준비 중입니다')">
-        <span class="ico">🛒</span>
-        <span>장바구니</span>
-      </div>
-      <div class="hdr-btn login-btn" onclick="doLogin()">
-        <span class="ico">👤</span>
-        <span>로그인</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- 카테고리 탭 -->
-  <nav class="cat-nav">
-    <div class="cat-inner" id="cats">
-      <div class="cat-tab on"  data-v="home"     onclick="showV('home')">🏠 홈</div>
-      <div class="cat-tab"     data-v="products"  onclick="showV('products')">🛍 더착한상품</div>
-      <div class="cat-tab"     data-v="ai"        onclick="showV('ai')">⭐ AI추천</div>
-      <div class="cat-tab"     data-v="stores"    onclick="showV('stores')">🏪 더착한가게</div>
-      <div class="cat-tab"     data-v="stories"   onclick="showV('stories')">📖 더착한스토리</div>
-      <div class="cat-tab"     data-v="live"      onclick="showV('live')">🎥 라이브</div>
-      <div class="cat-tab"     data-v="local"     onclick="showV('local')">🌾 지역특산품관</div>
-      <div class="cat-tab"     data-v="korea"     onclick="showV('korea')">🇰🇷 국산관</div>
-      <div class="cat-tab"     data-v="global"    onclick="showV('global')">🌍 글로벌관</div>
-      <div class="cat-tab"     data-v="rental"    onclick="showV('rental')">🚚 렌탈</div>
-      <div class="cat-tab"     data-v="cert"      onclick="showV('cert')">🏅 더착한인증</div>
-      <div class="cat-tab"     data-v="seller"    onclick="showV('seller')">🛒 셀러센터</div>
-      <div class="cat-tab"     data-v="apply"     onclick="showV('apply')">📢 입점신청</div>
-    </div>
-  </nav>
-</header>
-
-<!-- ================================================================
-     메인 콘텐츠
-     ================================================================ -->
+<!-- ══════════════════════════════════════════════════════════════
+     메인 콘텐츠 (max-width 1280px 중앙 정렬)
+══════════════════════════════════════════════════════════════ -->
+<div class="shop-content">
 <main>
 
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: HOME
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-home" class="view on">
+<!-- ─────────────────── VIEW: HOME ─────────────────── -->
+<div id="v-home" class="view on">
 
-    <!-- 히어로 -->
-    <section class="hero">
-      <div class="hero-in">
-        <div class="hero-badge">✨ ChatDoumi AI Core 추천 · 실시간 큐레이션</div>
-        <h1 class="hero-title">생산자·가게·소비자가<br>AI로 연결되는 쇼핑</h1>
-        <p class="hero-sub">단순 쇼핑몰이 아닌, 대한민국 생활경제 상생 플랫폼.<br>스토리와 AI가 좋은 생산자와 좋은 소비자를 이어드립니다.</p>
-        <div class="hero-btns">
-          <button class="btn-gold" onclick="showV('ai')">⭐ AI 추천 상품 보기</button>
-          <button class="btn-ghost" onclick="showV('apply')">📢 셀러 입점신청</button>
-        </div>
-        <!-- AP Point 환영 -->
-        <div class="hero-ap">
-          <div class="hero-ap-ico">💎</div>
-          <div class="hero-ap-txt">
-            지금 가입하면 <strong>AP 1,000P 즉시 적립!</strong><br>
-            구매·리뷰·스토리 작성 시마다 AP가 쌓입니다
-          </div>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="hs-num" id="sts">0</span><span class="hs-lbl">입점 셀러</span></div>
-          <div class="hero-stat"><span class="hs-num" id="stp">0</span><span class="hs-lbl">등록 상품</span></div>
-          <div class="hero-stat"><span class="hs-num" id="stry">0</span><span class="hs-lbl">더착한스토리</span></div>
-          <div class="hero-stat"><span class="hs-num" id="strg">0</span><span class="hs-lbl">활동 지역</span></div>
-        </div>
+  <section class="hero">
+    <div class="hero-in">
+      <div class="h-badge">✨ ChatDoumi AI Core 실시간 큐레이션</div>
+      <h1 class="h-title">생산자·가게·소비자가<br>AI로 연결되는 쇼핑</h1>
+      <p class="h-sub">단순 쇼핑몰이 아닌, 대한민국 생활경제 상생 플랫폼.<br>스토리와 AI가 좋은 생산자와 좋은 소비자를 이어드립니다.</p>
+      <div class="h-btns">
+        <button class="btn-gold" onclick="showV('ai')">⭐ AI 추천 상품</button>
+        <button class="btn-ghost" onclick="showV('plans')">📋 셀러 요금제</button>
+        <button class="btn-ghost" onclick="showV('apply')">📢 입점신청</button>
       </div>
-    </section>
-
-    <!-- AI 추천 상품 -->
-    <section>
-      <div class="sec-hd">
-        <div class="sec-title">⭐ 오늘의 AI 추천 <span class="badge-ai">AI PICK</span></div>
-        <span class="sec-more" onclick="showV('ai')">전체보기 ›</span>
+      <div class="hero-ap">
+        <div class="hero-ap-ico">💎</div>
+        <div class="hero-ap-t">지금 가입하면 <strong>AP 1,000P 즉시 적립!</strong> 구매·스토리 작성·추천 시마다 AP가 쌓입니다</div>
       </div>
-      <div class="ai-reason" id="ai-reason-home">
-        <strong>AI 추천 이유</strong> — 현재 시즌 제철 상품 + 지역 생산자 직거래 + 높은 소비자 신뢰도를 종합하여 선정했습니다
+      <div class="h-stats">
+        <div class="hs"><span class="hs-n" id="sts">0</span><span class="hs-l">입점 셀러</span></div>
+        <div class="hs"><span class="hs-n" id="stp">0</span><span class="hs-l">등록 상품</span></div>
+        <div class="hs"><span class="hs-n" id="stry">0</span><span class="hs-l">더착한스토리</span></div>
+        <div class="hs"><span class="hs-n" id="strg">0</span><span class="hs-l">활동 지역</span></div>
       </div>
-      <div class="prod-scroll"><div class="prod-row" id="pr-ai-home"></div></div>
-    </section>
-
-    <!-- 더착한 스토리 (핵심 차별화) -->
-    <section class="story-sec">
-      <div class="sec-hd" style="background:var(--story-bg)">
-        <div class="sec-title">📖 더착한 스토리 <span class="badge-new">NEW</span></div>
-        <span class="sec-more" onclick="showV('stories')">전체보기 ›</span>
-      </div>
-      <p style="padding:0 var(--pad) 8px;font-size:.76rem;color:var(--g4);margin:0;background:var(--story-bg)">
-        👨‍🌾 생산자 이야기 · 🏪 가게 이야기 · 😊 소비자 후기 · 🏘 우리동네 이야기
-      </p>
-      <div class="story-scroll" style="background:var(--story-bg)"><div class="story-row" id="sr-home"></div></div>
-      <!-- 스토리 작성 CTA -->
-      <div style="margin:8px var(--pad) 0;background:var(--story-bg);padding-bottom:4px">
-        <div style="display:flex;align-items:center;gap:10px;background:#fff;border:var(--bd);border-radius:var(--cr);padding:12px;cursor:pointer" onclick="toast('로그인 후 스토리를 작성할 수 있습니다')">
-          <div style="width:34px;height:34px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center">✏️</div>
-          <div style="flex:1;font-size:.82rem;color:var(--g4)">당신의 이야기를 들려주세요...</div>
-          <div style="background:var(--grn);color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:14px">작성</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 더착한 가게 -->
-    <section style="background:#fff;border-top:var(--bd);padding-bottom:4px">
-      <div class="sec-hd">
-        <div class="sec-title">🏪 더착한 가게</div>
-        <span class="sec-more" onclick="showV('stores')">전체보기 ›</span>
-      </div>
-      <div class="stores-grid" id="stg-home"></div>
-    </section>
-
-    <!-- 라이브 -->
-    <section style="background:#fff;border-top:var(--bd)">
-      <div class="sec-hd">
-        <div class="sec-title">🎥 오늘의 라이브 <span class="badge-live">LIVE</span></div>
-        <span class="sec-more" onclick="showV('live')">전체보기 ›</span>
-      </div>
-      <div class="live-scroll"><div class="live-row" id="lv-home"></div></div>
-    </section>
-
-    <!-- 신규 입점 -->
-    <section style="background:var(--g1);border-top:var(--bd);padding-bottom:4px">
-      <div class="sec-hd">
-        <div class="sec-title">🆕 신규 입점 <span class="badge-new">NEW</span></div>
-      </div>
-      <div class="item-grid" id="ig-new"></div>
-    </section>
-
-    <!-- 입점 모집 배너 -->
-    <div class="recruit-banner" onclick="showV('apply')">
-      <div class="rb-label">누구나 셀러 · AI 자동 지원 · 입점 모집 중</div>
-      <div class="rb-title">지금 바로 더착한쇼핑에 입점하세요</div>
-      <div class="rb-sub">생산자, 소상공인, 창작자 모두 환영 — AI가 홍보문·SEO·스토리를 자동 생성</div>
     </div>
+  </section>
 
-    <!-- 에코시스템 연계 -->
-    <section class="eco-sec">
-      <div class="eco-label">🔗 AI플랫마켓 생태계 — 함께 성장하는 모듈들</div>
-      <div class="eco-grid">
-        <div class="eco-chip" onclick="goMod('/lifemap')"><span class="eco-ico">🔮</span>AI인생진로</div>
-        <div class="eco-chip" onclick="goMod('/itemzone')"><span class="eco-ico">📦</span>AI아이템존</div>
-        <div class="eco-chip" onclick="goMod('/aird')"><span class="eco-ico">🔬</span>AIR&amp;D</div>
-        <div class="eco-chip" onclick="goMod('/promotion')"><span class="eco-ico">🎯</span>AI홍보센터</div>
-        <div class="eco-chip" onclick="goMod('/eduzone')"><span class="eco-ico">📚</span>AI교육존</div>
-        <div class="eco-chip" onclick="goMod('/community')"><span class="eco-ico">💬</span>커뮤니티</div>
-        <div class="eco-chip" onclick="goMod('/culture')"><span class="eco-ico">🎨</span>AI문화예술</div>
-        <div class="eco-chip" onclick="goMod('/gamezone')"><span class="eco-ico">🎮</span>AI게임존</div>
-      </div>
-    </section>
+  <!-- 광고 슬롯 [HOME-MID-1] -->
+  <div style="padding:8px var(--pad);background:#fff"><div class="ad-banner" style="min-height:56px;font-size:.78rem" onclick="toast('광고 문의: shop@aiplatmarket.com')">광고 슬롯 [HOME-MID-1] · 배너/추천상품/이벤트</div></div>
 
-    <!-- 오늘의 혜택 -->
-    <section style="background:#fff;border-top:var(--bd);padding-bottom:20px">
-      <div class="sec-hd">
-        <div class="sec-title">🎁 오늘의 혜택</div>
-      </div>
-      <div class="benefits-row">
-        <div class="bfc gold" onclick="openApModal()">
-          <div class="bfc-ico">💎</div>
-          <div class="bfc-lbl">가입 즉시 적립</div>
-          <div class="bfc-val">+1,000 AP</div>
-        </div>
-        <div class="bfc green" onclick="showV('cert')">
-          <div class="bfc-ico">🏅</div>
-          <div class="bfc-lbl">더착한인증 상품</div>
-          <div class="bfc-val">우선 추천</div>
-        </div>
-        <div class="bfc navy" onclick="toast('공동구매 기능 준비 중')">
-          <div class="bfc-ico">🤝</div>
-          <div class="bfc-lbl">공동구매</div>
-          <div class="bfc-val">최대 30%↓</div>
-        </div>
-        <div class="bfc gold" onclick="showV('stories')">
-          <div class="bfc-ico">📖</div>
-          <div class="bfc-lbl">스토리 작성</div>
-          <div class="bfc-val">+50 AP 적립</div>
-        </div>
-      </div>
-    </section>
+  <!-- AI 추천 -->
+  <section style="background:#fff">
+    <div class="sec-hd"><div class="sec-t">⭐ 오늘의 AI 추천 <span class="badge-ai">AI PICK</span></div><span class="sec-more" onclick="showV('ai')">전체보기 ›</span></div>
+    <div style="padding:0 var(--pad) 8px;font-size:.76rem;color:#8a6810;background:rgba(201,168,76,.06);margin:0 var(--pad);border-radius:8px;padding:8px 12px;margin-bottom:10px">⭐ <strong>AI 추천 기준</strong> — 제철·인증상품 우선 · 지역 직거래 · 실시간 트렌드 · 소비자 신뢰도 종합</div>
+    <div class="prod-scroll"><div class="prod-row" id="pr-ai"></div></div>
+  </section>
 
-  </div><!-- /v-home -->
+  <!-- 더착한 스토리 -->
+  <section class="story-sec">
+    <div class="sec-hd" style="background:var(--story)"><div class="sec-t">📖 더착한 스토리 <span class="badge-new">핵심 차별화</span></div><span class="sec-more" onclick="showV('stories')">전체보기 ›</span></div>
+    <p style="padding:0 var(--pad) 8px;font-size:.76rem;color:var(--g4);margin:0;background:var(--story)">👨‍🌾 생산자 이야기 · 🏪 가게 이야기 · 😊 소비자 후기 · 🏘 우리동네 — 콘텐츠가 쌓이는 영구 플랫폼 자산</p>
+    <div class="story-scroll"><div class="story-row" id="sr-home"></div></div>
+    <div style="margin:8px var(--pad) 0;background:var(--story);padding-bottom:4px"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:var(--bd);border-radius:var(--cr);padding:12px;cursor:pointer" onclick="toast('로그인 후 스토리를 작성할 수 있습니다')"><div style="width:34px;height:34px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center">✏️</div><div style="flex:1;font-size:.82rem;color:var(--g4)">당신의 이야기를 들려주세요...</div><div style="background:var(--grn);color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:14px">+50 AP</div></div></div>
+  </section>
 
+  <!-- 더착한 가게 -->
+  <section style="background:#fff;border-top:var(--bd);padding-bottom:4px">
+    <div class="sec-hd"><div class="sec-t">🏪 더착한 가게</div><span class="sec-more" onclick="showV('stores')">전체보기 ›</span></div>
+    <div class="g3" id="stg-home"></div>
+  </section>
 
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 더착한 상품
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-products" class="view">
-    <div class="vhd navy">
-      <div class="vhd-title">🛍 더착한 상품</div>
-      <div class="vhd-sub">국산 생활상품 · 지역특산품 · 소상공인 상품</div>
-    </div>
-    <div class="filter-bar">
-      <button class="fbtn on">전체</button>
-      <button class="fbtn">🥬 농수산</button>
-      <button class="fbtn">🏠 생활용품</button>
-      <button class="fbtn">💊 건강·식품</button>
-      <button class="fbtn">🤖 AI·디지털</button>
-      <button class="fbtn">👗 패션</button>
-      <button class="fbtn">🛠 서비스</button>
-    </div>
-    <div class="item-grid" id="ig-products"></div>
+  <!-- 라이브 -->
+  <section style="background:#fff;border-top:var(--bd)">
+    <div class="sec-hd"><div class="sec-t">🎥 오늘의 라이브 <span class="badge-live">LIVE</span></div><span class="sec-more" onclick="showV('live')">전체보기 ›</span></div>
+    <div class="lv-scroll"><div class="lv-row" id="lv-home"></div></div>
+  </section>
+
+  <!-- 신규 입점 -->
+  <section style="background:var(--g1);border-top:var(--bd);padding-bottom:4px">
+    <div class="sec-hd"><div class="sec-t">🆕 신규 입점 <span class="badge-new">NEW</span></div></div>
+    <div class="g2" id="ig-new"></div>
+  </section>
+
+  <!-- 입점 모집 배너 -->
+  <div class="rec-banner" onclick="showV('apply')">
+    <div class="rb-lb">누구나 셀러 · AI 사전검증 · 수수료 최저 2%</div>
+    <div class="rb-ti">더착한쇼핑에 입점하고 AI로 성장하세요</div>
+    <div class="rb-sb">생산자·소상공인·창작자 환영 · AI가 홍보문·SEO·스토리 자동 생성</div>
   </div>
 
+  <!-- 에코시스템 -->
+  <section class="eco-sec">
+    <div class="eco-lb">🔗 AI플랫마켓 생태계 — 모든 모듈이 더착한쇼핑과 연결됩니다</div>
+    <div class="eco-grid">
+      <div class="eco-ch" onclick="goMod('/lifemap')"><span class="eco-ico">🔮</span>AI인생진로</div>
+      <div class="eco-ch" onclick="goMod('/itemzone')"><span class="eco-ico">📦</span>AI아이템존</div>
+      <div class="eco-ch" onclick="goMod('/aird')"><span class="eco-ico">🔬</span>AIR&amp;D</div>
+      <div class="eco-ch" onclick="goMod('/promotion')"><span class="eco-ico">🎯</span>AI홍보센터</div>
+      <div class="eco-ch" onclick="goMod('/eduzone')"><span class="eco-ico">📚</span>AI교육존</div>
+      <div class="eco-ch" onclick="goMod('/community')"><span class="eco-ico">💬</span>커뮤니티</div>
+      <div class="eco-ch" onclick="goMod('/culture')"><span class="eco-ico">🎨</span>AI문화예술</div>
+      <div class="eco-ch" onclick="goMod('/gamezone')"><span class="eco-ico">🎮</span>AI게임존</div>
+    </div>
+  </section>
 
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: AI 추천
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-ai" class="view">
-    <div class="vhd gold">
-      <div style="font-size:.68rem;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:6px;letter-spacing:.3px">✨ ChatDoumi AI Core 분석 기반</div>
-      <div class="vhd-title">⭐ AI 추천 상품</div>
-      <div class="vhd-sub">소비자 성향·시즌·트렌드를 분석한 개인화 큐레이션</div>
+  <!-- 오늘의 혜택 -->
+  <section style="background:#fff;border-top:var(--bd);padding-bottom:20px">
+    <div class="sec-hd"><div class="sec-t">🎁 오늘의 혜택</div></div>
+    <div style="display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none">
+      <div class="bfc" style="background:linear-gradient(135deg,#7a5a10,var(--gold))" onclick="openApModal()"><div class="bfc-ico">💎</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">가입 즉시 적립</div><div style="font-size:1rem;font-weight:800">+1,000 AP</div></div>
+      <div class="bfc" style="background:linear-gradient(135deg,var(--grn2),var(--grn))" onclick="showV('cert')"><div class="bfc-ico">🏅</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">더착한인증</div><div style="font-size:1rem;font-weight:800">우선 추천</div></div>
+      <div class="bfc" style="background:linear-gradient(135deg,var(--navy),var(--navy2))" onclick="toast('공동구매 기능 준비 중')"><div class="bfc-ico">🤝</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">공동구매</div><div style="font-size:1rem;font-weight:800">최대 30%↓</div></div>
+      <div class="bfc" style="background:linear-gradient(135deg,var(--navy),var(--navy2))" onclick="showV('plans')"><div class="bfc-ico">📋</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">수수료</div><div style="font-size:1rem;font-weight:800">최저 2%</div></div>
     </div>
-    <div class="ai-reason" style="margin-top:12px">
-      <strong>오늘의 AI 추천 기준</strong> — 제철 상품 우선 · 더착한인증 상품 가중치 · 신규 생산자 노출 지원 · 실시간 검색 트렌드 반영
+  </section>
+
+</div><!-- /v-home -->
+
+
+<!-- ─────────────────── VIEW: 더착한상품 ─────────────────── -->
+<div id="v-products" class="view">
+  <div class="vhd navy"><div class="vhd-ti">🛍 더착한 상품</div><div class="vhd-sb">국산 생활상품 · 지역특산품 · 소상공인 상품</div></div>
+  <div class="filter-bar">
+    <button class="fbtn on">전체</button><button class="fbtn">🥬 농수산</button><button class="fbtn">🏠 생활용품</button><button class="fbtn">💊 건강·식품</button><button class="fbtn">🤖 AI·디지털</button><button class="fbtn">👗 패션</button><button class="fbtn">📦 OEM·ODM</button>
+  </div>
+  <div class="g2" style="padding-top:12px" id="ig-prod"></div>
+</div>
+
+
+<!-- ─────────────────── VIEW: AI 추천 ─────────────────── -->
+<div id="v-ai" class="view">
+  <div class="vhd gold"><div style="font-size:.68rem;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:6px">✨ ChatDoumi AI Core 분석 기반 개인화 추천</div><div class="vhd-ti">⭐ AI 추천 상품</div><div class="vhd-sb">소비자 성향·시즌·트렌드 분석 큐레이션</div></div>
+  <div style="padding:10px var(--pad) 0;background:rgba(201,168,76,.06)"><div style="font-size:.76rem;color:#8a6810;line-height:1.6;padding:8px 12px;border-left:3px solid var(--gold);background:#fff;border-radius:0 8px 8px 0">⭐ <strong>오늘의 AI 추천 기준</strong> — 제철 상품 우선 · 더착한인증 가중치 · 신규 생산자 노출 지원 · 실시간 검색 트렌드 반영</div></div>
+  <div class="g2" style="padding-top:12px" id="ig-ai"></div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 더착한가게 ─────────────────── -->
+<div id="v-stores" class="view">
+  <div class="vhd green"><div class="vhd-ti">🏪 더착한 가게</div><div class="vhd-sb">맛집·카페·생활서비스·병원·약국·전통시장·지역상점</div></div>
+  <div class="filter-bar"><button class="fbtn on">전체</button><button class="fbtn">🍜 맛집</button><button class="fbtn">☕ 카페</button><button class="fbtn">🛠 서비스</button><button class="fbtn">🏥 병원·약국</button><button class="fbtn">🏮 전통시장</button><button class="fbtn">📍 내 주변</button></div>
+  <div style="padding:12px var(--pad)"><div style="background:var(--g1);border:var(--bd);border-radius:var(--cr);padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:0" onclick="toast('위치 기반 서비스 준비 중 — 카카오맵 연동 예정')"><span style="font-size:1.5rem">📍</span><div><div style="font-size:.82rem;font-weight:600;color:var(--navy)">내 주변 더착한 가게 보기</div><div style="font-size:.72rem;color:var(--g4)">위치 허용 시 AI가 맞춤 가게 추천 · 카카오맵 연동 준비중</div></div></div></div>
+  <div class="g3" id="ig-stores"></div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 더착한스토리 ─────────────────── -->
+<div id="v-stories" class="view" style="background:var(--story)">
+  <div class="vhd story"><div class="vhd-ti">📖 더착한 스토리</div><div class="vhd-sb">생산자·가게·상품·소비자의 진짜 이야기 · 플랫폼 영구 자산</div></div>
+  <div class="filter-bar"><button class="fbtn on">전체</button><button class="fbtn">👨‍🌾 생산자</button><button class="fbtn">🏪 가게</button><button class="fbtn">📦 상품</button><button class="fbtn">😊 소비자</button><button class="fbtn">🏘 우리동네</button></div>
+  <div style="padding:12px var(--pad) 0"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:var(--bd);border-radius:var(--cr);padding:13px;cursor:pointer;margin-bottom:12px" onclick="toast('로그인 후 스토리를 작성할 수 있습니다')"><div style="width:36px;height:36px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center">✏️</div><div style="flex:1;font-size:.82rem;color:var(--g4)">당신의 이야기를 들려주세요...</div><div style="background:var(--grn);color:#fff;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:14px">+50 AP</div></div><div id="sl-full"></div></div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 라이브 ─────────────────── -->
+<div id="v-live" class="view">
+  <div class="vhd live"><div class="vhd-ti">🎥 라이브 홈쇼핑</div><div class="vhd-sb">실시간 라이브 · 예정 방송 · 다시보기</div></div>
+  <div class="filter-bar"><button class="fbtn on">전체</button><button class="fbtn">🔴 지금 LIVE</button><button class="fbtn">📅 예정</button><button class="fbtn">🔄 다시보기</button></div>
+  <div class="g2" style="padding-top:12px" id="ig-live"></div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 전체 카테고리 (동적 대/중/소분류) ─────────────────── -->
+<div id="v-cat" class="view">
+  <div class="vhd navy"><div class="vhd-ti">📂 전체 카테고리</div><div class="vhd-sb">대분류 · 중분류 · 소분류 — 관리자에서 자유롭게 추가/수정 가능</div></div>
+  <div class="cat-browse">
+    <div style="font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:10px">대분류 선택</div>
+    <div class="cat-grid" id="catGrid"></div>
+    <div id="subCatArea" style="display:none;margin-top:16px">
+      <div style="font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:8px" id="subCatTitle"></div>
+      <div class="sub-cats" id="subCats"></div>
     </div>
-    <div class="item-grid" id="ig-ai"></div>
+  </div>
+  <div style="padding:0 var(--pad) var(--pad)">
+    <div style="background:var(--g1);border-radius:var(--cr);padding:14px;font-size:.8rem;color:var(--g4);line-height:1.7">
+      <strong style="color:var(--navy);display:block;margin-bottom:4px">💡 동적 카테고리 시스템</strong>
+      위 카테고리는 초기 예시입니다. 관리자(Admin)에서 대분류·중분류·소분류를 코드 수정 없이 자유롭게 추가·수정·삭제할 수 있습니다. 향후 수십만 개 상품을 지원하는 확장 가능한 구조로 설계되었습니다.
+    </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 준비중 (지역특산품·국산관·글로벌관·렌탈) ─────────────────── -->
+<div id="v-local" class="view"><div class="vhd green"><div class="vhd-ti">🌾 지역특산품관</div><div class="vhd-sb">각 지역 대표 특산물</div></div><div class="upg"><div class="upg-ico">🌾</div><p class="upg-txt">지역 생산자와 협력하여 특산품관을 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div><div class="rec-banner" style="margin-top:0" onclick="showV('apply')"><div class="rb-lb">지역특산품 생산자 셀러 모집 중</div><div class="rb-ti">내 지역 특산품을 전국에 알리세요</div><div class="rb-sb">AI가 스토리·홍보문·SNS를 자동 생성</div></div></div>
+<div id="v-korea" class="view"><div class="vhd navy"><div class="vhd-ti">🇰🇷 국산관</div><div class="vhd-sb">Made in Korea 엄선 상품</div></div><div class="upg"><div class="upg-ico">🇰🇷</div><p class="upg-txt">국산 상품을 엄선하여 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div></div>
+<div id="v-global" class="view"><div class="vhd navy"><div class="vhd-ti">🌍 글로벌관</div><div class="vhd-sb">원산지 국가 투명 공개</div></div><div class="upg"><div class="upg-ico">🌍</div><p class="upg-txt">원산지 투명 공개 글로벌 상품관 준비 중</p><div class="upg-badge">업그레이드 중</div></div></div>
+<div id="v-rental" class="view"><div class="vhd navy"><div class="vhd-ti">🚚 렌탈</div><div class="vhd-sb">생활가전·가구·장비 렌탈</div></div><div class="upg"><div class="upg-ico">🚚</div><p class="upg-txt">렌탈 서비스를 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div></div>
+
+
+<!-- ─────────────────── VIEW: 더착한인증 ─────────────────── -->
+<div id="v-cert" class="view">
+  <div class="vhd gold"><div class="vhd-ti">🏅 더착한 인증</div><div class="vhd-sb">AI 검증 · 전문가 검토 · 소비자 신뢰</div></div>
+  <div style="padding:var(--pad)">
+    <div style="background:var(--g1);border-radius:var(--cr);padding:16px;margin-bottom:16px"><div style="font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:6px">더착한 인증이란?</div><div style="font-size:.8rem;color:var(--g4);line-height:1.7">AI플랫마켓 더착한쇼핑이 생산자·상품·가게를 AI 사전검증, 운영진 검토, 전문가 검증, 소비자 평가를 종합하여 부여하는 신뢰 인증 마크입니다.</div></div>
+    <div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:8px">인증 절차</div>
+    <div class="cert-steps">
+      <div class="cst"><div class="cst-ico">🤖</div><div class="cst-lb">AI<br>사전검증</div></div>
+      <div class="cst"><div class="cst-ico">👀</div><div class="cst-lb">운영진<br>검토</div></div>
+      <div class="cst"><div class="cst-ico">🔬</div><div class="cst-lb">전문가<br>검증</div></div>
+      <div class="cst"><div class="cst-ico">⭐</div><div class="cst-lb">소비자<br>평가</div></div>
+      <div class="cst done"><div class="cst-ico">🏅</div><div class="cst-lb">인증<br>부여</div></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center"><div style="font-size:1.4rem;margin-bottom:6px">👨‍🌾</div><div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 생산자</div></div>
+      <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center"><div style="font-size:1.4rem;margin-bottom:6px">📦</div><div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 상품</div></div>
+      <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center"><div style="font-size:1.4rem;margin-bottom:6px">🏪</div><div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 가게</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────── VIEW: 판매자 요금제 (Settlement Engine) ─────────────────── -->
+<div id="v-plans" class="view">
+  <div class="vhd navy"><div class="vhd-ti">📋 판매자 요금제</div><div class="vhd-sb">투명한 수수료 · 관리자에서 수수료율 자유 설정</div></div>
+
+  <!-- 신규 입점 혜택 -->
+  <div style="background:linear-gradient(135deg,var(--grn2),var(--grn));color:#fff;padding:14px var(--pad);margin-bottom:0">
+    <div style="font-size:.76rem;font-weight:700;letter-spacing:.5px;color:rgba(255,255,255,.75);margin-bottom:4px">🎉 신규 입점 특별 혜택</div>
+    <div style="font-size:.9rem;font-weight:800">가입 후 3개월 수수료 0% · 첫 100건 수수료 1% · 첫 6개월 PLUS 무료</div>
   </div>
 
-
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 더착한 가게
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-stores" class="view">
-    <div class="vhd green">
-      <div class="vhd-title">🏪 더착한 가게</div>
-      <div class="vhd-sub">맛집 · 카페 · 생활서비스 · 전통시장 · 지역상점</div>
-    </div>
-    <div class="filter-bar">
-      <button class="fbtn on">전체</button>
-      <button class="fbtn">🍜 맛집</button>
-      <button class="fbtn">☕ 카페</button>
-      <button class="fbtn">🛠 생활서비스</button>
-      <button class="fbtn">🏥 병원·약국</button>
-      <button class="fbtn">🏮 전통시장</button>
-      <button class="fbtn">🏪 지역상점</button>
-    </div>
-    <!-- 위치 기반 안내 -->
-    <div class="map-cta" onclick="toast('위치 기반 서비스를 준비 중입니다')">
-      <span style="font-size:1.5rem">📍</span>
-      <div>
-        <div class="map-cta-txt">📍 내 주변 가게 보기</div>
-        <div class="map-cta-sub">위치 허용 시 AI가 맞춤 가게를 추천합니다 · 카카오맵 연동 준비중</div>
-      </div>
-    </div>
-    <div class="stores-grid" id="ig-stores"></div>
+  <!-- 요금제 카드 -->
+  <div class="plan-grid">
+    <div class="plan-card"><div class="plan-head" style="background:var(--g1)"><div class="plan-name">START</div><div class="plan-price">0<small>원/월</small></div><div class="plan-fee" style="color:var(--g4)">판매수수료 5%</div></div><div class="plan-body"><div class="plan-item"><span class="plan-check">✓</span>상품 등록 무제한</div><div class="plan-item"><span class="plan-check">✓</span>기본 검색 노출</div><div class="plan-item"><span class="plan-check">✓</span>기본 통계</div><div class="plan-item"><span class="plan-check">✓</span>고객 문의</div></div></div>
+    <div class="plan-card best"><div class="plan-best-badge">추천</div><div class="plan-head" style="background:rgba(201,168,76,.08)"><div class="plan-name">PLUS</div><div class="plan-price" style="color:var(--navy)">29,900<small>원/월</small></div><div class="plan-fee" style="color:var(--grn)">판매수수료 4%</div></div><div class="plan-body"><div class="plan-item"><span class="plan-check">✓</span>AI 상품설명 생성</div><div class="plan-item"><span class="plan-check">✓</span>AI 홍보문 생성</div><div class="plan-item"><span class="plan-check">✓</span>추천상품 우선 노출</div><div class="plan-item"><span class="plan-check">✓</span>AP 추가 적립</div></div></div>
+    <div class="plan-card"><div class="plan-head" style="background:rgba(13,31,53,.05)"><div class="plan-name">PRO</div><div class="plan-price">59,900<small>원/월</small></div><div class="plan-fee" style="color:var(--grn)">판매수수료 3%</div></div><div class="plan-body"><div class="plan-item"><span class="plan-check">✓</span>라이브커머스 신청</div><div class="plan-item"><span class="plan-check">✓</span>AI 자동 홍보</div><div class="plan-item"><span class="plan-check">✓</span>더착한스토리 등록</div><div class="plan-item"><span class="plan-check">✓</span>배너광고 할인</div></div></div>
+    <div class="plan-card"><div class="plan-head" style="background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff"><div class="plan-name" style="color:#fff">BIZ</div><div class="plan-price" style="color:var(--gold)">99,000<small>원/월</small></div><div class="plan-fee" style="color:rgba(255,255,255,.75)">판매수수료 2%</div></div><div class="plan-body"><div class="plan-item"><span class="plan-check">✓</span>OEM·ODM 지원</div><div class="plan-item"><span class="plan-check">✓</span>B2B 대량주문</div><div class="plan-item"><span class="plan-check">✓</span>API 연동</div><div class="plan-item"><span class="plan-check">✓</span>전담 관리자</div></div></div>
   </div>
 
-
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 더착한 스토리
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-stories" class="view" style="background:var(--story-bg)">
-    <div class="vhd story">
-      <div class="vhd-title">📖 더착한 스토리</div>
-      <div class="vhd-sub">생산자 · 가게 · 상품 · 소비자의 진짜 이야기</div>
-    </div>
-    <div class="filter-bar">
-      <button class="fbtn on">전체</button>
-      <button class="fbtn">👨‍🌾 생산자</button>
-      <button class="fbtn">🏪 가게</button>
-      <button class="fbtn">📦 상품</button>
-      <button class="fbtn">😊 소비자</button>
-      <button class="fbtn">🏘 우리동네</button>
-    </div>
-    <!-- 스토리 작성 -->
-    <div style="padding:12px var(--pad) 0">
-      <div style="display:flex;align-items:center;gap:10px;background:#fff;border:var(--bd);border-radius:var(--cr);padding:13px;cursor:pointer;margin-bottom:12px" onclick="toast('로그인 후 스토리를 작성할 수 있습니다')">
-        <div style="width:36px;height:36px;background:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem">✏️</div>
-        <div style="flex:1;font-size:.82rem;color:var(--g4)">당신의 이야기를 들려주세요...</div>
-        <div style="background:var(--grn);color:#fff;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:14px">작성</div>
-      </div>
-      <div id="sl-full"></div>
+  <!-- 수수료 계산기 -->
+  <div class="fee-calc">
+    <div class="fee-calc-title">🧮 수수료 계산기 <span style="font-size:.72rem;font-weight:500;color:var(--g4)">— 판매금액 입력 시 자동 계산</span></div>
+    <input type="number" class="fee-input" id="feeAmt" placeholder="판매금액 입력 (예: 100000)" oninput="calcFee()">
+    <div class="fee-result" id="feeResult">
+      <div class="fee-item"><div class="fee-item-plan">START · 5%</div><div class="fee-item-val" id="f-start">—</div><div class="fee-item-settle" id="s-start"></div></div>
+      <div class="fee-item"><div class="fee-item-plan">PLUS · 4%</div><div class="fee-item-val" id="f-plus">—</div><div class="fee-item-settle" id="s-plus"></div></div>
+      <div class="fee-item highlight"><div class="fee-item-plan">PRO · 3%</div><div class="fee-item-val" id="f-pro">—</div><div class="fee-item-settle" id="s-pro"></div></div>
+      <div class="fee-item"><div class="fee-item-plan">BIZ · 2%</div><div class="fee-item-val" id="f-biz">—</div><div class="fee-item-settle" id="s-biz"></div></div>
     </div>
   </div>
 
-
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 라이브홈쇼핑
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-live" class="view">
-    <div class="vhd live">
-      <div class="vhd-title">🎥 라이브 홈쇼핑</div>
-      <div class="vhd-sub">실시간 라이브 · 예정 방송 · 다시보기</div>
-    </div>
-    <div class="filter-bar">
-      <button class="fbtn on">전체</button>
-      <button class="fbtn">🔴 지금 LIVE</button>
-      <button class="fbtn">📅 예정</button>
-      <button class="fbtn">🔄 다시보기</button>
-    </div>
-    <div class="item-grid" id="ig-live"></div>
-  </div>
-
-
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 지역특산품·국산관·글로벌관·렌탈 (준비중)
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-local" class="view">
-    <div class="vhd green"><div class="vhd-title">🌾 지역특산품관</div><div class="vhd-sub">각 지역 대표 특산물</div></div>
-    <div class="upg"><div class="upg-ico">🌾</div><p class="upg-txt">지역 생산자와 협력하여 각 지역 특산품을 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div>
-    <div class="recruit-banner" onclick="showV('apply')">
-      <div class="rb-label">지역특산품 생산자 셀러 모집 중</div>
-      <div class="rb-title">내 지역 특산품을 전국에 알리세요</div>
-      <div class="rb-sub">AI가 스토리·홍보문·SNS 콘텐츠를 자동 생성해 드립니다</div>
+  <div style="padding:0 var(--pad) var(--pad)">
+    <div style="background:var(--g1);border-radius:var(--cr);padding:14px;font-size:.78rem;color:var(--g4);line-height:1.8">
+      <strong style="color:var(--navy);display:block;margin-bottom:4px">⚙️ Settlement Engine 설계 원칙</strong>
+      · 판매 완료 즉시 요금제·카테고리별 수수료 자동 적용<br>
+      · 관리자에서 수수료율 변경 시 코드 수정 없이 즉시 전체 반영<br>
+      · 셀러별·브랜드별·이벤트 기간별 개별 수수료 설정 가능<br>
+      · 향후 라이브커머스 수수료·광고비·AP Credit까지 동일 엔진 확장
     </div>
   </div>
+</div>
 
-  <div id="v-korea" class="view">
-    <div class="vhd navy"><div class="vhd-title">🇰🇷 국산관</div><div class="vhd-sub">Made in Korea 엄선 상품</div></div>
-    <div class="upg"><div class="upg-ico">🇰🇷</div><p class="upg-txt">국산 상품을 엄선하여 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div>
+
+<!-- ─────────────────── VIEW: FCS / AP 시스템 ─────────────────── -->
+<div id="v-fcs" class="view">
+  <div class="vhd" style="background:linear-gradient(135deg,#7a5a10,var(--gold))"><div class="vhd-ti">💎 AP Point & FCS 시스템</div><div class="vhd-sb">공정기여도(Fair Contribution Score) 기반 AI 보상 시스템</div></div>
+
+  <!-- AP 잔액 -->
+  <div style="padding:var(--pad) var(--pad) 0">
+    <div class="ap-bal"><div class="ap-bal-lb">보유 AP Point (AIPlat Point)</div><div class="ap-bal-n" id="fcs-bal">0 P</div><div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px">로그인 후 정확한 잔액 표시</div></div>
   </div>
 
-  <div id="v-global" class="view">
-    <div class="vhd navy"><div class="vhd-title">🌍 글로벌관</div><div class="vhd-sub">원산지 국가 투명 공개 · 검증 수입 상품</div></div>
-    <div class="upg"><div class="upg-ico">🌍</div><p class="upg-txt">원산지 정보를 투명하게 공개하는 글로벌 상품관을 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div>
+  <!-- FCS 등급 -->
+  <div style="padding:var(--pad) var(--pad) 8px"><div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:8px">🏆 공정기여도 등급 (FCS Grade)</div></div>
+  <div class="fcs-level-bar">
+    <div class="fcs-lv on"><span class="fcs-lv-ico">🥉</span>Bronze</div>
+    <div class="fcs-lv"><span class="fcs-lv-ico">🥈</span>Silver<br><small style="font-size:.58rem">4%</small></div>
+    <div class="fcs-lv"><span class="fcs-lv-ico">🥇</span>Gold<br><small style="font-size:.58rem">3%</small></div>
+    <div class="fcs-lv"><span class="fcs-lv-ico">💠</span>Platinum<br><small style="font-size:.58rem">2%</small></div>
+    <div class="fcs-lv"><span class="fcs-lv-ico">💎</span>Diamond<br><small style="font-size:.58rem">1%</small></div>
   </div>
 
-  <div id="v-rental" class="view">
-    <div class="vhd navy"><div class="vhd-title">🚚 렌탈</div><div class="vhd-sub">생활가전 · 가구 · 장비 렌탈</div></div>
-    <div class="upg"><div class="upg-ico">🚚</div><p class="upg-txt">렌탈 서비스를 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div>
+  <!-- AP 적립 항목 -->
+  <div style="padding:0 var(--pad) 8px"><div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:10px">💎 AP 적립 활동</div></div>
+  <div class="fcs-items" id="fcsItems"></div>
+
+  <!-- AP Economy 로드맵 -->
+  <div style="padding:0 var(--pad) 8px"><div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:8px">📈 AP Economy 성장 로드맵</div></div>
+  <div class="ap-phases">
+    <div class="ap-phase cur"><div class="ap-phase-lb">Phase 1 · 현재</div><div class="ap-phase-v">AP Point<br><small style="font-size:.6rem;font-weight:500">멤버십 리워드</small></div></div>
+    <div class="ap-phase"><div class="ap-phase-lb">Phase 2</div><div class="ap-phase-v">AP Credit<br><small style="font-size:.6rem">플랫폼 크레딧</small></div></div>
+    <div class="ap-phase"><div class="ap-phase-lb">Phase 3</div><div class="ap-phase-v">AP Pay<br><small style="font-size:.6rem">통합 결제</small></div></div>
+    <div class="ap-phase"><div class="ap-phase-lb">Phase 4</div><div class="ap-phase-v">QR 결제<br><small style="font-size:.6rem">오프라인 가맹점</small></div></div>
+    <div class="ap-phase"><div class="ap-phase-lb">Phase 5</div><div class="ap-phase-v">통합 생태계<br><small style="font-size:.6rem">AI플랫마켓 전체</small></div></div>
   </div>
 
-
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 더착한 인증
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-cert" class="view">
-    <div class="vhd gold">
-      <div class="vhd-title">🏅 더착한 인증</div>
-      <div class="vhd-sub">AI 검증 · 전문가 검토 · 소비자 신뢰</div>
-    </div>
-    <div style="padding:var(--pad)">
-      <div style="background:var(--g1);border-radius:var(--cr);padding:16px;margin-bottom:16px">
-        <div style="font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:6px">더착한 인증이란?</div>
-        <div style="font-size:.8rem;color:var(--g4);line-height:1.7">AI플랫마켓 더착한쇼핑이 생산자·상품·가게를 AI 사전검증, 운영진 검토, 전문가 검증, 소비자 평가를 종합하여 부여하는 신뢰 인증 마크입니다.</div>
-      </div>
-      <div style="font-size:.86rem;font-weight:800;color:var(--navy);margin-bottom:8px">인증 절차</div>
-      <div class="cert-steps">
-        <div class="cert-step"><div class="cs-ico">🤖</div><div class="cs-lbl">AI<br>사전검증</div></div>
-        <div class="cert-step"><div class="cs-ico">👀</div><div class="cs-lbl">운영진<br>검토</div></div>
-        <div class="cert-step"><div class="cs-ico">🔬</div><div class="cs-lbl">전문가<br>검증</div></div>
-        <div class="cert-step"><div class="cs-ico">⭐</div><div class="cs-lbl">소비자<br>평가</div></div>
-        <div class="cert-step done"><div class="cs-ico">🏅</div><div class="cs-lbl">인증<br>부여</div></div>
-      </div>
-      <div style="font-size:.86rem;font-weight:800;color:var(--navy);margin:16px 0 10px">인증 종류</div>
-      <div style="display:flex;gap:10px">
-        <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center">
-          <div style="font-size:1.4rem;margin-bottom:6px">👨‍🌾</div>
-          <div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 생산자</div>
-        </div>
-        <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center">
-          <div style="font-size:1.4rem;margin-bottom:6px">📦</div>
-          <div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 상품</div>
-        </div>
-        <div style="flex:1;background:#fff;border:var(--bd);border-radius:var(--cr);padding:14px;text-align:center">
-          <div style="font-size:1.4rem;margin-bottom:6px">🏪</div>
-          <div style="font-size:.82rem;font-weight:800;color:var(--navy)">더착한 가게</div>
-        </div>
-      </div>
-      <div class="upg" style="margin-top:16px">
-        <p class="upg-txt">인증 신청 접수 준비 중입니다</p>
-        <div class="upg-badge">업그레이드 중</div>
-      </div>
+  <div style="padding:var(--pad)">
+    <div style="background:var(--g1);border-radius:var(--cr);padding:14px;font-size:.78rem;color:var(--g4);line-height:1.8">
+      <strong style="color:var(--navy);display:block;margin-bottom:4px">⚠️ AP Point 법적 준수 원칙</strong>
+      현금 환전 불가 · 회원 간 송금 불가 · 투자·재테크 불가 · 외부 거래 불가<br>
+      더착한쇼핑 및 AI플랫마켓 생태계 내 할인·혜택 전용 멤버십 포인트입니다.
     </div>
   </div>
+</div>
 
 
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 셀러센터
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-seller" class="view">
-    <div class="vhd navy">
-      <div class="vhd-title">🛒 셀러센터</div>
-      <div class="vhd-sub">상품 관리 · 주문 관리 · AI 자동 마케팅 지원</div>
-    </div>
-    <div class="ai-support-box">
-      <div class="ai-support-title">✨ AI 자동 지원 기능 (승인 후 제공)</div>
-      <div class="ai-support-chips">
-        <span class="ai-chip">📝 상품명 생성</span>
-        <span class="ai-chip">🔍 SEO 최적화</span>
-        <span class="ai-chip">📢 SNS 홍보문</span>
-        <span class="ai-chip">🎬 쇼츠 대본</span>
-        <span class="ai-chip">📖 스토리 초안</span>
-        <span class="ai-chip">📊 판매 AI 분석</span>
-        <span class="ai-chip">⭐ AI 추천 노출</span>
-        <span class="ai-chip">🎥 라이브 스크립트</span>
-      </div>
-    </div>
-    <div class="seller-menu">
-      <div class="sm-item" onclick="toast('상품 등록 기능 준비 중')"><div class="sm-ico">📦</div><div class="sm-lbl">상품등록</div></div>
-      <div class="sm-item" onclick="toast('주문 관리 기능 준비 중')"><div class="sm-ico">📋</div><div class="sm-lbl">주문관리</div></div>
-      <div class="sm-item" onclick="toast('재고 관리 기능 준비 중')"><div class="sm-ico">📊</div><div class="sm-lbl">재고관리</div></div>
-      <div class="sm-item" onclick="toast('가격 관리 기능 준비 중')"><div class="sm-ico">💰</div><div class="sm-lbl">가격관리</div></div>
-      <div class="sm-item" onclick="toast('스토리 관리 기능 준비 중')"><div class="sm-ico">📖</div><div class="sm-lbl">스토리</div></div>
-      <div class="sm-item" onclick="toast('라이브 신청 기능 준비 중')"><div class="sm-ico">🎥</div><div class="sm-lbl">라이브신청</div></div>
-      <div class="sm-item" onclick="toast('쿠폰 관리 기능 준비 중')"><div class="sm-ico">🎫</div><div class="sm-lbl">쿠폰관리</div></div>
-      <div class="sm-item" onclick="toast('문의 관리 기능 준비 중')"><div class="sm-ico">💬</div><div class="sm-lbl">문의관리</div></div>
-      <div class="sm-item" onclick="openApModal()"><div class="sm-ico">💎</div><div class="sm-lbl">AP 정산</div></div>
-    </div>
-    <div class="upg">
-      <p class="upg-txt">셀러센터를 구축 중입니다.<br>입점신청 후 승인 알림을 받아보세요.</p>
-      <div class="upg-badge">업그레이드 중</div>
-      <div style="margin-top:14px"><button onclick="showV('apply')" style="background:var(--grn);color:#fff;border:none;padding:10px 24px;border-radius:20px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit">입점신청 →</button></div>
-    </div>
+<!-- ─────────────────── VIEW: 셀러센터 ─────────────────── -->
+<div id="v-seller" class="view">
+  <div class="vhd navy"><div class="vhd-ti">🛒 셀러센터</div><div class="vhd-sb">상품 관리 · 주문 관리 · AI 자동 마케팅 지원</div></div>
+  <div class="ai-box"><div class="ai-box-t">✨ AI 자동 지원 (승인 후 제공)</div><div class="ai-chips"><span class="ai-chip">📝 상품명</span><span class="ai-chip">🔍 SEO</span><span class="ai-chip">📢 SNS홍보문</span><span class="ai-chip">🎬 쇼츠대본</span><span class="ai-chip">📖 스토리초안</span><span class="ai-chip">📊 판매분석</span><span class="ai-chip">⭐ AI추천노출</span><span class="ai-chip">🎥 라이브스크립트</span></div></div>
+  <div class="seller-menu">
+    <div class="sm-i" onclick="toast('상품 등록 기능 준비 중')"><div class="sm-ico">📦</div><div class="sm-lb">상품등록</div></div>
+    <div class="sm-i" onclick="toast('주문 관리 기능 준비 중')"><div class="sm-ico">📋</div><div class="sm-lb">주문관리</div></div>
+    <div class="sm-i" onclick="toast('재고 관리 기능 준비 중')"><div class="sm-ico">📊</div><div class="sm-lb">재고관리</div></div>
+    <div class="sm-i" onclick="toast('가격 관리 기능 준비 중')"><div class="sm-ico">💰</div><div class="sm-lb">가격관리</div></div>
+    <div class="sm-i" onclick="toast('스토리 관리 기능 준비 중')"><div class="sm-ico">📖</div><div class="sm-lb">스토리</div></div>
+    <div class="sm-i" onclick="toast('라이브 신청 기능 준비 중')"><div class="sm-ico">🎥</div><div class="sm-lb">라이브신청</div></div>
+    <div class="sm-i" onclick="toast('쿠폰 관리 기능 준비 중')"><div class="sm-ico">🎫</div><div class="sm-lb">쿠폰관리</div></div>
+    <div class="sm-i" onclick="toast('문의 관리 기능 준비 중')"><div class="sm-ico">💬</div><div class="sm-lb">문의관리</div></div>
+    <div class="sm-i" onclick="showV('fcs')"><div class="sm-ico">💎</div><div class="sm-lb">AP 정산</div></div>
   </div>
+  <div class="upg"><p class="upg-txt">셀러센터를 구축 중입니다.<br>입점신청 후 승인 알림을 받아보세요.</p><div class="upg-badge">업그레이드 중</div><div style="margin-top:14px"><button onclick="showV('apply')" style="background:var(--grn);color:#fff;border:none;padding:10px 24px;border-radius:20px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit">입점신청 →</button></div></div>
+</div>
 
 
-  <!-- ──────────────────────────────────────────────────────────
-       VIEW: 입점신청
-       ────────────────────────────────────────────────────────── -->
-  <div id="v-apply" class="view">
-    <div class="vhd" style="background:linear-gradient(135deg,var(--grn2),var(--navy))">
-      <div class="vhd-title">📢 셀러 입점신청</div>
-      <div class="vhd-sub">누구나 셀러 · AI 사전검증 · 관리자 승인 후 운영</div>
+<!-- ─────────────────── VIEW: 입점신청 ─────────────────── -->
+<div id="v-apply" class="view">
+  <div class="vhd" style="background:linear-gradient(135deg,var(--grn2),var(--navy))"><div class="vhd-ti">📢 셀러 입점신청</div><div class="vhd-sb">누구나 셀러 · AI 사전검증 · 관리자 승인 후 운영</div></div>
+  <div style="padding:var(--pad)">
+    <div class="flbl">셀러 유형 선택 *</div>
+    <div class="type-grid">
+      <div class="type-card" onclick="selType(this,'producer')"><div class="type-ico">👨‍🌾</div><div class="type-lbl">생산자</div></div>
+      <div class="type-card" onclick="selType(this,'manufacturer')"><div class="type-ico">🏭</div><div class="type-lbl">제조사</div></div>
+      <div class="type-card" onclick="selType(this,'sme')"><div class="type-ico">🏪</div><div class="type-lbl">소상공인</div></div>
+      <div class="type-card" onclick="selType(this,'distributor')"><div class="type-ico">🚚</div><div class="type-lbl">유통·수입사</div></div>
+      <div class="type-card" onclick="selType(this,'creator')"><div class="type-ico">🎨</div><div class="type-lbl">창작자</div></div>
+      <div class="type-card" onclick="selType(this,'general')"><div class="type-ico">👤</div><div class="type-lbl">일반셀러</div></div>
     </div>
-    <div class="apply-wrap">
-      <div class="flbl">셀러 유형 선택 *</div>
-      <div class="type-grid">
-        <div class="type-card" onclick="selType(this,'producer')"><div class="type-ico">👨‍🌾</div><div class="type-lbl">생산자</div></div>
-        <div class="type-card" onclick="selType(this,'manufacturer')"><div class="type-ico">🏭</div><div class="type-lbl">제조사</div></div>
-        <div class="type-card" onclick="selType(this,'sme')"><div class="type-ico">🏪</div><div class="type-lbl">소상공인</div></div>
-        <div class="type-card" onclick="selType(this,'distributor')"><div class="type-ico">🚚</div><div class="type-lbl">유통·수입사</div></div>
-        <div class="type-card" onclick="selType(this,'creator')"><div class="type-ico">🎨</div><div class="type-lbl">창작자</div></div>
-        <div class="type-card" onclick="selType(this,'general')"><div class="type-ico">👤</div><div class="type-lbl">일반셀러</div></div>
-      </div>
-      <input type="hidden" id="f-type">
-
-      <div class="flbl">브랜드명 / 상호명 *</div>
-      <input type="text" class="finput" id="f-brand" placeholder="예) 제주 감귤농원, 김철수 공방">
-      <div class="flbl">신청자 이름 *</div>
-      <input type="text" class="finput" id="f-name" placeholder="이름을 입력하세요">
-      <div class="flbl">연락처 *</div>
-      <input type="tel" class="finput" id="f-phone" placeholder="010-0000-0000">
-      <div class="flbl">이메일</div>
-      <input type="email" class="finput" id="f-email" placeholder="example@email.com">
-      <div class="flbl">주요 상품·서비스 소개</div>
-      <textarea class="finput" id="f-desc" rows="3" placeholder="판매하실 상품이나 서비스를 간단히 소개해 주세요" style="resize:vertical"></textarea>
-      <div class="flbl">활동 지역</div>
-      <input type="text" class="finput" id="f-region" placeholder="예) 경남 창원, 전남 고흥">
-
-      <div class="ai-support-box" style="margin:0 0 14px">
-        <div class="ai-support-title">🤖 AI가 자동으로 도와드립니다</div>
-        <div style="font-size:.76rem;color:var(--g4);line-height:1.7">입점 승인 후 ChatDoumi AI Core가 상품 설명·홍보문·SNS 콘텐츠를 자동 생성해 드립니다.</div>
-      </div>
-
-      <div class="agree-box">
-        <span class="agree-title">운영 원칙 동의</span>
-        원산지 정보 정확 표시 · 허위·과장 광고 금지 · 위조·가품 판매 금지 · 소비자 기만 행위 금지 · 불법 다단계·피라미드 판매 금지 · 유사수신 금지 · 관련 법령 및 운영정책 준수에 동의합니다.
-        <div style="margin-top:8px">
-          <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.82rem">
-            <input type="checkbox" id="f-agree" style="width:16px;height:16px;accent-color:var(--grn)">
-            운영 원칙에 동의합니다 (필수)
-          </label>
-        </div>
-      </div>
-
-      <button class="btn-submit" onclick="submitApply()">📢 입점 신청하기</button>
-      <div style="margin-top:10px;text-align:center;font-size:.74rem;color:var(--g4)">신청 후 AI 사전검증 → 운영진 검토 → 승인 안내 순으로 진행됩니다</div>
-    </div>
+    <input type="hidden" id="f-type">
+    <div class="flbl">브랜드명 / 상호명 *</div><input type="text" class="finput" id="f-brand" placeholder="예) 제주 감귤농원, 김철수 공방">
+    <div class="flbl">신청자 이름 *</div><input type="text" class="finput" id="f-name" placeholder="이름을 입력하세요">
+    <div class="flbl">연락처 *</div><input type="tel" class="finput" id="f-phone" placeholder="010-0000-0000">
+    <div class="flbl">이메일</div><input type="email" class="finput" id="f-email" placeholder="example@email.com">
+    <div class="flbl">주요 상품·서비스 소개</div><textarea class="finput" id="f-desc" rows="3" placeholder="판매하실 상품이나 서비스를 간단히 소개해 주세요" style="resize:vertical"></textarea>
+    <div class="flbl">활동 지역</div><input type="text" class="finput" id="f-region" placeholder="예) 경남 창원, 전남 고흥">
+    <div class="flbl">관심 요금제</div>
+    <select class="finput" id="f-plan"><option value="">선택하세요</option><option value="start">START (무료 · 5%)</option><option value="plus">PLUS (월 29,900원 · 4%)</option><option value="pro">PRO (월 59,900원 · 3%)</option><option value="biz">BIZ (월 99,000원 · 2%)</option></select>
+    <div class="ai-box" style="margin:0 0 14px"><div class="ai-box-t">🤖 AI가 자동으로 도와드립니다</div><div style="font-size:.76rem;color:var(--g4);line-height:1.7;margin-top:6px">입점 승인 후 ChatDoumi AI Core가 상품 설명·홍보문·SNS 콘텐츠를 자동 생성해 드립니다.</div></div>
+    <div style="background:var(--g1);border-radius:8px;padding:12px;margin-bottom:14px;font-size:.75rem;color:var(--g4);line-height:1.7"><strong style="color:var(--navy);display:block;margin-bottom:4px">운영 원칙 동의</strong>원산지 정보 정확 표시 · 허위·과장 광고 금지 · 위조·가품 판매 금지 · 소비자 기만 행위 금지 · 불법 다단계·피라미드 판매 금지 · 유사수신 금지 · 관련 법령 및 운영정책 준수<div style="margin-top:8px"><label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.82rem"><input type="checkbox" id="f-agree" style="width:16px;height:16px;accent-color:var(--grn)">운영 원칙에 동의합니다 (필수)</label></div></div>
+    <button class="btn-sub" onclick="submitApply()">📢 입점 신청하기</button>
+    <div style="margin-top:10px;text-align:center;font-size:.74rem;color:var(--g4)">신청 → AI 사전검증 → 운영진 검토 → 승인 안내 순으로 진행됩니다</div>
   </div>
+</div>
 
 </main>
+</div><!-- /shop-content -->
 
-<!-- ================================================================
-     푸터
-     ================================================================ -->
-<footer class="shop-footer">
-  <div class="sf-brand">더<b>착</b>한쇼핑</div>
-  <div class="sf-desc">
-    생산자 · 소상공인 · 소비자가 함께 성장하는<br>AI 기반 대한민국 생활경제 상생 플랫폼
-  </div>
-  <div class="sf-links">
-    <a href="/" onclick="goMain();return false">AI플랫마켓 메인</a>
-    <a href="#" onclick="showV('apply');return false">입점신청</a>
-    <a href="#" onclick="showV('seller');return false">셀러센터</a>
-    <a href="#" onclick="showV('cert');return false">더착한인증</a>
-    <a href="#" onclick="toast('이용약관 준비 중');return false">이용약관</a>
-    <a href="#" onclick="toast('개인정보처리방침 준비 중');return false">개인정보처리방침</a>
-    <a href="#" onclick="toast('고객센터 준비 중');return false">고객센터</a>
-  </div>
-  <div style="font-size:.74rem;color:rgba(255,255,255,.45);margin-bottom:10px;line-height:1.7">
-    운영·입점 문의: <span style="color:var(--gold)">shop@aiplatmarket.com</span><br>
-    더착한쇼핑은 통신판매중개업자로서 개별 거래에 대한 직접 책임은 셀러에게 있습니다.
-  </div>
-  <div class="sf-copy">
-    © 2026 AI플랫마켓 더착한쇼핑. All rights reserved.<br>
-    본 서비스는 aiplatmarket.com의 독립모듈(commerce/shop)입니다.
+
+<!-- ══════════════════════════════════════════════════════════════
+     AI플랫마켓 표준 FOOTER (AIPLATMARKET_HEADER_FOOTER.html 그대로)
+══════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="ft-outer">
+    <div class="ft">
+      <div style="min-width:240px">
+        <div class="ft-logo">AI PLATMARKET · 더착한쇼핑</div>
+        <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">AI가 연결하는 대한민국 생활경제 플랫폼</div>
+        <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+          © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+          대표: 김형식 &nbsp;|&nbsp; 사업자등록번호: 227-18-34338<br>
+          주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+          TEL: 0505-505-9000<br>
+          <span style="position:relative;display:inline-block">
+            <span onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+            <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+              <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee">📮 newstar114@naver.com</a>
+              <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600">📮 a55946564@gmail.com</a>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+        <div class="ft-links">
+          <a href="https://aiplatmarket.com/">AI플랫마켓 메인</a>
+          <a href="#" onclick="showV('apply');return false">입점신청</a>
+          <a href="#" onclick="showV('plans');return false">요금제</a>
+          <a href="#" onclick="showV('cert');return false">더착한인증</a>
+          <a href="#" onclick="toast('이용약관 준비 중');return false">이용약관</a>
+          <a href="#" onclick="toast('개인정보처리방침 준비 중');return false">개인정보처리방침</a>
+        </div>
+        <a href="/admin" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none">⚙️ 관리자 대시보드</a>
+      </div>
+    </div>
   </div>
 </footer>
 
-</div><!-- /shop-wrap -->
 
-<!-- ================================================================
+<!-- ══════════════════════════════════════════════════════════════
      AP Point 모달
-     ================================================================ -->
+══════════════════════════════════════════════════════════════ -->
 <div class="ap-modal" id="ap-modal" onclick="if(event.target===this)closeApModal()">
-  <div class="ap-modal-box">
-    <div class="apm-handle"></div>
-    <div class="apm-title">💎 AP Point (AIPlat Point)</div>
-    <div class="apm-sub">AI플랫마켓 통합 멤버십 리워드 포인트</div>
-    <div class="apm-balance">
-      <div class="apm-bal-lbl">보유 AP</div>
-      <div class="apm-bal-num" id="apm-balance">0 P</div>
-      <div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px">로그인 후 정확한 잔액이 표시됩니다</div>
-    </div>
-    <div class="apm-notice">
-      <strong>AP Point 안내</strong><br>
-      · 현금 환전 불가 · 회원 간 송금 불가<br>
-      · 투자·재테크 목적 사용 불가 · 외부 거래 불가<br>
-      · 더착한쇼핑 및 AI플랫마켓 생태계 내 할인·혜택 전용
-    </div>
-    <div style="font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:8px">AP Economy 성장 로드맵</div>
-    <div class="apm-phases">
-      <div class="apm-phase current"><div class="apm-phase-lbl">Phase 1 · 현재</div><div class="apm-phase-val">AP Point</div></div>
-      <div class="apm-phase"><div class="apm-phase-lbl">Phase 2</div><div class="apm-phase-val">AP Credit</div></div>
-      <div class="apm-phase"><div class="apm-phase-lbl">Phase 3</div><div class="apm-phase-val">AP Pay</div></div>
-      <div class="apm-phase"><div class="apm-phase-lbl">Phase 4</div><div class="apm-phase-val">QR 결제</div></div>
-      <div class="apm-phase"><div class="apm-phase-lbl">Phase 5</div><div class="apm-phase-val">통합 생태계</div></div>
-    </div>
-    <button onclick="closeApModal();doLogin()" style="width:100%;margin-top:14px;background:var(--grn);color:#fff;border:none;padding:12px;border-radius:var(--r);font-size:.86rem;font-weight:800;cursor:pointer;font-family:inherit">로그인하고 AP 1,000P 받기</button>
+  <div class="ap-box">
+    <div class="ap-handle"></div>
+    <div style="font-family:var(--fs);font-size:1.1rem;font-weight:900;color:var(--navy);margin-bottom:4px">💎 AP Point (AIPlat Point)</div>
+    <div style="font-size:.78rem;color:var(--g4);margin-bottom:16px">AI플랫마켓 통합 멤버십 리워드 포인트</div>
+    <div class="ap-bal"><div class="ap-bal-lb">보유 AP</div><div class="ap-bal-n" id="ap-modal-bal">0 P</div><div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-top:4px">로그인 후 정확한 잔액 표시</div></div>
+    <div class="ap-notice">· 현금 환전 불가 · 회원 간 송금 불가<br>· 투자·재테크 불가 · 외부 거래 불가<br>더착한쇼핑 및 AI플랫마켓 생태계 내 할인·혜택 전용</div>
+    <button onclick="closeApModal();doLogin()" style="width:100%;background:var(--grn);color:#fff;border:none;padding:12px;border-radius:8px;font-size:.86rem;font-weight:800;cursor:pointer;font-family:inherit">로그인하고 AP 1,000P 받기</button>
   </div>
 </div>
 
 <!-- 토스트 -->
 <div id="toast"></div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- 공통 코어 (선택적) -->
-<script src="/framework/assets/js/core.js" onerror="console.info('[Shop] standalone mode')"></script>
 
 <script>
 /* ================================================================
-   더착한쇼핑 MVP JavaScript
+   더착한쇼핑 MVP JavaScript v1.1
    public/commerce/shop/index.html
-   Version 1.0.0 · 2026-07
    ================================================================ */
 'use strict';
 
-/* ----------------------------------------------------------------
-   [AI Core Hook Points]
-   향후 ChatDoumi AI Core 연동 — ai-core/index.js 경유 전용
-   직접 Anthropic/OpenAI/Gemini API 호출 절대 금지
-   ---------------------------------------------------------------- */
+/* ── AI Core Hook Points (ChatDoumi 경유 전용) ── */
 const ShopAI = {
-  async recommend(userId, ctx) {
-    /* TODO: Firebase 연동 후 활성화
-    return await fetch('/api/ai/shop/recommend', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ userId, context: ctx, module:'shop' })
-    }).then(r=>r.json());
-    */
-    return null;
-  },
-  async genProductContent(productData) {
-    /* TODO: 상품 사진 업로드 → AI 상품명/설명/SEO/SNS 자동 생성 */
-    return null;
-  },
-  async verifyApplicant(applicationData) {
-    /* TODO: 입점신청 AI 사전검증 */
-    return { score: 0, result: 'pending' };
-  },
-  async curateStories(type) {
-    /* TODO: 스토리 AI 큐레이션 */
-    return null;
-  }
+  async recommend(uid,ctx){ return null; },
+  async genContent(data){ return null; },
+  async verifyApply(data){ return {score:0,result:'pending'}; }
 };
 
-/* ----------------------------------------------------------------
-   [Firebase Hook Points]
-   Firestore 컬렉션 구조:
-   /shop/products  /shop/sellers  /shop/stories
-   /shop/stores   /shop/lives    /shop/applications
-   /shop/interactions (행동 로그 → AI 학습)
-   /appoint/balances  /appoint/transactions (공통 AP Point DB)
-   ---------------------------------------------------------------- */
+/* ── Firebase Hook Points ── */
 const ShopDB = {
-  async getProducts(f={})  { return DEMO.products; },
-  async getStores(r=null)  { return DEMO.stores; },
+  async getProducts(f={}){ return DEMO.products; },
+  async getStores(r=null){ return DEMO.stores; },
   async getStories(t='all'){ return DEMO.stories; },
-  async getLives()         { return DEMO.lives; },
-  async getStats()         { return { sellers:47, products:312, stories:89, regions:23 }; },
-  async getApBalance(uid)  { return 0; /* TODO: /appoint/balances/{uid} */ },
-  async logInteraction(ev) {
-    /* TODO: /shop/interactions/{id} 에 행동 로그 저장
-    await db.collection('shop/interactions').add({
-      ...ev, timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    */
-  },
-  async saveApplication(data) {
-    /* TODO: Firebase 연동
-    return await db.collection('shop/applications').add({
-      ...data, status:'pending', appliedAt: serverTimestamp(),
-      _meta: { platform:'aiplatmarket', module:'shop', v:'1.0.0' }
-    });
-    */
-    console.log('[Shop] 입점신청 (demo):', data);
-    return { id:'demo_' + Date.now() };
-  }
+  async getLives(){ return DEMO.lives; },
+  async getStats(){ return {sellers:47,products:312,stories:89,regions:23}; },
+  async getApBalance(uid){ return 0; },
+  async saveApp(data){ console.log('[Shop] 입점신청(demo):',data); return {id:'demo_'+Date.now()}; },
+  async logClick(type,id){ /* /shop/interactions */ }
 };
 
-/* ----------------------------------------------------------------
-   AP Point 시스템
-   공식명: AP Point (AIPlat Point) · 약칭: AP
-   표시: AP 12,500P / 예상 적립 +250 AP / 보유 AP
-   ---------------------------------------------------------------- */
+/* ── AP Point 시스템 ── */
 const AP = {
   balance: 0,
-  async load(uid) {
-    this.balance = await ShopDB.getApBalance(uid);
-    this.updateUI();
-  },
-  updateUI() {
-    const v = this.balance.toLocaleString() + 'P';
-    const el1 = document.getElementById('sb-ap-val');
-    const el2 = document.getElementById('hdr-ap-val');
-    const el3 = document.getElementById('apm-balance');
-    if (el1) el1.textContent = 'AP ' + v;
-    if (el2) el2.textContent = 'AP ' + v;
-    if (el3) el3.textContent = this.balance.toLocaleString() + ' P';
+  updateUI(){
+    const v = this.balance.toLocaleString()+'P';
+    ['ap-hdr','fcs-bal'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='AP '+v});
+    const mb=document.getElementById('ap-modal-bal');if(mb)mb.textContent=this.balance.toLocaleString()+' P';
   }
 };
 
-/* ----------------------------------------------------------------
-   데모 데이터 (Firebase 연동 전 사용)
-   ---------------------------------------------------------------- */
+/* ── 동적 카테고리 데이터 ── */
+const CATS = [
+  {id:'agriculture',label:'농수산품',emoji:'🌾',sub:['과일','채소·나물','쌀·잡곡','수산물','축산물','임산물','달걀·유제품','유기농']},
+  {id:'food',label:'식음료',emoji:'🍽',sub:['반찬류','일반식품','제과·제빵','정육제품','식자재','건강식품','영양제','음료']},
+  {id:'life',label:'생활용품',emoji:'🏠',sub:['주방용품','청소용품','욕실용품','가구','침구','인테리어','조명','수납']},
+  {id:'fashion',label:'패션·뷰티',emoji:'👗',sub:['여성의류','남성의류','아동의류','신발','가방','액세서리','화장품','헤어케어']},
+  {id:'health',label:'건강·스포츠',emoji:'💊',sub:['건강기능식품','의료기기','스포츠용품','헬스용품','아웃도어','캠핑용품','레저']},
+  {id:'digital',label:'AI·디지털',emoji:'🤖',sub:['AI제품','스마트기기','IoT','드론','3D프린팅','소프트웨어','디지털콘텐츠','구독상품']},
+  {id:'education',label:'교육·도서',emoji:'📚',sub:['도서','교육기자재','학용품','유아교육','온라인강의','자격증']},
+  {id:'baby',label:'유아·반려',emoji:'👶',sub:['유아용품','장난감','반려동물','반려용품','혼수용품']},
+  {id:'business',label:'사업·B2B',emoji:'💼',sub:['사무용품','판촉물','OEM','ODM','NFC','공구','안전용품','산업용품']},
+  {id:'green',label:'친환경·ESG',emoji:'🌱',sub:['친환경생활','친환경포장','ESG상품','업사이클링','재사용']},
+  {id:'local',label:'지역·특산',emoji:'🏮',sub:['지역특산물','전통시장','직거래','중고거래','공동구매','나눔']},
+  {id:'service',label:'서비스·무형',emoji:'🛠',sub:['생활서비스','전문서비스','여행상품','배달음식','렌터카','숙박']},
+  {id:'art',label:'미술·공예',emoji:'🎨',sub:['미술품','공예품','골동품','수제품','인쇄물','사진']},
+  {id:'premium',label:'프리미엄관',emoji:'👑',sub:['명품대행','수입고급품','한정판','해외직구','글로벌관']},
+  {id:'robot',label:'로봇·모빌리티',emoji:'🤖',sub:['로봇','자동화기기','자동차용품','중고자동차','렌탈']},
+  {id:'event',label:'이벤트·기타',emoji:'🎉',sub:['기프트카드','행사용품','장례용품','장애용품','재고상품']},
+];
+
+/* ── FCS 적립 항목 ── */
+const FCS_ITEMS = [
+  {ico:'👤',lbl:'회원가입',ap:'+1,000 AP',sub:'즉시 지급'},
+  {ico:'🛍',lbl:'첫 구매',ap:'+500 AP',sub:'구매 완료 후'},
+  {ico:'⭐',lbl:'구매 적립',ap:'구매금액의 1%',sub:'요금제별 차등'},
+  {ico:'📖',lbl:'스토리 작성',ap:'+50 AP',sub:'승인 후 지급'},
+  {ico:'📷',lbl:'후기+사진',ap:'+30 AP',sub:'상품 구매 후'},
+  {ico:'🤝',lbl:'셀러 추천',ap:'+200 AP',sub:'입점 승인 후'},
+  {ico:'📢',lbl:'SNS 공유',ap:'+10 AP',sub:'공유 시마다'},
+  {ico:'🎥',lbl:'라이브 시청',ap:'+5 AP',sub:'30분 이상'},
+  {ico:'💬',lbl:'댓글 활동',ap:'+5 AP',sub:'승인된 댓글'},
+  {ico:'❤️',lbl:'좋아요 활동',ap:'+1 AP',sub:'상품·스토리'},
+  {ico:'🏆',lbl:'이벤트 참여',ap:'최대 +1,000 AP',sub:'이벤트별 상이'},
+  {ico:'🔍',lbl:'리뷰 검증',ap:'+20 AP',sub:'허위리뷰 신고'},
+];
+
+/* ── 데모 데이터 ── */
 const DEMO = {
-  products: [
-    { id:'p1', name:'제주 유기농 한라봉 5kg', seller:'한라봉농원', price:28000, orig:35000, dc:20, cert:true, ai:true, emoji:'🍊', region:'제주', apReward:280, aiReason:'제철·직거래·인증' },
-    { id:'p2', name:'전통 수제 된장·고추장 세트', seller:'전통장인', price:32000, orig:32000, dc:0, cert:true, ai:true, emoji:'🫙', region:'전남', apReward:320, aiReason:'인증 생산자·전통방식' },
-    { id:'p3', name:'경남 황금 햅쌀 10kg', seller:'황금들판', price:32000, orig:38000, dc:16, cert:false, ai:true, emoji:'🌾', region:'경남', apReward:320, aiReason:'수확 시즌·지역 직배송' },
-    { id:'p4', name:'완도 생미역 500g 신선배송', seller:'완도수산', price:8500, orig:10000, dc:15, cert:true, ai:false, emoji:'🌿', region:'전남', apReward:85, aiReason:'' },
-    { id:'p5', name:'AI 맞춤 건강기능식품 세트', seller:'헬스케어랩', price:45000, orig:55000, dc:18, cert:false, ai:true, emoji:'💊', region:'서울', apReward:450, aiReason:'AI 성분 분석·개인 맞춤' },
-    { id:'p6', name:'친환경 대나무 주방용품 세트', seller:'그린라이프', price:22000, orig:22000, dc:0, cert:true, ai:false, emoji:'🎋', region:'전남', apReward:220, aiReason:'' },
-    { id:'p7', name:'수제 도자기 머그컵 2종 세트', seller:'경주도예공방', price:28000, orig:35000, dc:20, cert:false, ai:true, emoji:'☕', region:'경북', apReward:280, aiReason:'장인 수작업·희소성' },
-    { id:'p8', name:'강원도 자연방목 달걀 30구', seller:'행복농장', price:9800, orig:12000, dc:18, cert:true, ai:true, emoji:'🥚', region:'강원', apReward:98, aiReason:'무항생제·인증 농장' },
+  products:[
+    {id:'p1',name:'제주 유기농 한라봉 5kg',seller:'한라봉농원',price:28000,orig:35000,dc:20,cert:true,ai:true,emoji:'🍊',region:'제주',apR:280,reason:'제철·직거래·인증'},
+    {id:'p2',name:'전통 수제 된장·고추장 세트',seller:'전통장인',price:32000,orig:32000,dc:0,cert:true,ai:true,emoji:'🫙',region:'전남',apR:320,reason:'인증 생산자·전통방식'},
+    {id:'p3',name:'경남 황금 햅쌀 10kg',seller:'황금들판',price:32000,orig:38000,dc:16,cert:false,ai:true,emoji:'🌾',region:'경남',apR:320,reason:'수확 시즌·지역 직배송'},
+    {id:'p4',name:'완도 생미역 500g',seller:'완도수산',price:8500,orig:10000,dc:15,cert:true,ai:false,emoji:'🌿',region:'전남',apR:85,reason:''},
+    {id:'p5',name:'AI 맞춤 건강기능식품 세트',seller:'헬스케어랩',price:45000,orig:55000,dc:18,cert:false,ai:true,emoji:'💊',region:'서울',apR:450,reason:'AI 성분 분석·맞춤 추천'},
+    {id:'p6',name:'친환경 대나무 주방용품 세트',seller:'그린라이프',price:22000,orig:22000,dc:0,cert:true,ai:false,emoji:'🎋',region:'전남',apR:220,reason:''},
+    {id:'p7',name:'수제 도자기 머그컵 2종',seller:'경주도예공방',price:28000,orig:35000,dc:20,cert:false,ai:true,emoji:'☕',region:'경북',apR:280,reason:'장인 수작업·희소성'},
+    {id:'p8',name:'강원도 자연방목 달걀 30구',seller:'행복농장',price:9800,orig:12000,dc:18,cert:true,ai:true,emoji:'🥚',region:'강원',apR:98,reason:'무항생제·인증 농장'},
   ],
-  stories: [
-    { id:'s1', type:'producer', mediaEmoji:'🍊', authorEmoji:'👨‍🌾', author:'김진호', role:'제주 감귤 30년 생산자',
-      title:'30년 감귤 농부의 이야기, AI로 전국에 알리다',
-      excerpt:'아버지께 물려받은 감귤밭. AI가 제 이야기를 SNS 홍보문으로 만들어줬을 때 처음으로 전국 소비자와 직접 만났습니다.',
-      likes:124, comments:18, views:1240, ai:true },
-    { id:'s2', type:'store', mediaEmoji:'🏪', authorEmoji:'☕', author:'박소희', role:'카페 사장님 10년차',
-      title:'작은 카페가 더착한쇼핑 덕분에 온라인으로 확장했어요',
-      excerpt:'배달은 꿈도 못 꿨는데, AI가 SNS 홍보문을 자동으로 만들어줘서 신기했어요. 첫 달에 온라인 매출이 생겼습니다.',
-      likes:87, comments:12, views:830, ai:false },
-    { id:'s3', type:'buyer', mediaEmoji:'🍊', authorEmoji:'😊', author:'이민정', role:'만족 구매자',
-      title:'한라봉이 이렇게 맛있는 건 처음이에요 — 제주 직배송 후기',
-      excerpt:'AI가 추천해줬는데 반신반의했지만, 받아보니 정말 신선하고 달았어요. 생산자 스토리를 보고 더 믿음이 갔어요.',
-      likes:203, comments:34, views:2100, ai:true },
-    { id:'s4', type:'product', mediaEmoji:'🫙', authorEmoji:'🫙', author:'전통장인 이철수', role:'된장 생산자 2대째',
-      title:'3년 숙성 전통 된장, AI가 숨겨진 맛을 설명해줬다',
-      excerpt:'말로 설명하기 어려웠던 된장의 맛과 효능을 AI가 멋진 글로 만들어줘서 처음으로 온라인 판매에 성공했어요.',
-      likes:156, comments:22, views:1580, ai:true },
-    { id:'s5', type:'local', mediaEmoji:'🏘', authorEmoji:'🏘', author:'고흥군 청년회', role:'우리동네 이야기',
-      title:'고흥 유자 축제 — 지역경제가 살아났습니다',
-      excerpt:'더착한쇼핑과 AI플랫마켓 통해 고흥 유자를 알리고 나서, 방문객이 작년 대비 2배 늘었어요.',
-      likes:89, comments:15, views:920, ai:false },
+  stories:[
+    {id:'s1',type:'producer',mE:'🍊',aE:'👨‍🌾',author:'김진호',role:'제주 감귤 30년 생산자',title:'30년 감귤 농부의 이야기, AI로 전국에 알리다',excerpt:'아버지께 물려받은 감귤밭. AI가 제 이야기를 SNS 홍보문으로 만들어줬을 때 처음으로 전국 소비자와 직접 만났습니다.',likes:124,comments:18,views:1240,ai:true},
+    {id:'s2',type:'store',mE:'🏪',aE:'☕',author:'박소희',role:'카페 사장님 10년차',title:'작은 카페가 더착한쇼핑 덕분에 온라인으로 확장했어요',excerpt:'배달은 꿈도 못 꿨는데 AI가 SNS 홍보문을 자동으로 만들어줘서 신기했어요. 첫 달에 온라인 매출이 생겼습니다.',likes:87,comments:12,views:830,ai:false},
+    {id:'s3',type:'buyer',mE:'🍊',aE:'😊',author:'이민정',role:'만족 구매자',title:'한라봉이 이렇게 맛있는 건 처음이에요 — 제주 직배송 후기',excerpt:'AI가 추천해줬는데 반신반의했지만 받아보니 정말 신선하고 달았어요. 생산자 스토리를 보고 더 믿음이 갔어요.',likes:203,comments:34,views:2100,ai:true},
+    {id:'s4',type:'product',mE:'🫙',aE:'🫙',author:'전통장인 이철수',role:'된장 2대째 생산자',title:'3년 숙성 전통 된장, AI가 숨겨진 맛을 설명해줬다',excerpt:'말로 설명하기 어려웠던 된장의 맛과 효능을 AI가 멋진 글로 만들어줘서 처음으로 온라인 판매에 성공했어요.',likes:156,comments:22,views:1580,ai:true},
+    {id:'s5',type:'local',mE:'🏘',aE:'🏘',author:'고흥군 청년회',role:'우리동네 이야기',title:'고흥 유자 축제 — 지역경제가 살아났습니다',excerpt:'더착한쇼핑을 통해 고흥 유자를 알리고 나서 방문객이 작년 대비 2배 늘었어요.',likes:89,comments:15,views:920,ai:false},
   ],
-  stores: [
-    { id:'st1', name:'제주도새우리', cat:'향토음식', rating:4.8, reviews:124, region:'제주 서귀포', emoji:'🍜', cert:true },
-    { id:'st2', name:'황금들판 직판장', cat:'농산물직판', rating:4.9, reviews:87, region:'경남 밀양', emoji:'🌾', cert:true },
-    { id:'st3', name:'할머니 손맛', cat:'전통식품', rating:5.0, reviews:43, region:'전북 순창', emoji:'🫙', cert:true },
-    { id:'st4', name:'완도 수산 직판', cat:'수산물', rating:4.7, reviews:201, region:'전남 완도', emoji:'🦞', cert:false },
+  stores:[
+    {id:'st1',name:'제주도새우리',cat:'향토음식',rating:4.8,reviews:124,region:'제주 서귀포',emoji:'🍜',cert:true},
+    {id:'st2',name:'황금들판 직판장',cat:'농산물직판',rating:4.9,reviews:87,region:'경남 밀양',emoji:'🌾',cert:true},
+    {id:'st3',name:'할머니 손맛',cat:'전통식품',rating:5.0,reviews:43,region:'전북 순창',emoji:'🫙',cert:true},
+    {id:'st4',name:'완도 수산 직판',cat:'수산물',rating:4.7,reviews:201,region:'전남 완도',emoji:'🦞',cert:false},
   ],
-  lives: [
-    { id:'l1', seller:'한라봉농원', title:'제주 감귤 직거래 특가 라이브', status:'live', viewers:247, emoji:'🍊' },
-    { id:'l2', seller:'황금들판', title:'경남 햅쌀 수확 현장 라이브', status:'scheduled', emoji:'🌾', sched:'오늘 오후 3시' },
-    { id:'l3', seller:'할머니손맛', title:'전통 고추장·된장 담그는 법', status:'replay', emoji:'🌶️', viewers:1240 },
-    { id:'l4', seller:'완도수산', title:'완도 생미역 당일배송 라이브', status:'scheduled', emoji:'🌿', sched:'내일 오전 10시' },
-  ]
+  lives:[
+    {id:'l1',seller:'한라봉농원',title:'제주 감귤 직거래 특가 라이브',status:'live',viewers:247,emoji:'🍊'},
+    {id:'l2',seller:'황금들판',title:'경남 햅쌀 수확 현장 라이브',status:'scheduled',emoji:'🌾',sched:'오늘 오후 3시'},
+    {id:'l3',seller:'할머니손맛',title:'전통 고추장·된장 담그는 법',status:'replay',emoji:'🌶️',viewers:1240},
+    {id:'l4',seller:'완도수산',title:'완도 생미역 당일배송 라이브',status:'scheduled',emoji:'🌿',sched:'내일 오전 10시'},
+  ],
+  popular:['제주 한라봉','된장찌개 재료','국산 쌀','친환경 용품','AI 건강식품','완도 미역','캠핑용품','수제 도자기'],
 };
 
-/* ----------------------------------------------------------------
-   렌더링 함수
-   ---------------------------------------------------------------- */
-function rProdSmall(p) {
-  return `<div class="pc" onclick="logClick('product','${p.id}')">
-    <div class="pc-thumb">
-      ${p.cert ? '<span class="badge-cert">더착한인증</span>' : ''}
-      ${p.ai ? '<span class="badge-ai">AI PICK</span>' : ''}
+/* ── 렌더링 함수 ── */
+function rPS(p){ // product small
+  return `<div class="pc" onclick="logC('product','${p.id}')">
+    <div class="pc-th">
+      ${p.cert?'<span class="badge-cert" style="position:absolute;top:6px;left:6px">더착한인증</span>':''}
+      ${p.ai?'<span class="badge-ai" style="position:absolute;top:6px;right:6px">AI PICK</span>':''}
       <span style="font-size:2.8rem">${p.emoji}</span>
     </div>
-    <div class="pc-body">
-      <div class="pc-seller">${p.seller}</div>
-      <div class="pc-name">${p.name}</div>
-      <div class="pc-price-row">
-        <span class="pc-price">${p.price.toLocaleString()}원</span>
-        ${p.dc > 0 ? `<span class="pc-orig">${p.orig.toLocaleString()}원</span><span class="pc-dc">${p.dc}%↓</span>` : ''}
-      </div>
-      <div class="ap-chip">예상 적립 +${p.apReward.toLocaleString()} AP</div>
+    <div class="pc-bd">
+      <div class="pc-sel">${p.seller}</div>
+      <div class="pc-nm">${p.name}</div>
+      <div class="pc-pr"><span class="pc-p">${p.price.toLocaleString()}원</span>${p.dc>0?`<span class="pc-o">${p.orig.toLocaleString()}원</span><span class="pc-d">${p.dc}%↓</span>`:''}</div>
+      <div class="ap-chip">예상 적립 +${p.apR.toLocaleString()} AP</div>
     </div>
   </div>`;
 }
 
-function rProdGrid(p) {
-  return `<div class="pgc" onclick="logClick('product','${p.id}')">
-    <div class="pgc-thumb">
-      ${p.cert ? '<span class="badge-cert">더착한인증</span>' : ''}
-      ${p.ai ? '<span class="badge-ai">AI PICK</span>' : ''}
-      <span style="font-size:3rem">${p.emoji}</span>
+function rPG(p){ // product grid
+  return `<div class="pg" onclick="logC('product','${p.id}')">
+    <div class="pg-th">
+      ${p.cert?'<span class="badge-cert" style="position:absolute;top:6px;left:6px">더착한인증</span>':''}
+      ${p.ai?'<span class="badge-ai" style="position:absolute;top:6px;right:6px">AI PICK</span>':''}
+      <span>${p.emoji}</span>
     </div>
-    <div class="pgc-body">
-      <div class="pgc-meta">${p.seller} · ${p.region}</div>
-      <div class="pgc-name">${p.name}</div>
-      <div class="pgc-price-row">
-        <span class="pgc-price">${p.price.toLocaleString()}원</span>
-        ${p.dc > 0 ? `<span class="pgc-orig">${p.orig.toLocaleString()}원</span><span class="pgc-dc">${p.dc}%↓</span>` : ''}
-      </div>
-      <div class="ap-chip">예상 적립 +${p.apReward.toLocaleString()} AP</div>
-      ${p.ai && p.aiReason ? `<div style="margin-top:5px;font-size:.64rem;color:var(--g4)">⭐ AI 이유: ${p.aiReason}</div>` : ''}
+    <div class="pg-bd">
+      <div class="pg-meta">${p.seller} · ${p.region}</div>
+      <div class="pg-nm">${p.name}</div>
+      <div class="pg-pr"><span class="pg-p">${p.price.toLocaleString()}원</span>${p.dc>0?`<span class="pg-o">${p.orig.toLocaleString()}원</span><span class="pg-d">${p.dc}%↓</span>`:''}</div>
+      <div class="ap-chip">예상 적립 +${p.apR.toLocaleString()} AP</div>
+      ${p.ai&&p.reason?`<div class="pg-reason">⭐ ${p.reason}</div>`:''}
     </div>
   </div>`;
 }
 
-function rStoryCard(s) {
-  const typeLabel = { producer:'생산자 스토리', store:'가게 이야기', buyer:'소비자 후기', product:'상품 이야기', local:'우리동네' }[s.type] || '스토리';
-  return `<div class="sc" onclick="logClick('story','${s.id}')">
-    <div class="sc-media">
-      <span style="font-size:3.2rem">${s.mediaEmoji}</span>
-      <div class="sc-type ${s.type}">${typeLabel}</div>
-    </div>
-    <div class="sc-body">
-      <div class="sc-author">
-        <div class="sc-avatar">${s.authorEmoji}</div>
-        <div><div class="sc-aname">${s.author}</div><div class="sc-arole">${s.role}</div></div>
-      </div>
-      <div class="sc-title">${s.title}</div>
-      <div class="sc-ex">${s.excerpt}</div>
-      <div class="sc-meta">
-        <span>❤️ ${s.likes}</span><span>💬 ${s.comments}</span><span>👁 ${s.views.toLocaleString()}</span>
-        ${s.ai ? '<span class="sc-ai">AI 추천</span>' : ''}
-      </div>
+function rSC(s){ // story card small
+  const tl={producer:'생산자 스토리',store:'가게 이야기',buyer:'소비자 후기',product:'상품 이야기',local:'우리동네'}[s.type]||'스토리';
+  return `<div class="sc" onclick="logC('story','${s.id}')">
+    <div class="sc-m"><span style="font-size:3rem">${s.mE}</span><div class="sc-type ${s.type}">${tl}</div></div>
+    <div class="sc-bd">
+      <div class="sc-au"><div class="sc-av">${s.aE}</div><div><div class="sc-an">${s.author}</div><div class="sc-ar">${s.role}</div></div></div>
+      <div class="sc-ti">${s.title}</div><div class="sc-ex">${s.excerpt}</div>
+      <div class="sc-mt"><span>❤️ ${s.likes}</span><span>💬 ${s.comments}</span><span>👁 ${s.views.toLocaleString()}</span>${s.ai?'<span class="sc-ai-chip">AI 추천</span>':''}</div>
     </div>
   </div>`;
 }
 
-function rStoryFull(s) {
-  const typeLabel = { producer:'생산자 스토리', store:'가게 이야기', buyer:'소비자 후기', product:'상품 이야기', local:'우리동네' }[s.type] || '스토리';
-  return `<div class="sc-full" onclick="logClick('story','${s.id}')">
-    <div class="sc-full-media">
-      <span>${s.mediaEmoji}</span>
-      <div class="sc-type ${s.type}" style="position:absolute;bottom:10px;left:10px">${typeLabel}</div>
-    </div>
-    <div class="sc-body">
-      <div class="sc-author">
-        <div class="sc-avatar">${s.authorEmoji}</div>
-        <div><div class="sc-aname">${s.author}</div><div class="sc-arole">${s.role}</div></div>
-      </div>
-      <div class="sc-title">${s.title}</div>
-      <div class="sc-ex">${s.excerpt}</div>
-      <div class="sc-meta">
-        <span>❤️ ${s.likes}</span><span>💬 ${s.comments}</span><span>👁 ${s.views.toLocaleString()}</span>
-        ${s.ai ? '<span class="sc-ai">AI 추천</span>' : ''}
-      </div>
+function rSF(s){ // story full
+  const tl={producer:'생산자 스토리',store:'가게 이야기',buyer:'소비자 후기',product:'상품 이야기',local:'우리동네'}[s.type]||'스토리';
+  return `<div class="sf" onclick="logC('story','${s.id}')">
+    <div class="sf-m"><span>${s.mE}</span><div class="sc-type ${s.type}" style="position:absolute;bottom:10px;left:10px">${tl}</div></div>
+    <div class="sc-bd">
+      <div class="sc-au"><div class="sc-av">${s.aE}</div><div><div class="sc-an">${s.author}</div><div class="sc-ar">${s.role}</div></div></div>
+      <div class="sc-ti">${s.title}</div><div class="sc-ex">${s.excerpt}</div>
+      <div class="sc-mt"><span>❤️ ${s.likes}</span><span>💬 ${s.comments}</span><span>👁 ${s.views.toLocaleString()}</span>${s.ai?'<span class="sc-ai-chip">AI 추천</span>':''}</div>
     </div>
   </div>`;
 }
 
-function rStoreCard(s) {
-  const stars = '★'.repeat(Math.floor(s.rating)) + (s.rating % 1 >= .5 ? '½' : '');
-  return `<div class="stc" onclick="logClick('store','${s.id}')">
-    <div class="stc-top">
-      <span style="font-size:2.4rem">${s.emoji}</span>
-      ${s.cert ? '<div class="stc-cert">더착한인증</div>' : ''}
-    </div>
-    <div class="stc-body">
-      <div class="stc-name">${s.name}</div>
-      <div class="stc-cat">${s.cat}</div>
-      <div class="stc-rating"><span class="stc-stars">${stars}</span> ${s.rating} <span style="color:var(--g4)">(${s.reviews})</span></div>
-      <div class="stc-region">📍 ${s.region}</div>
+function rSTC(s){ // store card
+  return `<div class="stc" onclick="logC('store','${s.id}')">
+    <div class="stc-t"><span style="font-size:2.4rem">${s.emoji}</span>${s.cert?'<div class="stc-cert">더착한인증</div>':''}</div>
+    <div class="stc-bd"><div class="stc-nm">${s.name}</div><div class="stc-cat">${s.cat}</div>
+      <div class="stc-rt"><span style="color:var(--gold)">${'★'.repeat(Math.floor(s.rating))}</span> ${s.rating} <span style="color:var(--g4)">(${s.reviews})</span></div>
+      <div class="stc-rg">📍 ${s.region}</div>
     </div>
   </div>`;
 }
 
-function rLiveCard(l) {
-  const badge = l.status === 'live'
-    ? `<div class="live-badge"><div class="live-dot"></div>LIVE</div><div class="live-viewers">👁 ${l.viewers}</div>`
-    : l.status === 'scheduled'
-    ? `<div class="live-sched">📅 ${l.sched}</div>`
-    : `<div class="live-sched">🔄 다시보기</div>`;
-  return `<div class="lvc" onclick="logClick('live','${l.id}')">
-    <div class="lvc-thumb"><span style="font-size:2.8rem">${l.emoji}</span>${badge}</div>
-    <div class="lvc-body">
-      <div class="lvc-seller">${l.seller}</div>
-      <div class="lvc-title">${l.title}</div>
-    </div>
-  </div>`;
+function rLVC(l){ // live card small
+  const b=l.status==='live'?`<div class="lv-bx"><div class="lv-dot"></div>LIVE</div><div class="lv-vw">👁 ${l.viewers}</div>`:l.status==='scheduled'?`<div class="lv-sch">📅 ${l.sched}</div>`:`<div class="lv-sch">🔄 다시보기</div>`;
+  return `<div class="lvc" onclick="logC('live','${l.id}')"><div class="lvc-t"><span style="font-size:2.8rem">${l.emoji}</span>${b}</div><div class="lvc-bd"><div class="lvc-sel">${l.seller}</div><div class="lvc-ti">${l.title}</div></div></div>`;
 }
 
-function rLiveGrid(l) {
-  const badge = l.status === 'live'
-    ? `<div style="position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:4px;background:var(--live-red);color:#fff;font-size:.64rem;font-weight:800;padding:3px 8px;border-radius:10px"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:blink 1s infinite"></span>LIVE</div><div style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:.64rem;padding:2px 7px;border-radius:8px">👁 ${l.viewers}</div>`
-    : l.status === 'scheduled'
-    ? `<div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:10px">📅 ${l.sched}</div>`
-    : `<div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:10px">🔄 다시보기</div>`;
-  return `<div class="pgc" onclick="logClick('live','${l.id}')">
-    <div class="pgc-thumb" style="background:linear-gradient(135deg,#1a3556,#0d5c36)">
-      <span style="font-size:3rem">${l.emoji}</span>${badge}
-    </div>
-    <div class="pgc-body">
-      <div class="pgc-meta">${l.seller}</div>
-      <div class="pgc-name">${l.title}</div>
-    </div>
-  </div>`;
+function rLVG(l){ // live grid
+  const b=l.status==='live'?`<div style="position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:4px;background:var(--live);color:#fff;font-size:.63rem;font-weight:800;padding:3px 8px;border-radius:10px"><span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:blink 1s infinite"></span>LIVE</div><div style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;font-size:.63rem;padding:2px 7px;border-radius:8px">👁 ${l.viewers}</div>`:l.status==='scheduled'?`<div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:10px">📅 ${l.sched}</div>`:`<div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.9);font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:10px">🔄 다시보기</div>`;
+  return `<div class="pg" onclick="logC('live','${l.id}')"><div class="pg-th" style="background:linear-gradient(135deg,#1a3556,#0d5c36)"><span style="font-size:3rem">${l.emoji}</span>${b}</div><div class="pg-bd"><div class="pg-meta">${l.seller}</div><div class="pg-nm">${l.title}</div></div></div>`;
 }
 
-/* ----------------------------------------------------------------
-   뷰 전환
-   ---------------------------------------------------------------- */
-function showV(id) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('on'));
-  const view = document.getElementById('v-' + id);
-  if (view) view.classList.add('on');
-  const tab = document.querySelector(`[data-v="${id}"]`);
-  if (tab) { tab.classList.add('on'); tab.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' }); }
-  window.scrollTo({ top: 0, behavior:'smooth' });
-  // 행동 로그
-  ShopDB.logInteraction({ type:'view', targetType:'page', targetId:id });
+/* ── 뷰 전환 ── */
+function showV(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.querySelectorAll('.sctab').forEach(t=>t.classList.remove('on'));
+  const v=document.getElementById('v-'+id);if(v)v.classList.add('on');
+  const t=document.querySelector(`[data-v="${id}"]`);if(t){t.classList.add('on');t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ----------------------------------------------------------------
-   검색
-   ---------------------------------------------------------------- */
-function doSearch() {
-  const q = document.getElementById('q').value.trim();
-  if (!q) return;
-  toast(`"${q}" 검색 기능을 준비 중입니다`);
-  ShopDB.logInteraction({ type:'search', keyword:q });
+/* ── 검색 패널 ── */
+function showSearchPanel(){
+  const p=document.getElementById('searchPanel');if(p)p.classList.add('on');
+}
+function hideSearchPanel(){
+  const p=document.getElementById('searchPanel');if(p)p.classList.remove('on');
+}
+function doSearch(){
+  const q=document.getElementById('q').value.trim();
+  if(!q)return;
+  toast(`"${q}" 검색 기능 준비 중`);
 }
 
-/* ----------------------------------------------------------------
-   로그인
-   ---------------------------------------------------------------- */
-function doLogin() {
-  if (typeof openLoginModal === 'function') openLoginModal();
-  else toast('AI플랫마켓 메인 페이지에서 로그인하세요');
-}
+/* ── 로그인 / 모듈 이동 ── */
+function doLogin(){if(typeof openLoginModal==='function')openLoginModal();else toast('AI플랫마켓 메인 페이지에서 로그인하세요');}
+function goMod(path){window.location.href=path;}
 
-/* ----------------------------------------------------------------
-   모듈 이동
-   ---------------------------------------------------------------- */
-function goMain() { window.location.href = '/'; }
-function goMod(path) { window.location.href = path; }
+/* ── 셀러 유형 ── */
+function selType(el,t){document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('on'));el.classList.add('on');document.getElementById('f-type').value=t;}
 
-/* ----------------------------------------------------------------
-   AP Point 모달
-   ---------------------------------------------------------------- */
-function openApModal() {
-  document.getElementById('ap-modal').classList.add('on');
-  document.body.style.overflow = 'hidden';
-}
-function closeApModal() {
-  document.getElementById('ap-modal').classList.remove('on');
-  document.body.style.overflow = '';
-}
-
-/* ----------------------------------------------------------------
-   셀러 유형 선택
-   ---------------------------------------------------------------- */
-function selType(el, type) {
-  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('f-type').value = type;
-}
-
-/* ----------------------------------------------------------------
-   입점신청 제출
-   ---------------------------------------------------------------- */
-async function submitApply() {
-  const type  = document.getElementById('f-type').value;
-  const brand = document.getElementById('f-brand').value.trim();
-  const name  = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const agree = document.getElementById('f-agree').checked;
-  if (!type)  { toast('셀러 유형을 선택하세요'); return; }
-  if (!brand) { toast('브랜드명/상호명을 입력하세요'); return; }
-  if (!name)  { toast('이름을 입력하세요'); return; }
-  if (!phone) { toast('연락처를 입력하세요'); return; }
-  if (!agree) { toast('운영 원칙에 동의해 주세요'); return; }
-  try {
-    await ShopDB.saveApplication({
-      sellerType: type, brandName: brand, name, phone,
-      email:       document.getElementById('f-email').value.trim(),
-      description: document.getElementById('f-desc').value.trim(),
-      region:      document.getElementById('f-region').value.trim(),
-    });
+/* ── 입점신청 ── */
+async function submitApply(){
+  const type=document.getElementById('f-type').value,brand=document.getElementById('f-brand').value.trim(),name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),agree=document.getElementById('f-agree').checked;
+  if(!type){toast('셀러 유형을 선택하세요');return;}if(!brand){toast('브랜드명을 입력하세요');return;}if(!name){toast('이름을 입력하세요');return;}if(!phone){toast('연락처를 입력하세요');return;}if(!agree){toast('운영 원칙에 동의해 주세요');return;}
+  try{
+    await ShopDB.saveApp({sellerType:type,brandName:brand,name,phone,email:document.getElementById('f-email').value.trim(),description:document.getElementById('f-desc').value.trim(),region:document.getElementById('f-region').value.trim(),plan:document.getElementById('f-plan').value});
     toast('✅ 입점 신청 완료! AI 검증 후 연락드리겠습니다');
-    ['f-brand','f-name','f-phone','f-email','f-desc','f-region'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    document.getElementById('f-type').value = '';
-    document.getElementById('f-agree').checked = false;
-    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('on'));
-  } catch(e) {
-    toast('처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-  }
+    ['f-brand','f-name','f-phone','f-email','f-desc','f-region'].forEach(id=>{document.getElementById(id).value='';});
+    document.getElementById('f-type').value='';document.getElementById('f-agree').checked=false;
+    document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('on'));
+  }catch(e){toast('처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');}
 }
 
-/* ----------------------------------------------------------------
-   행동 로그 (상품/가게/스토리 클릭)
-   ---------------------------------------------------------------- */
-function logClick(type, id) {
-  toast('상세 페이지를 준비 중입니다');
-  ShopDB.logInteraction({ type:'click', targetType:type, targetId:id });
+/* ── AP 모달 ── */
+function openApModal(){document.getElementById('ap-modal').classList.add('on');document.body.style.overflow='hidden';}
+function closeApModal(){document.getElementById('ap-modal').classList.remove('on');document.body.style.overflow='';}
+
+/* ── 수수료 계산기 ── */
+function calcFee(){
+  const amt=parseInt(document.getElementById('feeAmt').value)||0;
+  const plans=[{id:'start',rate:.05},{id:'plus',rate:.04},{id:'pro',rate:.03},{id:'biz',rate:.02}];
+  plans.forEach(p=>{
+    const fee=Math.round(amt*p.rate),settle=amt-fee;
+    const fEl=document.getElementById('f-'+p.id),sEl=document.getElementById('s-'+p.id);
+    if(fEl)fEl.textContent=amt>0?`수수료 ${fee.toLocaleString()}원`:'—';
+    if(sEl)sEl.textContent=amt>0?`정산 ${settle.toLocaleString()}원`:'';
+  });
 }
 
-/* ----------------------------------------------------------------
-   토스트
-   ---------------------------------------------------------------- */
-let _tt = null;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('on');
-  if (_tt) clearTimeout(_tt);
-  _tt = setTimeout(() => el.classList.remove('on'), 2800);
+/* ── 카테고리 렌더링 ── */
+function renderCats(){
+  const g=document.getElementById('catGrid');
+  if(!g)return;
+  g.innerHTML=CATS.map(c=>`<div class="cat-card" onclick="showSubCat('${c.id}')"><span class="cat-ico">${c.emoji}</span><span class="cat-lbl">${c.label}</span></div>`).join('');
+}
+function showSubCat(id){
+  const c=CATS.find(x=>x.id===id);if(!c)return;
+  document.querySelectorAll('.cat-card').forEach(el=>{el.classList.toggle('on',el.onclick.toString().includes(id));});
+  const area=document.getElementById('subCatArea'),title=document.getElementById('subCatTitle'),subs=document.getElementById('subCats');
+  area.style.display='block';
+  title.textContent=c.emoji+' '+c.label+' 중분류';
+  subs.innerHTML=c.sub.map(s=>`<button class="sub-cat-btn" onclick="toast('${s} 상품 목록 준비 중')">${s}</button>`).join('');
 }
 
-/* ----------------------------------------------------------------
-   카운트업 애니메이션
-   ---------------------------------------------------------------- */
-function countUp(el, target, sfx='') {
-  if (!el) return;
-  const dur = 1100, step = target / (dur / 16);
-  let cur = 0;
-  const t = setInterval(() => {
-    cur = Math.min(cur + step, target);
-    el.textContent = Math.floor(cur).toLocaleString() + sfx;
-    if (cur >= target) clearInterval(t);
-  }, 16);
+/* ── FCS 항목 렌더링 ── */
+function renderFCS(){
+  const g=document.getElementById('fcsItems');
+  if(!g)return;
+  g.innerHTML=FCS_ITEMS.map(f=>`<div class="fcs-item" onclick="toast('${f.lbl} AP 적립 기능 준비 중')"><div class="fcs-item-ico">${f.ico}</div><div class="fcs-item-lbl">${f.lbl}</div><div class="fcs-item-ap">${f.ap}</div><div class="fcs-item-sub">${f.sub}</div></div>`).join('');
 }
 
-/* ----------------------------------------------------------------
-   초기화
-   ---------------------------------------------------------------- */
-async function init() {
-  try {
-    // 통계
-    const stats = await ShopDB.getStats();
-    countUp(document.getElementById('sts'),  stats.sellers,  '명');
-    countUp(document.getElementById('stp'),  stats.products, '개');
-    countUp(document.getElementById('stry'), stats.stories,  '개');
-    countUp(document.getElementById('strg'), stats.regions,  '개');
-
-    // AP Point 초기화
-    AP.updateUI();
-
-    // 상품 데이터
-    const products = await ShopDB.getProducts();
-    const aiProds  = products.filter(p => p.ai);
-
-    // 홈 AI 추천 상품 (소형 스크롤)
-    const aiHomeRow = document.getElementById('pr-ai-home');
-    if (aiHomeRow) aiHomeRow.innerHTML = aiProds.slice(0,6).map(rProdSmall).join('');
-
-    // AI 추천 전체 뷰
-    const igAi = document.getElementById('ig-ai');
-    if (igAi) igAi.innerHTML = aiProds.map(rProdGrid).join('');
-
-    // 전체 상품 뷰
-    const igProd = document.getElementById('ig-products');
-    if (igProd) igProd.innerHTML = products.map(rProdGrid).join('');
-
-    // 스토리 데이터
-    const stories = await ShopDB.getStories();
-    const srHome = document.getElementById('sr-home');
-    if (srHome) srHome.innerHTML = stories.map(rStoryCard).join('');
-    const slFull = document.getElementById('sl-full');
-    if (slFull) slFull.innerHTML = stories.map(rStoryFull).join('');
-
-    // 가게 데이터
-    const stores = await ShopDB.getStores();
-    const stgHome = document.getElementById('stg-home');
-    if (stgHome) stgHome.innerHTML = stores.map(rStoreCard).join('');
-    const igStores = document.getElementById('ig-stores');
-    if (igStores) igStores.innerHTML = stores.map(rStoreCard).join('');
-
-    // 라이브 데이터
-    const lives = await ShopDB.getLives();
-    const lvHome = document.getElementById('lv-home');
-    if (lvHome) lvHome.innerHTML = lives.map(rLiveCard).join('');
-    const igLive = document.getElementById('ig-live');
-    if (igLive) igLive.innerHTML = lives.map(rLiveGrid).join('');
-
-    // 신규 입점 (최신 상품 4개)
-    const igNew = document.getElementById('ig-new');
-    if (igNew) igNew.innerHTML = products.slice(0,4).map(rProdGrid).join('');
-
-    // URL 해시 처리
-    const hash = location.hash.replace('#','');
-    if (hash && document.getElementById('v-' + hash)) showV(hash);
-
-  } catch(e) {
-    console.error('[Shop] 초기화 오류:', e);
-  }
+/* ── 인기 검색어 ── */
+function renderSearchPanel(){
+  const pop=document.getElementById('popularSearches'),rec=document.getElementById('recentSearches');
+  if(pop)pop.innerHTML=DEMO.popular.map(s=>`<button class="sp-tag" onclick="document.getElementById('q').value='${s}';doSearch()">${s}</button>`).join('');
+  if(rec)rec.innerHTML='<span style="font-size:.74rem;color:var(--g4)">최근 검색 기록이 없습니다</span>';
 }
 
-/* ----------------------------------------------------------------
-   필터 버튼 토글 (공통)
-   ---------------------------------------------------------------- */
-document.querySelectorAll('.filter-bar').forEach(bar => {
-  bar.querySelectorAll('.fbtn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      bar.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-    });
+/* ── 클릭 로그 ── */
+function logC(type,id){toast('상세 페이지를 준비 중입니다');ShopDB.logClick(type,id);}
+
+/* ── 토스트 ── */
+let _tt=null;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),2800);}
+
+/* ── 카운트업 ── */
+function countUp(el,target,sfx=''){
+  if(!el)return;
+  const dur=1100,step=target/(dur/16);let cur=0;
+  const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=Math.floor(cur).toLocaleString()+sfx;if(cur>=target)clearInterval(t);},16);
+}
+
+/* ── 필터 바 토글 ── */
+document.querySelectorAll('.filter-bar').forEach(bar=>{
+  bar.querySelectorAll('.fbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{bar.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');});
   });
 });
 
-// DOMContentLoaded 또는 즉시 실행
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+/* ── 초기화 ── */
+async function init(){
+  try{
+    const stats=await ShopDB.getStats();
+    countUp(document.getElementById('sts'),stats.sellers,'명');
+    countUp(document.getElementById('stp'),stats.products,'개');
+    countUp(document.getElementById('stry'),stats.stories,'개');
+    countUp(document.getElementById('strg'),stats.regions,'개');
+    AP.updateUI();
+
+    const products=await ShopDB.getProducts();
+    const aiP=products.filter(p=>p.ai);
+
+    // 홈 AI 추천 (소형 스크롤)
+    const prAi=document.getElementById('pr-ai');if(prAi)prAi.innerHTML=aiP.slice(0,6).map(rPS).join('');
+    // AI 추천 전체
+    const igAi=document.getElementById('ig-ai');if(igAi)igAi.innerHTML=aiP.map(rPG).join('');
+    // 상품 전체
+    const igProd=document.getElementById('ig-prod');if(igProd)igProd.innerHTML=products.map(rPG).join('');
+    // 신규 입점
+    const igNew=document.getElementById('ig-new');if(igNew)igNew.innerHTML=products.slice(0,4).map(rPG).join('');
+
+    const stories=await ShopDB.getStories();
+    const srHome=document.getElementById('sr-home');if(srHome)srHome.innerHTML=stories.map(rSC).join('');
+    const slFull=document.getElementById('sl-full');if(slFull)slFull.innerHTML=stories.map(rSF).join('');
+
+    const stores=await ShopDB.getStores();
+    const stgHome=document.getElementById('stg-home');if(stgHome)stgHome.innerHTML=stores.map(rSTC).join('');
+    const igStores=document.getElementById('ig-stores');if(igStores)igStores.innerHTML=stores.map(rSTC).join('');
+
+    const lives=await ShopDB.getLives();
+    const lvHome=document.getElementById('lv-home');if(lvHome)lvHome.innerHTML=lives.map(rLVC).join('');
+    const igLive=document.getElementById('ig-live');if(igLive)igLive.innerHTML=lives.map(rLVG).join('');
+
+    renderCats();
+    renderFCS();
+    renderSearchPanel();
+
+    const hash=location.hash.replace('#','');
+    if(hash&&document.getElementById('v-'+hash))showV(hash);
+  }catch(e){console.error('[Shop] 초기화 오류:',e);}
 }
 
-/*
-================================================================
-  [데이터 전략 메모] (GPT + 설계원칙 반영)
-  
-  더착한쇼핑의 장기 경쟁력 = 데이터 플랫폼
-  
-  지금 구축하는 이 모듈은 '상품 파는 사이트'가 아니라
-  대한민국 생활경제 AI 데이터 플랫폼의 시작점입니다.
-  
-  축적 대상:
-  - /shop/products     상품 카탈로그 + AI 생성 콘텐츠
-  - /shop/sellers      셀러 프로필 + 인증 이력
-  - /shop/stories      스토리 (소셜 영구 자산)
-  - /shop/stores       가게 정보 + 위치 데이터
-  - /shop/lives        라이브 방송 이력
-  - /shop/interactions 행동 로그 (AI 학습용)
-  - /appoint/*         AP 포인트 (플랫폼 전체 공통)
-  
-  2~3년 후 이 데이터가
-  AI플랫마켓 최대 경쟁력이 됩니다.
-================================================================
-*/
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
 </script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     AI플랫마켓 표준 GNB JS (AIPLATMARKET_HEADER_FOOTER.html 그대로)
+══════════════════════════════════════════════════════════════ -->
+<script>
+function toggleCat(id,e){
+  if(e)e.stopPropagation();
+  const cat=document.getElementById('gcat-'+id);if(!cat)return;
+  const isOpen=cat.classList.contains('open');closeCats();if(isOpen)return;
+  cat.classList.add('open');
+  const btn=cat.querySelector('.gcbtn'),drop=cat.querySelector('.gcdrop');if(!btn||!drop)return;
+  const r=btn.getBoundingClientRect();
+  drop.style.top=(r.bottom+1)+'px';drop.style.left=r.left+'px';drop.style.right='auto';
+  requestAnimationFrame(()=>{
+    const dr=drop.getBoundingClientRect();
+    if(dr.right>window.innerWidth-8){drop.style.left='auto';drop.style.right='8px';}
+    if(dr.bottom>window.innerHeight-8){drop.style.top=(r.top-dr.height-1)+'px';}
+  });
+}
+window.addEventListener('scroll',()=>closeCats(),{passive:true});
+window.addEventListener('resize',()=>closeCats());
+function closeCats(){document.querySelectorAll('.gcat.open').forEach(c=>c.classList.remove('open'));}
+document.addEventListener('click',function(e){if(!e.target.closest('.gcat'))closeCats();});
+function updateGnbScrollHint(bar){
+  const hint=document.getElementById('gnbScrollHint'),hintL=document.getElementById('gnbScrollHintLeft');
+  if(!hint)return;
+  hint.classList.toggle('show',bar.scrollWidth-bar.scrollLeft-bar.clientWidth>4);
+  if(hintL)hintL.classList.toggle('show',bar.scrollLeft>4);
+}
+window.addEventListener('load',()=>{const bar=document.getElementById('gnbCatBar');if(bar)updateGnbScrollHint(bar);});
+function toggleFtEmail(){const dd=document.getElementById('ftEmailDd');if(dd)dd.style.display=dd.style.display==='none'?'block':'none';}
+/* quickReg, setGenre 등 메인 사이트 함수 — 없으면 무시 */
+function quickReg(r){toast(r+' 경제TV 준비 중');}
+function setGenre(g){toast('뮤직 기능 준비 중');}
+</script>
+
 </body>
 </html>
