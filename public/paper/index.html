@@ -2161,35 +2161,34 @@ document.getElementById('portalSearchBtn').addEventListener('click', openSearchP
    하위 호환됩니다 — 기존 항목을 고칠 필요가 없습니다.
 ════════════════════════════════════════════════════════════════ */
 const ISSUES_RAW = [
-  // 예시: 신문 1건 = 여러 권(1부/2부)인 경우
+  // ⚠ public/paper/archive/ 저장소에 실제로 올라와 있는 파일 목록 기준으로 작성했습니다.
+  //   썸네일은 201605호(assets/thumb_201605.jpg)만 실제 이미지가 있어 나머지는 임시로 같은
+  //   이미지를 재사용 중입니다. 각 호의 실제 표지 이미지를 assets/에 추가하고 thumb 값만
+  //   바꿔주시면 됩니다.
   {
-    id:"202608", title:"국민경제㊉나눔 2026년 8월호", date:"2026.08", region:"인천", isNew:true,
+    id:"200912", title:"국민경제저널 창간호", date:"2009.12", region:"인천", isNew:false,
     volumes:[
-      { label:"1부", pdf:"archive/202608_1.pdf", thumb:"assets/thumb_201605.jpg", pages:16 },
-      { label:"2부", pdf:"archive/202608_2.pdf", thumb:"assets/thumb_201605.jpg", pages:16 }
+      { label:"1부", pdf:"archive/200912_국민경제저널_창간1부(표1~24p).pdf", thumb:"assets/thumb_201605.jpg", pages:24 },
+      { label:"2부", pdf:"archive/200912_국민경제저널_창간2부(25~48p,표3,4).pdf", thumb:"assets/thumb_201605.jpg", pages:24 }
     ]
   },
-  // 이하 기존(단일 PDF) 형식 — 그대로 유지, 자동 변환됨
-  { id:"201605", title:"국민경제㊉나눔 2016년 5월호", date:"2016.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202601", title:"국민경제㊉나눔 2026년 1월호", date:"2026.01", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202602", title:"국민경제㊉나눔 2026년 2월호", date:"2026.02", region:"서울", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202603", title:"국민경제㊉나눔 2026년 3월호", date:"2026.03", region:"경기", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202604", title:"국민경제㊉나눔 2026년 4월호", date:"2026.04", region:"부산", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202605", title:"국민경제㊉나눔 2026년 5월호", date:"2026.05", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202606", title:"국민경제㊉나눔 2026년 6월호", date:"2026.06", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202607", title:"국민경제㊉나눔 2026년 7월호", date:"2026.07", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202512", title:"국민경제㊉나눔 2025년 12월호", date:"2025.12", region:"광주", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202511", title:"국민경제㊉나눔 2025년 11월호", date:"2025.11", region:"대전", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202510", title:"국민경제㊉나눔 2025년 10월호", date:"2025.10", region:"강원", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202509", title:"국민경제㊉나눔 2025년 9월호", date:"2025.09", region:"충청", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202508", title:"국민경제㊉나눔 2025년 8월호", date:"2025.08", region:"전라", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202507", title:"국민경제㊉나눔 2025년 7월호", date:"2025.07", region:"경북·경남", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202506", title:"국민경제㊉나눔 2025년 6월호", date:"2025.06", region:"제주", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202505", title:"국민경제㊉나눔 2025년 5월호", date:"2025.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202504", title:"국민경제㊉나눔 2025년 4월호", date:"2025.04", region:"서울", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202503", title:"국민경제㊉나눔 2025년 3월호", date:"2025.03", region:"경기", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202502", title:"국민경제㊉나눔 2025년 2월호", date:"2025.02", region:"부산", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false },
-  { id:"202501", title:"국민경제㊉나눔 2025년 1월호", date:"2025.01", region:"대구", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false }
+  {
+    id:"201005", title:"국민경제저널 2010년 5월호", date:"2010.05", region:"인천", isNew:false,
+    volumes:[
+      { label:"1부", pdf:"archive/201005_국민경제저널1부B5(01-26).pdf", thumb:"assets/thumb_201605.jpg", pages:26 },
+      { label:"2부", pdf:"archive/201005_국민경제저널2부B5(27-52).pdf", thumb:"assets/thumb_201605.jpg", pages:26 }
+    ]
+  },
+  { id:"201404", title:"국민경제저널 특집", date:"2014.04", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201404_국민경제저널특집A4(16p).pdf" },
+  { id:"201605", title:"국민경제+나눔", date:"2016.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201605_국민경제+나눔A4(16p).pdf" },
+  { id:"201705", title:"국민경제+Job", date:"2017.05", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201705_국민경제+JobA4(16p).pdf" },
+  { id:"201707", title:"국민경제+아이템", date:"2017.07", region:"인천", pages:4, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201707_국민경제+아이템A4(4p).pdf" },
+  { id:"201712", title:"국민경제+INFO", date:"2017.12", region:"인천", pages:4, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201712+국민경제+INFOA4(4p).pdf" },
+  { id:"201801", title:"창업박람회", date:"2018.01", region:"인천", pages:16, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201801_창업박람회(16p).pdf" },
+  { id:"201802", title:"신년경제정보", date:"2018.02", region:"인천", pages:8, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201802_신년경제정보(8p).pdf" },
+  { id:"201804", title:"Start", date:"2018.04", region:"인천", pages:8, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201804+Start(8p).pdf" },
+  { id:"201805", title:"미래로", date:"2018.05", region:"인천", pages:4, thumb:"assets/thumb_201605.jpg", isNew:false, pdf:"archive/201805+미래로A4(4p).pdf" },
+  { id:"201810", title:"미래로", date:"2018.10", region:"인천", pages:4, thumb:"assets/thumb_201605.jpg", isNew:true, pdf:"archive/201810_미래로A4(4p).pdf" }
 ];
 
 /* 기존(단일 PDF) 형식 → volumes 배열 형식으로 자동 변환 (하위 호환) */
