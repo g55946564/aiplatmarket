@@ -1,5 +1,5 @@
 {
-  "id": "promotion",
+  "id": "promo",
   "group": "platform",
   "title": "AI통합홍보센터",
   "icon": "🎯",
@@ -7,10 +7,10 @@
   "version": "0.0.1",
   "status": "planned",
   "routes": [
-    "/promotion",
-    "/platform/promotion/"
+    "/promo",
+    "/platform/promo/"
   ],
-  "subdomain": "promotion.aiplatmarket.com",
+  "subdomain": "aiplatmarket.com/promo",
   "framework_version": "1.0.0",
   "ai_features": [],
   "owner": "형식",
