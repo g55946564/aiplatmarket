@@ -123,13 +123,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    6. 콘텐츠 래퍼 (max-width 중앙 정렬)
 ══════════════════════════════════════════════════════════════ */
-.shop-content{max-width:1280px;margin:0 auto;background:#fff;min-height:60vh}
+.shop-content{width:100%;min-height:60vh}
 .view{display:none}.view.on{display:block}
 
 /* ══════════════════════════════════════════════════════════════
    7. 공통 섹션 헤더
 ══════════════════════════════════════════════════════════════ */
-.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 12px}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
 .sec-t{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;color:var(--navy);letter-spacing:-.4px}
 .sec-more{font-size:.76rem;color:var(--g4);cursor:pointer;transition:color .2s}
 .sec-more:hover{color:var(--navy)}
@@ -143,11 +143,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    8. 히어로
 ══════════════════════════════════════════════════════════════ */
-.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);color:#fff;padding:28px var(--pad) 24px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);color:#fff;padding:32px 0 28px;position:relative;overflow:hidden}
 .hero::before,.hero::after{content:'';position:absolute;border-radius:50%}
 .hero::before{top:-40px;right:-20px;width:200px;height:200px;background:rgba(201,168,76,.1)}
 .hero::after{bottom:-50px;left:40px;width:160px;height:160px;background:rgba(26,122,74,.15)}
-.hero-in{position:relative;z-index:1;max-width:860px}
+.hero-in{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 var(--pad)}
 .h-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.35);color:var(--gold);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.3px}
 .h-title{font-family:var(--fs);font-size:1.5rem;font-weight:900;line-height:1.25;margin:0 0 8px;letter-spacing:-.5px}
 .h-sub{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:14px}
@@ -167,7 +167,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    9. 상품 카드
 ══════════════════════════════════════════════════════════════ */
-.prod-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
+.prod-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px;max-width:1280px;margin-left:auto;margin-right:auto}
 .prod-scroll::-webkit-scrollbar{display:none}
 .prod-row{display:flex;gap:10px;width:max-content}
 /* 소형 */
@@ -197,8 +197,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    10. 그리드 레이아웃
 ══════════════════════════════════════════════════════════════ */
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
-.g3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
+.g3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
 @media(min-width:640px){.g3{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:960px){.g2{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(4,1fr)}}
 
@@ -206,7 +206,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
    11. 더착한 스토리 카드
 ══════════════════════════════════════════════════════════════ */
 .story-sec{background:var(--story);padding-bottom:4px}
-.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px;background:var(--story)}
+.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px;max-width:1280px;margin-left:auto;margin-right:auto}
 .story-scroll::-webkit-scrollbar{display:none}
 .story-row{display:flex;gap:12px;width:max-content}
 .sc{width:258px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
@@ -248,7 +248,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    13. 라이브 카드
 ══════════════════════════════════════════════════════════════ */
-.lv-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
+.lv-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px;max-width:1280px;margin-left:auto;margin-right:auto}
 .lv-scroll::-webkit-scrollbar{display:none}
 .lv-row{display:flex;gap:12px;width:max-content}
 .lvc{width:220px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
@@ -265,15 +265,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    14. 입점 모집 배너 / 에코시스템 / 혜택
 ══════════════════════════════════════════════════════════════ */
-.rec-banner{margin:0 var(--pad) 16px;background:linear-gradient(135deg,var(--grn2),var(--grn));border-radius:var(--cr);padding:20px var(--pad);color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
+.rec-banner{max-width:calc(1280px - var(--pad) * 2);margin:0 auto 16px;display:block;background:linear-gradient(135deg,var(--grn2),var(--grn));border-radius:var(--cr);padding:20px var(--pad);color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
 .rec-banner:hover{transform:translateY(-2px)}
 .rec-banner::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:rgba(255,255,255,.4)}
 .rb-lb{font-size:.66rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.75);margin-bottom:4px}
 .rb-ti{font-family:var(--fs);font-size:1.1rem;font-weight:900;margin-bottom:4px}
 .rb-sb{font-size:.78rem;color:rgba(255,255,255,.8)}
-.eco-sec{background:var(--navy);padding:20px var(--pad)}
+.eco-sec{background:var(--navy);padding:20px 0}
+.eco-sec-in{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
 .eco-lb{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:12px}
-.eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:1280px;margin-left:auto;margin-right:auto}
 .eco-ch{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.7);font-size:.67rem}
 .eco-ch:hover{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
 .eco-ico{font-size:1.2rem;display:block;margin-bottom:4px}
@@ -283,7 +284,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    15. 카테고리 분류 시스템 (동적 대/중/소분류)
 ══════════════════════════════════════════════════════════════ */
-.cat-browse{padding:var(--pad)}
+.cat-browse{padding:var(--pad);max-width:1280px;margin:0 auto}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .cat-card{background:var(--g1);border:var(--bd);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s}
 .cat-card:hover,.cat-card.on{background:var(--navy);color:#fff;border-color:var(--navy)}
@@ -296,7 +297,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    16. 판매자 요금제 (Settlement Engine)
 ══════════════════════════════════════════════════════════════ */
-.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad)}
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad);max-width:1280px;margin:0 auto}
 @media(min-width:768px){.plan-grid{grid-template-columns:repeat(4,1fr)}}
 .plan-card{border-radius:var(--cr);overflow:hidden;border:2px solid var(--g2);transition:all .2s;cursor:pointer}
 .plan-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,31,53,.12)}
@@ -312,7 +313,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .plan-item:last-child{border:none}
 .plan-check{color:var(--grn);font-weight:700}
 /* 수수료 계산기 */
-.fee-calc{background:var(--g1);border-radius:var(--cr);padding:var(--pad);margin:0 var(--pad) 16px}
+.fee-calc{background:var(--g1);border-radius:var(--cr);padding:var(--pad);margin:0 auto 16px;max-width:calc(1280px - var(--pad) * 2)}
 .fee-calc-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .fee-input{width:100%;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.86rem;font-family:var(--fn);outline:none;margin-bottom:10px}
 .fee-result{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
@@ -325,12 +326,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    17. FCS (공정기여도) / AP 시스템
 ══════════════════════════════════════════════════════════════ */
-.fcs-level-bar{display:flex;gap:0;margin:0 var(--pad) 16px;border-radius:var(--cr);overflow:hidden;border:var(--bd)}
+.fcs-level-bar{display:flex;gap:0;margin:0 auto 16px;max-width:calc(1280px - var(--pad) * 2);border-radius:var(--cr);overflow:hidden;border:var(--bd)}
 .fcs-lv{flex:1;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--g1);border-right:var(--bd);font-size:.72rem;font-weight:700}
 .fcs-lv:last-child{border-right:none}
 .fcs-lv.on{background:var(--navy);color:#fff}
 .fcs-lv-ico{display:block;font-size:1rem;margin-bottom:3px}
-.fcs-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 var(--pad) 16px}
+.fcs-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 var(--pad) 16px;max-width:1280px;margin:0 auto}
 @media(min-width:640px){.fcs-items{grid-template-columns:repeat(3,1fr)}}
 .fcs-item{background:#fff;border:var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
 .fcs-item:hover{border-color:var(--gold);background:rgba(201,168,76,.05)}
@@ -360,6 +361,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
    19. 뷰 헤더 / 필터 / 셀러센터 / 입점신청
 ══════════════════════════════════════════════════════════════ */
 .vhd{padding:22px var(--pad) 18px;color:#fff}
+
 .vhd.navy{background:linear-gradient(135deg,var(--navy),var(--navy2))}
 .vhd.green{background:linear-gradient(135deg,var(--grn2),var(--grn))}
 .vhd.gold{background:linear-gradient(135deg,#7a5a10,var(--gold))}
@@ -376,12 +378,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .upg-ico{font-size:2rem;margin-bottom:10px}
 .upg-txt{font-size:.84rem;line-height:1.7;margin-bottom:12px}
 .upg-badge{display:inline-block;background:var(--navy);color:#fff;font-size:.72rem;font-weight:700;padding:4px 16px;border-radius:20px}
-.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad)}
+.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad);max-width:1280px;margin:0 auto}
 .sm-i{background:#fff;border:var(--bd);border-radius:var(--cr);padding:16px 8px;text-align:center;cursor:pointer;transition:all .2s}
 .sm-i:hover{border-color:var(--grn);background:rgba(26,122,74,.04)}
 .sm-ico{font-size:1.5rem;margin-bottom:6px}
 .sm-lb{font-size:.75rem;font-weight:700;color:var(--navy)}
-.ai-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) var(--pad) 0}
+.ai-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) auto 0;max-width:calc(1280px - var(--pad) * 2)}
 .ai-box-t{font-size:.84rem;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .ai-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .ai-chip{background:#fff;border:var(--bd);border-radius:12px;padding:3px 10px;font-size:.7rem;color:var(--g4);font-weight:600}
@@ -655,6 +657,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
 
   <!-- 에코시스템 -->
   <section class="eco-sec">
+    <div class="eco-sec-in">
     <div class="eco-lb">🔗 AI플랫마켓 생태계 — 모든 모듈이 더착한쇼핑과 연결됩니다</div>
     <div class="eco-grid">
       <div class="eco-ch" onclick="goMod('/lifemap')"><span class="eco-ico">🔮</span>AI인생진로</div>
@@ -666,12 +669,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
       <div class="eco-ch" onclick="goMod('/culture')"><span class="eco-ico">🎨</span>AI문화예술</div>
       <div class="eco-ch" onclick="goMod('/gamezone')"><span class="eco-ico">🎮</span>AI게임존</div>
     </div>
+    </div><!-- /eco-sec-in -->
   </section>
 
   <!-- 오늘의 혜택 -->
   <section style="background:#fff;border-top:var(--bd);padding-bottom:20px">
     <div class="sec-hd"><div class="sec-t">🎁 오늘의 혜택</div></div>
-    <div style="display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none">
+    <div style="display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;max-width:1280px;margin:0 auto">
       <div class="bfc" style="background:linear-gradient(135deg,#7a5a10,var(--gold))" onclick="openApModal()"><div class="bfc-ico">💎</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">가입 즉시 적립</div><div style="font-size:1rem;font-weight:800">+1,000 AP</div></div>
       <div class="bfc" style="background:linear-gradient(135deg,var(--grn2),var(--grn))" onclick="showV('cert')"><div class="bfc-ico">🏅</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">더착한인증</div><div style="font-size:1rem;font-weight:800">우선 추천</div></div>
       <div class="bfc" style="background:linear-gradient(135deg,var(--navy),var(--navy2))" onclick="toast('공동구매 기능 준비 중')"><div class="bfc-ico">🤝</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">공동구매</div><div style="font-size:1rem;font-weight:800">최대 30%↓</div></div>
