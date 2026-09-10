@@ -3,568 +3,829 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI통합홍보센터 MVP</title>
+<title>AI통합홍보센터 · AI플랫마켓</title>
 
 <style>
-* {
-  box-sizing: border-box;
+/* ══════════ 표준 GNB/Footer 변수 + 스타일 (AIPLATMARKET_HEADER_FOOTER.html 원본 그대로) ══════════ */
+:root{
+  --navy:#0d1f35; --navy2:#1a3556; --red:#c0392b; --gold:#c9a84c;
+  --grn:#1a7a4a; --grn2:#0d5c36; --gnb-grn:#15603e; --gnb-grn2:#0e4a30;
+  --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
+  --bd:1px solid var(--g2); --r:10px; --fs:'Pretendard','Noto Sans KR',sans-serif;
 }
+nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
+.gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
+.gnb-top-scroll{padding-left:0px}
+.gnb-top-scroll::-webkit-scrollbar{display:none}
+.gnb-top-fixed{padding:4px 0 4px 2px}
+.gnb-sub{padding:0;scrollbar-width:none}
+.gnb-sub::-webkit-scrollbar{display:none}
+.gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
+.gnb-cat-bar-wrap{position:relative;min-width:0;width:100%;max-width:100vw;overflow:hidden}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-width:0;max-width:100%}
+.gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+.gnb-scroll-hint.show{display:flex}
+.gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+.gnb-cat-bar::-webkit-scrollbar{display:none}
+.gcat{position:relative;flex-shrink:0}
+.gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+.gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+.caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+.gcat.open .caret{transform:rotate(180deg)}
+.gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcat.open .gcdrop{display:block}
+.gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gcdrop-list{display:flex;flex-direction:column;gap:2px}
+.gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+.gcdi:hover{background:#f0f4ff}
+.gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+.gcdi-txt{display:flex;flex-direction:column;min-width:0}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+.gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+.gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+.gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+.gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+.ft-copy{font-size:.7rem}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap}
+.ft-links a,.ft-links a:visited{font-size:.73rem;color:rgba(255,255,255,.78);text-decoration:none;transition:color .2s}
+.ft-links a:hover{color:var(--gold);text-decoration:underline}
+@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
 
-body {
-  margin: 0;
-  font-family: Arial, "Noto Sans KR", sans-serif;
-  background: #f5f7fb;
-  color: #1f2937;
-}
+/* ══════════ 이 프로젝트(AI통합홍보센터) 전용 스타일 — 본문 영역만 ══════════ */
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--fs);background:var(--g1);color:var(--navy);display:flex;flex-direction:column;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:36px 0 30px}
+.hero h1{margin:0 0 8px;font-size:1.6rem;font-weight:900}
+.hero p{margin:0;color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.6;max-width:640px}
 
-header {
-  background: #111827;
-  color: white;
-  padding: 18px 24px;
-}
+.tabs{display:flex;gap:6px;margin:22px 0 18px;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;border-bottom:2px solid var(--g2);padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{height:6px}
+.tabs::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.tab{padding:10px 16px;border-radius:8px 8px 0 0;font-size:.82rem;font-weight:700;color:var(--g4);cursor:pointer;border:1px solid transparent;border-bottom:none;background:transparent;white-space:nowrap;flex-shrink:0}
+.tab.active{color:var(--navy);background:#fff;border-color:var(--g2)}
+.tab .n{display:inline-block;background:var(--navy);color:#fff;font-size:.62rem;border-radius:8px;padding:1px 6px;margin-right:5px}
+.tab.soon{color:var(--g3)}
 
-.header-inner {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.panel{display:none;background:#fff;border-radius:var(--r);padding:24px;box-shadow:0 4px 16px rgba(13,31,53,.05);margin-bottom:24px}
+.panel.active{display:block}
+.panel h2{margin:0 0 6px;font-size:1.15rem}
+.panel .lead{color:var(--g4);font-size:.84rem;line-height:1.6;margin:0 0 20px}
 
-.logo {
-  font-size: 20px;
-  font-weight: 700;
-}
+.tone-strip{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.tone-strip.paid{background:#fce8e6;color:var(--red)}
+.tone-strip.volunteer{background:#e8f6ee;color:var(--grn2)}
+.tone-strip.admin{background:#eef1f6;color:var(--navy)}
 
-.badge {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: rgba(255,255,255,.12);
-}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
 
-.container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
+.fgroup{margin-bottom:14px}
+.fgroup label{display:block;font-size:.78rem;font-weight:700;margin-bottom:6px;color:var(--navy)}
+.fgroup input,.fgroup select,.fgroup textarea{width:100%;padding:10px 12px;border:var(--bd);border-radius:8px;font-size:.83rem;font-family:inherit;color:var(--navy)}
+.fgroup textarea{min-height:80px;resize:vertical}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}}
+.btn{border:0;border-radius:8px;padding:11px 18px;font-weight:700;font-size:.83rem;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy2)}
+.help{font-size:.7rem;color:var(--g4);margin-top:4px;line-height:1.5}
 
-.hero {
-  background: white;
-  border-radius: 18px;
-  padding: 30px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 25px rgba(0,0,0,.06);
-}
+.list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.item{border:var(--bd);border-radius:8px;padding:12px 14px}
+.item-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.item-title{font-weight:700;font-size:.85rem}
+.item-meta{font-size:.72rem;color:var(--g4)}
+.status{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:10px}
+.status.pending{background:#fff4de;color:#a06a00}
+.status.approved{background:#e8f6ee;color:var(--grn2)}
+.status.rejected{background:#fce8e6;color:var(--red)}
+.empty{color:var(--g4);font-size:.8rem;padding:16px 0;text-align:center}
 
-.hero h1 {
-  margin-top: 0;
-  font-size: 30px;
-}
+.price-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:10px}
+.price-table th,.price-table td{border:var(--bd);padding:8px 10px;text-align:left}
+.price-table th{background:var(--g1);font-size:.72rem;color:var(--g4)}
+.price-src{font-size:.68rem;color:var(--g4);margin-top:8px}
+.price-src.live{color:var(--grn2)}
 
-.hero p {
-  color: #6b7280;
-  line-height: 1.7;
-}
+.lockbox{border:2px dashed var(--g3);border-radius:var(--r);padding:26px;text-align:center;color:var(--g4)}
+.lockbox .ico{font-size:1.8rem;margin-bottom:8px}
+.admin-only{display:none}
+body.is-admin .admin-only{display:block}
+body.is-admin .locked-view{display:none}
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.roadmap-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.roadmap-grid{grid-template-columns:1fr}}
+.rcard{border:var(--bd);border-radius:8px;padding:16px;background:var(--g1)}
+.rcard .ico{font-size:1.4rem;margin-bottom:6px}
+.rcard h3{margin:0 0 4px;font-size:.86rem}
+.rcard p{margin:0 0 8px;font-size:.72rem;color:var(--g4);line-height:1.5}
+.rcard .soon{font-size:.62rem;font-weight:700;color:var(--gold);background:#fbf3e3;padding:2px 7px;border-radius:8px}
+.note-box{background:#eef4ff;border:1px solid #d3e2fb;border-radius:8px;padding:14px 16px;font-size:.78rem;color:var(--navy2);line-height:1.6;margin-top:16px}
 
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 22px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.05);
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.project-card {
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: .2s;
-}
-
-.project-card:hover {
-  transform: translateY(-2px);
-}
-
-.project-card.active {
-  border-color: #2563eb;
-}
-
-.project-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-}
-
-.project-card p {
-  font-size: 14px;
-  color: #6b7280;
-  line-height: 1.5;
-}
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-
-select,
-textarea,
-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.btn {
-  border: 0;
-  border-radius: 10px;
-  padding: 13px 18px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.btn-primary {
-  background: #2563eb;
-  color: white;
-}
-
-.btn-secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.channel-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.channel {
-  background: #f3f4f6;
-  padding: 10px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-}
-
-.result {
-  margin-top: 25px;
-  padding: 20px;
-  background: #f9fafb;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-}
-
-.result-title {
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.status {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: #dcfce7;
-  color: #166534;
-  font-size: 12px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.stat {
-  background: #f9fafb;
-  padding: 18px;
-  border-radius: 12px;
-}
-
-.stat strong {
-  display: block;
-  font-size: 24px;
-  margin-top: 5px;
-}
-
-@media (max-width: 800px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .header-inner {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,31,53,.55);z-index:5000;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#fff;border-radius:var(--r);max-width:520px;width:100%;padding:26px;max-height:85vh;overflow:auto}
+.modal-box h2{margin:0 0 14px;font-size:1.1rem}
+.modal-box .close{float:right;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--g4)}
+.modal-box ul{margin:0 0 12px;padding-left:20px;font-size:.82rem;line-height:1.8;color:var(--navy2)}
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">AI플랫마켓 · AI통합홍보센터</div>
-    <div class="badge">초기 확장형 MVP Prototype</div>
+<!-- ══════════ HEADER (GNB) — 원본 그대로, 수정 금지 ══════════ -->
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy)">
+  <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
+  <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
+</div>
+<div class="gnb-cat-bar-wrap">
+<div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
+
+  <div class="gcat" id="gcat-ai">
+    <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-ai">
+      <div class="gcdrop-grid">
+        <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+        <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+        <a class="gcdi platform" href="/promo" target="_blank" rel="noopener" onclick="closeCats()" style="background:#f0f4ff"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화 (현재 페이지)</span></span></a>
+        <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#videocenter','_blank');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+        <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+      </div>
+    </div>
   </div>
-</header>
 
-<main class="container">
+  <div class="gcat-div"></div>
 
-  <section class="hero">
-    <h1>AI통합홍보센터</h1>
-    <p>
-      하나의 콘텐츠를 여러 채널로 확장하고,
-      AI플랫마켓의 다양한 프로젝트와 소상공인의 성장을 지원합니다.
-    </p>
-
-    <div class="channel-list">
-      <span class="channel">Naver</span>
-      <span class="channel">Google</span>
-      <span class="channel">YouTube</span>
-      <span class="channel">Instagram</span>
-      <span class="channel">Facebook</span>
-      <span class="channel">TikTok</span>
-      <span class="channel">Kakao</span>
-      <span class="channel">QR</span>
-    </div>
-  </section>
-
-
-  <!-- 1. 홍보 대상 -->
-  <section class="card">
-    <h2>1. 무엇을 홍보하시겠습니까?</h2>
-
-    <div class="grid">
-
-      <div class="card project-card active"
-           onclick="selectProject(this, 'lifemap')">
-        <div class="project-icon">🧭</div>
-        <h3>AI LifeMap</h3>
-        <p>
-          AI 인생·진로 탐색과 자기이해를 지원하는
-          첫 번째 핵심 홍보 대상
-        </p>
-      </div>
-
-      <div class="card project-card"
-           onclick="selectProject(this, 'platform')">
-        <div class="project-icon">🌐</div>
-        <h3>AI플랫마켓</h3>
-        <p>플랫폼 자체 인지도와 신규 이용자 확보</p>
-      </div>
-
-      <div class="card project-card"
-           onclick="selectProject(this, 'chatdoumi')">
-        <div class="project-icon">🤖</div>
-        <h3>챗도우미</h3>
-        <p>소상공인 AI 비서 및 업무 지원 서비스 홍보</p>
-      </div>
-
-      <div class="card project-card"
-           onclick="selectProject(this, 'smallbusiness')">
-        <div class="project-icon">🏪</div>
-        <h3>소상공인</h3>
-        <p>가게·상품·서비스 홍보</p>
-      </div>
-
-      <div class="card project-card"
-           onclick="selectProject(this, 'metazone')">
-        <div class="project-icon">🪐</div>
-        <h3>AI MetaZone</h3>
-        <p>온라인·오프라인 체험형 공간 홍보</p>
-      </div>
-
-      <div class="card project-card"
-           onclick="selectProject(this, 'itemzone')">
-        <div class="project-icon">💡</div>
-        <h3>AI ItemZone</h3>
-        <p>아이디어·창업·사업 실행 지원 홍보</p>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- 2. 홍보 설정 -->
-  <section class="card" style="margin-top:24px;">
-
-    <h2>2. 홍보 캠페인 설정</h2>
-
-    <div class="form-group">
-      <label>홍보 목표</label>
-      <select id="goal">
-        <option value="awareness">인지도 확대</option>
-        <option value="visit">신규 방문자 확보</option>
-        <option value="signup">회원가입 유도</option>
-        <option value="conversion">서비스 이용 유도</option>
-        <option value="event">이벤트 홍보</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>주요 타깃</label>
-      <input
-        id="target"
-        value="진로와 미래를 고민하는 청소년·청년·취업준비생">
-    </div>
-
-    <div class="form-group">
-      <label>핵심 메시지</label>
-      <textarea id="message">나에게 맞는 진로와 직업을 AI와 함께 탐색해보세요.</textarea>
-    </div>
-
-    <div class="form-group">
-      <label>홍보 채널</label>
-
-      <div class="channel-list">
-        <span class="channel">Naver Blog</span>
-        <span class="channel">Google SEO</span>
-        <span class="channel">YouTube</span>
-        <span class="channel">Shorts</span>
-        <span class="channel">Instagram</span>
-        <span class="channel">Facebook</span>
-        <span class="channel">TikTok</span>
-        <span class="channel">Kakao</span>
-        <span class="channel">QR 전단</span>
+  <div class="gcat" id="gcat-comm">
+    <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-comm">
+      <div class="gcdrop-list">
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#newprod','_blank');closeCats()">🆕 더착한상품</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#recipe','_blank');closeCats()">👨‍🍳 뉴레시피</a>
+        <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+        <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
       </div>
     </div>
+  </div>
 
-    <button class="btn btn-primary"
-            onclick="generatePromotion()">
-      AI 홍보 콘텐츠 생성
-    </button>
+  <div class="gcat-div"></div>
 
-  </section>
-
-
-  <!-- 3. AI Core 상태 -->
-  <section class="card" style="margin-top:24px;">
-
-    <h2>AI Core 처리 상태</h2>
-
-    <p>
-      AI통합홍보센터는 직접 AI 모델을 호출하지 않고
-      챗도우미 AI Core를 통해 콘텐츠를 생성합니다.
-    </p>
-
-    <div class="result">
-      <div class="result-title">MVP AI 호출 순서</div>
-
-      <div class="channel-list">
-        <span class="channel">1. Gemini</span>
-        <span class="channel">2. GPT</span>
-        <span class="channel">3. Claude</span>
+  <!-- 3. Business -->
+  <div class="gcat" id="gcat-biz">
+    <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-biz">
+      <div class="gcdrop-list">
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+        <div class="gcdi-sep">🤝 전국소상공인회</div>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#create-sanglife','_blank');closeCats()">🌱 상생회 만들기</a>
+        <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+        <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
       </div>
+    </div>
+  </div>
 
-      <p>
-        Gemini 호출 실패·한도초과·Timeout 등 예외 발생 시
-        GPT → Claude 순으로 Fallback
-      </p>
+  <div class="gcat-div"></div>
 
-      <span class="status" id="aiStatus">
-        대기 중
-      </span>
+  <!-- 4. Community -->
+  <div class="gcat" id="gcat-cmt">
+    <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-cmt">
+      <div class="gcdrop-list">
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">📌 자유게시판</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🤝 정보공유</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcat-div"></div>
+
+  <!-- 5. Media -->
+  <div class="gcat" id="gcat-media">
+    <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-media">
+      <div class="gcdrop-list">
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
+        <div class="gcdi-sep">📡 인터넷TV</div>
+        <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+        <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+        <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+        <div class="gcdi-sep">🎵 뮤직</div>
+        <a class="gcdi" onclick="setGenre(0);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">K-POP</a>
+        <a class="gcdi" onclick="setGenre(1);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">트롯</a>
+        <a class="gcdi" onclick="setGenre(2);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">발라드</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcat-div"></div>
+
+  <!-- 6. Lifestyle -->
+  <div class="gcat" id="gcat-life">
+    <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-life">
+      <div class="gcdrop-list">
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#travel','_blank');closeCats()">✈️ 여행</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#incident','_blank');closeCats()">🚨 사건사고</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
+        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#global','_blank');closeCats()">🌐 글로벌경제</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcat-div"></div>
+
+  <!-- 7. 디지털신문 -->
+  <div class="gcat" id="gcat-paper">
+    <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+    <div class="gcdrop" id="gcdrop-paper">
+      <div class="gcdrop-list">
+        <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+    <button class="gcbtn-reg" onclick="window.open('https://aiplatmarket.com/#register','_blank')">✅ 입점신청</button>
+    <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
+    <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+  </div>
+
+</div>
+<div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+<div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+</div>
+<!-- ══════════ /HEADER ══════════ -->
+
+<main style="flex:1">
+  <div class="hero">
+    <div class="wrap">
+      <h1>🎯 AI통합홍보센터</h1>
+      <p>광고주 홍보 신청, 서포터즈 참여형 홍보, 플랫폼 자체 마케팅을 한 공간에서 관리합니다.
+        AI 호출이 필요한 기능은 AI플랫마켓 공통 AI Core(ChatDoumi)를 통해서만 처리하며,
+        이 프로젝트가 직접 AI 모델을 호출하지 않습니다.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="advertiser" onclick="switchTab('advertiser')">🏪 광고주 서비스</button>
+      <button class="tab" data-tab="supporter" onclick="switchTab('supporter')">🙌 서포터즈 참여</button>
+      <button class="tab" data-tab="platform" onclick="switchTab('platform')">🏢 플랫폼 자체 홍보</button>
+      <button class="tab" data-tab="community" onclick="switchTab('community')">💬 커뮤니티</button>
+      <button class="tab soon" data-tab="strategy" onclick="switchTab('strategy')">🚀 통합 마케팅 전략본부 <span style="font-size:.6rem">· 예정</span></button>
     </div>
 
-  </section>
+    <!-- ① 광고주 서비스 (외부 이용자 홍보 요청) -->
+    <section class="panel active" id="panel-advertiser">
+      <span class="tone-strip paid">💳 유료 서비스 · 신청→검토→승인→진행→리포트</span>
+      <h2>내 가게 · 상품을 홍보하고 싶어요</h2>
+      <p class="lead">소상공인 등 외부 이용자가 자신의 서비스/상품 홍보를 신청하는 영역입니다.
+        신청서를 제출하면 <b>대기(pending)</b> 상태로 접수되고, 운영자 검토 후 승인/반려됩니다.
+        가격은 이 프로젝트가 임의로 정하지 않고 ChatDoumi AI Core 중앙 정책을 조회해 표시합니다.</p>
 
+      <div class="grid2">
+        <div>
+          <div class="fgroup">
+            <label>신청자 / 사업자명 *</label>
+            <input id="adv-name" placeholder="예: 형식마트 김형식">
+          </div>
+          <div class="fgrid">
+            <div class="fgroup">
+              <label>연락처 *</label>
+              <input id="adv-phone" placeholder="010-0000-0000">
+            </div>
+            <div class="fgroup">
+              <label>이메일</label>
+              <input id="adv-email" placeholder="선택 입력">
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>사업자 정보 (선택)</label>
+            <input id="adv-biz" placeholder="사업자등록번호 등 — 필요 시에만">
+          </div>
+          <div class="fgrid">
+            <div class="fgroup">
+              <label>광고 대상 서비스/상품 *</label>
+              <select id="adv-target">
+                <option value="">선택</option>
+                <option>AI LifeMap</option>
+                <option>AI ItemZone</option>
+                <option>더착한쇼핑(몰)</option>
+                <option>챗도우미</option>
+                <option>AI플랫마켓 자체</option>
+                <option>내 가게/상품 (소상공인)</option>
+                <option>기타</option>
+              </select>
+            </div>
+            <div class="fgroup">
+              <label>광고 유형 *</label>
+              <select id="adv-type">
+                <option value="">선택</option>
+                <option>인터뷰 기사</option>
+                <option>업체 홍보</option>
+                <option>라이브 영상</option>
+                <option>우수업체 인증</option>
+                <option>전단지/명함</option>
+                <option>지역 광고</option>
+                <option>SNS 콘텐츠</option>
+              </select>
+            </div>
+          </div>
+          <div class="fgrid">
+            <div class="fgroup">
+              <label>희망 기간</label>
+              <input id="adv-period" placeholder="예: 2026-10-01 ~ 2026-10-31">
+            </div>
+            <div class="fgroup">
+              <label>예산 (AI Point 또는 원)</label>
+              <input id="adv-budget" placeholder="예: 100,000원 / 협의">
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>요청 메모</label>
+            <textarea id="adv-memo" placeholder="홍보하고 싶은 내용을 자유롭게 적어주세요."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="submitAdvertiser()">신청서 제출</button>
+          <div class="help">개인정보는 연락 목적 외 사용되지 않으며 최소한만 수집합니다. 이번 MVP는 신규 서버 API 없이 이 브라우저에 임시 저장되며(localStorage), 추후 Firestore <code>promotionAdvertisers</code> 컬렉션 연동 시 자동으로 서버 저장으로 전환됩니다.</div>
 
-  <!-- 4. 결과 -->
-  <section class="card" style="margin-top:24px;">
+          <h3 style="font-size:.9rem;margin-top:22px">내 신청 내역</h3>
+          <div class="list" id="adv-list"></div>
+        </div>
 
-    <h2>홍보 콘텐츠 결과</h2>
+        <div>
+          <h3 style="font-size:.9rem;margin-top:0">공식 가격 안내</h3>
+          <div id="price-box"><div class="empty">가격 정보를 불러오는 중...</div></div>
+        </div>
+      </div>
+    </section>
 
-    <div id="resultArea">
+    <!-- ② 서포터즈 참여형 홍보 -->
+    <section class="panel" id="panel-supporter">
+      <span class="tone-strip volunteer">🙌 무보수 자발적 참여 · 일부 활동은 향후 AI Point 보상 연동 예정</span>
+      <h2>서포터즈 · 앰버서더 활동 기록</h2>
+      <p class="lead">AI플랫마켓을 좋아하는 이용자가 직접 홍보를 돕는 영역입니다. 지금은 정산 로직 없이
+        <b>"누가 언제 무엇을 했는지"</b>만 기록합니다. 이 기록은 향후 공정기여도 · AI Point 적립 기준의
+        원본 데이터가 됩니다.</p>
 
-      <p style="color:#6b7280;">
-        AI 홍보 콘텐츠를 생성하면
-        원본 콘텐츠와 채널별 변환 결과가 표시됩니다.
-      </p>
+      <div class="grid2">
+        <div>
+          <div class="fgrid">
+            <div class="fgroup">
+              <label>회원 식별자 / 닉네임 *</label>
+              <input id="sup-name" placeholder="예: 형식러버">
+            </div>
+            <div class="fgroup">
+              <label>활동 유형 *</label>
+              <select id="sup-type">
+                <option value="">선택</option>
+                <option>후기 작성</option>
+                <option>SNS 공유</option>
+                <option>추천 링크 배포</option>
+                <option>커뮤니티 자발 홍보</option>
+                <option>기타</option>
+              </select>
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>활동 콘텐츠 / 링크 *</label>
+            <input id="sup-link" placeholder="게시글 URL 또는 활동 내용 요약">
+          </div>
+          <div class="fgroup">
+            <label>비고</label>
+            <textarea id="sup-memo" placeholder="추가로 남기고 싶은 내용"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="submitSupporter()">활동 등록</button>
+          <div class="help">등록 즉시 상태는 <b>검토 대기</b>이며, 보상/지급 로직은 이번 MVP 범위가 아닙니다.
+            이 데이터도 localStorage 임시 저장이며 추후 <code>promotionSupporterActivities</code> 컬렉션으로 전환됩니다.</div>
 
-    </div>
+          <h3 style="font-size:.9rem;margin-top:22px">내 활동 내역</h3>
+          <div class="list" id="sup-list"></div>
+        </div>
+        <div>
+          <h3 style="font-size:.9rem;margin-top:0">참여 방법 안내</h3>
+          <div class="item">
+            <div class="item-title">1. 활동하기</div>
+            <div class="item-meta">후기 작성, SNS 공유, 추천 링크 배포, 커뮤니티 홍보 중 하나를 진행합니다.</div>
+          </div>
+          <div class="item" style="margin-top:8px">
+            <div class="item-title">2. 여기에 기록</div>
+            <div class="item-meta">활동 내용을 왼쪽 양식으로 등록해 주세요. 링크가 있다면 함께 남겨주세요.</div>
+          </div>
+          <div class="item" style="margin-top:8px">
+            <div class="item-title">3. 운영자 확인</div>
+            <div class="item-meta">운영자가 활동을 확인하고, 향후 공정기여도 · AI Point 정책이 확정되면 소급 반영을 검토합니다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  </section>
+    <!-- ③ 플랫폼 자체 홍보 전략 -->
+    <section class="panel" id="panel-platform">
+      <span class="tone-strip admin">🔒 운영자 주도 · 일반 이용자는 열람만 가능</span>
+      <h2>AI플랫마켓 자체 홍보 콘텐츠</h2>
+      <p class="lead">플랫폼 자신을 알리기 위한 SNS 소재 · 블로그 · 보도자료 · 배너 자료입니다.
+        작성/수정은 운영자만 가능합니다.</p>
 
-
-  <!-- 5. 성과 -->
-  <section class="card" style="margin-top:24px;">
-
-    <h2>캠페인 성과</h2>
-
-    <div class="stats">
-
-      <div class="stat">
-        방문
-        <strong>0</strong>
+      <div class="locked-view">
+        <div class="lockbox">
+          <div class="ico">🔒</div>
+          운영자 전용 영역입니다. 목록은 열람할 수 있지만 편집은 관리자만 가능합니다.
+        </div>
+        <div class="list" style="margin-top:14px">
+          <div class="item"><div class="item-top"><span class="item-title">📱 SNS 카드뉴스 — "AI플랫마켓, 상생을 잇다"</span><span class="item-meta">초안</span></div></div>
+          <div class="item"><div class="item-top"><span class="item-title">📰 보도자료 — 소상공인 상생 플랫폼 정식 출범</span><span class="item-meta">검토중</span></div></div>
+          <div class="item"><div class="item-top"><span class="item-title">🖼 배너 — "지금 가입하고 AI Point 받기"</span><span class="item-meta">배포중</span></div></div>
+        </div>
       </div>
 
-      <div class="stat">
-        클릭
-        <strong>0</strong>
+      <div class="admin-only">
+        <div class="note-box">관리자 모드입니다 (데모: URL에 <code>?admin=1</code>). 실제 서비스에서는
+          로그인 기반 관리자 권한 체크로 대체해야 합니다 — 지금은 목업입니다.</div>
+        <button class="btn btn-primary" style="margin-top:10px">+ 새 홍보 콘텐츠 작성 (준비중)</button>
+      </div>
+    </section>
+
+    <!-- ④ 자체 커뮤니티 -->
+    <section class="panel" id="panel-community">
+      <span class="tone-strip volunteer">💬 AI통합홍보센터 이용자 게시판</span>
+      <h2>커뮤니티</h2>
+      <p class="lead">광고주·서포터즈·운영자가 홍보 관련 질문, 후기, 노하우를 나누는 자체 게시판입니다.
+        메인 사이트 커뮤니티와는 별개로, 이 모듈 안에서 바로 글을 쓰고 볼 수 있습니다.</p>
+
+      <div class="grid2">
+        <div>
+          <div class="fgrid">
+            <div class="fgroup">
+              <label>닉네임 *</label>
+              <input id="cmt-name" placeholder="예: 형식마트">
+            </div>
+            <div class="fgroup">
+              <label>제목 *</label>
+              <input id="cmt-title" placeholder="예: 전단지 광고 신청 후기">
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>내용 *</label>
+            <textarea id="cmt-body" placeholder="궁금한 점, 후기, 팁 등을 자유롭게 남겨주세요."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="submitCommunityPost()">글 등록</button>
+          <div class="help">이번 MVP는 이 브라우저에만 저장됩니다(localStorage). 여러 이용자가 같은 글을 보려면
+            추후 서버 API/Firestore 연동이 필요합니다 — 메인 개발창에 요청해 주세요.</div>
+        </div>
+        <div>
+          <h3 style="font-size:.9rem;margin-top:0">최근 글</h3>
+          <div class="list" id="cmt-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ 통합 마케팅 전략본부 (로드맵) -->
+    <section class="panel" id="panel-strategy">
+      <span class="tone-strip admin">🚀 로드맵 · 이번 MVP 범위 아님</span>
+      <h2>통합 마케팅 전략본부 (예정)</h2>
+      <p class="lead">AI통합홍보센터를 AI플랫마켓 전 프로젝트의 마케팅 컨트롤타워로 확장하기 위한 구조입니다.
+        지금은 화면 구조만 잡아두고, 실제 기능은 API/데이터가 준비되는 순서대로 채워 나갑니다.</p>
+
+      <div class="roadmap-grid">
+        <div class="rcard"><div class="ico">🧭</div><h3>AEO+SEO 전략센터</h3><p>ChatGPT·Claude·Gemini·Perplexity 등 AI 답변엔진 노출 전략 + 검색엔진 최적화</p><span class="soon">개발 예정</span></div>
+        <div class="rcard"><div class="ico">✍️</div><h3>AI콘텐츠 제작센터</h3><p>블로그·SNS·카드뉴스·숏폼·이메일 콘텐츠 자동 생성 (AI Core 경유)</p><span class="soon">개발 예정</span></div>
+        <div class="rcard"><div class="ico">🎨</div><h3>AI브랜드센터</h3><p>슬로건·BI·CI·브랜드 가이드 관리</p><span class="soon">개발 예정</span></div>
+        <div class="rcard"><div class="ico">📢</div><h3>AI광고센터</h3><p>검색·SNS·디스플레이 광고 및 AI 광고 추천</p><span class="soon">개발 예정</span></div>
+        <div class="rcard"><div class="ico">📊</div><h3>AI분석센터</h3><p>방문자·전환율·행동·A/B 테스트 분석</p><span class="soon">개발 예정</span></div>
+        <div class="rcard"><div class="ico">🏛</div><h3>통합 경영 대시보드</h3><p>전 프로젝트 GDI·KPI·Project Health Score(🟢🟡🟠🔴)를 한 화면에서 관리</p><span class="soon">개발 예정</span></div>
       </div>
 
-      <div class="stat">
-        회원가입
-        <strong>0</strong>
+      <div class="note-box">
+        <b>제안 사항 전달용 메모</b> — "공정기여도"를 이 프로젝트 안에 개별 구현하지 말고,
+        AI Core 공통 엔진(Fair Contribution Engine)으로 두면 더착한쇼핑·LifeMap·ItemZone·Community·EduZone 등
+        모든 프로젝트가 같은 기준을 공유할 수 있습니다. 이 판단과 실제 엔진 설계는 <b>메인 개발창</b>에서
+        진행하는 것을 추천드립니다 (이 창은 개별 모듈만 담당).
       </div>
-
-      <div class="stat">
-        LifeMap 이용
-        <strong>0</strong>
-      </div>
-
-    </div>
-
-  </section>
-
+    </section>
+  </div>
 </main>
 
+<!-- ══════════ FOOTER — 원본 그대로, 수정 금지 ══════════ -->
+<footer>
+  <div class="ft-outer">
+    <div class="ft">
+    <div style="min-width:240px">
+      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+        사업자등록번호: 227-18-34338<br>
+        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+        TEL: 0505-505-9000<br>
+        <span style="position:relative;display:inline-block">
+          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee">📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span></a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600">📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span></a>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+      <div class="ft-links">
+        <a href="#" onclick="showAbout();return false">서비스 소개</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#terms','_blank');return false">이용약관</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#privacy','_blank');return false">개인정보처리방침</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#adcontact','_blank');return false">광고문의</a>
+        <a href="#" onclick="window.open('https://aiplatmarket.com/#register','_blank');return false">입점문의</a>
+        <a href="#" onclick="switchTab('community');document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});return false">커뮤니티</a>
+        <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+      </div>
+      <a href="/admin" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;text-decoration:none" title="관리자 대시보드">⚙️ 관리자 대시보드</a>
+    </div>
+    </div>
+  </div>
+</footer>
+<!-- ══════════ /FOOTER ══════════ -->
+
+<!-- "서비스 소개" 모달 — 메인 사이트로 나가지 않고 이 모듈 자체를 설명 -->
+<div class="modal-overlay" id="aboutModal" onclick="if(event.target===this)hideAbout()">
+  <div class="modal-box">
+    <button class="close" onclick="hideAbout()">✕</button>
+    <h2>🎯 AI통합홍보센터 소개</h2>
+    <p style="font-size:.83rem;color:var(--navy2);line-height:1.6">
+      AI플랫마켓 전체의 홍보·마케팅을 한 곳에서 관리하는 모듈입니다. 성격이 다른 3가지 영역을
+      명확히 구분해서 운영합니다.
+    </p>
+    <ul>
+      <li><b>🏪 광고주 서비스</b> — 소상공인 등 외부 이용자가 유료로 홍보를 신청 (신청→검토→승인→진행→리포트)</li>
+      <li><b>🙌 서포터즈 참여</b> — 이용자가 무보수로 자발적 홍보 활동을 하고 기록을 남기는 영역 (향후 공정기여도·AI Point 연동 검토)</li>
+      <li><b>🏢 플랫폼 자체 홍보</b> — AI플랫마켓 자신을 알리는 콘텐츠, 운영자 전용</li>
+      <li><b>💬 커뮤니티</b> — 이용자끼리 질문·후기·노하우를 나누는 자체 게시판</li>
+    </ul>
+    <p style="font-size:.78rem;color:var(--g4);line-height:1.6">
+      AI 호출이 필요한 기능은 항상 AI플랫마켓 공통 AI Core(ChatDoumi)를 거치며,
+      이 모듈이 직접 AI 모델을 호출하지 않습니다. 가격 정책도 ChatDoumi 중앙 정책을 기준으로 표시됩니다.
+    </p>
+    <button class="btn btn-primary" onclick="hideAbout()" style="margin-top:6px">확인</button>
+  </div>
+</div>
 
 <script>
+/* ── AI플랫마켓 표준 GNB/Footer가 필요로 하는 함수 (원본 그대로) ── */
+function toggleCat(id, e) {
+  if (e) e.stopPropagation();
+  const cat = document.getElementById('gcat-' + id);
+  if (!cat) return;
+  const isOpen = cat.classList.contains('open');
+  closeCats();
+  if (isOpen) return;
+  cat.classList.add('open');
+  const btn = cat.querySelector('.gcbtn'), drop = cat.querySelector('.gcdrop');
+  if (!btn || !drop) return;
+  const r = btn.getBoundingClientRect();
+  drop.style.top = (r.bottom + 1) + 'px'; drop.style.left = r.left + 'px'; drop.style.right = 'auto';
+  requestAnimationFrame(() => {
+    const dr = drop.getBoundingClientRect();
+    if (dr.right > window.innerWidth - 8) { drop.style.left = 'auto'; drop.style.right = '8px'; }
+    if (dr.bottom > window.innerHeight - 8) { drop.style.top = (r.top - dr.height - 1) + 'px'; }
+  });
+}
+window.addEventListener('scroll', () => closeCats(), { passive: true });
+window.addEventListener('resize', () => closeCats());
+function closeCats() { document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open')); }
+document.addEventListener('click', function (e) { if (!e.target.closest('.gcat')) closeCats(); });
+function updateGnbScrollHint(bar) {
+  const hint = document.getElementById('gnbScrollHint'), hintL = document.getElementById('gnbScrollHintLeft');
+  if (!hint) return;
+  hint.classList.toggle('show', bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4);
+  if (hintL) hintL.classList.toggle('show', bar.scrollLeft > 4);
+}
+window.addEventListener('load', () => { const bar = document.getElementById('gnbCatBar'); if (bar) updateGnbScrollHint(bar); });
+(function () {
+  const bar = document.getElementById('gnbCatBar');
+  if (!bar) return;
+  bar.addEventListener('wheel', function (e) {
+    if (bar.scrollWidth <= bar.clientWidth) return;
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      bar.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }
+  }, { passive: false });
+})();
+function toggleFtEmail() { const dd = document.getElementById('ftEmailDd'); if (dd) dd.style.display = dd.style.display === 'none' ? 'block' : 'none'; }
+if (typeof toast === 'undefined') { window.toast = function (msg) { console.log('[toast]', msg); }; }
+/* quickReg()/setGenre()는 메인 SPA 전용 함수로, 참조 파일의 Media 카테고리 일부 항목이 아직
+   window.open()으로 치환되지 않은 상태입니다 (원본 파일 자체의 미완성 부분으로 추정).
+   독립 모듈에서 ReferenceError로 클릭이 아예 씹히는 것을 막기 위한 안전 가드입니다. */
+if (typeof quickReg === 'undefined') { window.quickReg = function (region) { window.open('https://aiplatmarket.com/#live', '_blank'); }; }
+if (typeof setGenre === 'undefined') { window.setGenre = function () {}; }
 
-let selectedProject = "lifemap";
+/* ── AI통합홍보센터 본문 로직 ── */
 
-function selectProject(element, project) {
-
-  document
-    .querySelectorAll(".project-card")
-    .forEach(card => {
-      card.classList.remove("active");
-    });
-
-  element.classList.add("active");
-
-  selectedProject = project;
-
-  console.log("Selected project:", selectedProject);
+// 관리자 데모 모드 (실서비스에서는 로그인 세션 기반 권한 체크로 교체 필요)
+if (new URLSearchParams(location.search).get('admin') === '1') {
+  document.body.classList.add('is-admin');
 }
 
-
-function generatePromotion() {
-
-  const goal =
-    document.getElementById("goal").value;
-
-  const target =
-    document.getElementById("target").value;
-
-  const message =
-    document.getElementById("message").value;
-
-  const status =
-    document.getElementById("aiStatus");
-
-  status.innerText =
-    "AI Core 처리 중... Gemini 호출";
-
-  setTimeout(() => {
-
-    status.innerText =
-      "Gemini 성공 · 콘텐츠 생성 완료";
-
-    document.getElementById("resultArea")
-      .innerHTML = `
-
-        <div class="result">
-
-          <div class="result-title">
-            AI LifeMap 홍보 원본 콘텐츠
-          </div>
-
-          <p>
-            ${message}
-          </p>
-
-          <hr>
-
-          <h3>채널별 콘텐츠</h3>
-
-          <p>
-            <strong>Naver Blog</strong><br>
-            AI LifeMap을 통해 나에게 맞는 진로와
-            직업을 탐색해보세요.
-          </p>
-
-          <p>
-            <strong>Instagram</strong><br>
-            나에게 맞는 미래는 무엇일까요?
-            AI LifeMap과 함께 찾아보세요.
-          </p>
-
-          <p>
-            <strong>YouTube Shorts</strong><br>
-            "내가 잘할 수 있는 일은 뭘까?"
-            AI LifeMap으로 새로운 가능성을 찾아보세요.
-          </p>
-
-          <p>
-            <strong>Kakao</strong><br>
-            AI로 나의 인생과 진로를 탐색해보세요.
-            AI LifeMap 체험하기
-          </p>
-
-          <p>
-            <strong>QR 전단</strong><br>
-            QR을 스캔하고 AI LifeMap을 체험해보세요.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            onclick="saveContent()">
-            콘텐츠 저장
-          </button>
-
-          <button
-            class="btn btn-primary"
-            onclick="createQR()">
-            QR 만들기
-          </button>
-
-        </div>
-      `;
-
-  }, 1000);
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
 }
 
+// ── localStorage 저장소 (추후 서버 API 연동 시 이 함수들만 fetch()로 교체) ──
+const STORE_KEY_ADV = 'promotionAdvertisers';
+const STORE_KEY_SUP = 'promotionSupporterActivities';
+const STORE_KEY_CMT = 'promotionCommunityPosts';
 
-function saveContent() {
-  alert(
-    "향후 Firestore 콘텐츠 라이브러리에 저장"
-  );
+function loadList(key) {
+  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
+}
+function saveList(key, arr) { localStorage.setItem(key, JSON.stringify(arr)); }
+
+function submitAdvertiser() {
+  const name = document.getElementById('adv-name').value.trim();
+  const phone = document.getElementById('adv-phone').value.trim();
+  const target = document.getElementById('adv-target').value;
+  const type = document.getElementById('adv-type').value;
+  if (!name || !phone || !target || !type) { toast('필수 항목(*)을 입력해 주세요'); return; }
+
+  const record = {
+    id: 'adv_' + Date.now(),
+    name, phone,
+    email: document.getElementById('adv-email').value.trim(),
+    bizInfo: document.getElementById('adv-biz').value.trim(),
+    target, type,
+    period: document.getElementById('adv-period').value.trim(),
+    budget: document.getElementById('adv-budget').value.trim(),
+    memo: document.getElementById('adv-memo').value.trim(),
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+    adminMemo: ''
+  };
+  const list = loadList(STORE_KEY_ADV);
+  list.unshift(record);
+  saveList(STORE_KEY_ADV, list);
+  renderAdvList();
+  ['adv-name','adv-phone','adv-email','adv-biz','adv-period','adv-budget','adv-memo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('adv-target').value = '';
+  document.getElementById('adv-type').value = '';
+  toast('신청이 접수되었습니다 (검토 대기)');
 }
 
+function submitSupporter() {
+  const name = document.getElementById('sup-name').value.trim();
+  const type = document.getElementById('sup-type').value;
+  const link = document.getElementById('sup-link').value.trim();
+  if (!name || !type || !link) { toast('필수 항목(*)을 입력해 주세요'); return; }
 
-function createQR() {
-  alert(
-    "향후 AI LifeMap 추적 URL 기반 QR 생성"
-  );
+  const record = {
+    id: 'sup_' + Date.now(),
+    memberName: name,
+    activityType: type,
+    activityLink: link,
+    memo: document.getElementById('sup-memo').value.trim(),
+    activityDate: new Date().toISOString(),
+    status: 'pending',
+    approved: false,
+    reward: null
+  };
+  const list = loadList(STORE_KEY_SUP);
+  list.unshift(record);
+  saveList(STORE_KEY_SUP, list);
+  renderSupList();
+  ['sup-name','sup-link','sup-memo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('sup-type').value = '';
+  toast('활동이 등록되었습니다 (검토 대기)');
 }
 
+function submitCommunityPost() {
+  const name = document.getElementById('cmt-name').value.trim();
+  const title = document.getElementById('cmt-title').value.trim();
+  const body = document.getElementById('cmt-body').value.trim();
+  if (!name || !title || !body) { toast('필수 항목(*)을 입력해 주세요'); return; }
+
+  const record = {
+    id: 'cmt_' + Date.now(),
+    author: name, title, body,
+    createdAt: new Date().toISOString()
+  };
+  const list = loadList(STORE_KEY_CMT);
+  list.unshift(record);
+  saveList(STORE_KEY_CMT, list);
+  renderCmtList();
+  ['cmt-name','cmt-title','cmt-body'].forEach(id => document.getElementById(id).value = '');
+  toast('글이 등록되었습니다');
+}
+
+function renderCmtList() {
+  const list = loadList(STORE_KEY_CMT);
+  const el = document.getElementById('cmt-list');
+  if (!list.length) { el.innerHTML = '<div class="empty">아직 등록된 글이 없습니다. 첫 글을 남겨보세요!</div>'; return; }
+  el.innerHTML = list.map(r => `
+    <div class="item">
+      <div class="item-top"><span class="item-title">${escapeHtml(r.title)}</span><span class="item-meta">${escapeHtml(r.author)}</span></div>
+      <div style="font-size:.8rem;color:var(--navy2);margin:4px 0;white-space:pre-wrap">${escapeHtml(r.body)}</div>
+      <div class="item-meta">${new Date(r.createdAt).toLocaleString('ko-KR')}</div>
+    </div>`).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ── "서비스 소개" 안내 모달 (메인 사이트로 나가지 않고 이 모듈 안에서 바로 설명) ──
+function showAbout() {
+  document.getElementById('aboutModal').style.display = 'flex';
+}
+function hideAbout() {
+  document.getElementById('aboutModal').style.display = 'none';
+}
+  const label = { pending: '검토 대기', approved: '승인', rejected: '반려' }[s] || s;
+  return `<span class="status ${s}">${label}</span>`;
+}
+
+function renderAdvList() {
+  const list = loadList(STORE_KEY_ADV);
+  const el = document.getElementById('adv-list');
+  if (!list.length) { el.innerHTML = '<div class="empty">아직 신청 내역이 없습니다.</div>'; return; }
+  el.innerHTML = list.map(r => `
+    <div class="item">
+      <div class="item-top"><span class="item-title">${r.target} · ${r.type}</span>${statusBadge(r.status)}</div>
+      <div class="item-meta">${r.name} · ${r.phone} · ${new Date(r.createdAt).toLocaleString('ko-KR')}</div>
+    </div>`).join('');
+}
+
+function renderSupList() {
+  const list = loadList(STORE_KEY_SUP);
+  const el = document.getElementById('sup-list');
+  if (!list.length) { el.innerHTML = '<div class="empty">아직 활동 내역이 없습니다.</div>'; return; }
+  el.innerHTML = list.map(r => `
+    <div class="item">
+      <div class="item-top"><span class="item-title">${r.activityType}</span>${statusBadge(r.status)}</div>
+      <div class="item-meta">${r.memberName} · ${new Date(r.activityDate).toLocaleString('ko-KR')}</div>
+    </div>`).join('');
+}
+
+// ── AI Point 가격 정책 표시: ChatDoumi AI Core 실시간 조회 → 실패 시 price.md 기준값 폴백 ──
+const STATIC_PLANS = [
+  { name: 'FREE', price: '0원', desc: '기본 기능 제공, 필요 시 AI Point 별도 충전' },
+  { name: 'FREE+', price: '9,900원/월', desc: 'AI 기능 확대, 월 기본 AI Point 제공' },
+  { name: 'PRO', price: '29,000원/월', desc: '소상공인·개인사업자용 AI 기능 확대' },
+  { name: 'GOLD', price: '59,000원/월', desc: '고급 AI 기능 및 프리미엄 기능' }
+];
+
+async function loadPricing() {
+  const box = document.getElementById('price-box');
+  try {
+    const res = await fetch('/api/pricing/plans');
+    if (!res.ok) throw new Error('bad status');
+    const data = await res.json();
+    const plans = Array.isArray(data) ? data : (data.plans || []);
+    if (!plans.length) throw new Error('empty');
+    box.innerHTML = renderPriceTable(plans, true);
+  } catch (e) {
+    box.innerHTML = renderPriceTable(STATIC_PLANS, false);
+  }
+}
+
+function renderPriceTable(plans, isLive) {
+  const rows = plans.map(p => `<tr><td><b>${p.name || p.plan}</b></td><td>${p.price || p.monthlyPrice || ''}</td><td>${p.desc || p.description || ''}</td></tr>`).join('');
+  return `
+    <table class="price-table">
+      <tr><th>요금제</th><th>가격</th><th>설명</th></tr>
+      ${rows}
+    </table>
+    <div class="price-src ${isLive ? 'live' : ''}">
+      ${isLive ? '✅ 출처: ChatDoumi AI Core 실시간 정책 (GET /api/pricing/plans)' : '⚠️ 출처: /price.md 기준값 (오프라인 폴백 — 실시간 API 연결 전)'}
+    </div>
+    <div class="help">1 AI Point(AP) = 1원. 실제 서비스 이용 시 AI Point 차감량은 요청 유형(BASIC/STANDARD/ADVANCED/EXPERT)에 따라 다르며, 최종 기준은 항상 ChatDoumi AI Core 정책입니다.</div>`;
+}
+
+renderAdvList();
+renderSupList();
+renderCmtList();
+loadPricing();
 </script>
 
 </body>
