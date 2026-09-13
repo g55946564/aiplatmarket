@@ -915,14 +915,14 @@ const MODULE_MAP = {
   gamezone:    { group: 'platform', dir: 'gamezone' },
   metazone:    { group: 'platform', dir: 'metazone' },
   lifemap:     { group: 'platform', dir: 'lifemap' },
-  promotion:   { group: 'platform', dir: 'promotion' },
+  promo:   { group: 'platform', dir: 'promo' },
   // commerce/
   growplatzone: { group: 'platform', dir: 'growplatzone' },
   localfood:   { group: 'commerce', dir: 'localfood' },
   goodstore:   { group: 'commerce', dir: 'goodstore' },
   newproduct:  { group: 'commerce', dir: 'newproduct' },
   recipe:      { group: 'commerce', dir: 'recipe' },
-  promo:       { group: 'commerce', dir: 'promo' },
+  gift:       { group: 'commerce', dir: 'gift' },
   shop:        { group: 'commerce', dir: 'shop' },       // AI더착한쇼핑(몰)
   // business/
   startup:        { group: 'business', dir: 'startup' },
