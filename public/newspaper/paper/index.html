@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국민경제㊉ | 지면보기</title>
+<meta name="description" content="국민경제㊉ 디지털신문 지면보기 임시 화면">
+<style>
+:root{
+  --brand:#0756a8;
+  --brand-dark:#063c76;
+  --line:#d9dee6;
+  --muted:#687385;
+  --bg:#f5f7fa;
+  --paper:#fff;
+  --shadow:0 8px 28px rgba(24,43,67,.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;color:#1c2430;background:var(--bg)}
+button,a{font:inherit}
+button{cursor:pointer}
+.top{
+  height:58px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:20
+}
+.top-inner{width:min(1180px,94%);display:flex;align-items:center;gap:26px}
+.logo{font-size:24px;font-weight:900;color:var(--brand);letter-spacing:-1.5px}
+.logo small{display:block;font-size:10px;letter-spacing:0;color:#8993a0;margin-top:-2px}
+.nav{display:flex;gap:18px;font-size:14px;font-weight:700}
+.nav a{color:#333;text-decoration:none}
+.nav a:hover{color:var(--brand)}
+.top-right{margin-left:auto;display:flex;gap:12px;color:#77808c;font-size:12px}
+
+.container{width:min(1180px,94%);margin:24px auto 50px}
+.breadcrumb{font-size:12px;color:#89919c;margin-bottom:8px}
+.title-row{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
+h1{margin:0;font-size:28px;letter-spacing:-1.5px}
+.subtitle{font-size:13px;color:var(--muted);margin-top:7px}
+.actions{display:flex;gap:8px}
+.btn{border:1px solid #cbd3dd;background:#fff;border-radius:7px;padding:8px 13px;font-size:12px}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+.latest{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;
+  box-shadow:var(--shadow)
+}
+.latest-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.latest-head h2{margin:0;font-size:18px}
+.issue-info{color:var(--muted);font-size:12px}
+
+.latest-grid{
+  display:grid;grid-template-columns:minmax(220px,290px) 1fr;gap:28px;align-items:center
+}
+.cover{
+  aspect-ratio:3/4;border:1px solid #c9cdd3;background:#fff;
+  box-shadow:0 10px 20px rgba(0,0,0,.14);padding:13px;position:relative;overflow:hidden
+}
+.cover .mast{font-size:25px;font-weight:900;color:#0756a8;border-bottom:4px solid #0756a8;padding-bottom:7px}
+.cover .date{font-size:10px;margin:7px 0}
+.cover .hero{height:33%;background:linear-gradient(135deg,#eaf2fa,#c9dced);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#285a86}
+.cover .lines{margin-top:10px;display:grid;gap:5px}
+.cover .line{height:7px;background:#d6dbe1;border-radius:2px}
+.cover .line.big{width:85%;height:11px;background:#8da9c2}
+.cover .ad{position:absolute;bottom:12px;left:13px;right:13px;height:40px;background:#f0f2f4;border:1px solid #d3d7dc;font-size:9px;display:flex;align-items:center;justify-content:center;color:#667}
+
+.issue-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.issue-card{
+  border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;
+  display:flex;align-items:center;gap:14px
+}
+.issue-thumb{
+  width:92px;aspect-ratio:3/4;background:#fff;border:1px solid #cfd4da;
+  box-shadow:0 4px 9px rgba(0,0,0,.08);padding:7px;flex:none
+}
+.issue-thumb .mini-mast{font-size:9px;font-weight:900;color:var(--brand);border-bottom:2px solid var(--brand);padding-bottom:3px}
+.issue-thumb .mini-title{font-size:9px;font-weight:900;margin:8px 0 5px}
+.issue-thumb .mini-lines{display:grid;gap:3px}
+.issue-thumb .mini-lines i{display:block;height:4px;background:#dfe3e7}
+.issue-meta{min-width:0}
+.issue-meta strong{display:block;font-size:14px;margin-bottom:6px}
+.issue-meta span{display:block;color:var(--muted);font-size:11px;line-height:1.6}
+.issue-meta .btn{margin-top:8px}
+
+.parts{margin-top:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.part{
+  border:1px solid #d7dde5;border-radius:10px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center
+}
+.part strong{font-size:14px}.part span{font-size:11px;color:var(--muted)}
+
+.archive{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.section-head h2{font-size:18px;margin:0}
+.section-head span{font-size:11px;color:var(--muted)}
+.archive-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px 14px}
+.archive-card{text-align:center;min-width:0}
+.archive-thumb{
+  width:100%;aspect-ratio:3/4;background:#fff;border:1px solid #ccd2d9;
+  box-shadow:0 5px 12px rgba(0,0,0,.08);padding:9px;margin-bottom:8px;position:relative;overflow:hidden
+}
+.archive-thumb .amast{font-size:11px;font-weight:900;color:#167451;border-bottom:2px solid #167451;padding-bottom:4px}
+.archive-thumb .ahead{font-size:9px;font-weight:800;margin:10px 0 6px;text-align:left}
+.archive-thumb .acol{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.archive-thumb .acol i{height:32px;background:#e4e8eb;display:block}
+.archive-thumb .afoot{position:absolute;bottom:8px;left:9px;right:9px;height:14px;background:#e9edf0}
+.archive-date{font-size:12px;font-weight:700}
+.archive-card .btn{padding:5px 10px;margin-top:5px;font-size:11px}
+
+.notice{
+  margin-top:18px;padding:13px 15px;border-radius:9px;background:#eef6ff;
+  border:1px solid #d2e4f8;color:#45617c;font-size:12px;line-height:1.7
+}
+
+.footer{text-align:center;color:#8a929d;font-size:11px;padding:25px 0 40px}
+
+.modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:50;
+  align-items:center;justify-content:center;padding:20px
+}
+.modal.open{display:flex}
+.viewer{
+  width:min(1100px,96vw);height:min(820px,92vh);background:#fff;border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column
+}
+.viewer-head{height:50px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 15px}
+.viewer-head strong{font-size:14px}.viewer-head button{margin-left:auto}
+.viewer-body{flex:1;background:#eee;display:flex;align-items:center;justify-content:center}
+.viewer-placeholder{
+  width:min(600px,85%);height:80%;background:#fff;box-shadow:0 12px 28px rgba(0,0,0,.2);
+  padding:28px;text-align:center;display:flex;flex-direction:column;justify-content:center
+}
+.viewer-placeholder h3{font-size:24px;margin:0 0 12px;color:var(--brand)}
+.viewer-placeholder p{font-size:13px;color:#667;line-height:1.8}
+.viewer-placeholder code{display:block;margin-top:12px;padding:10px;background:#f4f5f7;font-size:11px}
+
+@media(max-width:900px){
+  .nav{display:none}
+  .latest-grid{grid-template-columns:220px 1fr}
+  .archive-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:650px){
+  .top{height:52px}.logo{font-size:20px}
+  .top-right{display:none}
+  .container{width:94%;margin-top:16px}
+  .title-row{display:block}.actions{margin-top:12px}
+  h1{font-size:23px}
+  .latest{padding:15px}
+  .latest-grid{grid-template-columns:1fr}
+  .cover{width:min(250px,70%);margin:auto}
+  .issue-list{grid-template-columns:1fr}
+  .parts{grid-template-columns:1fr}
+  .archive{padding:15px}
+  .archive-grid{grid-template-columns:repeat(2,1fr);gap:18px 12px}
+  .archive-card .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="logo">국민경제㊉<small>AI플랫마켓 디지털신문</small></div>
+    <nav class="nav">
+      <a href="/newspaper">디지털신문</a>
+      <a href="/newspaper">인터넷뉴스</a>
+      <a href="/paper">지면보기</a>
+      <a href="#">지난신문</a>
+    </nav>
+    <div class="top-right">
+      <span>로그인</span><span>회원가입</span><span>AI플랫마켓</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb">HOME › 디지털신문 › 지면보기</div>
+
+  <div class="title-row">
+    <div>
+      <h1>국민경제㊉ 신문 지면보기</h1>
+      <div class="subtitle">최신 발행호를 확인하고 지난 신문을 다시 볼 수 있습니다.</div>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="location.href='/newspaper'">인터넷 뉴스</button>
+      <button class="btn primary" onclick="scrollToArchive()">지난신문</button>
+    </div>
+  </div>
+
+  <section class="latest">
+    <div class="latest-head">
+      <h2>최신 신문</h2>
+      <div class="issue-info">2026년 9월호 · 최신 발행본</div>
+    </div>
+
+    <div class="latest-grid">
+      <div>
+        <div class="cover" aria-label="최신신문 표지 임시 이미지">
+          <div class="mast">국민경제㊉</div>
+          <div class="date">2026.09 · 디지털신문</div>
+          <div class="hero">주요 경제·사회 뉴스</div>
+          <div class="lines">
+            <div class="line big"></div><div class="line"></div><div class="line"></div>
+            <div class="line big"></div><div class="line"></div><div class="line"></div>
+          </div>
+          <div class="ad">최신호 표지 이미지 / PDF 연결 영역</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="issue-list">
+          <div class="issue-card">
+            <div class="issue-thumb">
+              <div class="mini-mast">국민경제㊉</div>
+              <div class="mini-title">2026년 9월 최신호 1부</div>
+              <div class="mini-lines"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="issue-meta">
+              <strong>1부</strong>
+              <span>최신 신문 지면</span>
+              <span>PDF 전체보기</span>
+              <button class="btn primary" onclick="openPdf('최신호 1부','assets/newspaper-2026-09-1.pdf')">지면보기</button>
+            </div>
+          </div>
+
+          <div class="issue-card">
+            <div class="issue-thumb">
+              <div class="mini-mast">국민경제㊉</div>
+              <div class="mini-title">2026년 9월 최신호 2부</div>
+              <div class="mini-lines"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="issue-meta">
+              <strong>2부</strong>
+              <span>최신 신문 지면</span>
+              <span>PDF 전체보기</span>
+              <button class="btn primary" onclick="openPdf('최신호 2부','assets/newspaper-2026-09-2.pdf')">지면보기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="parts">
+          <div class="part">
+            <div><strong>PDF 1부</strong><br><span>실제 파일: assets/...</span></div>
+            <button class="btn" onclick="openPdf('최신호 1부','assets/newspaper-2026-09-1.pdf')">PDF 보기</button>
+          </div>
+          <div class="part">
+            <div><strong>PDF 2부</strong><br><span>실제 파일: assets/...</span></div>
+            <button class="btn" onclick="openPdf('최신호 2부','assets/newspaper-2026-09-2.pdf')">PDF 보기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice">
+      ※ 현재 화면은 개발용 임시 UI입니다. 실제 운영 시 <b>assets/</b>의 최신호 파일과
+      <b>archive/</b>의 지난신문 PDF를 실제 파일명에 맞춰 연결하고, 기존 모바일 지면보기/FlipBook 기능을 결합하면 됩니다.
+    </div>
+  </section>
+
+  <section class="archive" id="archive">
+    <div class="section-head">
+      <h2>지난신문</h2>
+      <span>썸네일 클릭 → 해당 PDF 보기</span>
+    </div>
+    <div class="archive-grid" id="archiveGrid"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  © AI플랫마켓 · 국민경제㊉ 디지털신문 · 지면보기
+</footer>
+
+<div class="modal" id="modal">
+  <div class="viewer">
+    <div class="viewer-head">
+      <strong id="viewerTitle">PDF 보기</strong>
+      <button class="btn" onclick="closePdf()">닫기</button>
+    </div>
+    <div class="viewer-body" id="viewerBody"></div>
+  </div>
+</div>
+
+<script>
+/*
+  실제 운영 데이터 예시
+  - thumbnail: /assets/파일명.jpg
+  - pdf:       /archive/파일명.pdf
+  - 동일한 기본 파일명을 사용하면 관리하기 쉽습니다.
+*/
+const archiveData = [
+  { date:"2026-08-28", title:"국민경제㊉ 2026년 8월 28일", thumbnail:"assets/economy-2026-08-28.jpg", pdf:"archive/economy-2026-08-28.pdf" },
+  { date:"2026-08-21", title:"국민경제㊉ 2026년 8월 21일", thumbnail:"assets/economy-2026-08-21.jpg", pdf:"archive/economy-2026-08-21.pdf" },
+  { date:"2026-08-14", title:"국민경제㊉ 2026년 8월 14일", thumbnail:"assets/economy-2026-08-14.jpg", pdf:"archive/economy-2026-08-14.pdf" },
+  { date:"2026-08-07", title:"국민경제㊉ 2026년 8월 7일", thumbnail:"assets/economy-2026-08-07.jpg", pdf:"archive/economy-2026-08-07.pdf" },
+  { date:"2026-07-31", title:"국민경제㊉ 2026년 7월 31일", thumbnail:"assets/economy-2026-07-31.jpg", pdf:"archive/economy-2026-07-31.pdf" },
+  { date:"2026-07-24", title:"국민경제㊉ 2026년 7월 24일", thumbnail:"assets/economy-2026-07-24.jpg", pdf:"archive/economy-2026-07-24.pdf" },
+  { date:"2026-07-17", title:"국민경제㊉ 2026년 7월 17일", thumbnail:"assets/economy-2026-07-17.jpg", pdf:"archive/economy-2026-07-17.pdf" },
+  { date:"2026-07-10", title:"국민경제㊉ 2026년 7월 10일", thumbnail:"assets/economy-2026-07-10.jpg", pdf:"archive/economy-2026-07-10.pdf" },
+  { date:"2026-07-03", title:"국민경제㊉ 2026년 7월 3일", thumbnail:"assets/economy-2026-07-03.jpg", pdf:"archive/economy-2026-07-03.pdf" },
+  { date:"2026-06-26", title:"국민경제㊉ 2026년 6월 26일", thumbnail:"assets/economy-2026-06-26.jpg", pdf:"archive/economy-2026-06-26.pdf" },
+  { date:"2026-06-19", title:"국민경제㊉ 2026년 6월 19일", thumbnail:"assets/economy-2026-06-19.jpg", pdf:"archive/economy-2026-06-19.pdf" },
+  { date:"2026-06-12", title:"국민경제㊉ 2026년 6월 12일", thumbnail:"assets/economy-2026-06-12.jpg", pdf:"archive/economy-2026-06-12.pdf" }
+];
+
+function renderArchive(){
+  const grid = document.getElementById("archiveGrid");
+  grid.innerHTML = archiveData.map(item => `
+    <article class="archive-card">
+      <div class="archive-thumb">
+        <div class="amast">국민경제㊉</div>
+        <div class="ahead">${item.date}</div>
+        <div class="acol"><i></i><i></i><i></i><i></i></div>
+        <div class="afoot"></div>
+      </div>
+      <div class="archive-date">${item.date}</div>
+      <button class="btn" onclick="openPdf('${item.title}','${item.pdf}')">PDF 보기</button>
+    </article>
+  `).join("");
+}
+
+function openPdf(title, path){
+  document.getElementById("viewerTitle").textContent = title;
+  document.getElementById("viewerBody").innerHTML = `
+    <div class="viewer-placeholder">
+      <h3>${title}</h3>
+      <p>실제 운영에서는 이 영역에 PDF 또는 기존 지면보기(FlipBook)가 연결됩니다.</p>
+      <code>${path}</code>
+      <button class="btn primary" style="margin-top:16px"
+        onclick="window.open('${path}','_blank')">실제 PDF 새 창으로 열기</button>
+    </div>`;
+  document.getElementById("modal").classList.add("open");
+}
+function closePdf(){ document.getElementById("modal").classList.remove("open"); }
+function scrollToArchive(){ document.getElementById("archive").scrollIntoView({behavior:"smooth"}); }
+document.getElementById("modal").addEventListener("click", e => {
+  if(e.target.id === "modal") closePdf();
+});
+renderArchive();
+</script>
+</body>
+</html>
