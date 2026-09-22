@@ -916,7 +916,7 @@ const MODULE_MAP = {
   gamezone:    { group: 'platform', dir: 'gamezone' },
   metazone:    { group: 'platform', dir: 'metazone' },
   lifemap:     { group: 'platform', dir: 'lifemap' },
-  growplatzone: { group: 'platform', dir: 'growth' },
+  growth: { group: 'platform', dir: 'growth' },
   promo:   { group: 'platform', dir: 'promo' },
   video: { group: 'platform', dir: 'video' },
   // commerce/
