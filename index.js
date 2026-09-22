@@ -933,7 +933,7 @@ const MODULE_MAP = {
   live:        { group: 'media', dir: 'live' },
   tv:          { group: 'media', dir: 'tv' },
   music:       { group: 'media', dir: 'music' },
-  paper:       { group: 'media', dir: 'paper' },          // 국민경제㊉ 신문
+  newspaper:       { group: 'media', dir: 'newspaper' },          // 국민경제㊉ 신문
   // community/
   community:   { group: 'community', dir: '' },
   // lifestyle/
