@@ -909,15 +909,17 @@ const MODULE_MAP = {
   // platform/
   aird:        { group: 'platform', dir: 'aird' },
   simul:       { group: 'platform', dir: 'simul' },
+  academy: { group: 'platform', dir: 'academy' },
   itemzone:    { group: 'platform', dir: 'itemzone' },
   eduzone:     { group: 'platform', dir: 'eduzone' },
   culture:     { group: 'platform', dir: 'culture' },
   gamezone:    { group: 'platform', dir: 'gamezone' },
   metazone:    { group: 'platform', dir: 'metazone' },
   lifemap:     { group: 'platform', dir: 'lifemap' },
+  growplatzone: { group: 'platform', dir: 'growth' },
   promo:   { group: 'platform', dir: 'promo' },
+  video: { group: 'platform', dir: 'video' },
   // commerce/
-  growplatzone: { group: 'platform', dir: 'growplatzone' },
   localfood:   { group: 'commerce', dir: 'localfood' },
   goodstore:   { group: 'commerce', dir: 'goodstore' },
   newproduct:  { group: 'commerce', dir: 'newproduct' },
