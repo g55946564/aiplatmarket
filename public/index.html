@@ -503,8 +503,8 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 #page-ai-assistant.pg.act{position:relative;inset:auto;height:var(--aic-page-height,calc(100dvh - 220px));flex:0 0 var(--aic-page-height,calc(100dvh - 220px));z-index:auto;display:block;min-height:320px;overflow:hidden}
 .aic-shell{width:100%;height:100%;min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr) 260px;background:#fff;position:relative;isolation:isolate;overflow:hidden}
 .aic-side{background:#fff;min-width:0;min-height:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;height:100%}
-.aic-left{border-right:var(--bd)}
-.aic-right{border-left:var(--bd)}
+.aic-left{display:flex;border-right:var(--bd)}
+.aic-right{display:flex;border-left:var(--bd)}
 .aic-side-hd{height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:var(--bd);font-weight:800;font-size:.86rem;color:var(--navy)}
 .aic-icon-btn{border:0;background:transparent;width:30px;height:30px;border-radius:8px;cursor:pointer;color:var(--g4);font-size:.9rem}
 .aic-icon-btn:hover{background:var(--g1)}
@@ -3399,7 +3399,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
         <button class="aic-icon-btn aic-mobile-only aic-service-toggle" onclick="aicOpenDrawer('right')" title="AI플랫마켓 서비스" aria-label="서비스 목록 열기">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="10" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg>
           </button>
-        </div>
       </div>
 
       <div class="aic-messages" id="aicMessages">
