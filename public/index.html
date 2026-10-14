@@ -1043,6 +1043,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
             <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
             <a class="gcdi platform" href="https://chatdoumi.com/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
             <a class="gcdi platform" href="https://chatdoumi.com/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/trading" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📈</span><span class="gcdi-txt"><b>AI매매추천·검증시스템</b><span class="gcdi-desc">추천 검증 · 투자 참고용</span></span></a>
             <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>            
@@ -5222,6 +5223,8 @@ function showPage(id) {
   if (id === 'ai-assistant') {
     // 챗 화면은 속보바 하단을 기준으로 바로 맞춰야 하므로 부드러운 문서 스크롤을 기다리지 않는다.
     window.scrollTo({ top: 0, behavior: 'auto' });
+    const _cdPop = document.getElementById('cdPopup');
+    if (_cdPop) _cdPop.style.display = 'none';   // 우측 서비스 패널을 가리지 않도록 홍보 팝업 닫기
     aicFitToViewport();
     setTimeout(() => {
       aicRenderHistory();
@@ -6012,7 +6015,9 @@ function closeCdPopup() {
 }
 // 3초 후 자동 표시 (오늘 닫은 경우 제외)
 setTimeout(() => {
-  if (!sessionStorage.getItem('cd_popup_closed')) {
+  // 챗도우미 화면(page-ai-assistant)에서는 우측 서비스 패널을 가리므로 자동 표시하지 않는다
+  const onChatPage = document.getElementById('page-ai-assistant')?.classList.contains('act');
+  if (!sessionStorage.getItem('cd_popup_closed') && !onChatPage) {
     document.getElementById('cdPopup').style.display = 'block';
   }
 }, 3000);
