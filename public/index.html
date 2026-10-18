@@ -3755,11 +3755,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <small style="display:block;font-size:.62rem;color:var(--g4);font-family:var(--fn);letter-spacing:1px;font-weight:400;margin-bottom:3px">소상공인+소비자 상생 플랫폼</small>
     AI<em>PLAT</em>MARKET
   </div>
-    <!-- AI 플랫폼: 데스크톱 GNB의 AI 플랫폼 링크를 그대로 복사해 채운다 (syncMobileMenu) -->
-    <div class="lsb-ttl">🤖 AI 플랫폼</div>
-    <div class="lsb-menu" id="mobAiPlatList"></div>
-    <div class="lsb-div"></div>
-    <!-- 나머지 메뉴: PC 좌측 사이드바(.lsb)를 그대로 복사해 채운다 (syncMobileMenu) -->
+    <!-- 날씨 → AI 플랫폼(접기/펼치기) → 메뉴: PC 좌측 사이드바와 GNB를 그대로 복사해 채운다 (syncMobileMenu) -->
     <div id="mobLsbMirror"></div>
 </div>
 <div class="mob-panel right" id="mobR">
@@ -4599,31 +4595,11 @@ function closeSide() {
    원본: ① 데스크톱 GNB의 AI 플랫폼 링크(#gcdrop-ai)  ② PC 좌측 사이드바(aside.lsb)
    모바일 패널을 열 때마다 원본을 복사하므로, 메뉴·이름·링크·업종별 건수가 어긋나지 않는다. */
 function syncMobileMenu() {
-  // ① AI 플랫폼 묶음 ← GNB 링크 그대로
-  const aiBox = document.getElementById('mobAiPlatList');
-  if (aiBox) {
-    aiBox.innerHTML = '';
-    document.querySelectorAll('#gcdrop-ai a.gcdi').forEach(a => {
-      const item = document.createElement('a');
-      item.className = 'lmi';
-      const href = a.getAttribute('href');
-      if (href) {
-        item.setAttribute('href', href);
-        item.setAttribute('target', a.getAttribute('target') || '_blank');
-        item.setAttribute('rel', 'noopener');
-      } else if (a.getAttribute('onclick')) {
-        item.setAttribute('onclick', a.getAttribute('onclick'));
-      }
-      const icon = (a.querySelector('.gcdi-ico') || {}).textContent || '';
-      const nameEl = a.querySelector('.gcdi-txt b');
-      item.innerHTML = '<span class="ico">' + icon + '</span>' + (nameEl ? nameEl.innerHTML : a.textContent.trim());
-      aiBox.appendChild(item);
-    });
-  }
-  // ② 나머지 메뉴 ← PC 좌측 사이드바 그대로 (날씨·메뉴·업종별·지역별·공지·SNS)
   const src = document.querySelector('aside.lsb');
   const dst = document.getElementById('mobLsbMirror');
-  if (src && dst) {
+  if (!dst) return;
+  // ① PC 좌측 사이드바를 그대로 복사 (날씨 → 메뉴 → 업종별 → 지역별 → 공지 → SNS)
+  if (src) {
     dst.innerHTML = src.innerHTML;
     dst.querySelectorAll('[id]').forEach(e => {      // id 중복 방지 (더보기용 id는 data 속성으로 보존)
       if (e.id === 'lsbMenuMore') e.setAttribute('data-lsb-more', '');
@@ -4631,6 +4607,44 @@ function syncMobileMenu() {
       e.removeAttribute('id');
     });
   }
+  // ② AI 플랫폼: 데스크톱 GNB 링크를 복사해 접고 펼치는 묶음으로 만들어 날씨 바로 아래에 둔다 (기본 접힘)
+  const group = document.createElement('div');
+  group.className = 'mob-ai-group';
+  const head = document.createElement('div');
+  head.className = 'lmi';
+  head.setAttribute('onclick', 'toggleMobAi(this)');
+  head.style.cssText = 'justify-content:space-between;font-weight:800;color:var(--navy)';
+  head.innerHTML = '<span><span class="ico">🤖</span> AI 플랫폼</span><span class="mob-ai-caret">▾</span>';
+  const list = document.createElement('div');
+  list.className = 'mob-ai-list';
+  list.style.cssText = 'display:none;padding-left:8px';
+  document.querySelectorAll('#gcdrop-ai a.gcdi').forEach(a => {
+    const item = document.createElement('a');
+    item.className = 'lmi';
+    const href = a.getAttribute('href');
+    if (href) {
+      item.setAttribute('href', href);
+      item.setAttribute('target', a.getAttribute('target') || '_blank');
+      item.setAttribute('rel', 'noopener');
+    } else if (a.getAttribute('onclick')) {
+      item.setAttribute('onclick', a.getAttribute('onclick'));
+    }
+    const icon = (a.querySelector('.gcdi-ico') || {}).textContent || '';
+    const nameEl = a.querySelector('.gcdi-txt b');
+    item.innerHTML = '<span class="ico">' + icon + '</span>' + (nameEl ? nameEl.innerHTML : a.textContent.trim());
+    list.appendChild(item);
+  });
+  group.append(head, list);
+  const firstDivider = dst.querySelector('.lsb-div');   // 날씨·위치 영역과 메뉴 사이 구분선
+  if (firstDivider) dst.insertBefore(group, firstDivider); else dst.appendChild(group);
+}
+function toggleMobAi(head) {
+  const list = head.nextElementSibling;
+  if (!list) return;
+  const open = list.style.display !== 'none';
+  list.style.display = open ? 'none' : 'block';
+  const caret = head.querySelector('.mob-ai-caret');
+  if (caret) caret.textContent = open ? '▾' : '▴';
 }
 // 모바일 패널 안에서 이동 링크를 누르면 패널을 닫는다 (아코디언·더보기·위치변경 버튼은 유지)
 document.addEventListener('click', function (e) {
@@ -4639,7 +4653,7 @@ document.addEventListener('click', function (e) {
   const el = e.target.closest('[onclick], a[href]');
   if (!el || !panel.contains(el)) return;
   const oc = el.getAttribute('onclick') || '';
-  if (/toggleLsbMenu|toggleAcc|detectLoc|closeSide/.test(oc)) {
+  if (/toggleLsbMenu|toggleAcc|toggleMobAi|detectLoc|closeSide/.test(oc)) {
     if (/detectLoc/.test(oc)) setTimeout(syncMobileMenu, 2500);   // 위치 변경 후 날씨 표시 갱신
     return;
   }
