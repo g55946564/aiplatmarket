@@ -1,3 +1,4 @@
+// 최종 수정: 2026.10.23 07:12 (KST)
 /** 2026-09-22
  * ============================================================
  * AI PLATMARKET index.js — 통합 완전판 v4
@@ -482,9 +483,12 @@ async function naverNews(keyword, display=10) {
   setCache(key,items); return items;
 }
 
-async function googleNews(keyword) {
-  const key='google:'+keyword; const hit=getCache(key); if(hit) return hit;
-  const xml=await fetchUrl(`https://news.google.com/rss/search?q=${encodeURIComponent(keyword)}&hl=ko&gl=KR&ceid=KR:ko`,{'User-Agent':'Mozilla/5.0'});
+async function googleNews(keyword, edition) {
+  // edition === 'global' 이면 영문(미국판) 글로벌 뉴스, 그 외에는 기존 한국판. 캐시도 판별로 분리한다.
+  const isGlobal = edition === 'global';
+  const key=(isGlobal?'google-global:':'google:')+keyword; const hit=getCache(key); if(hit) return hit;
+  const locale = isGlobal ? 'hl=en-US&gl=US&ceid=US:en' : 'hl=ko&gl=KR&ceid=KR:ko';
+  const xml=await fetchUrl(`https://news.google.com/rss/search?q=${encodeURIComponent(keyword)}&${locale}`,{'User-Agent':'Mozilla/5.0'});
   const items=[]; const re=/<item>([\s\S]*?)<\/item>/g; let m;
   while((m=re.exec(xml))!==null&&items.length<10){
     const b=m[1];
@@ -504,6 +508,27 @@ app.get('/api/news', async (req, res) => {
   const { cat='전체', source='all', display=10 } = req.query;
   const keyword=KEYWORD_MAP[cat]||cat;
   const result={cat,items:[],sources:[],warnings:[]};
+  // 글로벌 카테고리: 한국어 키워드로 국내 기사가 섞여 나오던 문제 → 영문 키워드 + 구글 글로벌판만 사용
+  // (네이버는 국내 검색 전용이므로 제외). 다른 카테고리 동작은 아래 기존 로직 그대로.
+  if (cat === '글로벌') {
+    const GLOBAL_KEYWORDS = ['world economy business', 'global trade finance markets', 'small business economy international'];
+    const want = Number(display) || 10;
+    for (const kw of GLOBAL_KEYWORDS) {
+      try {
+        const g = await googleNews(kw, 'global');
+        const seen = new Set(result.items.map(n => n.title));
+        for (const n of g) {                         // 한 번에 받은 묶음 안의 중복도 함께 제거
+          if (!seen.has(n.title)) { seen.add(n.title); result.items.push(n); }
+        }
+        if (!result.sources.includes('google-global')) result.sources.push('google-global');
+        if (result.items.length >= want) break;
+      } catch (e) { result.warnings.push('google-global:' + e.message); }
+    }
+    result.items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    result.items = result.items.slice(0, want * 2);
+    // 조회 실패 시에도 국내 기사로 대체하지 않는다 (빈 목록 + warnings 로 화면이 안내 문구를 보이게 함)
+    return res.json(result);
+  }
   if(source==='all'||source==='naver'){
     try{result.items.push(...await naverNews(keyword,Number(display)));result.sources.push('naver');}
     catch(e){result.warnings.push('naver:'+e.message);}
