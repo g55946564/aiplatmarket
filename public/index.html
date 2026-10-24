@@ -1,3 +1,4 @@
+<!-- 최종 수정: 2026.10.23 07:12 (KST) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -2384,15 +2385,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
   </div>
 </div>
 
-<!-- ==================== 판촉물 ==================== -->
-<div id="page-promo" class="pg">
-  <div class="sp-page"><div class="sh"><div class="sh-t">🎁 판촉물</div></div><div class="sp-grid">
-    <div class="sp-card"><div class="sp-thumb" style="background:#e8f0fe">🖨️</div><div class="sp-body"><span class="sp-tag" style="background:#e8f0fe;color:#1a56a0">인쇄물</span><div class="sp-ttl">전단지·리플렛 인쇄</div><div class="sp-sub">1,000장 15,000원 · 당일 제작</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#fff3e0">🎀</div><div class="sp-body"><span class="sp-tag" style="background:#fff3e0;color:#e65100">포장재</span><div class="sp-ttl">로고 쇼핑백·포장지</div><div class="sp-sub">최소 100개 · 맞춤 디자인</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#e8f5e9">📌</div><div class="sp-body"><span class="sp-tag" style="background:#e8f5e9;color:#2e7d32">사인물</span><div class="sp-ttl">현수막·배너·간판</div><div class="sp-sub">현수막 3,500원/m² · 빠른제작</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#fce4ec">🎁</div><div class="sp-body"><span class="sp-tag" style="background:#fce4ec;color:#c62828">답례품</span><div class="sp-ttl">로고 인쇄 답례품</div><div class="sp-sub">볼펜·머그컵·에코백 · 50개~</div></div></div>
-  </div></div>
-</div>
 
 <!-- ==================== 레시피 ==================== -->
 <div id="page-recipe" class="pg">
@@ -5468,7 +5460,7 @@ function _renderTodayList(panel, items) {
   const ul = document.getElementById(listId);
   if (!ul) return;
   ul.innerHTML = items.slice(0, 6).map((item, i) => {
-    const title = (item.title || item.headline || '').replace(/<[^>]+>/g, '').slice(0, 60);
+    const title = (item.title || item.headline || '').replace(/<[^>]+>/g, '').slice(0, panel === 'global' ? 90 : 60);
     const link  = item.link || item.url || '#';
     const dot   = i < 2 ? dotColor : 'var(--g3)';
     return `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer;display:flex;gap:6px;align-items:flex-start"
@@ -5482,6 +5474,12 @@ function _renderTodayList(panel, items) {
 }
 
 function _renderTodayFallback(panel) {
+  // 글로벌 패널: 임의의 한국어 문구를 뉴스처럼 보여주지 않고, 불러오지 못했음을 안내한다
+  if (panel === 'global') {
+    const gul = document.getElementById('todayGlobalList');
+    if (gul) gul.innerHTML = '<li style="padding:12px;color:var(--g4);font-size:.75rem;line-height:1.7">🌐 글로벌 뉴스를 불러오지 못했습니다.<br><span onclick="fetchTodayNews(\'global\')" style="color:var(--navy);font-weight:700;cursor:pointer;text-decoration:underline">다시 시도</span></li>';
+    return;
+  }
   const dom = [
     '소상공인 디지털 전환 지원금 200만원 확대',
     '2026 최저임금 확정 — 소상공인 대응 방법',
