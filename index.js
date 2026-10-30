@@ -1,4 +1,4 @@
-// 최종 수정: 2026.10.23 07:12 (KST)
+// 최종 수정: 2026.10.30 13:47 (KST)
 /** 2026-09-22
  * ============================================================
  * AI PLATMARKET index.js — 통합 완전판 v4
@@ -499,6 +499,9 @@ async function googleNews(keyword, edition) {
     const source=(/<source[^>]*>(.*?)<\/source>/.exec(b))?.[1]||'구글뉴스';
     if(title) items.push({title:title.replace(/<[^>]+>/g,'').trim(),desc:aiSummarize(desc),link:link.trim(),date:date.trim(),source,origin:'google'});
   }
+  // 기사가 하나도 없으면(차단·제한·동의 페이지 등 RSS가 아닌 응답) 빈 결과를 캐시하지 않는다.
+  // 글로벌판은 호출부가 원인을 warnings 에 남기고 대체 경로로 넘어갈 수 있도록 오류로 알린다.
+  if (!items.length) { if (isGlobal) throw new Error('구글 글로벌판 응답에 기사가 없음(접속 제한 가능)'); return items; }
   setCache(key,items); return items;
 }
 
@@ -508,25 +511,36 @@ app.get('/api/news', async (req, res) => {
   const { cat='전체', source='all', display=10 } = req.query;
   const keyword=KEYWORD_MAP[cat]||cat;
   const result={cat,items:[],sources:[],warnings:[]};
-  // 글로벌 카테고리: 한국어 키워드로 국내 기사가 섞여 나오던 문제 → 영문 키워드 + 구글 글로벌판만 사용
-  // (네이버는 국내 검색 전용이므로 제외). 다른 카테고리 동작은 아래 기존 로직 그대로.
+  // 글로벌 카테고리: 한국어 키워드로 국내 기사가 섞여 나오던 문제 → 영문 키워드 + 구글 글로벌판 우선.
+  // 영문 조회가 비면 해외 소식 중심의 한국어 키워드로 대체한다 ('소상공인' 등 국내 키워드는 쓰지 않음).
+  // 응답의 edition 값: 'global-en'(영문) / 'world-ko-fallback'(한국어 대체) — 어느 경로인지 확인용.
   if (cat === '글로벌') {
-    const GLOBAL_KEYWORDS = ['world economy business', 'global trade finance markets', 'small business economy international'];
+    const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('시간 초과')), ms))]);
     const want = Number(display) || 10;
-    for (const kw of GLOBAL_KEYWORDS) {
+    const addItems = (list) => {
+      const seen = new Set(result.items.map(n => n.title));
+      for (const n of list) { if (!seen.has(n.title)) { seen.add(n.title); result.items.push(n); } }
+    };
+    for (const kw of ['world economy business', 'global trade finance markets', 'small business economy international']) {
       try {
-        const g = await googleNews(kw, 'global');
-        const seen = new Set(result.items.map(n => n.title));
-        for (const n of g) {                         // 한 번에 받은 묶음 안의 중복도 함께 제거
-          if (!seen.has(n.title)) { seen.add(n.title); result.items.push(n); }
-        }
+        addItems(await withTimeout(googleNews(kw, 'global'), 8000));
         if (!result.sources.includes('google-global')) result.sources.push('google-global');
         if (result.items.length >= want) break;
       } catch (e) { result.warnings.push('google-global:' + e.message); }
     }
+    if (result.items.length) result.edition = 'global-en';
+    if (!result.items.length) {
+      for (const kw of ['세계 경제 해외 증시', '국제 정세 글로벌 무역']) {
+        try { addItems(await withTimeout(naverNews(kw, want), 8000)); if (!result.sources.includes('naver')) result.sources.push('naver'); }
+        catch (e) { result.warnings.push('naver-world:' + e.message); }
+        try { addItems(await withTimeout(googleNews(kw), 8000)); if (!result.sources.includes('google')) result.sources.push('google'); }
+        catch (e) { result.warnings.push('google-world:' + e.message); }
+        if (result.items.length >= want) break;
+      }
+      if (result.items.length) result.edition = 'world-ko-fallback';
+    }
     result.items.sort((a, b) => new Date(b.date) - new Date(a.date));
     result.items = result.items.slice(0, want * 2);
-    // 조회 실패 시에도 국내 기사로 대체하지 않는다 (빈 목록 + warnings 로 화면이 안내 문구를 보이게 함)
     return res.json(result);
   }
   if(source==='all'||source==='naver'){
