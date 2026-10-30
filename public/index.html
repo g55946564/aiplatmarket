@@ -1,4 +1,4 @@
-<!-- 최종 수정: 2026.10.23 07:12 (KST) -->
+<!-- 최종 수정: 2026.10.30 13:47 (KST) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -497,6 +497,32 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 /* === PAGES === */
 .pg{display:none}
 .pg.act{display:block}
+/* ── 오늘의 주요뉴스 (홈): 국내/글로벌 2열 패널 ── */
+.tn-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:nowrap}
+.tn-title{display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap}
+.tn-title b{font-size:.9rem;font-weight:900;color:var(--navy)}
+.tn-time{font-size:.65rem;background:var(--red);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;white-space:nowrap}
+.tn-all{font-size:.72rem;white-space:nowrap;flex-shrink:0}
+.tn-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tn-panel{border:var(--bd);border-radius:var(--r);overflow:hidden;min-width:0;cursor:pointer;background:#fff}
+.tn-hd{padding:7px 12px;display:flex;align-items:center;justify-content:space-between;gap:6px;color:#fff;font-size:.72rem;font-weight:900;white-space:nowrap}
+.tn-hd.dom{background:var(--navy)}
+.tn-hd.glb{background:#1565c0}
+.tn-list{margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.5}
+.tn-item{padding:8px 12px;border-bottom:var(--bd);cursor:pointer;display:flex;gap:6px;align-items:flex-start}
+.tn-item:last-child{border-bottom:0}
+.tn-item:hover{background:var(--g1)}
+.tn-item .tn-t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all;overflow-wrap:anywhere;min-width:0}
+.tn-empty{padding:9px 12px;color:var(--g4)}
+.tn-refresh{margin-top:8px;padding:8px;border:var(--bd);border-radius:8px;background:var(--g1);text-align:center;font-size:.74rem;color:var(--g4);cursor:pointer;font-weight:700}
+.tn-refresh:hover{background:var(--g2)}
+@media(max-width:700px){
+  .tn-title b{font-size:.84rem}
+  .tn-wrap{gap:6px}
+  .tn-hd{padding:6px 8px;font-size:.68rem}
+  .tn-list{font-size:.72rem}
+  .tn-item{padding:7px 8px;gap:4px}
+}
 .sp-page{padding:22px var(--pad)}
 
 /* ══════════ AI플랫마켓 챗도우미 (내부 대화) — 뷰포트 고정 3단 레이아웃 ══════════ */
@@ -1356,42 +1382,27 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       </div><!-- /bc-grid -->
 
 
-      <!-- ★ 오늘의 주요뉴스 2분할 패널 (홈 메인) ★ -->
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="display:flex;align-items:center;gap:6px">
-            <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
-            <span style="font-size:.9rem;font-weight:900;color:var(--navy)">오늘의 주요뉴스</span>
-            <span id="newsTodayTime" style="font-size:.65rem;background:var(--red);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700"></span>
-          </div>
-          <div style="display:flex;gap:4px;align-items:center">
-            <button id="todayPanelBtn1" onclick="switchTodayPanel('dom')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700">🇰🇷 국내</button>
-            <button id="todayPanelBtn2" onclick="switchTodayPanel('global')" style="font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700">🌐 글로벌</button>
-            <span class="sh-m" onclick="showPage('news')" style="font-size:.72rem">전체 뉴스 ›</span>
-          </div>
-        </div>
-        <div id="todayNewsWrap" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div id="todayDomPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
-            <div style="background:var(--navy);padding:7px 12px;display:flex;align-items:center;gap:6px">
-              <span style="font-size:.72rem;font-weight:900;color:#fff">🇰🇷 국내 주요뉴스</span>
-              <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
-            </div>
-            <ul id="todayDomList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
-              <li style="padding:9px 12px;color:var(--g4)">불러오는 중...</li>
-            </ul>
-            <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('dom')">🔄 새로고침</div>
-          </div>
-          <div id="todayGlobalPanel" style="border:var(--bd);border-radius:var(--r);overflow:hidden">
-            <div style="background:#1565c0;padding:7px 12px;display:flex;align-items:center;gap:6px">
-              <span style="font-size:.72rem;font-weight:900;color:#fff">🌐 글로벌 주요뉴스</span>
-              <span style="margin-left:auto;width:7px;height:7px;background:#f44336;border-radius:50%;animation:blink 1.2s infinite"></span>
-            </div>
-            <ul id="todayGlobalList" style="margin:0;padding:0;list-style:none;font-size:.78rem;line-height:1.55">
-              <li style="padding:9px 12px;color:var(--g4)">불러오는 중...</li>
-            </ul>
-            <div style="padding:6px 12px;background:var(--g1);border-top:var(--bd);cursor:pointer;font-size:.7rem;color:var(--g4);text-align:right" onclick="fetchTodayNews('global')">🔄 새로고침</div>
-          </div>
-        </div>
+      <!-- ★ 오늘의 주요뉴스: 국내/글로벌 2열 패널 (홈 메인) ★ -->
+      <div style="margin-bottom:16px">
+        <div class="tn-title-row">
+          <div class="tn-title">
+            <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
+            <b>오늘의 주요뉴스</b>
+            <span id="newsTodayTime" class="tn-time"></span>
+          </div>
+          <span class="sh-m tn-all" onclick="showPage('news')">전체 뉴스 ›</span>
+        </div>
+        <div id="todayNewsWrap" class="tn-wrap">
+          <div id="todayDomPanel" class="tn-panel" onclick="openTodayNews('dom', event)">
+            <div class="tn-hd dom"><span>🇰🇷 국내 주요뉴스</span><span>›</span></div>
+            <ul id="todayDomList" class="tn-list"><li class="tn-empty">불러오는 중...</li></ul>
+          </div>
+          <div id="todayGlobalPanel" class="tn-panel" onclick="openTodayNews('global', event)">
+            <div class="tn-hd glb"><span>🌐 글로벌 주요뉴스</span><span>›</span></div>
+            <ul id="todayGlobalList" class="tn-list"><li class="tn-empty">불러오는 중...</li></ul>
+          </div>
+        </div>
+        <div id="todayRefreshBtn" class="tn-refresh" onclick="refreshTodayNews()">🔄 새로고침</div>
       </div>
 
 
@@ -5463,12 +5474,9 @@ function _renderTodayList(panel, items) {
     const title = (item.title || item.headline || '').replace(/<[^>]+>/g, '').slice(0, panel === 'global' ? 90 : 60);
     const link  = item.link || item.url || '#';
     const dot   = i < 2 ? dotColor : 'var(--g3)';
-    return `<li style="padding:8px 12px;border-bottom:var(--bd);cursor:pointer;display:flex;gap:6px;align-items:flex-start"
-      onclick="window.open('${link}','_blank')"
-      onmouseover="this.style.background='var(--g1)'"
-      onmouseout="this.style.background=''">
+    return `<li class="tn-item" onclick="window.open('${link}','_blank')">
       <span style="color:${dot};font-size:.6rem;font-weight:700;flex-shrink:0;padding-top:3px">●</span>
-      <span style="line-height:1.5">${title || '기사 제목 없음'}</span>
+      <span class="tn-t">${title || '기사 제목 없음'}</span>
     </li>`;
   }).join('');
 }
@@ -5501,34 +5509,38 @@ function _renderTodayFallback(panel) {
   _renderTodayList(panel, items);
 }
 
-function switchTodayPanel(panel) {
-  const b1 = document.getElementById('todayPanelBtn1');
-  const b2 = document.getElementById('todayPanelBtn2');
-  const domP    = document.getElementById('todayDomPanel');
-  const globalP = document.getElementById('todayGlobalPanel');
-  if (!b1 || !domP) return;
-  const isMobile = window.innerWidth < 700;
-  if (!isMobile) { // 데스크탑: 양쪽 항상 표시, 활성 버튼만 구분
-    b1.style.cssText = panel === 'dom'
-      ? 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;font-weight:700'
-      : 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700';
-    b2.style.cssText = panel === 'global'
-      ? 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid #1565c0;background:#1565c0;color:#fff;cursor:pointer;font-weight:700'
-      : 'font-size:.7rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--g3);background:#fff;color:var(--g4);cursor:pointer;font-weight:700';
-    domP.style.display    = '';
-    globalP.style.display = '';
-    domP.style.outline    = panel === 'dom'    ? '2px solid var(--navy)' : '';
-    globalP.style.outline = panel === 'global' ? '2px solid #1565c0'    : '';
-    return;
+/* 뉴스 패널의 머리말·빈 곳을 누르면 해당 뉴스 페이지로 이동한다.
+   기사 항목(제목)이나 안의 버튼을 누른 경우에는 그 동작(기사 열기·다시 시도)이 우선이다. */
+function openTodayNews(panel, ev) {
+  if (ev && ev.target && ev.currentTarget) {
+    const hit = ev.target.closest('[onclick]');
+    if (hit && hit !== ev.currentTarget) return;
   }
-  // 모바일: 하나만 표시
-  domP.style.display    = panel === 'dom'    ? '' : 'none';
-  globalP.style.display = panel === 'global' ? '' : 'none';
-  b1.style.background = panel === 'dom'    ? 'var(--navy)' : '#fff';
-  b1.style.color      = panel === 'dom'    ? '#fff'        : 'var(--g4)';
-  b2.style.background = panel === 'global' ? '#1565c0'     : '#fff';
-  b2.style.color      = panel === 'global' ? '#fff'        : 'var(--g4)';
+  showPage(panel === 'dom' ? 'news' : 'global');
 }
+
+/* 아래 새로고침: 국내·글로벌 두 패널과 "몇 시 기준" 표시를 함께 갱신한다 */
+async function refreshTodayNews() {
+  const btn = document.getElementById('todayRefreshBtn');
+  if (!btn || btn.dataset.busy === '1') return;
+  btn.dataset.busy = '1';
+  btn.textContent = '⏳ 불러오는 중...';
+  _todayNewsCache.ts = 0;                                   // 5분 캐시 무효화
+  try { await Promise.all([fetchTodayNews('dom'), fetchTodayNews('global')]); } catch (e) {}
+  const t = document.getElementById('newsTodayTime');
+  if (t) { const n = new Date(); t.textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')} 기준`; }
+  btn.textContent = '🔄 새로고침';
+  btn.dataset.busy = '0';
+}
+
+/* 홈이 기본 화면인 첫 접속에서도 뉴스 패널이 바로 채워지도록 한 번 불러온다.
+   (원래는 showPage('home') 가 실행될 때만 불러왔음. 5분 캐시가 있어 중복 호출은 없다) */
+document.addEventListener('DOMContentLoaded', function () {
+  setTimeout(function () {
+    const home = document.getElementById('page-home');
+    if (home && home.classList.contains('act')) initTodayNewsPanel();
+  }, 600);
+});
 
 /* ══════════════════════════════════════════
    스포츠 & 건강 뉴스
