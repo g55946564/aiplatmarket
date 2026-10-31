@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>더착한쇼핑 | AI가 연결하는 대한민국 생활경제 플랫폼</title>
 <meta name="description" content="생산자·상품·가게·소비자·AI를 연결하는 대한민국 생활경제 상생 플랫폼">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -31,21 +31,27 @@ body{margin:0;font-family:var(--fn);background:var(--g1);color:#1c2635;line-heig
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 
-/* ══════════════════════════════════════════════════════════════
-   2. AI플랫마켓 실제 GNB 스타일 (AIPLATMARKET_HEADER_FOOTER.html 그대로)
-══════════════════════════════════════════════════════════════ */
+/* 2. AI플랫마켓 표준 GNB·Footer CSS (AIPLATMARKET_HEADER_FOOTER_1.html · 2026.10.23 그대로) */
+nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
+.gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
+.gnb-top-scroll{padding-left:0px}
+.gnb-top-scroll::-webkit-scrollbar{display:none}
+.gnb-top-fixed{padding:4px 0 4px 2px}
+.gnb-sub{padding:0;scrollbar-width:none}
+.gnb-sub::-webkit-scrollbar{display:none}
+.gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
 .gnb-cat-bar-wrap{position:relative}
-.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.gnb-cat-bar::-webkit-scrollbar{display:none}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
 .gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
 .gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
-.gnb-scroll-hint.show{display:flex}
 .gcat{position:relative;flex-shrink:0}
 .gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
 .gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
 .caret{font-size:.6rem;transition:transform .2s;opacity:.7}
 .gcat.open .caret{transform:rotate(180deg)}
-.gcdrop{display:none;position:fixed;background:#fff;border:.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
 .gcat.open .gcdrop{display:block}
 .gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 .gcdrop-list{display:flex;flex-direction:column;gap:2px}
@@ -55,9 +61,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .gcdi-txt{display:flex;flex-direction:column;min-width:0}
 .gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
 .gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
-.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:4px;flex-shrink:0;white-space:nowrap;display:inline-block;vertical-align:middle}
 .gcdi-badge.ext{background:#fce8e6;color:var(--red)}
-.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
 .gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
 .gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-reg:hover{background:rgba(46,204,113,.3)}
@@ -65,7 +71,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .gcbtn-chat:hover{background:rgba(201,168,76,.3)}
 .gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
-@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box}
+.ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+.ft-copy{font-size:.7rem}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap}
+.ft-links a{font-size:.73rem;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
 
 /* ══════════════════════════════════════════════════════════════
    3. 쇼핑 서브 헤더 (검색 + AP + 장바구니 + 로그인)
@@ -76,7 +89,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   box-shadow:0 2px 8px rgba(13,31,53,.07);
 }
 .shop-subhdr-in{
-  max-width:1280px;margin:0 auto;padding:10px var(--pad);
+  margin:0 auto;padding:10px var(--pad);
   display:flex;align-items:center;gap:10px;
 }
 .sh-brand{flex-shrink:0;cursor:pointer;line-height:1.15}
@@ -108,7 +121,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
    5. 광고 슬롯 시스템 (관리자에서 설정)
 ══════════════════════════════════════════════════════════════ */
 .ad-slot{width:100%;overflow:hidden}
-.ad-slot-inner{max-width:1280px;margin:0 auto;padding:8px var(--pad)}
+.ad-slot-inner{margin:0 auto;padding:8px var(--pad)}
 .ad-banner{
   border-radius:var(--cr);overflow:hidden;cursor:pointer;
   display:flex;align-items:center;justify-content:center;min-height:72px;
@@ -129,7 +142,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    7. 공통 섹션 헤더
 ══════════════════════════════════════════════════════════════ */
-.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:18px var(--pad) 12px}
 .sec-t{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;color:var(--navy);letter-spacing:-.4px}
 .sec-more{font-size:.76rem;color:var(--g4);cursor:pointer;transition:color .2s}
 .sec-more:hover{color:var(--navy)}
@@ -143,11 +156,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    8. 히어로
 ══════════════════════════════════════════════════════════════ */
-.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);color:#fff;padding:32px 0 28px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 45%,var(--grn2) 100%);color:#fff;padding:24px 20px;border-radius:var(--cr);position:relative;overflow:hidden}
 .hero::before,.hero::after{content:'';position:absolute;border-radius:50%}
 .hero::before{top:-40px;right:-20px;width:200px;height:200px;background:rgba(201,168,76,.1)}
 .hero::after{bottom:-50px;left:40px;width:160px;height:160px;background:rgba(26,122,74,.15)}
-.hero-in{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 var(--pad)}
+.hero-in{position:relative;z-index:1}
 .h-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.35);color:var(--gold);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.3px}
 .h-title{font-family:var(--fs);font-size:1.5rem;font-weight:900;line-height:1.25;margin:0 0 8px;letter-spacing:-.5px}
 .h-sub{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:14px}
@@ -167,7 +180,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    9. 상품 카드
 ══════════════════════════════════════════════════════════════ */
-.prod-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px;max-width:1280px;margin-left:auto;margin-right:auto}
+.prod-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
 .prod-scroll::-webkit-scrollbar{display:none}
 .prod-row{display:flex;gap:10px;width:max-content}
 /* 소형 */
@@ -197,8 +210,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    10. 그리드 레이아웃
 ══════════════════════════════════════════════════════════════ */
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
-.g3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px;max-width:1280px;margin-left:auto;margin-right:auto}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
+.g3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 var(--pad) 12px}
 @media(min-width:640px){.g3{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:960px){.g2{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(4,1fr)}}
 
@@ -206,7 +219,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
    11. 더착한 스토리 카드
 ══════════════════════════════════════════════════════════════ */
 .story-sec{background:var(--story);padding-bottom:4px}
-.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px;max-width:1280px;margin-left:auto;margin-right:auto}
+.story-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 4px}
 .story-scroll::-webkit-scrollbar{display:none}
 .story-row{display:flex;gap:12px;width:max-content}
 .sc{width:258px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
@@ -248,7 +261,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    13. 라이브 카드
 ══════════════════════════════════════════════════════════════ */
-.lv-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px;max-width:1280px;margin-left:auto;margin-right:auto}
+.lv-scroll{overflow-x:auto;scrollbar-width:none;padding:0 var(--pad) 16px}
 .lv-scroll::-webkit-scrollbar{display:none}
 .lv-row{display:flex;gap:12px;width:max-content}
 .lvc{width:220px;flex-shrink:0;background:#fff;border-radius:var(--cr);border:var(--bd);cursor:pointer;transition:transform .2s,box-shadow .2s;overflow:hidden}
@@ -265,16 +278,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    14. 입점 모집 배너 / 에코시스템 / 혜택
 ══════════════════════════════════════════════════════════════ */
-.rec-banner{max-width:calc(1280px - var(--pad) * 2);margin:0 auto 16px;display:block;background:linear-gradient(135deg,var(--grn2),var(--grn));border-radius:var(--cr);padding:20px var(--pad);color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
+.rec-banner{margin:0 var(--pad) 16px;display:block;background:linear-gradient(135deg,var(--grn2),var(--grn));border-radius:var(--cr);padding:20px var(--pad);color:#fff;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
 .rec-banner:hover{transform:translateY(-2px)}
 .rec-banner::after{content:'→';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:rgba(255,255,255,.4)}
 .rb-lb{font-size:.66rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.75);margin-bottom:4px}
 .rb-ti{font-family:var(--fs);font-size:1.1rem;font-weight:900;margin-bottom:4px}
 .rb-sb{font-size:.78rem;color:rgba(255,255,255,.8)}
 .eco-sec{background:var(--navy);padding:20px 0}
-.eco-sec-in{max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+.eco-sec-in{margin:0 auto;padding:0 var(--pad)}
 .eco-lb{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;margin-bottom:12px}
-.eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:1280px;margin-left:auto;margin-right:auto}
+.eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .eco-ch{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.7);font-size:.67rem}
 .eco-ch:hover{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)}
 .eco-ico{font-size:1.2rem;display:block;margin-bottom:4px}
@@ -284,7 +297,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    15. 카테고리 분류 시스템 (동적 대/중/소분류)
 ══════════════════════════════════════════════════════════════ */
-.cat-browse{padding:var(--pad);max-width:1280px;margin:0 auto}
+.cat-browse{padding:var(--pad);margin:0 auto}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .cat-card{background:var(--g1);border:var(--bd);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s}
 .cat-card:hover,.cat-card.on{background:var(--navy);color:#fff;border-color:var(--navy)}
@@ -297,7 +310,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    16. 판매자 요금제 (Settlement Engine)
 ══════════════════════════════════════════════════════════════ */
-.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad);max-width:1280px;margin:0 auto}
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:var(--pad);margin:0 auto}
 @media(min-width:768px){.plan-grid{grid-template-columns:repeat(4,1fr)}}
 .plan-card{border-radius:var(--cr);overflow:hidden;border:2px solid var(--g2);transition:all .2s;cursor:pointer}
 .plan-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,31,53,.12)}
@@ -313,7 +326,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .plan-item:last-child{border:none}
 .plan-check{color:var(--grn);font-weight:700}
 /* 수수료 계산기 */
-.fee-calc{background:var(--g1);border-radius:var(--cr);padding:var(--pad);margin:0 auto 16px;max-width:calc(1280px - var(--pad) * 2)}
+.fee-calc{background:var(--g1);border-radius:var(--cr);padding:var(--pad);margin:0 var(--pad) 16px;}
 .fee-calc-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .fee-input{width:100%;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.86rem;font-family:var(--fn);outline:none;margin-bottom:10px}
 .fee-result{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
@@ -326,12 +339,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* ══════════════════════════════════════════════════════════════
    17. FCS (공정기여도) / AP 시스템
 ══════════════════════════════════════════════════════════════ */
-.fcs-level-bar{display:flex;gap:0;margin:0 auto 16px;max-width:calc(1280px - var(--pad) * 2);border-radius:var(--cr);overflow:hidden;border:var(--bd)}
+.fcs-level-bar{display:flex;gap:0;margin:0 var(--pad) 16px;border-radius:var(--cr);overflow:hidden;border:var(--bd)}
 .fcs-lv{flex:1;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--g1);border-right:var(--bd);font-size:.72rem;font-weight:700}
 .fcs-lv:last-child{border-right:none}
 .fcs-lv.on{background:var(--navy);color:#fff}
 .fcs-lv-ico{display:block;font-size:1rem;margin-bottom:3px}
-.fcs-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 var(--pad) 16px;max-width:1280px;margin:0 auto}
+.fcs-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 var(--pad) 16px;margin:0 auto}
 @media(min-width:640px){.fcs-items{grid-template-columns:repeat(3,1fr)}}
 .fcs-item{background:#fff;border:var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .2s}
 .fcs-item:hover{border-color:var(--gold);background:rgba(201,168,76,.05)}
@@ -378,12 +391,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .upg-ico{font-size:2rem;margin-bottom:10px}
 .upg-txt{font-size:.84rem;line-height:1.7;margin-bottom:12px}
 .upg-badge{display:inline-block;background:var(--navy);color:#fff;font-size:.72rem;font-weight:700;padding:4px 16px;border-radius:20px}
-.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad);max-width:1280px;margin:0 auto}
+.seller-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:var(--pad);margin:0 auto}
 .sm-i{background:#fff;border:var(--bd);border-radius:var(--cr);padding:16px 8px;text-align:center;cursor:pointer;transition:all .2s}
 .sm-i:hover{border-color:var(--grn);background:rgba(26,122,74,.04)}
 .sm-ico{font-size:1.5rem;margin-bottom:6px}
 .sm-lb{font-size:.75rem;font-weight:700;color:var(--navy)}
-.ai-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) auto 0;max-width:calc(1280px - var(--pad) * 2)}
+.ai-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(26,122,74,.05));border:1px solid rgba(201,168,76,.25);border-radius:var(--cr);padding:14px;margin:var(--pad) var(--pad) 0;}
 .ai-box-t{font-size:.84rem;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .ai-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .ai-chip{background:#fff;border:var(--bd);border-radius:12px;padding:3px 10px;font-size:.7rem;color:var(--g4);font-weight:600}
@@ -424,17 +437,63 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--navy);color:#fff;padding:9px 20px;border-radius:20px;font-size:.82rem;font-weight:600;z-index:9999;pointer-events:none;transition:transform .3s ease;white-space:nowrap}
 #toast.on{transform:translateX(-50%) translateY(0)}
 
-/* ══════════════════════════════════════════════════════════════
-   22. AI플랫마켓 표준 푸터 (AIPLATMARKET_HEADER_FOOTER.html)
-══════════════════════════════════════════════════════════════ */
-footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
-.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box}
-.ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.ft-logo{font-family:var(--fn);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
-.ft-copy{font-size:.7rem}
-.ft-links{display:flex;gap:12px;flex-wrap:wrap}
-.ft-links a{font-size:.73rem;transition:color .2s}
-.ft-links a:hover{color:var(--gold)}
+
+/* ═ v1.2 : PC 80% 레이아웃 · 타이틀바 · 캐러셀 · 판촉물 ═ */
+.gnb-cat-bar-wrap{min-width:0;width:100%;max-width:100vw;overflow:hidden}
+.pc-wrap{background:#fff;min-height:100vh;display:flex;flex-direction:column}
+.shop-content{flex:1;min-width:0}
+@media(min-width:1200px){.pc-wrap{width:80%;margin:0 auto;box-shadow:0 0 40px rgba(13,31,53,.1)}}
+.ft-logo{font-family:var(--fn)}
+.gnb-cat-bar::-webkit-scrollbar-track{background:rgba(0,0,0,.18)}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4);border-radius:4px}
+.tb-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 16px;background:var(--navy)}
+.tb-logo{font-weight:900;font-size:1.05rem;color:#fff;font-family:var(--fs);white-space:nowrap}
+.tb-logo em{color:var(--gold);font-style:normal}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-home{font-size:.76rem;color:rgba(255,255,255,.7);white-space:nowrap}
+.tb-home:hover{color:#fff}
+.hm-s{display:none}
+.tb-login{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:4px 12px;border-radius:14px;font-size:.74rem;font-weight:800;white-space:nowrap;transition:background .15s}
+.tb-login:hover{background:rgba(201,168,76,.32)}
+.sh-icons{gap:0;margin-left:auto}
+.sh-btn{padding:4px 5px}
+@media(max-width:640px){
+  .sh-brand-sub{display:none}
+  .shop-subhdr-in{gap:6px;padding:8px 6px 8px 10px}
+  .sh-brand-main{font-size:1.05rem}
+  .sh-search input{padding:8px 32px 8px 12px;font-size:.82rem}
+  .sh-btn{padding:4px 3px}
+}
+@media(max-width:480px){.hm-l{display:none}.hm-s{display:inline}.tb-bar{padding:8px 10px}}
+.top-row{padding:12px var(--pad) 6px;background:#fff}
+.pcar{position:relative}
+.pcar-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pcar-track::-webkit-scrollbar{display:none}
+.pcar-card{flex:0 0 86%;min-width:0;scroll-snap-align:start;position:relative;overflow:hidden;border-radius:var(--cr);color:#fff;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:22px 20px;min-height:250px}
+@media(min-width:640px){.pcar-card{flex-basis:calc((100% - 12px)/2)}}
+@media(min-width:1100px){.pcar-card{flex-basis:calc((100% - 24px)/3)}}
+.pcar-card.hero{cursor:default;justify-content:flex-start}
+.pcar-card.hero .h-title{font-size:1.3rem;margin-bottom:6px}
+.pcar-card.hero .h-sub{font-size:.76rem;line-height:1.6;margin-bottom:10px}
+.pcar-card.hero .h-btns{gap:6px;margin-bottom:10px}
+.pcar-card.hero .btn-gold,.pcar-card.hero .btn-ghost{padding:6px 12px;font-size:.74rem}
+.pcar-card.hero .hero-ap{padding:7px 10px;margin-bottom:10px}
+.pcar-card.hero .hero-ap-ico{font-size:1.2rem}
+.pcar-card.hero .hero-ap-t{font-size:.74rem}
+.pcar-card.hero .h-stats{gap:14px;padding-top:10px}
+.pcar-card.hero .hs-n{font-size:1.05rem}
+.pcar-ico{font-size:2.2rem;line-height:1}
+.pcar-tag{font-size:.66rem;font-weight:800;letter-spacing:.08em;opacity:.8}
+.pcar-ti{font-family:var(--fs);font-size:1.2rem;font-weight:900;line-height:1.3}
+.pcar-ds{font-size:.8rem;opacity:.88;line-height:1.65}
+.pcar-go{align-self:flex-start;margin-top:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:5px 14px;border-radius:16px;font-size:.74rem;font-weight:700}
+.pcar-nav{position:absolute;top:calc(50% - 10px);transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--navy);font-size:1.2rem;line-height:1;z-index:3;box-shadow:0 2px 8px rgba(13,31,53,.3)}
+.pcar-nav.prev{left:-8px}.pcar-nav.next{right:-8px}
+.pcar-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.pcar-dot{width:7px;height:7px;padding:0;border-radius:4px;background:var(--g3);transition:all .25s}
+.pcar-dot.on{width:18px;background:var(--grn)}
+@media(max-width:640px){.pcar-nav{display:none}.pcar-card{min-height:230px}}
+.pm-tag{display:inline-block;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:10px}
 </style>
 </head>
 <body>
@@ -443,74 +502,170 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
      전체 헤더 STICKY WRAPPER
      ⚠️ body 최상단 · max-width 없음 → 항상 전체 너비 유지
 ══════════════════════════════════════════════════════════════ -->
+<div class="pc-wrap">
 <div id="all-hdr" style="position:sticky;top:0;z-index:900;box-shadow:0 2px 10px rgba(13,31,53,.1)">
 
-  <!-- ① AI플랫마켓 탑바 (실제 코드 그대로) -->
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 16px;background:var(--navy)">
-    <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
-    <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
+  <!-- ① 타이틀 바 : 로고 + 홈으로 + 로그인(최상단 우측) -->
+  <div class="tb-bar">
+    <a href="https://aiplatmarket.com/" class="tb-logo">AI<em>PLAT</em>MARKET</a>
+    <div class="tb-right">
+      <a href="https://aiplatmarket.com/" class="tb-home"><span class="hm-l">← AI플랫마켓 홈으로</span><span class="hm-s">← 홈으로</span></a>
+      <button class="tb-login" onclick="doLogin()">👤 로그인</button>
+    </div>
   </div>
 
-  <!-- ② AI플랫마켓 GNB 카테고리 바 (실제 코드 그대로) -->
+  <!-- ② AI플랫마켓 표준 GNB 카테고리바 (AIPLATMARKET_HEADER_FOOTER_1.html 그대로) -->
   <div class="gnb-cat-bar-wrap">
     <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
-      <div class="gcat" id="gcat-ai"><button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-ai"><div class="gcdrop-grid">
-          <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
-          <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
-          <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
-          <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#promo-center','_blank');closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화</span></span></a>
-          <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로</b><span class="gcdi-desc">독립 Platform</span></span></a>
-          <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-          <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
-          <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        </div></div>
+
+      <!-- 1. AI 플랫폼 -->
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 탐색존 <span class="gcdi-badge" style="background:var(--red);color:#fff">인기</span></b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/metazone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌐</span><span class="gcdi-txt"><b>AI메타플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/growth" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌱</span><span class="gcdi-txt"><b>AI성장플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/academy" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎓</span><span class="gcdi-txt"><b>AI인생성장사관학교</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/trading" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📈</span><span class="gcdi-txt"><b>AI매매추천·검증시스템</b><span class="gcdi-desc">추천 검증 · 투자 참고용</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>            
+            <a class="gcdi platform" href="/promo" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/video" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          </div>
+        </div>
       </div>
+
       <div class="gcat-div"></div>
-      <div class="gcat" id="gcat-comm"><button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-comm"><div class="gcdrop-list">
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
-          <a class="gcdi" href="/shop" style="font-weight:700;color:var(--grn)" onclick="closeCats()">🛍️ 더착한쇼핑 <span class="gcdi-badge">독립</span></a>
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
-        </div></div>
+
+      <!-- AI Hub: 외부 AI 서비스 탐색 + 내부 챗도우미 -->
+      <div class="gcat" id="gcat-aihub">
+        <button class="gcbtn" onclick="toggleCat('aihub',event)">🧠 AI Hub <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-aihub">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('ai-assistant');closeCats()"><span class="gcdi-ico">🤖</span><span class="gcdi-txt"><b>AI플랫마켓 챗도우미</b><span class="gcdi-desc">플랫폼 안내 · 일반 AI 상담</span></span></a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" onclick="showPage('ai-hub');closeCats()"><span class="gcdi-ico">🧭</span><span class="gcdi-txt"><b>AI 서비스 전체보기</b><span class="gcdi-desc">대화·이미지·디자인·영상·코딩 등</span></span></a>
+          </div>
+        </div>
       </div>
+
       <div class="gcat-div"></div>
-      <div class="gcat" id="gcat-biz"><button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-biz"><div class="gcdrop-list">
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업</a>
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터</a>
-        </div></div>
+
+      <!-- 2. Commerce -->
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+            <a class="gcdi" onclick="showPage('local-products');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 더착한상품</a>
+            <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
       </div>
+
       <div class="gcat-div"></div>
-      <div class="gcat" id="gcat-cmt"><button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-cmt"><div class="gcdrop-list">
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티</a>
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
-        </div></div>
+
+      <!-- 3. Business -->
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('startup');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('localcenter');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="showPage('create-sanglife');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+            <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
       </div>
+
       <div class="gcat-div"></div>
-      <div class="gcat" id="gcat-media"><button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-media"><div class="gcdrop-list">
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
-        </div></div>
+
+      <!-- 4. Community -->
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('community');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
       </div>
+
       <div class="gcat-div"></div>
-      <div class="gcat" id="gcat-life"><button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
-        <div class="gcdrop" id="gcdrop-life"><div class="gcdrop-list">
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
-          <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
-        </div></div>
+
+      <!-- 5. Media -->
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('live');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);showPage('home');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);showPage('home');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);showPage('home');closeCats()">발라드</a>
+          </div>
+        </div>
       </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 6. Lifestyle -->
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('sports');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="showPage('travel');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 7. 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/newspaper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+            <a class="gcdi" href="/newspaper#welfare" target="_blank" rel="noopener" onclick="closeCats()">🤝 복지신문</a>
+            <a class="gcdi" href="/newspaper#local" target="_blank" rel="noopener" onclick="closeCats()">🏘️ 내고장뉴스</a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">📄 종이신문 그대로 보기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 입점신청 고정 -->
       <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
-        <button class="gcbtn-reg" onclick="showV('apply')">✅ 입점신청</button>
-        <button class="gcbtn-fb" onclick="toast('의견 보내기 준비 중')">💡 의견</button>
+        <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
         <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
       </div>
-    </div>
+
+    </div><!-- /gnb-cat-bar -->
     <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
     <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
-  </div>
+    </div><!-- /gnb-cat-bar-wrap -->
 
   <!-- ③ 더착한쇼핑 서브헤더 (검색 + AP + 장바구니 + 로그인) -->
   <div class="shop-subhdr">
@@ -535,7 +690,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
       <div class="sh-icons">
         <div class="sh-btn ap" onclick="openApModal()"><span class="ico">💎</span><span id="ap-hdr">AP 0P</span></div>
         <div class="sh-btn" onclick="toast('장바구니 기능 준비 중')"><span class="ico">🛒</span><span>장바구니</span></div>
-        <div class="sh-btn login" onclick="doLogin()"><span class="ico">👤</span><span>로그인</span></div>
       </div>
     </div>
   </div>
@@ -550,6 +704,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
       <div class="sctab"     data-v="stories"   onclick="showV('stories')">📖 더착한스토리</div>
       <div class="sctab"     data-v="live"      onclick="showV('live')">🎥 라이브</div>
       <div class="sctab"     data-v="cat"       onclick="showV('cat')">📂 전체카테고리</div>
+      <div class="sctab"     data-v="promo"     onclick="showV('promo')">🎁 판촉물</div>
       <div class="sctab"     data-v="local"     onclick="showV('local')">🌾 지역특산품</div>
       <div class="sctab"     data-v="korea"     onclick="showV('korea')">🇰🇷 국산관</div>
       <div class="sctab"     data-v="global"    onclick="showV('global')">🌍 글로벌관</div>
@@ -568,18 +723,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
 <!-- ══════════════════════════════════════════════════════════════
      광고 슬롯 — 상단 배너 (관리자에서 설정)
 ══════════════════════════════════════════════════════════════ -->
-<div class="ad-slot" id="ad-top" style="background:#fff">
-  <div class="ad-slot-inner">
-    <div class="ad-banner" onclick="toast('광고 문의: shop@aiplatmarket.com')">
-      <div style="text-align:center">
-        <div style="font-size:.68rem;color:rgba(255,255,255,.6);margin-bottom:4px">광고 슬롯 [TOP-BANNER-1] · 관리자에서 설정</div>
-        <div style="font-size:.9rem;font-weight:800">더착한쇼핑 오픈 기념 — 입점 셀러 모집 중 📢</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <!-- ══════════════════════════════════════════════════════════════
      메인 콘텐츠 (max-width 1280px 중앙 정렬)
 ══════════════════════════════════════════════════════════════ -->
@@ -589,7 +732,10 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
 <!-- ─────────────────── VIEW: HOME ─────────────────── -->
 <div id="v-home" class="view on">
 
-  <section class="hero">
+  <section class="top-row">
+  <div class="pcar" id="pcar" role="region" aria-label="메뉴별 안내">
+    <div class="pcar-track" id="pcarTrack">
+    <div class="pcar-card hero">
     <div class="hero-in">
       <div class="h-badge">✨ ChatDoumi AI Core 실시간 큐레이션</div>
       <h1 class="h-title">생산자·가게·소비자가<br>AI로 연결되는 쇼핑</h1>
@@ -610,7 +756,13 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
         <div class="hs"><span class="hs-n" id="strg">0</span><span class="hs-l">활동 지역</span></div>
       </div>
     </div>
-  </section>
+      </div><!-- /히어로 카드 -->
+    </div><!-- /pcar-track -->
+    <button class="pcar-nav prev" onclick="pcarTo(pcarI-1)" aria-label="이전">‹</button>
+    <button class="pcar-nav next" onclick="pcarTo(pcarI+1)" aria-label="다음">›</button>
+    <div class="pcar-dots" id="pcarDots"></div>
+  </div>
+</section>
 
   <!-- 광고 슬롯 [HOME-MID-1] -->
   <div style="padding:8px var(--pad);background:#fff"><div class="ad-banner" style="min-height:56px;font-size:.78rem" onclick="toast('광고 문의: shop@aiplatmarket.com')">광고 슬롯 [HOME-MID-1] · 배너/추천상품/이벤트</div></div>
@@ -675,7 +827,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
   <!-- 오늘의 혜택 -->
   <section style="background:#fff;border-top:var(--bd);padding-bottom:20px">
     <div class="sec-hd"><div class="sec-t">🎁 오늘의 혜택</div></div>
-    <div style="display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;max-width:1280px;margin:0 auto">
+    <div style="display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;margin:0 auto">
       <div class="bfc" style="background:linear-gradient(135deg,#7a5a10,var(--gold))" onclick="openApModal()"><div class="bfc-ico">💎</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">가입 즉시 적립</div><div style="font-size:1rem;font-weight:800">+1,000 AP</div></div>
       <div class="bfc" style="background:linear-gradient(135deg,var(--grn2),var(--grn))" onclick="showV('cert')"><div class="bfc-ico">🏅</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">더착한인증</div><div style="font-size:1rem;font-weight:800">우선 추천</div></div>
       <div class="bfc" style="background:linear-gradient(135deg,var(--navy),var(--navy2))" onclick="toast('공동구매 기능 준비 중')"><div class="bfc-ico">🤝</div><div style="font-size:.66rem;color:rgba(255,255,255,.7)">공동구매</div><div style="font-size:1rem;font-weight:800">최대 30%↓</div></div>
@@ -750,6 +902,18 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
 
 
 <!-- ─────────────────── VIEW: 준비중 (지역특산품·국산관·글로벌관·렌탈) ─────────────────── -->
+<!-- ─── VIEW: 판촉물 ─── -->
+<div id="v-promo" class="view">
+  <div class="vhd gold"><div class="vhd-ti">🎁 판촉물</div><div class="vhd-sb">인쇄물 · 포장재 · 사인물 · 기념품(답례품) — 맞춤 제작 · 견적 문의</div></div>
+  <div class="filter-bar" id="promoSubs"></div>
+  <div class="g2" style="padding-top:12px" id="promoGrid"></div>
+  <div class="rec-banner" onclick="showV('apply')">
+    <div class="rb-lb">판촉물·인쇄·제작 업체 입점 모집</div>
+    <div class="rb-ti">우리 업체 판촉물을 더착한쇼핑에 등록하세요</div>
+    <div class="rb-sb">인쇄·포장·사인·기념품 제작 업체 누구나 셀러 신청 가능</div>
+  </div>
+</div>
+
 <div id="v-local" class="view"><div class="vhd green"><div class="vhd-ti">🌾 지역특산품관</div><div class="vhd-sb">각 지역 대표 특산물</div></div><div class="upg"><div class="upg-ico">🌾</div><p class="upg-txt">지역 생산자와 협력하여 특산품관을 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div><div class="rec-banner" style="margin-top:0" onclick="showV('apply')"><div class="rb-lb">지역특산품 생산자 셀러 모집 중</div><div class="rb-ti">내 지역 특산품을 전국에 알리세요</div><div class="rb-sb">AI가 스토리·홍보문·SNS를 자동 생성</div></div></div>
 <div id="v-korea" class="view"><div class="vhd navy"><div class="vhd-ti">🇰🇷 국산관</div><div class="vhd-sb">Made in Korea 엄선 상품</div></div><div class="upg"><div class="upg-ico">🇰🇷</div><p class="upg-txt">국산 상품을 엄선하여 준비 중입니다</p><div class="upg-badge">업그레이드 중</div></div></div>
 <div id="v-global" class="view"><div class="vhd navy"><div class="vhd-ti">🌍 글로벌관</div><div class="vhd-sb">원산지 국가 투명 공개</div></div><div class="upg"><div class="upg-ico">🌍</div><p class="upg-txt">원산지 투명 공개 글로벌 상품관 준비 중</p><div class="upg-badge">업그레이드 중</div></div></div>
@@ -921,37 +1085,71 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto}
 <footer>
   <div class="ft-outer">
     <div class="ft">
-      <div style="min-width:240px">
-        <div class="ft-logo">AI PLATMARKET · 더착한쇼핑</div>
-        <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">AI가 연결하는 대한민국 생활경제 플랫폼</div>
-        <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
-          © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
-          대표: 김형식 &nbsp;|&nbsp; 사업자등록번호: 227-18-34338<br>
-          주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
-          TEL: 0505-505-9000<br>
-          <span style="position:relative;display:inline-block">
-            <span onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
-            <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
-              <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee">📮 newstar114@naver.com</a>
-              <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600">📮 a55946564@gmail.com</a>
-            </div>
-          </span>
-        </div>
+<!-- 좌: 브랜드 + 사업자 정보 -->
+    <div style="min-width:240px">
+      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+        사업자등록번호: 227-18-34338<br>
+        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+        TEL: 0505-505-9000<br>
+        <!-- 이메일 드롭다운 -->
+        <span style="position:relative;display:inline-block">
+          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
+            </a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
+            </a>
+          </div>
+        </span>
       </div>
-      <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
-        <div class="ft-links">
-          <a href="https://aiplatmarket.com/">AI플랫마켓 메인</a>
-          <a href="#" onclick="showV('apply');return false">입점신청</a>
-          <a href="#" onclick="showV('plans');return false">요금제</a>
-          <a href="#" onclick="showV('cert');return false">더착한인증</a>
-          <a href="#" onclick="toast('이용약관 준비 중');return false">이용약관</a>
-          <a href="#" onclick="toast('개인정보처리방침 준비 중');return false">개인정보처리방침</a>
+    </div>
+
+    <!-- 우: 링크 + 관리자 -->
+    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+      <div class="ft-links">
+        <a href="#" onclick="showPage('about');return false">서비스 소개</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
+        <a href="#" onclick="showPage('terms');return false">이용약관</a>
+        <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
+        <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
+        <a href="#" onclick="showPage('register');return false">입점문의</a>
+        <a href="#" onclick="showPage('community');return false">커뮤니티</a>
+        <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+      </div>
+      <!-- 관리자 버튼 (푸터 우측 하단) -->
+      <a href="/admin" target="_blank"
+         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
+         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
+         title="관리자 대시보드">
+        ⚙️ 관리자 대시보드
+      </a>
+      <!-- PC/모바일 버전 전환 (드롭다운) -->
+      <div style="position:relative" id="viewModeDdw">
+        <button onclick="toggleViewModeDd()"
+           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
+           id="viewModeBtn">
+          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
+        </button>
+        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
+          </div>
+          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
+          </div>
         </div>
-        <a href="/admin" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none">⚙️ 관리자 대시보드</a>
       </div>
     </div>
   </div>
+  </div>
 </footer>
+</div><!-- /pc-wrap -->
 
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -1026,6 +1224,7 @@ const CATS = [
   {id:'art',label:'미술·공예',emoji:'🎨',sub:['미술품','공예품','골동품','수제품','인쇄물','사진']},
   {id:'premium',label:'프리미엄관',emoji:'👑',sub:['명품대행','수입고급품','한정판','해외직구','글로벌관']},
   {id:'robot',label:'로봇·모빌리티',emoji:'🤖',sub:['로봇','자동화기기','자동차용품','중고자동차','렌탈']},
+  {id:'promo',label:'판촉물',emoji:'🎁',sub:['인쇄물','포장재','사인물','기념품','답례품','광고용품']},
   {id:'event',label:'이벤트·기타',emoji:'🎉',sub:['기프트카드','행사용품','장례용품','장애용품','재고상품']},
 ];
 
@@ -1163,7 +1362,7 @@ function showV(id){
   document.querySelectorAll('.sctab').forEach(t=>t.classList.remove('on'));
   const v=document.getElementById('v-'+id);if(v)v.classList.add('on');
   const t=document.querySelector(`[data-v="${id}"]`);if(t){t.classList.add('on');t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'}); if(window.pcarSync)pcarSync(id);
 }
 
 /* ── 검색 패널 ── */
@@ -1227,7 +1426,7 @@ function showSubCat(id){
   const area=document.getElementById('subCatArea'),title=document.getElementById('subCatTitle'),subs=document.getElementById('subCats');
   area.style.display='block';
   title.textContent=c.emoji+' '+c.label+' 중분류';
-  subs.innerHTML=c.sub.map(s=>`<button class="sub-cat-btn" onclick="toast('${s} 상품 목록 준비 중')">${s}</button>`).join('');
+  subs.innerHTML=c.sub.map(s=>`<button class="sub-cat-btn" onclick="${c.id==='promo'?`openPromo('${s}')`:`toast('${s} 상품 목록 준비 중')`}">${s}</button>`).join('');
 }
 
 /* ── FCS 항목 렌더링 ── */
@@ -1346,5 +1545,87 @@ function quickReg(r){toast(r+' 경제TV 준비 중');}
 function setGenre(g){toast('뮤직 기능 준비 중');}
 </script>
 
+
+<script>
+/* ═ 더착한쇼핑 v1.2 — 메뉴 안내 캐러셀 · 판촉물 · 메인사이트 연동 shim ═ */
+// 표준 GNB/Footer가 호출하는 메인 SPA 함수 → 독립모듈에서는 메인 사이트를 새 탭으로 연다
+function showPage(p){window.open('https://aiplatmarket.com/#'+p,'_blank','noopener');}
+function toggleViewModeDd(){const d=document.getElementById('viewModeDd');if(d)d.style.display=d.style.display==='none'?'block':'none';}
+function setVp(c){const m=document.querySelector('meta[name=viewport]');if(m)m.setAttribute('content',c);toggleViewModeDd();}
+function switchToPcMode(){setVp('width=1200');}
+function switchToMobileMode(){setVp('width=device-width,initial-scale=1');}
+
+/* ── 판촉물 (하위메뉴: 인쇄물·포장재·사인물·기념품[답례품 병합]) ── */
+const PROMO_SUBS=[['인쇄물','🖨️','#e8f0fe','#1a56a0'],['포장재','🎀','#fff3e0','#e65100'],['사인물','📌','#e8f5e9','#2e7d32'],['기념품','🎁','#fce4ec','#c62828']];
+const PROMO=[ // [하위메뉴, 아이콘, 태그, 제목, 설명]  (앞 4개=요청 원문, 이후=샘플)
+ ['인쇄물','🖨️','인쇄물','전단지·리플렛 인쇄','1,000장 15,000원 · 당일 제작'],
+ ['포장재','🎀','포장재','로고 쇼핑백·포장지','최소 100개 · 맞춤 디자인'],
+ ['사인물','📌','사인물','현수막·배너·간판','현수막 3,500원/m2 · 빠른제작'],
+ ['기념품','🎁','기념품·답례품','로고 인쇄 답례품','볼펜·머그컵·에코백 · 50개~'],
+ ['인쇄물','🪪','인쇄물','명함·카탈로그 인쇄','소량 제작 · 견적 문의'],
+ ['인쇄물','🏷️','인쇄물','스티커·라벨 제작','맞춤 사이즈 · 견적 문의'],
+ ['포장재','📦','포장재','맞춤 박스·택배 포장','로고 인쇄 가능 · 견적 문의'],
+ ['사인물','🪧','사인물','X배너·입간판','매장 홍보용 · 견적 문의'],
+ ['기념품','☕','기념품','로고 머그컵·텀블러','소량 가능 · 견적 문의'],
+ ['기념품','🧢','기념품','단체복·모자 제작','로고 자수·인쇄 · 견적 문의'],
+];
+function renderPromo(sub){
+  sub=sub||'전체';
+  document.getElementById('promoSubs').innerHTML=
+    `<button class="fbtn${sub==='전체'?' on':''}" onclick="renderPromo('전체')">전체</button>`+
+    PROMO_SUBS.map(x=>`<button class="fbtn${sub===x[0]?' on':''}" onclick="renderPromo('${x[0]}')">${x[1]} ${x[0]==='기념품'?'기념품·답례품':x[0]}</button>`).join('');
+  document.getElementById('promoGrid').innerHTML=PROMO.filter(p=>sub==='전체'||p[0]===sub).map(p=>{
+    const c=PROMO_SUBS.find(x=>x[0]===p[0]);
+    return `<div class="pg" onclick="toast('${p[3]} — 견적 문의 기능 준비 중')"><div class="pg-th" style="background:${c[2]}">${p[1]}</div><div class="pg-bd"><span class="pm-tag" style="background:${c[2]};color:${c[3]}">${p[2]}</span><div class="pg-nm" style="margin-top:6px">${p[3]}</div><div class="pg-meta">${p[4]}</div></div></div>`;
+  }).join('');
+}
+function openPromo(n){showV('promo');renderPromo(n==='답례품'?'기념품':(PROMO_SUBS.some(x=>x[0]===n)?n:'전체'));}
+
+/* ── 메뉴별 안내·홍보 캐러셀 (히어로 옆 · 4초마다 한 장씩 좌→우 자동 이동) ── */
+const PCARDS=[ // [이동뷰, 아이콘, 태그, 제목, 설명, 버튼, 배경그라데이션]
+ ['apply','📢','오픈 기념','더착한쇼핑 오픈 기념 — 입점 셀러 모집 중','생산자·소상공인·창작자 누구나 셀러로 입점하세요. AI 사전검증 후 승인됩니다.','입점신청 →','#0d5c36,#1a7a4a'],
+ ['products','🛍','더착한상품','국산 생활상품 · 지역 특산품','생산자 이야기가 담긴 믿을 수 있는 상품을 만나보세요.','상품 보기 →','#1a3556,#0d1f35'],
+ ['ai','⭐','AI추천','AI가 골라드리는 오늘의 추천','제철·인증·지역 직거래를 종합해 큐레이션합니다.','추천 보기 →','#7a5a10,#c9a84c'],
+ ['stores','🏪','더착한가게','우리 동네 착한가게 찾기','맛집·카페·생활서비스·전통시장까지 한 곳에서 확인하세요.','가게 보기 →','#0d5c36,#15603e'],
+ ['stories','📖','더착한스토리','당신의 이야기가 플랫폼의 자산이 됩니다','생산자·가게·소비자 이야기를 남기면 AP가 적립됩니다.','스토리 보기 →','#6b3f1d,#a8703a'],
+ ['live','🎥','라이브홈쇼핑','오늘의 라이브','실시간 방송 · 예정 방송 · 다시보기를 확인하세요.','라이브 보기 →','#6b0000,#e63946'],
+ ['promo','🎁','판촉물','인쇄물 · 포장재 · 사인물 · 기념품','전단지부터 답례품까지 맞춤 제작, 견적 문의를 받습니다.','판촉물 보기 →','#1a56a0,#0d1f35'],
+ ['cert','🏅','더착한인증','AI 검증 + 운영진·전문가·소비자 평가','믿을 수 있는 생산자·상품·가게에 인증마크를 부여합니다.','인증 안내 →','#15603e,#1a7a4a'],
+ ['plans','📋','판매자 요금제','START 0원부터, 수수료 최저 2%','요금제별 수수료와 정산금을 계산기로 바로 확인하세요.','요금제 보기 →','#243d5c,#0d1f35'],
+ ['fcs','💎','AP Point','구매·후기·스토리로 쌓는 AP','공정기여도(FCS) 등급이 오를수록 혜택이 커집니다.','AP 알아보기 →','#7a5a10,#b8935a'],
+ ['seller','🛒','셀러센터','상품·주문·AI 홍보를 한 곳에서','AI가 상품명·SEO·SNS 홍보문을 자동으로 만들어 드립니다.','셀러센터 →','#0d1f35,#1a3556'],
+ ['local','🌾','지역특산품관','내 지역 특산품을 전국으로','지역 생산자와 함께 특산품관을 준비하고 있습니다.','자세히 보기 →','#0d5c36,#22a05a'],
+];
+let pcarI=0,pcarPause=false,pcarT=null;
+function pcarStep(){const c=document.getElementById('pcarTrack').children;return c.length>1?c[1].offsetLeft-c[0].offsetLeft:0;}
+function pcarPos(){const t=document.getElementById('pcarTrack'),st=pcarStep();return st?Math.max(1,Math.round((t.scrollWidth-t.clientWidth)/st)+1):1;}
+function pcarDots(){
+  const d=document.getElementById('pcarDots');if(!d)return;
+  const n=pcarPos();if(pcarI>=n)pcarI=n-1;
+  if(d.children.length!==n)d.innerHTML=Array.from({length:n},(_,i)=>`<button class="pcar-dot" onclick="pcarTo(${i})" aria-label="${i+1}번째"></button>`).join('');
+  [...d.children].forEach((b,i)=>b.classList.toggle('on',i===pcarI));
+}
+function pcarTo(i){
+  const tr=document.getElementById('pcarTrack');if(!tr)return;
+  const st=pcarStep(),n=pcarPos(),wrap=(i<0||i>=n);
+  pcarI=(i+n)%n;
+  tr.scrollTo({left:Math.min(pcarI*st,tr.scrollWidth-tr.clientWidth),behavior:wrap?'instant':'smooth'});
+  pcarDots();
+}
+function pcarSync(id){if(id!=='home')return;const tr=document.getElementById('pcarTrack');if(tr){tr.scrollLeft=0;pcarI=0;pcarDots();}}
+function initPromoCar(){
+  const tr=document.getElementById('pcarTrack'),car=document.getElementById('pcar');if(!tr||!car)return;
+  tr.insertAdjacentHTML('beforeend',PCARDS.map(c=>`<div class="pcar-card" style="background:linear-gradient(135deg,${c[6]})" onclick="showV('${c[0]}')"><div class="pcar-ico">${c[1]}</div><div class="pcar-tag">${c[2]}</div><div class="pcar-ti">${c[3]}</div><div class="pcar-ds">${c[4]}</div><span class="pcar-go">${c[5]}</span></div>`).join(''));
+  pcarDots();
+  tr.addEventListener('scroll',()=>{clearTimeout(pcarT);pcarT=setTimeout(()=>{const st=pcarStep();if(st){pcarI=Math.round(tr.scrollLeft/st);pcarDots();}},90);},{passive:true});
+  ['mouseenter','touchstart','focusin'].forEach(e=>car.addEventListener(e,()=>{pcarPause=true;},{passive:true}));
+  ['mouseleave','touchend','focusout'].forEach(e=>car.addEventListener(e,()=>{pcarPause=false;},{passive:true}));
+  window.addEventListener('resize',pcarDots);
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setInterval(()=>{if(!pcarPause&&!document.hidden&&tr.clientWidth)pcarTo(pcarI+1);},4000);
+}
+renderPromo('전체');
+initPromoCar();
+</script>
 </body>
 </html>
