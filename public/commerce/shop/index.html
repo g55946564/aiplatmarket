@@ -494,6 +494,48 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 .pcar-dot.on{width:18px;background:var(--grn)}
 @media(max-width:640px){.pcar-nav{display:none}.pcar-card{min-height:230px}}
 .pm-tag{display:inline-block;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:10px}
+
+/* ═ v1.3 : 카드 높이 2/3 · 로그인 ═ */
+.pcar-card{min-height:0;padding:16px;gap:5px}
+.pcar-ico{font-size:1.5rem}
+.pcar-tag{font-size:.62rem}
+.pcar-ti{font-size:1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcar-ds{font-size:.74rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pcar-go{margin-top:4px;padding:4px 12px;font-size:.7rem}
+.pcar-card.hero{padding:14px 16px}
+.pcar-card.hero .h-badge{font-size:.6rem;padding:2px 8px;margin-bottom:6px}
+.pcar-card.hero .h-title{font-size:1.1rem;line-height:1.25;margin:0 0 4px}
+.pcar-card.hero .h-sub{font-size:.72rem;line-height:1.5;margin-bottom:8px}
+.pcar-card.hero .h-btns{margin-bottom:8px}
+.pcar-card.hero .btn-gold,.pcar-card.hero .btn-ghost{padding:5px 11px;font-size:.72rem}
+.pcar-card.hero .hero-ap{padding:4px 10px;margin-bottom:8px}
+.pcar-card.hero .hero-ap-ico{font-size:1rem}
+.pcar-card.hero .hero-ap-t{font-size:.72rem;line-height:1.4}
+.pcar-card.hero .h-stats{gap:8px;justify-content:space-between;padding-top:8px;flex-wrap:nowrap}
+.pcar-card.hero .hs-n{font-size:.95rem}
+.pcar-card.hero .hs-l{font-size:.56rem}
+.ap-modal.center{align-items:center}
+.ap-modal.center .ap-box{border-radius:16px;max-width:400px;animation:none;padding:22px var(--pad)}
+.lg-t{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:var(--navy);text-align:center}
+.lg-s{font-size:.74rem;color:var(--g4);text-align:center;margin:2px 0 14px}
+.lg-tabs{display:flex;gap:4px;background:var(--g1);padding:3px;border-radius:10px;margin-bottom:14px}
+.lg-tab{flex:1;padding:7px 0;border-radius:8px;font-size:.78rem;font-weight:700;color:var(--g4)}
+.lg-tab.on{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(13,31,53,.12)}
+.lg-pane{display:none;flex-direction:column;gap:8px}.lg-pane.on{display:flex}
+.lg-in{width:100%;border:var(--bd);border-radius:8px;padding:10px 12px;font-size:.88rem;font-family:var(--fn);outline:none}
+.lg-in:focus{border-color:var(--grn)}
+.lg-row{display:flex;gap:6px}.lg-row .lg-in{flex:1;min-width:0}
+.lg-btn{padding:11px;border-radius:8px;font-size:.88rem;font-weight:800;background:var(--navy);color:#fff}
+.lg-btn.sub{background:var(--g1);color:var(--navy);white-space:nowrap;padding:0 12px;font-size:.76rem}
+.lg-btn:disabled{opacity:.55}
+.lg-kakao{background:#FEE500;color:#3C1E1E;padding:12px;border-radius:8px;font-size:.92rem;font-weight:800}
+.lg-err{min-height:16px;font-size:.76rem;color:var(--red);text-align:center;margin-top:8px}
+.lg-note{font-size:.72rem;color:var(--g4);line-height:1.6;text-align:center}
+.tb-user{position:relative}
+.tb-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:var(--bd);border-radius:8px;box-shadow:0 8px 24px rgba(13,31,53,.18);min-width:150px;z-index:1000;overflow:hidden}
+.tb-menu.on{display:block}
+.tb-menu a,.tb-menu button{display:block;width:100%;text-align:left;padding:10px 14px;font-size:.78rem;color:var(--navy);font-weight:600}
+.tb-menu a:hover,.tb-menu button:hover{background:var(--g1)}
 </style>
 </head>
 <body>
@@ -510,7 +552,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <a href="https://aiplatmarket.com/" class="tb-logo">AI<em>PLAT</em>MARKET</a>
     <div class="tb-right">
       <a href="https://aiplatmarket.com/" class="tb-home"><span class="hm-l">← AI플랫마켓 홈으로</span><span class="hm-s">← 홈으로</span></a>
-      <button class="tb-login" onclick="doLogin()">👤 로그인</button>
+      <span class="tb-user"><button class="tb-login" id="tbLogin" onclick="doLogin()">👤 로그인</button><div class="tb-menu" id="tbMenu"></div></span>
     </div>
   </div>
 
@@ -739,15 +781,14 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="hero-in">
       <div class="h-badge">✨ ChatDoumi AI Core 실시간 큐레이션</div>
       <h1 class="h-title">생산자·가게·소비자가<br>AI로 연결되는 쇼핑</h1>
-      <p class="h-sub">단순 쇼핑몰이 아닌, 대한민국 생활경제 상생 플랫폼.<br>스토리와 AI가 좋은 생산자와 좋은 소비자를 이어드립니다.</p>
+      <p class="h-sub">AI가 잇는 대한민국 생활경제 상생 플랫폼</p>
       <div class="h-btns">
         <button class="btn-gold" onclick="showV('ai')">⭐ AI 추천 상품</button>
-        <button class="btn-ghost" onclick="showV('plans')">📋 셀러 요금제</button>
         <button class="btn-ghost" onclick="showV('apply')">📢 입점신청</button>
       </div>
       <div class="hero-ap">
         <div class="hero-ap-ico">💎</div>
-        <div class="hero-ap-t">지금 가입하면 <strong>AP 1,000P 즉시 적립!</strong> 구매·스토리 작성·추천 시마다 AP가 쌓입니다</div>
+        <div class="hero-ap-t">가입 즉시 <strong>AP 1,000P</strong> 적립!</div>
       </div>
       <div class="h-stats">
         <div class="hs"><span class="hs-n" id="sts">0</span><span class="hs-l">입점 셀러</span></div>
@@ -1167,6 +1208,36 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 </div>
 
 <!-- 토스트 -->
+<!-- ══ 자체 로그인 모달 (카카오 · 휴대폰 · 관리자) ══ -->
+<div class="ap-modal center" id="lg-modal" onclick="if(event.target===this)ShopAuth.close()">
+  <div class="ap-box">
+    <div class="lg-t">AI플랫마켓 로그인</div>
+    <div class="lg-s">하나의 계정으로 더착한쇼핑과 모든 모듈을 이용하세요</div>
+    <div class="lg-tabs">
+      <button class="lg-tab on" data-t="kakao" onclick="ShopAuth.tab('kakao')">카카오</button>
+      <button class="lg-tab" data-t="phone" onclick="ShopAuth.tab('phone')">휴대폰</button>
+      <button class="lg-tab" data-t="admin" onclick="ShopAuth.tab('admin')">관리자</button>
+    </div>
+    <div class="lg-pane on" id="lg-p-kakao">
+      <button class="lg-kakao" onclick="ShopAuth.kakao()">💬 카카오로 3초 만에 시작</button>
+      <div class="lg-note">카카오 계정으로 간편하게 로그인합니다.<br>비밀번호는 저장하지 않습니다.</div>
+    </div>
+    <div class="lg-pane" id="lg-p-phone">
+      <div class="lg-row"><input class="lg-in" id="lg-phone" type="tel" inputmode="numeric" maxlength="13" placeholder="휴대폰 번호 (숫자만)" autocomplete="tel"><button class="lg-btn sub" id="lg-send" onclick="ShopAuth.sendCode()">인증번호 받기</button></div>
+      <input class="lg-in" id="lg-code" inputmode="numeric" maxlength="6" placeholder="인증번호 6자리" autocomplete="one-time-code">
+      <input class="lg-in" id="lg-name" maxlength="20" placeholder="이름 (선택, 처음 가입 시)">
+      <button class="lg-btn" onclick="ShopAuth.verify()">휴대폰으로 로그인</button>
+    </div>
+    <div class="lg-pane" id="lg-p-admin">
+      <input class="lg-in" id="lg-aid" placeholder="관리자 아이디" autocomplete="username">
+      <input class="lg-in" id="lg-apw" type="password" placeholder="비밀번호" autocomplete="current-password" onkeydown="if(event.key==='Enter')ShopAuth.admin()">
+      <button class="lg-btn" onclick="ShopAuth.admin()">관리자 로그인</button>
+    </div>
+    <div class="lg-err" id="lg-err"></div>
+    <div class="lg-note" style="margin-top:6px">로그인 시 이용약관·개인정보처리방침에 동의한 것으로 봅니다.</div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1379,7 +1450,7 @@ function doSearch(){
 }
 
 /* ── 로그인 / 모듈 이동 ── */
-function doLogin(){if(typeof openLoginModal==='function')openLoginModal();else toast('AI플랫마켓 메인 페이지에서 로그인하세요');}
+function doLogin(){if(typeof ShopAuth!=='undefined'&&ShopAuth.u)ShopAuth.menu();else ShopAuth.open();}
 function goMod(path){window.location.href=path;}
 
 /* ── 셀러 유형 ── */
@@ -1626,6 +1697,85 @@ function initPromoCar(){
 }
 renderPromo('전체');
 initPromoCar();
+</script>
+
+<script>
+/* ═ 더착한쇼핑 자체 로그인 — 카카오 · 휴대폰 · 관리자 (서버: /api/shop/auth, Render 환경변수 사용) ═
+   · 메인 사이트와 같은 저장키(kakao_user / apm_user / apm_admin_logged)를 읽고 써서 로그인 상태가 서로 공유됩니다. */
+const ShopAuth={
+  API:'/api/shop/auth',u:null,cfg:null,
+  $(id){return document.getElementById(id);},
+  read(){
+    try{const s=JSON.parse(localStorage.getItem('shop_session')||'null');if(s&&s.name)return s;}catch(e){}
+    try{if(localStorage.getItem('apm_admin_logged')==='true')return{id:'admin',name:'관리자',role:'admin',provider:'admin'};}catch(e){}
+    for(const k of['kakao_user','apm_user']){try{const m=JSON.parse(localStorage.getItem(k)||'null');if(m&&(m.id||m.name))return{id:String(m.id||''),name:m.name||'회원',role:'user',provider:k==='kakao_user'?'kakao':'phone'};}catch(e){}}
+    return null;
+  },
+  async api(path,body){
+    const r=await fetch(this.API+path,{method:body?'POST':'GET',credentials:'same-origin',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
+    if(r.status===404)throw new Error('로그인 서버가 아직 연결되지 않았습니다 (shop-auth.js 등록 필요)');
+    let d={};try{d=await r.json();}catch(e){}
+    if(!r.ok||d.ok===false)throw new Error(d.error||'요청에 실패했습니다 ('+r.status+')');
+    return d;
+  },
+  set(u){
+    this.u=u;
+    try{
+      localStorage.setItem('shop_session',JSON.stringify(u));
+      if(u.provider==='kakao')localStorage.setItem('kakao_user',JSON.stringify({id:u.id,name:u.name,email:u.email||''}));
+      if(u.provider==='phone')localStorage.setItem('apm_user',JSON.stringify({id:u.id,name:u.name,phone:u.phone||''}));
+      if(u.role==='admin')localStorage.setItem('apm_admin_logged','true');
+    }catch(e){}
+    this.paint();
+    if(typeof AP!=='undefined')ShopDB.getApBalance(u.id).then(v=>{AP.balance=v;AP.updateUI();});
+  },
+  paint(){
+    const b=this.$('tbLogin'),m=this.$('tbMenu'),u=this.u;if(!b)return;
+    b.textContent=u?(u.role==='admin'?'⚙️ 관리자':'👤 '+u.name):'👤 로그인';
+    if(m)m.innerHTML=u?'<button onclick="ShopAuth.menu(false);openApModal()">💎 내 AP</button>'+(u.role==='admin'?'<a href="/admin" target="_blank" rel="noopener">⚙️ 관리자 대시보드</a>':'')+'<button onclick="ShopAuth.logout()">로그아웃</button>':'';
+  },
+  open(t){this.$('lg-modal').classList.add('on');document.body.style.overflow='hidden';this.tab(t||'kakao');},
+  close(){this.$('lg-modal').classList.remove('on');document.body.style.overflow='';},
+  tab(t){document.querySelectorAll('.lg-tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.querySelectorAll('.lg-pane').forEach(p=>p.classList.toggle('on',p.id==='lg-p-'+t));this.err('');},
+  err(m){const e=this.$('lg-err');if(e)e.textContent=m||'';},
+  menu(f){const m=this.$('tbMenu');if(m)m.classList.toggle('on',f);},
+  kakao(){
+    if(this.cfg&&!this.cfg.kakao)return this.err('카카오 로그인 설정(REST API 키)이 서버에 없습니다');
+    location.href=this.API+'/kakao/start?return='+encodeURIComponent(location.pathname);
+  },
+  cool(n){const b=this.$('lg-send');b.disabled=true;const t=setInterval(()=>{n--;if(n<=0){clearInterval(t);b.disabled=false;b.textContent='재전송';}else b.textContent=n+'초';},1000);},
+  async sendCode(){
+    const p=this.$('lg-phone').value.replace(/\D/g,'');
+    if(!/^01[016789]\d{7,8}$/.test(p))return this.err('휴대폰 번호를 정확히 입력하세요');
+    try{this.err('');const d=await this.api('/phone/send',{phone:p});this.$('lg-code').focus();toast(d.dev?'개발모드 인증번호: '+d.dev:'인증번호를 문자로 보냈습니다');this.cool(60);}catch(e){this.err(e.message);}
+  },
+  async verify(){
+    const phone=this.$('lg-phone').value.replace(/\D/g,''),code=this.$('lg-code').value.trim(),name=this.$('lg-name').value.trim();
+    if(!phone||code.length<4)return this.err('휴대폰 번호와 인증번호를 입력하세요');
+    try{const d=await this.api('/phone/verify',{phone,code,name});this.set(d.user);this.close();toast('✅ '+d.user.name+'님 환영합니다');}catch(e){this.err(e.message);}
+  },
+  async admin(){
+    const id=this.$('lg-aid').value.trim(),pw=this.$('lg-apw').value;
+    if(!id||!pw)return this.err('아이디와 비밀번호를 입력하세요');
+    try{const d=await this.api('/admin',{id,pw});this.$('lg-apw').value='';this.set(d.user);this.close();toast('✅ 관리자로 로그인했습니다');}catch(e){this.err(e.message);}
+  },
+  async logout(){
+    try{await this.api('/logout',{});}catch(e){}
+    ['shop_session','kakao_user','apm_user','apm_admin_logged'].forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});
+    this.u=null;this.menu(false);this.paint();
+    if(typeof AP!=='undefined'){AP.balance=0;AP.updateUI();}
+    toast('로그아웃되었습니다');
+  },
+  async init(){
+    const q=new URLSearchParams(location.search);
+    if(q.has('login')||q.has('login_error')){const e=q.get('login_error');history.replaceState(null,'',location.pathname+location.hash);if(e)setTimeout(()=>toast('로그인 실패: '+e),400);}
+    this.u=this.read();this.paint();
+    try{this.cfg=await this.api('/config');}catch(e){}
+    try{const d=await this.api('/me');if(d.user)this.set(d.user);else if(localStorage.getItem('shop_session')){localStorage.removeItem('shop_session');this.u=this.read();this.paint();}}catch(e){}
+  }
+};
+document.addEventListener('click',e=>{if(!e.target.closest('.tb-user'))ShopAuth.menu(false);});
+ShopAuth.init();
 </script>
 </body>
 </html>
