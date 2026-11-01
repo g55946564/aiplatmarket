@@ -2,10 +2,115 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="description" content="AI LifeMap — 심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼">
-<title>AI 인생·진로 체험센터 | AI LifeMap | AI플랫마켓</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="AI인생진로탐색 — AI LifeMap · 심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼">
+<meta name="theme-color" content="#0d1f35">
+<title>AI인생진로탐색 | AI 인생·진로 체험센터 | AI플랫마켓</title>
 <link rel="stylesheet" href="/framework/assets/css/common.css">
+<style>
+/* AI플랫마켓 표준 GNB/Footer 스타일 — AIPLATMARKET_HEADER_FOOTER v2 */
+:root{
+  --navy:#0d1f35; --navy2:#1a3556; --red:#c0392b; --gold:#c9a84c;
+  --grn:#1a7a4a; --grn2:#0d5c36; --gnb-grn:#15603e; --gnb-grn2:#0e4a30;
+  --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
+  --bd:1px solid var(--g2); --r:10px; --fs:'Pretendard','Noto Sans KR','Malgun Gothic',sans-serif;
+}
+
+nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
+.gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
+.gnb-top-scroll{padding-left:0px}
+.gnb-top-scroll::-webkit-scrollbar{display:none}
+.gnb-top-fixed{padding:4px 0 4px 2px}
+.gnb-sub{padding:0;scrollbar-width:none}
+.gnb-sub::-webkit-scrollbar{display:none}
+.gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
+.gnb-cat-bar-wrap{position:relative}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
+.gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
+.gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
+.gcat{position:relative;flex-shrink:0}
+.gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
+.gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
+.caret{font-size:.6rem;transition:transform .2s;opacity:.7}
+.gcat.open .caret{transform:rotate(180deg)}
+.gcdrop{display:none;position:fixed;background:var(--color-background-primary,#fff);border:0.5px solid #d0d5dd;border-radius:10px;box-shadow:0 12px 32px rgba(13,31,53,.14);z-index:9999;min-width:260px;max-width:92vw;padding:8px}
+.gcat.open .gcdrop{display:block}
+.gcdrop-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gcdrop-list{display:flex;flex-direction:column;gap:2px}
+.gcdi{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:.76rem;color:var(--navy);text-decoration:none;transition:background .12s;line-height:1.4}
+.gcdi:hover{background:#f0f4ff}
+.gcdi-ico{flex-shrink:0;font-size:1rem;line-height:1.35;margin-top:1px}
+.gcdi-txt{display:flex;flex-direction:column;min-width:0}
+.gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
+.gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:4px;flex-shrink:0;white-space:nowrap;display:inline-block;vertical-align:middle}
+.gcdi-badge.ext{background:#fce8e6;color:var(--red)}
+.gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
+.gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
+.gcbtn-reg{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-reg:hover{background:rgba(46,204,113,.3)}
+.gcbtn-chat{background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.45);color:var(--gold);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-chat:hover{background:rgba(201,168,76,.3)}
+.gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
+.gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
+footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box}
+.ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
+.ft-copy{font-size:.7rem}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap}
+.ft-links a{font-size:.73rem;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
+
+/* ═══════════ v2 추가분 — 모듈 상단바 · 로그인 · 모달 · 토스트 ═══════════ */
+.fw-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px;background:var(--navy);min-height:44px;box-sizing:border-box}
+.fw-logo{font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs);white-space:nowrap}
+.fw-logo em{color:var(--gold);font-style:normal}
+.fw-top-right{display:flex;align-items:center;gap:8px;min-width:0}
+.fw-mod-label{font-size:.72rem;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+#fwAuthArea{display:flex;align-items:center;gap:6px}
+.fw-login-btn{display:inline-flex;align-items:center;gap:5px;background:var(--gold);color:var(--navy);border:1px solid var(--gold);border-radius:6px;padding:6px 14px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;transition:filter .15s}
+.fw-login-btn:hover{filter:brightness(1.08)}
+.fw-login-btn.ghost{background:transparent;color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);font-weight:600;padding:5px 10px}
+.fw-user{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:.76rem;font-weight:700;max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fw-user-ico{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:.62rem;font-weight:900}
+.fw-user-ico.kakao{background:#FEE500;color:#191919}.fw-user-ico.naver{background:#03C75A;color:#fff}
+.fw-user-ico.google{background:#fff;color:#4285F4}.fw-user-ico.phone{background:var(--gold);color:var(--navy)}
+/* GNB 가로 스크롤 막대(메뉴가 많을 때 표시) */
+.gnb-cat-bar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.45) transparent}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4);border-radius:4px}
+.gnb-scroll-hint.show{display:flex}
+
+/* 로그인 모달 */
+.fw-modal{display:none;position:fixed;inset:0;z-index:10000;background:rgba(5,12,22,.62);align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.fw-modal.open{display:flex}
+.fw-modal-box{position:relative;width:100%;max-width:380px;max-height:92%;overflow-y:auto;background:#fff;color:var(--navy);border-radius:14px;padding:26px 22px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-family:var(--fs)}
+.fw-modal-x{position:absolute;top:10px;right:12px;background:none;border:none;font-size:1.3rem;line-height:1;color:var(--g4);cursor:pointer;padding:4px 8px}
+.fw-modal-ttl{font-size:1.1rem;font-weight:900;margin:0 0 4px}
+.fw-modal-sub{font-size:.76rem;color:var(--g4);line-height:1.55;margin:0 0 16px}
+.fw-prov{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid var(--g2);font-size:.86rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:8px;position:relative}
+.fw-prov.kakao{background:#FEE500;border-color:#FEE500;color:#191919}
+.fw-prov.naver{background:#03C75A;border-color:#03C75A;color:#fff}
+.fw-prov.google{background:#fff;color:#3c4043;border-color:#dadce0}
+.fw-prov.phone{background:var(--navy);border-color:var(--navy);color:#fff}
+.fw-prov.is-off{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
+.fw-prov .fw-soon{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.6rem;font-weight:800;background:rgba(0,0,0,.12);border-radius:10px;padding:2px 7px;color:inherit}
+.fw-phone-box{display:none;border:1px solid var(--g2);border-radius:8px;padding:12px;margin:2px 0 8px;background:var(--g1)}
+.fw-phone-box.open{display:block}
+.fw-phone-box input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--g3);border-radius:6px;font-size:.88rem;font-family:inherit;margin-bottom:8px;color:var(--navy);background:#fff}
+.fw-phone-box button{width:100%;padding:10px;border:none;border-radius:6px;background:var(--gold);color:var(--navy);font-weight:800;font-size:.84rem;cursor:pointer;font-family:inherit}
+.fw-modal-note{font-size:.66rem;color:var(--g4);line-height:1.6;margin:12px 0 0;text-align:center}
+.fw-modal-note a{color:var(--navy);text-decoration:underline;cursor:pointer}
+.fw-modal-skip{display:block;text-align:center;font-size:.74rem;color:var(--g4);margin-top:10px;cursor:pointer;text-decoration:underline;background:none;border:none;width:100%;font-family:inherit}
+
+/* 토스트 */
+.fw-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(10px);background:rgba(13,31,53,.95);color:#fff;border:1px solid rgba(201,168,76,.5);padding:10px 18px;border-radius:24px;font-size:.78rem;z-index:10001;opacity:0;pointer-events:none;transition:all .25s;max-width:86%;text-align:center;line-height:1.5}
+.fw-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+</style>
 <style>
 /* ════════════════════════════════════════════════════════════
    AI LifeMap — 전용 스타일
@@ -423,18 +528,418 @@ textarea.fc{resize:none;line-height:1.6}
   .form-body{max-width:600px;margin:0 auto}
 }
 </style>
+<style>
+/* ══════════════════════════════════════════════════════════════════════
+   LifeMap Shell v2 — 타이틀박스 · 검색 · 자체 GNB · 좌우 패널(20/60/20) · 질문바
+   PC(≥900px): 전체 80% 배율 + 3분할, 좌/중/우 각각 스크롤, 질문바는 중앙 하단 고정
+   모바일(<900px): 일반 스크롤 + 좌우 서랍(☰) + 질문바 하단 고정
+══════════════════════════════════════════════════════════════════════ */
+:root{--lm-scale:1;--lm-stick:0px;--lm-ask-h:0px;--lm-sheet-max:360px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:0;overflow-x:hidden}
+#lm-viewport{position:relative}
+#lm-app{display:flex;flex-direction:column;min-height:100vh}
+button{-webkit-tap-highlight-color:transparent}
+
+/* ── 타이틀 박스 ── */
+.lm-head{background:linear-gradient(180deg,#0a1a2e,#07111f);border-bottom:1px solid var(--glass-b);position:relative;z-index:250;flex:none}
+.lm-titlebox{padding:10px 14px 8px}
+.lm-title-row{display:flex;align-items:center;gap:10px}
+.lm-hbtn{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--glass-b);background:rgba(255,255,255,.04);color:var(--gold);font-size:1.3rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s,border-color .2s;font-family:inherit}
+.lm-hbtn:hover{background:rgba(201,168,76,.12)}
+.lm-hbtn[aria-expanded="true"]{background:rgba(201,168,76,.18);border-color:var(--gold)}
+.lm-title-center{flex:1;min-width:0;text-align:center}
+.lm-title{margin:0;font-size:1.3rem;font-weight:900;color:var(--t1);letter-spacing:-.3px}
+.lm-title b{color:var(--gold)}
+.lm-title-sub{font-size:.7rem;color:var(--t2);margin-top:3px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+.mode-indicator{position:static;z-index:auto;display:inline-block;background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.4);border-radius:12px;padding:1px 9px;font-size:.62rem;font-weight:700;color:var(--gold-lt);box-shadow:none}
+.mode-indicator.mode-contrast{background:rgba(201,168,76,.14);color:var(--gold-lt);border-color:rgba(201,168,76,.4);font-weight:700}
+.lm-search-row{margin-top:9px;display:flex;justify-content:center}
+.lm-search{position:relative;width:100%;max-width:680px}
+.lm-search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:.9rem;opacity:.7;pointer-events:none}
+.lm-search input{width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--glass-b);border-radius:24px;padding:10px 38px 10px 38px;color:var(--t1);font-size:.86rem;outline:none;font-family:inherit}
+.lm-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.lm-search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t2);font-size:1.1rem;cursor:pointer;padding:4px 8px;display:none}
+.lm-search-results{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);background:#0b1a2d;border:1px solid var(--glass-b);border-radius:12px;max-height:340px;overflow-y:auto;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:600;text-align:left}
+.lm-search-results.open{display:block}
+.lm-sr-item{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;background:none;border:none;border-bottom:1px solid rgba(201,168,76,.08);color:var(--t1);cursor:pointer;text-align:left;font-family:inherit}
+.lm-sr-item:last-child{border-bottom:none}
+.lm-sr-item:hover,.lm-sr-item.sel{background:rgba(201,168,76,.12)}
+.lm-sr-ico{font-size:1.15rem;width:26px;text-align:center;flex:none}
+.lm-sr-tx{flex:1;min-width:0}
+.lm-sr-l{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lm-sr-s{font-size:.66rem;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.lm-sr-t{flex:none;font-size:.58rem;font-weight:800;color:var(--gold);border:1px solid rgba(201,168,76,.35);border-radius:8px;padding:1px 7px}
+.lm-sr-empty{padding:16px;font-size:.78rem;color:var(--t2);text-align:center}
+
+/* ── LifeMap 자체 GNB (가로 스크롤 막대 표시) ── */
+.lm-nav{background:rgba(6,16,30,.96);border-top:1px solid rgba(201,168,76,.1)}
+.lm-nav-scroll{position:relative;display:flex;gap:4px;padding:6px 10px 7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:var(--gold-dk) rgba(255,255,255,.06);-webkit-overflow-scrolling:touch}
+.lm-nav-scroll::-webkit-scrollbar{height:6px}
+.lm-nav-scroll::-webkit-scrollbar-thumb{background:var(--gold-dk);border-radius:4px}
+.lm-nav-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}
+.lm-nav-item{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border-radius:18px;border:1px solid transparent;background:transparent;color:var(--t2);font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s,color .15s}
+.lm-nav-item:hover{color:var(--t1);background:rgba(255,255,255,.05)}
+.lm-nav-item.active{background:rgba(201,168,76,.16);border-color:var(--gold);color:var(--gold)}
+.lm-nav-item .nb{font-size:.56rem;background:var(--gold);color:var(--navy);border-radius:8px;padding:1px 5px;font-weight:800}
+
+/* ── 본문 3분할 ── */
+.lm-body{flex:1;min-height:0;display:grid;grid-template-columns:20% minmax(0,1fr) 20%;transition:grid-template-columns .25s ease}
+.lm-panel{min-width:0;min-height:0;overflow-y:auto;overscroll-behavior:contain;background:rgba(8,18,33,.72);padding:14px 12px 28px;scrollbar-width:thin;scrollbar-color:var(--gold-dk) transparent;box-sizing:border-box}
+.lm-panel-left{grid-column:1;border-right:1px solid var(--glass-b)}
+.lm-panel-right{grid-column:3;border-left:1px solid var(--glass-b)}
+.lm-center-wrap{grid-column:2;display:flex;flex-direction:column;min-width:0;min-height:0;position:relative}
+.lm-center{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:var(--gold-dk) transparent}
+.lm-center .lm-screen{min-height:0;flex:1 0 auto}
+.lm-center>footer{flex:none}
+.lm-body.no-left{grid-template-columns:0px minmax(0,1fr) 20%}
+.lm-body.no-right{grid-template-columns:20% minmax(0,1fr) 0px}
+.lm-body.no-left.no-right{grid-template-columns:0px minmax(0,1fr) 0px}
+.lm-body.no-left .lm-panel-left,.lm-body.no-right .lm-panel-right{visibility:hidden;padding-left:0;padding-right:0;border-width:0;overflow:hidden}
+.lm-backdrop{display:none}
+
+/* 패널 내부 */
+.pn-sec{margin-bottom:16px}
+.pn-h{font-size:.68rem;font-weight:800;letter-spacing:.8px;color:var(--gold);margin:0 2px 8px;text-transform:uppercase}
+.pn-card{background:var(--card);border:1px solid var(--glass-b);border-radius:12px;padding:12px}
+.pn-profile{text-align:center}
+.pn-ava{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-weight:900;font-size:1.05rem;background:rgba(201,168,76,.16);color:var(--gold);border:1px solid var(--gold)}
+.pn-name{font-size:.86rem;font-weight:800;color:var(--t1)}
+.pn-sub{font-size:.68rem;color:var(--t2);margin-top:3px;line-height:1.5}
+.pn-btn{display:block;width:100%;margin-top:10px;padding:9px;border-radius:8px;border:1px solid var(--gold);background:linear-gradient(135deg,var(--gold-dk),var(--gold));color:var(--navy);font-weight:800;font-size:.78rem;cursor:pointer;font-family:inherit}
+.pn-btn.ghost{background:transparent;color:var(--t2);border-color:var(--glass-b);font-weight:600}
+.pn-item{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;margin-bottom:5px;border-radius:9px;border:1px solid transparent;background:rgba(255,255,255,.03);color:var(--t1);font-size:.78rem;font-weight:600;cursor:pointer;text-align:left;font-family:inherit;text-decoration:none;box-sizing:border-box;transition:background .15s,border-color .15s}
+.pn-item:hover{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.35)}
+.pn-item .pi-ico{flex:none;width:22px;text-align:center;font-size:1rem}
+.pn-item .pi-tx{flex:1;min-width:0}
+.pn-item .pi-s{display:block;font-size:.62rem;color:var(--t2);font-weight:400;margin-top:1px}
+.pn-item .pi-b{flex:none;font-size:.56rem;font-weight:800;border-radius:8px;padding:1px 6px;background:rgba(201,168,76,.2);color:var(--gold)}
+.pn-item .pi-b.on{background:rgba(26,122,74,.25);color:#4ade80}
+.pn-q{font-size:.84rem;line-height:1.55;color:var(--t1);font-weight:700;margin:0 0 10px}
+.pn-q-row{display:flex;gap:6px}
+.pn-q-row button{flex:1;padding:8px 6px;border-radius:8px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--glass-b);background:transparent;color:var(--t2)}
+.pn-q-row button.pri{background:rgba(201,168,76,.16);border-color:var(--gold);color:var(--gold)}
+.pn-note{font-size:.64rem;color:var(--t3);line-height:1.65}
+.pn-seg{display:flex;gap:6px}
+.pn-seg button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--glass-b);background:transparent;color:var(--t2);font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit}
+.pn-seg button.on{background:rgba(201,168,76,.16);border-color:var(--gold);color:var(--gold)}
+
+/* ── 질문 입력바 (중앙 하단 고정) ── */
+.lm-askbar{flex:none;position:relative;background:rgba(6,16,30,.98);border-top:1px solid var(--glass-b);padding:10px 14px 8px;z-index:60}
+.lm-ask-row{display:flex;align-items:center;gap:8px;max-width:820px;margin:0 auto}
+.lm-ask-input{flex:1;min-width:0;background:var(--card);border:1px solid var(--glass-b);border-radius:24px;padding:11px 16px;color:var(--t1);font-size:.88rem;outline:none;font-family:inherit}
+.lm-ask-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.lm-ask-send{flex:none;width:42px;height:42px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--gold-dk),var(--gold));color:var(--navy);font-size:1.05rem;font-weight:900;cursor:pointer;font-family:inherit}
+.lm-ask-send:disabled{opacity:.45;cursor:not-allowed}
+.lm-ask-hint{text-align:center;font-size:.62rem;color:var(--t3);margin-top:5px;line-height:1.4}
+.lm-asksheet{display:none;position:absolute;left:10px;right:10px;bottom:100%;margin-bottom:8px;max-height:var(--lm-sheet-max);background:#0b1a2d;border:1px solid var(--glass-b);border-radius:14px;box-shadow:0 -10px 30px rgba(0,0,0,.45);flex-direction:column;overflow:hidden}
+.lm-asksheet.open{display:flex}
+.as-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid rgba(201,168,76,.12);font-size:.76rem;font-weight:800;color:var(--gold)}
+.as-head button{background:none;border:none;color:var(--t2);font-size:1.2rem;cursor:pointer;padding:0 4px;line-height:1}
+.as-msgs{flex:1;min-height:60px;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.as-m{max-width:92%;font-size:.8rem;line-height:1.65;border-radius:12px;padding:9px 12px;white-space:pre-wrap;word-break:break-word}
+.as-m.user{align-self:flex-end;background:rgba(201,168,76,.18);border:1px solid rgba(201,168,76,.4);color:var(--t1)}
+.as-m.bot{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid var(--glass-b);color:var(--t1)}
+.as-tag{display:inline-block;font-size:.58rem;font-weight:800;border-radius:8px;padding:1px 7px;margin-bottom:5px;background:rgba(255,255,255,.08);color:var(--t2)}
+.as-tag.ai{background:rgba(99,102,241,.25);color:#c7d2fe}.as-tag.safety{background:rgba(192,57,43,.25);color:#fca5a5}
+.as-acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.as-acts button{padding:6px 11px;border-radius:14px;border:1px solid var(--gold);background:rgba(201,168,76,.12);color:var(--gold);font-size:.7rem;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* ── 새 화면 공통(.lm-page) ── */
+.lm-page{width:100%;max-width:860px;margin:0 auto;padding:16px 16px 40px;box-sizing:border-box}
+.lm-page h2{font-size:1.1rem;font-weight:900;margin:2px 0 6px;color:var(--t1)}
+.lm-lead{font-size:.8rem;color:var(--t2);line-height:1.65;margin-bottom:14px}
+.lm-note{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.22);border-radius:10px;padding:10px 12px;font-size:.72rem;color:var(--t2);line-height:1.6;margin-bottom:14px}
+.lm-box{background:var(--card);border:1px solid var(--glass-b);border-radius:12px;padding:14px;margin-bottom:12px}
+.lm-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.lm-tabs button{padding:7px 14px;border-radius:18px;border:1px solid var(--glass-b);background:var(--card);color:var(--t2);font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit}
+.lm-tabs button.on{background:rgba(201,168,76,.16);border-color:var(--gold);color:var(--gold)}
+.lm-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lm-btn{padding:11px 18px;border-radius:8px;border:none;background:linear-gradient(135deg,var(--gold-dk),var(--gold));color:var(--navy);font-weight:800;font-size:.84rem;cursor:pointer;font-family:inherit}
+.lm-btn.ghost{background:transparent;border:1px solid var(--glass-b);color:var(--t2);font-weight:600}
+.lm-btn.sm{padding:6px 12px;font-size:.7rem}
+.lm-post{background:var(--card);border:1px solid var(--glass-b);border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.lm-post-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.lm-chip{font-size:.6rem;font-weight:800;border-radius:8px;padding:2px 8px;background:rgba(201,168,76,.18);color:var(--gold)}
+.lm-chip.g{background:rgba(26,122,74,.22);color:#4ade80}.lm-chip.w{background:rgba(255,255,255,.08);color:var(--t2)}
+.lm-post-t{font-size:.88rem;font-weight:800;color:var(--t1);flex:1;min-width:0;word-break:break-word}
+.lm-post-b{font-size:.78rem;color:var(--t2);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.lm-post-f{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:.66rem;color:var(--t3)}
+.lm-post-f button{background:none;border:none;color:var(--t2);font-size:.7rem;cursor:pointer;font-family:inherit;padding:2px 4px}
+.lm-auto{margin-top:9px;background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:6px;padding:8px 11px;font-size:.74rem;color:var(--t2);line-height:1.65;white-space:pre-wrap}
+.lm-empty{text-align:center;color:var(--t3);font-size:.8rem;padding:28px 10px}
+.lm-faq details{background:var(--card);border:1px solid var(--glass-b);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.lm-faq summary{padding:12px 14px;font-size:.82rem;font-weight:700;color:var(--t1);cursor:pointer;list-style:none}
+.lm-faq summary::-webkit-details-marker{display:none}
+.lm-faq summary::before{content:'Q. ';color:var(--gold);font-weight:900}
+.lm-faq details[open] summary{border-bottom:1px solid rgba(201,168,76,.12)}
+.lm-faq .fa{padding:11px 14px;font-size:.78rem;color:var(--t2);line-height:1.75;white-space:pre-wrap}
+.lm-step{display:flex;gap:12px;margin-bottom:12px}
+.lm-step-n{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.8rem;background:rgba(201,168,76,.16);color:var(--gold);border:1px solid var(--gold)}
+.lm-step.now .lm-step-n{background:var(--gold);color:var(--navy)}
+.lm-step-b{flex:1;min-width:0;background:var(--card);border:1px solid var(--glass-b);border-radius:12px;padding:11px 13px}
+.lm-step-t{font-size:.84rem;font-weight:800;color:var(--t1);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.lm-step-d{font-size:.72rem;color:var(--t2);line-height:1.6;margin:4px 0 8px}
+.lm-hist{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--glass-b);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.lm-hist-g{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:900;font-size:1.1rem;color:var(--gold);background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.4)}
+.lm-hist-b{flex:1;min-width:0}
+.lm-hist-t{font-size:.84rem;font-weight:800;color:var(--t1)}
+.lm-hist-s{font-size:.68rem;color:var(--t2);margin-top:2px;line-height:1.5}
+.lm-wip{text-align:center;padding:36px 16px;color:var(--t2)}
+.lm-wip .ico{font-size:2.4rem}
+.lm-wip .bd{display:inline-block;background:var(--navy);color:#fff;border:1px solid var(--glass-b);padding:4px 14px;border-radius:20px;font-size:.7rem;margin:10px 0}
+.lm-flash{animation:lmFlash 1.6s ease}
+@keyframes lmFlash{0%,60%{box-shadow:0 0 0 3px rgba(201,168,76,.7)}100%{box-shadow:0 0 0 0 rgba(201,168,76,0)}}
+.sct-in{width:100%;box-sizing:border-box;margin-bottom:12px}
+
+/* 기존 화면 보정 (고정 하단바는 중앙 스크롤 안에서 sticky) */
+.lm-topbar{top:var(--lm-stick)}
+.course-footer,.form-footer{position:sticky;bottom:var(--lm-ask-h);z-index:30}
+.lm-center .qs-section,.lm-center .course-section{max-width:860px}
+.lm-center .lm-hero{max-width:720px}
+
+/* ════════ PC (≥900px): 전체 80% 배율 + 3분할 + 독립 스크롤 ════════ */
+@media (min-width:900px){
+  :root{--lm-scale:.8}
+  html,body{height:100%;overflow:hidden}
+  #lm-viewport{position:fixed;left:0;top:0;width:calc(100vw / var(--lm-scale));height:100vh;height:calc(100vh / var(--lm-scale));transform:scale(var(--lm-scale));transform-origin:0 0;overflow:hidden}
+  @supports (height:100dvh){#lm-viewport{height:calc(100dvh / var(--lm-scale))}}
+  #lm-app{height:100%;min-height:0}
+  .lm-body{overflow:hidden}
+}
+
+/* ════════ 모바일/태블릿 (<900px): 일반 스크롤 + 서랍 + 하단 질문바 ════════ */
+@media (max-width:899px){
+  :root{--lm-ask-h:76px}
+  body{padding-bottom:calc(var(--lm-ask-h) + env(safe-area-inset-bottom,0px))}
+  .lm-head{position:sticky;top:0}
+  .lm-title{font-size:1.1rem}
+  .lm-body{display:block}
+  .lm-center-wrap,.lm-center{display:block;overflow:visible}
+  .lm-center{display:flex}
+  .lm-center .lm-screen{min-height:calc(100vh - 260px)}
+  .lm-panel{position:fixed;top:0;bottom:0;width:min(86vw,330px);z-index:420;visibility:hidden;transform:translateX(-105%);transition:transform .26s ease,visibility 0s linear .26s;box-shadow:0 0 40px rgba(0,0,0,.55);padding-top:16px;background:#08121f}
+  .lm-panel-left{left:0}
+  .lm-panel-right{right:0;left:auto;transform:translateX(105%)}
+  .lm-panel.open{visibility:visible;transform:none;transition:transform .26s ease}
+  .lm-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:410}
+  .lm-backdrop.show{display:block}
+  .lm-askbar{position:fixed;left:0;right:0;bottom:0;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .lm-asksheet{left:8px;right:8px}
+  .lm-head.lm-compact .lm-search-row{display:none}
+  .lm-head.lm-compact .lm-title-sub{display:none}
+  .lm-search input,.lm-ask-input,.fc,.sct-in{font-size:16px}
+  .fw-toast{bottom:calc(var(--lm-ask-h) + 22px)}
+}
+@media (max-width:480px){
+  .lm-row2{grid-template-columns:1fr}
+  .lm-page{padding:14px 12px 36px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.lm-sbtns{display:flex;gap:6px;flex-wrap:wrap}
+nav.gnb{z-index:300}
+@media(max-width:899px){.desk-only{display:none!important}nav.gnb{position:relative;top:auto}}
+
+</style>
 </head>
 <body>
+<div id="lm-viewport" data-fw-scale>
+<div id="lm-app">
 
-<!-- ── 공통 헤더 (framework 자동 주입) ── -->
-<div id="fw-header"></div>
+<!-- ══════════ HEADER (GNB) — AIPLATMARKET_HEADER_FOOTER v2 ══════════ -->
+<nav class="gnb">
+    <div class="fw-top">
+      <a class="fw-logo" href="https://aiplatmarket.com/" title="AI플랫마켓 홈으로">AI<em>PLAT</em>MARKET</a>
+      <div class="fw-top-right">
+        <span class="fw-mod-label" id="fwModLabel"></span>
+        <!-- 로그인 영역: 로그인 전 [로그인] 버튼 / 로그인 후 [이름님][로그아웃] (FWAuth가 자동 렌더) -->
+        <div id="fwAuthArea"><button type="button" class="fw-login-btn" onclick="FWAuth.open()">🔐 로그인</button></div>
+      </div>
+    </div>
 
-<!-- ── 운영 모드 표시 (DEV/PREVIEW) ── -->
-<div class="mode-indicator" id="mode-indicator">⚙ PREVIEW</div>
+<div class="gnb-cat-bar-wrap">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
 
-<!-- ════════════════════════════════════════════════════════
-     SCREEN 1: LANDING
-════════════════════════════════════════════════════════ -->
+      <!-- 1. AI 플랫폼 -->
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 탐색존 <span class="gcdi-badge" style="background:var(--red);color:#fff">인기</span></b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/metazone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌐</span><span class="gcdi-txt"><b>AI메타플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/growth" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌱</span><span class="gcdi-txt"><b>AI성장플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/academy" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎓</span><span class="gcdi-txt"><b>AI인생성장사관학교</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/trading" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📈</span><span class="gcdi-txt"><b>AI매매추천·검증시스템</b><span class="gcdi-desc">추천 검증 · 투자 참고용</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>            
+            <a class="gcdi platform" href="/promo" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/video" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- AI Hub: 외부 AI 서비스 탐색 + 내부 챗도우미 -->
+      <div class="gcat" id="gcat-aihub">
+        <button class="gcbtn" onclick="toggleCat('aihub',event)">🧠 AI Hub <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-aihub">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('ai-assistant');closeCats()"><span class="gcdi-ico">🤖</span><span class="gcdi-txt"><b>AI플랫마켓 챗도우미</b><span class="gcdi-desc">플랫폼 안내 · 일반 AI 상담</span></span></a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" onclick="showPage('ai-hub');closeCats()"><span class="gcdi-ico">🧭</span><span class="gcdi-txt"><b>AI 서비스 전체보기</b><span class="gcdi-desc">대화·이미지·디자인·영상·코딩 등</span></span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 2. Commerce -->
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+            <a class="gcdi" onclick="showPage('local-products');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 더착한상품</a>
+            <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 3. Business -->
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('startup');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('localcenter');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="showPage('create-sanglife');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+            <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 4. Community -->
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('community');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 5. Media -->
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('live');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);showPage('home');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);showPage('home');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);showPage('home');closeCats()">발라드</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 6. Lifestyle -->
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('sports');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="showPage('travel');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gcat-div"></div>
+
+      <!-- 7. 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/newspaper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+            <a class="gcdi" href="/newspaper#welfare" target="_blank" rel="noopener" onclick="closeCats()">🤝 복지신문</a>
+            <a class="gcdi" href="/newspaper#local" target="_blank" rel="noopener" onclick="closeCats()">🏘️ 내고장뉴스</a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">📄 종이신문 그대로 보기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 입점신청 고정 -->
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
+
+    </div><!-- /gnb-cat-bar -->
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+    </div><!-- /gnb-cat-bar-wrap -->
+</nav>
+<!-- ══════════ /HEADER ══════════ -->
+
+<div class="lm-head" id="lm-head">
+  <div class="lm-titlebox">
+    <div class="lm-title-row">
+      <button type="button" class="lm-hbtn" id="lm-hb-left" aria-label="내 메뉴 열기/닫기" aria-controls="lm-panel-left" aria-expanded="true" onclick="lmTogglePanel('left')">☰</button>
+      <div class="lm-title-center">
+        <h1 class="lm-title">🔮 AI<b>인생진로탐색</b></h1>
+        <div class="lm-title-sub"><span>AI LifeMap · 인생·진로 체험센터</span><span class="mode-indicator" id="mode-indicator" title="PREVIEW = AI 호출 0회(규칙 기반 체험)">⚙ PREVIEW</span></div>
+      </div>
+      <button type="button" class="lm-hbtn" id="lm-hb-right" aria-label="탐색 메뉴 열기/닫기" aria-controls="lm-panel-right" aria-expanded="true" onclick="lmTogglePanel('right')">☰</button>
+    </div>
+    <div class="lm-search-row">
+      <div class="lm-search" id="lm-search">
+        <span class="lm-search-ico" aria-hidden="true">🔎</span>
+        <input id="lm-search-input" type="search" autocomplete="off" enterkeyhint="search" maxlength="40" placeholder="검사·코스·메뉴·안내 검색 (예: MBTI, 창업, 사주, SCT)" aria-label="AI인생진로탐색 검색">
+        <button type="button" class="lm-search-clear" id="lm-search-clear" aria-label="검색어 지우기">×</button>
+        <div class="lm-search-results" id="lm-search-results" role="listbox"></div>
+      </div>
+    </div>
+  </div>
+  <nav class="lm-nav" aria-label="AI인생진로탐색 메뉴"><div class="lm-nav-scroll" id="lm-nav-scroll"></div></nav>
+</div>
+
+<div class="lm-body" id="lm-body">
+<aside class="lm-panel lm-panel-left" id="lm-panel-left" aria-label="내 메뉴"><div id="lm-left-body"></div></aside>
+
+<div class="lm-center-wrap" id="lm-center-wrap">
+<main class="lm-center" id="lm-center">
+
 <section id="s-landing" class="lm-screen active">
   <div class="preview-banner" id="preview-banner">
     <b>🔍 사전 체험 모드</b> — AI 분석 없이 규칙 기반 체험 결과를 제공합니다.
@@ -444,16 +949,9 @@ textarea.fc{resize:none;line-height:1.6}
     <div class="hero-bg"><span class="g1"></span><span class="g2"></span></div>
     <span class="hero-icon">🔮</span>
     <div class="hero-brand">AI LifeMap · AI인생·진로 체험센터</div>
-    <h1 class="hero-title">나를 알고,<br><span>삶을 탐색</span>하다</h1>
-    <p class="hero-sub">심리학·동양철학·AI Fusion 34개 학문이<br>하나의 종합 분석으로 연결됩니다</p>
-    <div class="hero-badges">
-      <span class="hbadge">🧠 심리학 9종</span>
-      <span class="hbadge">🔍 자기탐색 6종</span>
-      <span class="hbadge">☯ 동양철학 5종</span>
-      <span class="hbadge">⭐ 서양전통 5종</span>
-      <span class="hbadge">💼 진로·직업 5종</span>
-      <span class="hbadge">🌿 환경·생명 3종</span>
-    </div>
+    <h2 class="hero-title">나를 알고,<br><span>삶을 탐색</span>하다</h2>
+    <p class="hero-sub">심리학·동양철학·AI Fusion <b id="disc-total">34</b>개 학문이<br>하나의 종합 분석으로 연결됩니다</p>
+    <div class="hero-badges" id="hero-badges"></div>
   </div>
 
   <!-- 오늘의 질문 카드 -->
@@ -695,7 +1193,7 @@ textarea.fc{resize:none;line-height:1.6}
 <section id="s-loading" class="lm-screen">
   <div class="loading-ring"></div>
   <div class="loading-mode-badge" id="loading-mode-badge">⚙ PREVIEW 규칙기반 분석</div>
-  <p class="loading-txt">34개 학문 분야 분석 중...</p>
+  <p class="loading-txt" id="loading-txt">학문 분야 분석 중...</p>
   <p class="loading-disc" id="loading-disc">초기화 중</p>
   <div class="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
   <div class="loading-tags" id="loading-tags"></div>
@@ -734,7 +1232,7 @@ textarea.fc{resize:none;line-height:1.6}
         <div class="eco-step"><span class="eco-step-dot"></span>AI MetaZone — 삶과 미래를 직접 체험</div>
       </div>
       <div class="eco-btns">
-        <a href="/platform/promotion" class="eco-btn-primary">
+        <a href="/promo" class="eco-btn-primary">
           🌐 AI 평생성장 생태계 통합 설명회 보기 →
         </a>
         <button class="eco-btn-secondary" onclick="showScreen('signup')">
@@ -758,8 +1256,8 @@ textarea.fc{resize:none;line-height:1.6}
         새로운 평생성장 생태계를 함께 만들어 주세요.
       </div>
       <div class="ps-btns">
-        <a href="/platform/promotion" class="ps-btn-main">성장파트너 참여 알아보기 →</a>
-        <a href="/platform/promotion" class="ps-btn-sub">통합 설명회·체험 프로그램 보기</a>
+        <a href="/promo" class="ps-btn-main">성장파트너 참여 알아보기 →</a>
+        <a href="/promo" class="ps-btn-sub">통합 설명회·체험 프로그램 보기</a>
       </div>
     </div>
   </div>
@@ -808,10 +1306,441 @@ textarea.fc{resize:none;line-height:1.6}
   </div>
 </section>
 
-<!-- ── 공통 푸터 ── -->
-<div id="fw-footer"></div>
-<script src="/framework/assets/js/core.js"></script>
+<!-- ══ 커뮤니티 ══ -->
+<section id="s-community" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">💬 커뮤니티</span><span class="sub" id="cm-count"></span></div>
+  <div class="lm-page">
+    <p class="lm-lead">체험 후기와 정보를 나누는 공간이에요. 서로 존중하는 말로 남겨 주세요.</p>
+    <div class="lm-note">🔒 사전 체험(PREVIEW) 기간에는 이 기기(브라우저)에만 저장되는 체험용 게시판입니다. 정식 오픈 시 회원 공용 게시판으로 전환됩니다. 실명·연락처 등 개인정보는 적지 마세요.</div>
+    <div class="lm-box">
+      <div class="lm-row2" style="margin-bottom:8px">
+        <select id="cm-cat" class="fc" aria-label="분류"><option value="review">⭐ 체험 후기</option><option value="free">📌 자유</option><option value="info">🤝 정보공유</option></select>
+        <input id="cm-nick" class="fc" type="text" maxlength="12" placeholder="닉네임 (비우면 익명)" aria-label="닉네임">
+      </div>
+      <input id="cm-title" class="fc" type="text" maxlength="60" placeholder="제목 (2자 이상)" style="margin-bottom:8px" aria-label="제목">
+      <textarea id="cm-body" class="fc" rows="4" maxlength="2000" placeholder="내용 (5자 이상)" aria-label="내용"></textarea>
+      <div style="text-align:right;margin-top:10px"><button type="button" class="lm-btn" onclick="lmCommunitySubmit()">글 등록</button></div>
+    </div>
+    <div class="lm-tabs" id="cm-tabs"></div>
+    <div id="cm-list"></div>
+  </div>
+</section>
+<!-- ══ Q&A ══ -->
+<section id="s-qna" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">❓ Q&amp;A</span><span class="sub" id="qa-count"></span></div>
+  <div class="lm-page">
+    <p class="lm-lead">이용 중 궁금한 점을 남겨 주세요. 등록하면 규칙 기반 <b>자동 안내</b>가 먼저 붙고, 운영자 답변은 정식 오픈 후 이어집니다.</p>
+    <div class="lm-note">🤖 자동 안내는 AI가 아닌 FAQ·규칙 기반입니다. 사전 체험 기간에는 이 기기에만 저장됩니다.</div>
+    <div class="lm-box">
+      <input id="qa-title" class="fc" type="text" maxlength="60" placeholder="질문 제목 (2자 이상)" style="margin-bottom:8px" aria-label="질문 제목">
+      <textarea id="qa-body" class="fc" rows="3" maxlength="1000" placeholder="질문 내용 (선택)" aria-label="질문 내용"></textarea>
+      <div style="text-align:right;margin-top:10px"><button type="button" class="lm-btn" onclick="lmQnaSubmit()">질문 등록</button></div>
+    </div>
+    <div id="qa-list"></div>
+  </div>
+</section>
+<!-- ══ 나의 결과 ══ -->
+<section id="s-history" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">📋 나의 결과</span><span class="sub" id="hs-count"></span></div>
+  <div class="lm-page">
+    <p class="lm-lead">최근 분석 결과(최대 5건)를 이 기기에서 다시 볼 수 있어요.</p>
+    <div id="hs-list"></div>
+  </div>
+</section>
+<!-- ══ 성장경로 ══ -->
+<section id="s-growth" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">🌱 나의 성장 경로</span></div>
+  <div class="lm-page">
+    <h2>AI LifeMap 체험 후, 더 넓은 성장 여정</h2>
+    <p class="lm-lead">현재의 나를 점검하고 가능성을 발견한 뒤, 사업·학습·홍보·판매로 이어지는 AI플랫마켓 성장 경로입니다. 순서는 정해져 있지 않으며, 필요한 단계부터 시작하세요.</p>
+    <div id="gr-steps"></div>
+  </div>
+</section>
+<!-- ══ 이용안내 ══ -->
+<section id="s-help" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">🙋 이용안내</span></div>
+  <div class="lm-page">
+    <h2>자주 묻는 질문</h2>
+    <p class="lm-lead">찾는 내용이 없으면 아래 질문 입력바나 Q&amp;A에 남겨 주세요.</p>
+    <div class="lm-faq" id="faq-list"></div>
+  </div>
+</section>
+<!-- ══ 삶의 균형 (준비 중) ══ -->
+<section id="s-balance" class="lm-screen">
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">⚖️ 삶의 균형 (Life Balance Map)</span></div>
+  <div class="lm-page">
+    <div class="lm-wip">
+      <div class="ico">🔧</div>
+      <div class="bd">업그레이드 중</div>
+      <h2>삶의 균형 지도를 준비하고 있어요</h2>
+      <p class="lm-lead" style="max-width:520px;margin:8px auto 18px">나 자신·진로·가족·관계·건강·경제·삶의 방향 9개 영역의 만족도와 중요도를 한눈에 보고, 지금 먼저 돌볼 영역을 스스로 정해 보는 기능입니다.<br>평가나 진단이 아니라 <b>스스로 선택하기 위한 참고 지도</b>로 만들 예정이에요.</p>
+      <button type="button" class="lm-btn" onclick="showScreen('signup')">🚀 출시 알림 신청</button>
+      <button type="button" class="lm-btn ghost" style="margin-left:6px" onclick="openCourse('selfexplore')">지금은 자기탐색 체험하기</button>
+    </div>
+  </div>
+</section>
 
+<!-- ══════════ FOOTER — AIPLATMARKET_HEADER_FOOTER v2 ══════════ -->
+<footer>
+  <div class="ft-outer">
+    <div class="ft">
+<!-- 좌: 브랜드 + 사업자 정보 -->
+    <div style="min-width:240px">
+      <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
+      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
+        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+        대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
+        사업자등록번호: 227-18-34338<br>
+        주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
+        TEL: 0505-505-9000<br>
+        <!-- 이메일 드롭다운 -->
+        <span style="position:relative;display:inline-block">
+          <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
+          <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
+            </a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
+            </a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- 우: 링크 + 관리자 -->
+    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
+      <div class="ft-links">
+        <a href="#" onclick="showPage('about');return false">서비스 소개</a>
+        <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
+        <a href="#" onclick="showPage('terms');return false">이용약관</a>
+        <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
+        <a href="#" onclick="showPage('adcontact');return false">광고문의</a>
+        <a href="#" onclick="showPage('register');return false">입점문의</a>
+        <a href="#" onclick="showPage('community');return false">커뮤니티</a>
+        <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
+      </div>
+      <!-- 관리자 버튼 (푸터 우측 하단) -->
+      <a href="/admin" target="_blank"
+         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
+         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
+         title="관리자 대시보드">
+        ⚙️ 관리자 대시보드
+      </a>
+      <!-- PC/모바일 버전 전환 (드롭다운) -->
+      <div style="position:relative" id="viewModeDdw">
+        <button onclick="toggleViewModeDd()"
+           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
+           id="viewModeBtn">
+          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
+        </button>
+        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
+          </div>
+          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    </div>
+  </div>
+    
+    </div>
+  </div>
+</footer>
+<!-- ══════════ /FOOTER ══════════ -->
+
+</main>
+<div class="lm-askbar" id="lm-askbar">
+  <div class="lm-asksheet" id="lm-asksheet" role="dialog" aria-label="AI LifeMap 질문 답변">
+    <div class="as-head"><span>💬 질문 &amp; 답변</span><button type="button" aria-label="답변 창 닫기" onclick="lmCloseSheet()">×</button></div>
+    <div class="as-msgs" id="as-msgs" aria-live="polite"></div>
+  </div>
+  <div class="lm-ask-row">
+    <input class="lm-ask-input" id="lm-ask-input" type="text" maxlength="300" autocomplete="off" enterkeyhint="send" placeholder="궁금한 점을 질문해 보세요 (예: 창업이 나에게 맞을까요?)" aria-label="질문 입력">
+    <button type="button" class="lm-ask-send" id="lm-ask-send" aria-label="질문 보내기">➤</button>
+  </div>
+  <div class="lm-ask-hint" id="lm-ask-hint"></div>
+</div>
+
+</div>
+<aside class="lm-panel lm-panel-right" id="lm-panel-right" aria-label="오늘의 탐색"><div id="lm-right-body"></div></aside>
+
+</div>
+<div class="lm-backdrop" id="lm-backdrop" onclick="lmClosePanels()"></div>
+
+<div class="fw-modal" id="fwLoginModal" role="dialog" aria-modal="true" aria-labelledby="fwLoginTtl" onclick="if(event.target===this)FWAuth.close()">
+  <div class="fw-modal-box">
+    <button type="button" class="fw-modal-x" aria-label="닫기" onclick="FWAuth.close()">×</button>
+    <h2 class="fw-modal-ttl" id="fwLoginTtl">로그인</h2>
+    <p class="fw-modal-sub">로그인하면 분석 결과와 활동 기록을 안전하게 이어서 볼 수 있어요.<br>이 모듈에서 바로 로그인할 수 있습니다.</p>
+    <button type="button" class="fw-prov kakao" id="fwProv-kakao" onclick="FWAuth.kakao()"><b>K</b> 카카오로 계속하기<span class="fw-soon" style="display:none">준비 중</span></button>
+    <button type="button" class="fw-prov naver" id="fwProv-naver" onclick="FWAuth.naver()"><b>N</b> 네이버로 계속하기<span class="fw-soon" style="display:none">준비 중</span></button>
+    <button type="button" class="fw-prov google" id="fwProv-google" onclick="FWAuth.google()"><b style="color:#4285F4">G</b> Google로 계속하기<span class="fw-soon">준비 중</span></button>
+    <button type="button" class="fw-prov phone" id="fwProv-phone" onclick="FWAuth.phone()"><b>☎</b> 휴대폰 번호로 로그인<span class="fw-soon">준비 중</span></button>
+    <div class="fw-phone-box" id="fwPhoneBox">
+      <input id="fwPhoneNo" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="휴대폰 번호 (예: 01012345678)">
+      <button type="button" onclick="FWAuth.phoneSend()">인증번호 받기</button>
+      <div id="fwPhoneCodeRow" style="display:none;margin-top:8px">
+        <input id="fwPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="인증번호 입력">
+        <button type="button" onclick="FWAuth.phoneVerify()">확인</button>
+      </div>
+    </div>
+    <p class="fw-modal-note">로그인 시 <a onclick="showPage('terms')">이용약관</a> 및 <a onclick="showPage('privacy')">개인정보처리방침</a>에 동의한 것으로 봅니다.<br>휴대폰 번호는 인증 목적으로만 사용되며 이 기기에 저장하지 않습니다.</p>
+    <button type="button" class="fw-modal-skip" onclick="FWAuth.close()">로그인 없이 계속 둘러보기</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   AI플랫마켓 표준 GNB/Footer 스크립트 (모듈판 v2) — 그대로 </body> 직전에 붙여넣기
+   포함: ① GNB/Footer 기본 함수  ② 메인 SPA 전용 함수 shim  ③ toast  ④ FWAuth(로그인)
+   ──────────────────────────────────────────────────────────────────────
+   【로그인 서버 계약】 필요한 경우에만 아래 FW_AUTH_ENDPOINTS 로 경로를 바꾸세요.
+     GET  /api/config                → 관리자 설정·키 전달 (카카오 JS 키 등)
+     GET  /api/auth/me               → 현재 로그인 사용자 {user:{id,name,provider,avatar}}
+     POST /api/auth/kakao            → {code,redirectUri} 교환 → {user:{...}}
+     GET  /api/auth/naver?returnTo=  → 네이버 OAuth 시작(서버가 NAVER_CLIENT_ID/SECRET 사용)
+     GET  /api/auth/google?returnTo= → 구글 OAuth 시작
+     POST /api/auth/phone/send       → {phone} 인증번호 발송
+     POST /api/auth/phone/verify     → {phone,code} → {user:{...}}
+     POST /api/auth/logout           → 세션 종료
+   서버 경로가 아직 없으면 버튼은 동작하되 "서버 연동 준비 중" 안내만 표시됩니다(오류 없음).
+══════════════════════════════════════════════════════════════════════ */
+(function (w, d) {
+  'use strict';
+  var FW_MAIN = 'https://aiplatmarket.com/';
+
+  /* ① GNB / Footer 기본 함수 ------------------------------------------------ */
+  w.toggleFtEmail = function () {
+    var dd = d.getElementById('ftEmailDd'); if (!dd) return;
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+  w.updateGnbScrollHint = function (bar) {
+    var hint = d.getElementById('gnbScrollHint'), hintL = d.getElementById('gnbScrollHintLeft');
+    if (!bar || !hint) return;
+    hint.classList.toggle('show', bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4);
+    if (hintL) hintL.classList.toggle('show', bar.scrollLeft > 4);
+  };
+  /* 화면 배율(80% 등 transform:scale 적용 시) — [data-fw-scale] 요소로 실제 배율을 측정 */
+  w.fwScale = function () {
+    var el = d.querySelector('[data-fw-scale]');
+    if (!el || !el.offsetWidth) return 1;
+    var s = el.getBoundingClientRect().width / el.offsetWidth;
+    return (s > 0.2 && s < 3) ? s : 1;
+  };
+  w.toggleCat = function (id, e) {
+    if (e) e.stopPropagation();
+    var cat = d.getElementById('gcat-' + id); if (!cat) return;
+    var wasOpen = cat.classList.contains('open');
+    w.closeCats(); if (wasOpen) return;
+    cat.classList.add('open');
+    var btn = cat.querySelector('.gcbtn'), drop = cat.querySelector('.gcdrop');
+    if (!btn || !drop) return;
+    var S = w.fwScale(), r = btn.getBoundingClientRect(), vw = w.innerWidth / S, vh = w.innerHeight / S;
+    drop.style.top = ((r.bottom / S) + 1) + 'px';
+    drop.style.left = (r.left / S) + 'px'; drop.style.right = 'auto';
+    w.requestAnimationFrame(function () {
+      var dr = drop.getBoundingClientRect(), dw = dr.width / S, dh = dr.height / S;
+      if ((dr.left / S) + dw > vw - 8) { drop.style.left = 'auto'; drop.style.right = '8px'; }
+      if ((dr.top / S) + dh > vh - 8) { drop.style.top = Math.max(8, (r.top / S) - dh - 1) + 'px'; }
+    });
+  };
+  w.closeCats = function () {
+    d.querySelectorAll('.gcat.open').forEach(function (c) { c.classList.remove('open'); });
+  };
+  d.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.gcat')) w.closeCats(); });
+  d.addEventListener('keydown', function (e) { if (e.key === 'Escape') { w.closeCats(); if (w.FWAuth) w.FWAuth.close(); } });
+
+  /* ② 메인 SPA 전용 함수 shim — 모듈 페이지에는 없으므로 메인 사이트로 연결 --------- */
+  var go = function (hash) { w.open(FW_MAIN + (hash ? '#' + encodeURIComponent(hash) : ''), '_blank', 'noopener'); };
+  if (typeof w.showPage !== 'function') w.showPage = function (id) { go(id); };
+  if (typeof w.quickReg !== 'function') w.quickReg = function () { go('tv'); };
+  if (typeof w.setGenre !== 'function') w.setGenre = function () {};
+  if (typeof w.toggleDd !== 'function') w.toggleDd = function () {};
+  if (typeof w.closeDds !== 'function') w.closeDds = function () {};
+  ['gnbCat', 'gnbSort', 'gnbKw'].forEach(function (n) { if (typeof w[n] !== 'function') w[n] = function () { go('news'); }; });
+  w.toggleViewModeDd = function () {
+    var dd = d.getElementById('viewModeDd'); if (dd) dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+  w.switchToPcMode = function () {
+    var m = d.querySelector('meta[name=viewport]'); if (m) m.setAttribute('content', 'width=1280');
+    w.toggleViewModeDd(); w.toast('PC 버전으로 표시합니다');
+  };
+  w.switchToMobileMode = function () {
+    var m = d.querySelector('meta[name=viewport]'); if (m) m.setAttribute('content', 'width=device-width,initial-scale=1');
+    w.toggleViewModeDd(); w.toast('모바일 버전으로 표시합니다');
+  };
+
+  /* ③ toast ------------------------------------------------------------------ */
+  var toastTimer;
+  w.toast = function (msg) {
+    var t = d.getElementById('fwToast');
+    if (!t) { t = d.createElement('div'); t.id = 'fwToast'; t.className = 'fw-toast'; t.setAttribute('role', 'status'); d.body.appendChild(t); }
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  };
+
+  /* ④ FWAuth — 모듈 자체 로그인 (메인 연동과 무관하게 단독 동작) ------------------- */
+  var EP = {
+    config: '/api/config', me: '/api/auth/me', logout: '/api/auth/logout',
+    kakaoExchange: '/api/auth/kakao', naverStart: '/api/auth/naver', googleStart: '/api/auth/google',
+    phoneSend: '/api/auth/phone/send', phoneVerify: '/api/auth/phone/verify'
+  };
+  if (w.FW_AUTH_ENDPOINTS) for (var k in w.FW_AUTH_ENDPOINTS) EP[k] = w.FW_AUTH_ENDPOINTS[k];
+
+  var LS = 'fw_user_v1';
+  /* 기본값: 관리자에 키가 등록된 카카오·네이버는 켬, 구글·휴대폰은 관리자 설정이 켜질 때까지 "준비 중" */
+  var st = { on: { kakao: true, naver: true, google: false, phone: false }, kakaoKey: '', cfgLoaded: false, user: null, cbs: [], phone: '' };
+  var KAKAO_KEYS = ['kakaoJsKey', 'kakaoJsApiKey', 'kakaoAppKey', 'kakaoKey', 'kakao_js_key', 'KAKAO_JS_KEY'];
+  var GOOGLE_KEYS = ['googleClientId', 'GOOGLE_CLIENT_ID', 'google_client_id'];
+
+  function $(id) { return d.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pick(o, names) { if (!o) return ''; for (var i = 0; i < names.length; i++) if (o[names[i]]) return o[names[i]]; return ''; }
+  function fetchJSON(url, opt, ms) {
+    opt = opt || {}; opt.credentials = 'include';
+    var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    if (ctl) opt.signal = ctl.signal;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, ms || 8000) : null;
+    return fetch(url, opt).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (j) { return { ok: r.ok, status: r.status, data: j }; });
+    }).catch(function () { return { ok: false, status: 0, data: null }; })
+      .then(function (x) { if (timer) clearTimeout(timer); return x; });
+  }
+  function normalize(u, provider) {
+    u = u || {};
+    return { id: String(u.id || u.uid || u.userId || u.sub || ''), name: String(u.name || u.nickname || u.displayName || '회원').slice(0, 20), provider: u.provider || provider || '', avatar: u.avatar || u.profileImage || '' };
+  }
+  function loadUser() { try { var u = JSON.parse(w.localStorage.getItem(LS) || 'null'); return u && u.id ? u : null; } catch (e) { return null; } }
+  function saveUser(u) { try { if (u) w.localStorage.setItem(LS, JSON.stringify(u)); else w.localStorage.removeItem(LS); } catch (e) {} }
+  function setUser(u) {
+    st.user = u; saveUser(u); render();
+    st.cbs.forEach(function (fn) { try { fn(u); } catch (e) {} });
+  }
+  function loadScript(src) {
+    return new Promise(function (res, rej) { var s = d.createElement('script'); s.src = src; s.async = true; s.onload = res; s.onerror = function () { rej(new Error('load')); }; d.head.appendChild(s); });
+  }
+
+  function applyConfig(c) {
+    c = c || {};
+    var flags = c.authProviders || c.loginProviders || c.auth || c.login || {};
+    ['kakao', 'naver', 'google', 'phone'].forEach(function (p) {
+      var f = flags[p];
+      if (typeof f === 'boolean') st.on[p] = f;
+      else if (f && typeof f === 'object' && typeof f.enabled === 'boolean') st.on[p] = f.enabled;
+    });
+    st.kakaoKey = pick(c, KAKAO_KEYS) || pick(c.kakao, ['jsKey', 'appKey', 'key']) || st.kakaoKey;
+    if (typeof flags.google !== 'boolean' && pick(c, GOOGLE_KEYS)) st.on.google = true;
+    if (typeof flags.phone !== 'boolean' && (c.phoneAuth === true || c.phoneLogin === true)) st.on.phone = true;
+  }
+  function ensureConfig() {
+    if (st.cfgLoaded) return Promise.resolve();
+    return fetchJSON(EP.config).then(function (r) { st.cfgLoaded = true; if (r.ok && r.data) applyConfig(r.data.config || r.data); render(); });
+  }
+
+  function provIcon(p) { return { kakao: 'K', naver: 'N', google: 'G', phone: '☎' }[p] || '●'; }
+  function render() {
+    var a = $('fwAuthArea');
+    if (a) {
+      if (st.user) a.innerHTML = '<span class="fw-user" title="' + esc(st.user.provider) + ' 로그인"><span class="fw-user-ico ' + esc(st.user.provider) + '">' + provIcon(st.user.provider) + '</span>' + esc(st.user.name) + '님</span><button type="button" class="fw-login-btn ghost" onclick="FWAuth.logout()">로그아웃</button>';
+      else a.innerHTML = '<button type="button" class="fw-login-btn" onclick="FWAuth.open()">🔐 로그인</button>';
+    }
+    ['kakao', 'naver', 'google', 'phone'].forEach(function (p) {
+      var b = $('fwProv-' + p); if (!b) return;
+      b.classList.toggle('is-off', !st.on[p]);
+      var soon = b.querySelector('.fw-soon'); if (soon) soon.style.display = st.on[p] ? 'none' : 'inline-block';
+    });
+  }
+
+  function notReady(what) { w.toast(what + ' 서버 연동이 아직 준비되지 않았습니다. 관리자에게 문의해 주세요.'); }
+
+  function loginKakao() {
+    if (!st.on.kakao) return w.toast('카카오 로그인이 현재 비활성화되어 있습니다.');
+    ensureConfig().then(function () {
+      if (!st.kakaoKey) return w.toast('카카오 키를 불러오지 못했습니다. 관리자 설정(/api/config)을 확인해 주세요.');
+      return (w.Kakao ? Promise.resolve() : loadScript('https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js')).then(function () {
+        if (!w.Kakao.isInitialized()) w.Kakao.init(st.kakaoKey);
+        w.Kakao.Auth.authorize({ redirectUri: w.location.origin + w.location.pathname, state: 'fw_kakao' });
+      });
+    }).catch(function () { w.toast('카카오 SDK를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'); });
+  }
+  function loginServer(p, url, label) {
+    if (!st.on[p]) return w.toast(label + ' 로그인은 아직 활성화되지 않았습니다.');
+    w.location.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'returnTo=' + encodeURIComponent(w.location.pathname);
+  }
+  function togglePhone() {
+    if (!st.on.phone) return w.toast('휴대폰 로그인은 관리자 설정이 활성화되면 사용할 수 있습니다.');
+    var b = $('fwPhoneBox'); if (b) b.classList.toggle('open');
+  }
+  function phoneSend() {
+    var raw = ($('fwPhoneNo') || {}).value || '', num = raw.replace(/\D/g, '');
+    if (!/^01[016789]\d{7,8}$/.test(num)) return w.toast('휴대폰 번호를 정확히 입력해 주세요. (예: 01012345678)');
+    fetchJSON(EP.phoneSend, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: num }) }).then(function (r) {
+      if (!r.ok) return notReady('휴대폰 인증');
+      st.phone = num; var c = $('fwPhoneCodeRow'); if (c) c.style.display = 'block'; w.toast('인증번호를 발송했습니다.');
+    });
+  }
+  function phoneVerify() {
+    var code = (($('fwPhoneCode') || {}).value || '').replace(/\D/g, '');
+    if (code.length < 4) return w.toast('인증번호를 입력해 주세요.');
+    fetchJSON(EP.phoneVerify, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: st.phone, code: code }) }).then(function (r) {
+      if (!r.ok || !r.data || !(r.data.user || r.data.success)) return w.toast('인증번호가 올바르지 않거나 서버 연동이 준비되지 않았습니다.');
+      var u = normalize(r.data.user || r.data, 'phone');
+      if (!u.name || u.name === '회원') u.name = st.phone.slice(0, 3) + '-****-' + st.phone.slice(-4);
+      setUser(u); close(); w.toast('로그인되었습니다.');
+    });
+  }
+  function me() {
+    return fetchJSON(EP.me).then(function (r) {
+      if (r.ok && r.data && (r.data.user || r.data.id)) { setUser(normalize(r.data.user || r.data)); return true; }
+      return false;
+    });
+  }
+  function handleReturn() {
+    var q = new URLSearchParams(w.location.search), clean = w.location.pathname + w.location.hash;
+    if (q.get('state') === 'fw_kakao' && q.get('code')) {
+      var code = q.get('code'); w.history.replaceState(null, '', clean);
+      fetchJSON(EP.kakaoExchange, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: code, redirectUri: w.location.origin + w.location.pathname }) }).then(function (r) {
+        if (r.ok && r.data && (r.data.user || r.data.success)) { setUser(normalize(r.data.user || r.data, 'kakao')); w.toast('카카오 로그인이 완료되었습니다.'); }
+        else notReady('카카오 로그인');
+      });
+    } else if (q.get('login')) {
+      w.history.replaceState(null, '', clean);
+      me().then(function (ok) { if (ok) w.toast('로그인되었습니다.'); });
+    }
+  }
+  function open() { var m = $('fwLoginModal'); if (!m) return; ensureConfig(); render(); m.classList.add('open'); var f = m.querySelector('.fw-prov'); if (f) f.focus(); }
+  function close() { var m = $('fwLoginModal'); if (m) m.classList.remove('open'); }
+  function logout() {
+    fetchJSON(EP.logout, { method: 'POST' }); setUser(null); w.toast('로그아웃되었습니다.');
+  }
+
+  w.FWAuth = {
+    open: open, close: close, logout: logout, user: function () { return st.user; },
+    onChange: function (fn) { st.cbs.push(fn); },
+    kakao: loginKakao, naver: function () { loginServer('naver', EP.naverStart, '네이버'); },
+    google: function () { loginServer('google', EP.googleStart, '구글'); },
+    phone: togglePhone, phoneSend: phoneSend, phoneVerify: phoneVerify
+  };
+  function boot() {
+    st.user = loadUser(); render(); handleReturn();
+    if (!st.user) me(); /* 서버 세션이 있으면 자동 복원(없으면 조용히 무시) */
+    ensureConfig();
+  }
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
+})(window, document);
+
+</script>
 <script>
 /* ════════════════════════════════════════════════════════════
    AI LifeMap — App Script v1.0.0
@@ -918,6 +1847,13 @@ const DISCS = {
     time:'7분',
     note:'⚠ 이 탐색은 임상적 MMPI 검사를 대체하지 않습니다. 전문가 진단이 필요하면 정신건강 전문의를 찾아주세요.',
     disclaimer:true},
+
+  sct:{id:'sct',g:'psychology',icon:'✍️',name:'SCT 문장완성검사',
+    short:'문장으로 보는 내면',price:700,free:false,
+    what:'미완성 문장 12개를 내 말로 이어 쓰며 자기·가족·관계·일·정서·미래에 대한 생각을 살펴보는 투사적 자기탐색입니다.',
+    gain:['6개 영역별 표현 톤','내가 쓴 문장 되짚어보기','스스로 돌아볼 질문 3가지','다른 검사와 교차 해석'],
+    time:'7~10분',
+    note:'⚠ 전문가가 시행하는 임상 SCT(심리평가)를 대체하지 않는 자기탐색 체험입니다. 실명·연락처 등 개인정보는 쓰지 마세요.',disclaimer:true},
 
   // ── AI 자기탐색 ───────────────────────────────────────────
   character:{id:'character',g:'selfexplore',icon:'🌱',name:'인성 탐색',
@@ -1058,12 +1994,12 @@ const COURSES = {
     time:'약 20분'},
   psychology:{id:'psychology',icon:'🧠',name:'심리학 코스',
     desc:'과학적으로 검증된 심리학 집약',
-    discs:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi'],
-    time:'약 35분'},
+    discs:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi','sct'],
+    time:'약 45분'},
   selfexplore:{id:'selfexplore',icon:'🔍',name:'AI 자기탐색 코스',
     desc:'나를 깊이 이해하는 탐색 여정',
-    discs:['character','potential','creativity','interest','aptitude','values'],
-    time:'약 28분'},
+    discs:['character','potential','creativity','interest','aptitude','values','sct'],
+    time:'약 36분'},
   career:{id:'career',icon:'💼',name:'진로·직업 코스',
     desc:'직업 탐색과 커리어 설계',
     discs:['holland','aptitude','values','leadership','learning','jobOntology'],
@@ -1081,9 +2017,9 @@ const COURSES = {
     discs:['astrology','tarot','numerology','zodiac'],
     time:'약 8분 (무료)'},
   comprehensive:{id:'comprehensive',icon:'🔮',name:'통합 코스',
-    badge:'🏆 대표과정',desc:'34개 학문 전체 AI Fusion',featured:true,
+    badge:'🏆 대표과정',desc:`${Object.keys(DISCS).length}개 학문 전체 AI Fusion`,featured:true,
     discs:Object.keys(DISCS),
-    time:'약 60분'},
+    time:'약 70분'},
 };
 
 const CAT_META = {
@@ -1118,7 +2054,7 @@ function showScreen(id) {
   document.querySelectorAll('.lm-screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById('s-'+id);
   if (el) el.classList.add('active');
-  window.scrollTo(0, 0);
+  lmAfterShow(id);
 }
 
 /* ── 5. 초기화 ─────────────────────────────────────────────── */
@@ -1223,7 +2159,7 @@ function renderDiscList(discIds) {
           <div class="di-chk">${isSel?'✓':''}</div>
         </div>
         <div class="pretest-info">
-          ${d.disclaimer ? `<div style="color:#f87171;font-size:.68rem;margin-bottom:8px">⚠ ${d.note}</div>` : ''}
+          ${d.disclaimer ? `<div style="color:#f87171;font-size:.68rem;margin-bottom:8px">⚠ ${d.note.replace(/^⚠\s*/,'')}</div>` : ''}
           <div class="pt-row"><span class="pt-label">📖 무엇인가요?</span><span class="pt-val">${d.what}</span></div>
           <div class="pt-row"><span class="pt-label">💡 알 수 있는 것</span>
             <div class="pt-gain">${d.gain.map(g=>`<span class="pt-tag">${g}</span>`).join('')}</div>
@@ -1264,7 +2200,7 @@ function updatePriceSummary() {
   const origTotal = sel.reduce((s,id) => s+(DISCS[id]?.price||0), 0);
   const bundle = c ? LIFEAI_PRICING_BUNDLES[c.id] : null;
   const finalPrice = (bundle && bundle.price < origTotal) ? bundle.price : origTotal;
-  const disc = bundle ? bundle.discount : 0;
+  const disc = (bundle && origTotal > 0 && bundle.price < origTotal) ? Math.round((1 - bundle.price / origTotal) * 100) : 0;
   const origEl = document.getElementById('ps-orig');
   const finalEl = document.getElementById('ps-final');
   const discEl = document.getElementById('ps-discount');
@@ -1273,7 +2209,7 @@ function updatePriceSummary() {
     finalEl.textContent = '무료 체험';
     discEl.textContent = '';
   } else if (LM.MODE === 'PREVIEW') {
-    origEl.textContent = `정식출시 후 ${origTotal.toLocaleString()}AP`;
+    origEl.textContent = disc > 0 ? `정식출시 후 ${finalPrice.toLocaleString()}AP (묶음 ${disc}% 할인)` : `정식출시 후 ${origTotal.toLocaleString()}AP`;
     finalEl.textContent = 'PREVIEW 무료 체험';
     discEl.textContent = '🎁';
   } else {
@@ -1293,7 +2229,7 @@ const LIFEAI_PRICING_BUNDLES = {
 /* ── 8. 폼 흐름 ────────────────────────────────────────────── */
 function startFormFlow() {
   if (ST.selectedDiscs.size === 0) {
-    alert('분석할 학문을 최소 1개 선택해 주세요.'); return;
+    toast('분석할 학문을 최소 1개 선택해 주세요.'); return;
   }
   ST.formStep = 0;
   updateFormUI();
@@ -1331,7 +2267,7 @@ function formNext() {
   collectFormStep();
   if (ST.formStep < ST.TOTAL_FORM_STEPS - 1) {
     if (ST.formStep === 0 && !document.getElementById('f-bdate').value) {
-      alert('생년월일은 필수 입력 항목입니다.'); return;
+      toast('생년월일은 필수 입력 항목입니다.'); return;
     }
     ST.formStep++;
     updateFormUI();
@@ -1372,6 +2308,25 @@ function togInt(btn,val){
 
 /* ── 9. 미니 검사 ──────────────────────────────────────────── */
 const MINI_TESTS = {
+  sct:{
+    title:'✍️ SCT 문장완성검사',
+    type:'text',
+    disclaimer:'정답은 없어요. 떠오르는 대로 짧게 이어 써 주세요. 임상 심리평가를 대체하지 않는 자기탐색용이며, 실명·연락처 등 개인정보는 적지 마세요. 건너뛴 문장은 분석에서 제외됩니다.',
+    qs:[
+      {stem:'나는 어릴 때', dom:'family'},
+      {stem:'내가 가장 자랑스러울 때는', dom:'self'},
+      {stem:'나의 가장 큰 장점은', dom:'self'},
+      {stem:'나는 힘들다고 느낄 때', dom:'emotion'},
+      {stem:'우리 가족은', dom:'family'},
+      {stem:'나에게 친구란', dom:'relation'},
+      {stem:'직장(학교)에서 나는', dom:'work'},
+      {stem:'내가 가장 두려워하는 것은', dom:'emotion'},
+      {stem:'5년 후의 나는', dom:'future'},
+      {stem:'내가 정말 되고 싶은 사람은', dom:'future'},
+      {stem:'사람들은 나를', dom:'self'},
+      {stem:'나에게 돈이란', dom:'future'}
+    ]
+  },
   mmpi:{
     title:'📊 MMPI 성격 탐색 (간략 체험)',
     disclaimer:'이 탐색은 임상적 MMPI 검사를 대체하지 않습니다. 자기이해를 위한 참고용 체험입니다.',
@@ -1434,19 +2389,24 @@ function renderMiniTests() {
   }
   wrap.innerHTML = needTests.map(k => {
     const t = MINI_TESTS[k];
-    return `
-    <div class="mini-test">
-      <div class="mt-title">${t.title}</div>
-      ${t.disclaimer ? `<div class="mt-disclaimer">⚠ ${t.disclaimer}</div>` : ''}
-      ${t.qs.map((q,i) => `
-      <div class="mt-q">${i+1}. ${q}</div>
+    const body = t.type === 'text'
+      ? t.qs.map((q,i) => `
+      <div class="mt-q">${i+1}. ${escHtml(q.stem)} …</div>
+      <input class="fc sct-in" type="text" maxlength="60" name="${k}_q${i}" autocomplete="off" placeholder="이어서 써 주세요 (건너뛰어도 돼요)" value="${escHtml((ST.form.miniTests[k]?.answers||[])[i]||'')}" aria-label="${escHtml(q.stem)}">`).join('')
+      : t.qs.map((q,i) => `
+      <div class="mt-q">${i+1}. ${escHtml(q)}</div>
       <div class="mt-scale">
         ${[1,2,3,4,5].map(v=>`
         <label>
           <input type="radio" name="${k}_q${i}" value="${v}">
           <span>${v===1?'전혀<br>아님':v===5?'매우<br>그렇다':v}</span>
         </label>`).join('')}
-      </div>`).join('')}
+      </div>`).join('');
+    return `
+    <div class="mini-test">
+      <div class="mt-title">${t.title}</div>
+      ${t.disclaimer ? `<div class="mt-disclaimer">⚠ ${t.disclaimer}</div>` : ''}
+      ${body}
     </div>`;
   }).join('');
 }
@@ -1455,6 +2415,14 @@ function collectMiniTests() {
   const needTests = Object.keys(MINI_TESTS).filter(k => ST.selectedDiscs.has(k));
   needTests.forEach(k => {
     const t = MINI_TESTS[k];
+    if (t.type === 'text') {
+      const answers = t.qs.map((_,i) => {
+        const el = document.querySelector(`input[name="${k}_q${i}"]`);
+        return el ? el.value.trim().slice(0,60) : '';
+      });
+      ST.form.miniTests[k] = { answers, filled: answers.filter(Boolean).length };
+      return;
+    }
     const scores = t.qs.map((_,i) => {
       const r = document.querySelector(`input[name="${k}_q${i}"]:checked`);
       return r ? parseInt(r.value) : 3;
@@ -1469,14 +2437,14 @@ function renderSummary() {
   if (!el) return;
   el.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div><span style="color:var(--gold)">이름</span><br>${f.name||'미입력'}</div>
-      <div><span style="color:var(--gold)">생년월일</span><br>${f.bdate||'미입력'}</div>
+      <div><span style="color:var(--gold)">이름</span><br>${escHtml(f.name||'미입력')}</div>
+      <div><span style="color:var(--gold)">생년월일</span><br>${escHtml(f.bdate||'미입력')}</div>
       <div><span style="color:var(--gold)">성별</span><br>${f.gender==='male'?'남성':f.gender==='female'?'여성':'미입력'}</div>
-      <div><span style="color:var(--gold)">혈액형</span><br>${f.blood||'미입력'}</div>
-      <div><span style="color:var(--gold)">출생지</span><br>${f.birthplace||'미입력'}</div>
-      <div><span style="color:var(--gold)">거주지</span><br>${f.location||'미입력'}</div>
-      <div><span style="color:var(--gold)">현재상태</span><br>${f.status||'미입력'}</div>
-      <div><span style="color:var(--gold)">MBTI</span><br>${f.mbti||'미입력'}</div>
+      <div><span style="color:var(--gold)">혈액형</span><br>${escHtml(f.blood||'미입력')}</div>
+      <div><span style="color:var(--gold)">출생지</span><br>${escHtml(f.birthplace||'미입력')}</div>
+      <div><span style="color:var(--gold)">거주지</span><br>${escHtml(f.location||'미입력')}</div>
+      <div><span style="color:var(--gold)">현재상태</span><br>${escHtml(f.status||'미입력')}</div>
+      <div><span style="color:var(--gold)">MBTI</span><br>${escHtml(f.mbti||'미입력')}</div>
     </div>
     <div style="margin-top:10px"><span style="color:var(--gold)">선택 학문</span><br>
       <span style="font-size:.72rem;color:var(--t2)">${[...ST.selectedDiscs].map(id=>DISCS[id]?.name||id).join(' · ')}</span>
@@ -1490,8 +2458,8 @@ function renderSummary() {
 const MANSEOK = {
   STEMS:['갑','을','병','정','무','기','경','신','임','계'],
   BRANCHES:['자','축','인','묘','진','사','오','미','신','유','술','해'],
-  SE:{'갑':'木','을':'木','병':'火','정':'Fire','무':'土','기':'土','경':'金','신':'金','임':'Water','계':'Water'},
-  BE:{'자':'Water','축':'土','인':'木','묘':'木','진':'土','사':'Fire','오':'Fire','미':'土','신':'金','유':'金','술':'土','해':'Water'},
+  SE:{'갑':'木','을':'木','병':'火','정':'火','무':'土','기':'土','경':'金','신':'金','임':'水','계':'水'},
+  BE:{'자':'水','축':'土','인':'木','묘':'木','진':'土','사':'火','오':'火','미':'土','신':'金','유':'金','술':'土','해':'水'},
   // 절기 기반 월지 (대략적 적용, ±1일 오차 가능)
   getMonthBranch(m, d) {
     const starts=[[1,6,1],[2,4,2],[3,6,3],[4,5,4],[5,6,5],[6,6,6],
@@ -1505,11 +2473,12 @@ const MANSEOK = {
     if (!dateStr) return null;
     const d = new Date(dateStr);
     const yr=d.getFullYear(), mo=d.getMonth()+1, dy=d.getDate();
-    // 년주
-    const ysi=((yr-4)%10+10)%10, ybi=((yr-4)%12+12)%12;
-    // 월주
+    // 연주 — 입춘(2/4경) 이전 출생은 전년도 간지 (사주 연도는 입춘 기준)
+    const solarYear = (mo===1 || (mo===2 && dy<4)) ? yr-1 : yr;
+    const ysi=((solarYear-4)%10+10)%10, ybi=((solarYear-4)%12+12)%12;
+    // 월주 — 월지는 절기 기준, 월간은 월두법(연간×2+2 에서 인월부터 순행)
     const mbi=this.getMonthBranch(mo,dy);
-    const msi=((ysi%5)*2+mbi-2+20)%10;
+    const msi=((ysi%5)*2+2+((mbi-2+12)%12))%10;
     // 일주 (기준: 2024-01-01 = 甲子日, 기준점 계산값)
     const REF=new Date('2024-01-01');
     const diff=Math.round((d-REF)/86400000);
@@ -1529,7 +2498,7 @@ const MANSEOK = {
     const ds=this.STEMS[dsi],db=this.BRANCHES[dbi];
     const me=this.SE[ds]||'土'; // 일주(日主) = 나의 오행
     // 오행 개수 파악
-    const ec={'木':0,'火':0,'土':0,'金':0,'Water':0};
+    const ec={'木':0,'火':0,'土':0,'金':0,'水':0};
     [ys,ms,ds,...(hResult?[hResult.stem]:[])].forEach(s=>{ const e=this.SE[s]; if(e)ec[e]++; });
     [yb,mb,db,...(hResult?[hResult.branch]:[])].forEach(b=>{ const e=this.BE[b]; if(e)ec[e]++; });
     return {year:{stem:ys,branch:yb,element:this.SE[ys]||'土'},
@@ -1549,10 +2518,10 @@ const RULE = {
 
   EL_TRAITS:{
     '木':{power:'성장·창조',career:'교육, 기획, 의료, 예술, IT',color:'초록',dir:'동방'},
-    'Fire':{power:'열정·표현',career:'영업, 연예, 마케팅, 요식업',color:'빨강',dir:'남방'},
+    '火':{power:'열정·표현',career:'영업, 연예, 마케팅, 요식업',color:'빨강',dir:'남방'},
     '土':{power:'안정·신뢰',career:'금융, 부동산, 농업, 공무',color:'황토',dir:'중앙'},
     '金':{power:'의지·결단',career:'군경, 법조, IT, 제조',color:'흰색',dir:'서방'},
-    'Water':{power:'지혜·유연',career:'연구, 철학, 유통, 국제',color:'검정',dir:'북방'},
+    '水':{power:'지혜·유연',career:'연구, 철학, 유통, 국제',color:'검정',dir:'북방'},
   },
   ZODIAC_ANIMALS:['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'],
   ZODIAC_TRAITS:{
@@ -1643,12 +2612,12 @@ const RULE = {
       case 'ohang': {
         const me=msok?msok.mainElement:'土';
         const et2=this.EL_TRAITS[me]||this.EL_TRAITS['土'];
-        const good={'木':'水·火','Fire':'木·土','土':'Fire·金','金':'土·Water','Water':'木·金'};
+        const good={'木':'水·火','火':'木·土','土':'火·金','金':'土·水','水':'木·金'};
         return R(SC(seed,65,88),`${me}행 — ${et2.power}`,
           `${me}행의 ${et2.power} 기운이 삶을 이끕니다.`,
           `주요 오행: ${me} (${et2.power})\n보완 오행: ${good[me]||'水·木'}\n`+
           `직업 방향: ${et2.career}\n행운의 색: ${et2.color} / 방위: ${et2.dir}\n`+
-          `건강 주의: ${me==='木'?'간·담낭':me==='Fire'?'심장·소장':me==='土'?'비장·위장':me==='金'?'폐·대장':'신장·방광'}`,
+          `건강 주의: ${me==='木'?'간·담낭':me==='火'?'심장·소장':me==='土'?'비장·위장':me==='金'?'폐·대장':'신장·방광'}`,
           [me+'행',et2.power]);
       }
       case 'sasang': {
@@ -1762,6 +2731,47 @@ const RULE = {
           `\n\n추천 직업군: ${top3==='RIA'?'공학자, 과학자, 건축가':top3==='ESA'?'교사, 마케터, 디자이너':top3==='ESC'?'경영자, 공무원, 관리자':'관련 분야 전문직'}`,
           [top3+' 유형']);
       }
+      case 'sct': {
+        const sct = mi.sct, stems = MINI_TESTS.sct.qs;
+        const answers = (sct && sct.answers) ? sct.answers : [];
+        const filled = answers.filter(Boolean).length;
+        if (filled < 3) {
+          return R(60, 'SCT 문장완성 — 응답이 적어요',
+            '문장을 3개 이상 이어 써 주시면 영역별 표현 톤을 살펴볼 수 있어요.',
+            `작성한 문장: ${filled}/12개\n\n문장완성검사는 내가 쓴 말이 곧 분석 재료입니다. 다시 체험할 때 떠오르는 대로 3개 이상 이어 써 보세요.\n\n※ 임상 심리평가를 대체하지 않는 자기탐색 체험입니다.`,
+            ['응답 부족']);
+        }
+        const POS = ['좋','행복','즐','편안','안정','따뜻','든든','자랑','성장','도전','희망','감사','사랑','보람','열정','꿈','웃','평화','자유','믿','노력','성공','나아','긍정','재미','소중','배려','도움','뿌듯','여유'];
+        const NEG = ['힘들','싫','불안','두려','걱정','외롭','화가','화나','답답','지치','우울','슬프','후회','무서','부담','짜증','상처','포기','불편','스트레스','실패','어렵','피곤','눈치','무기력','막막','불만','무시','혼자'];
+        const DOMS = {self:'자기상', family:'가족·성장', relation:'대인관계', work:'일·성취', emotion:'정서·스트레스', future:'미래·가치'};
+        const dom = {}; Object.keys(DOMS).forEach(k => dom[k] = {p:0, n:0, cnt:0, quotes:[]});
+        stems.forEach((q,i) => {
+          const a = (answers[i] || '').trim(); if (!a) return;
+          const d = dom[q.dom]; d.cnt++;
+          POS.forEach(w => { if (a.indexOf(w) >= 0) d.p++; });
+          NEG.forEach(w => { if (a.indexOf(w) >= 0) d.n++; });
+          d.quotes.push(`“${q.stem} ${a}”`);
+        });
+        const tone = d => d.cnt === 0 ? '응답 없음' : (d.p > d.n ? '밝고 안정적인 표현' : d.n > d.p ? '무거움·긴장이 느껴지는 표현' : '담담하고 균형 잡힌 표현');
+        let pos = 0, neg = 0; Object.values(dom).forEach(d => { pos += d.p; neg += d.n; });
+        const lines = Object.keys(DOMS).map(k => `• ${DOMS[k]}: ${tone(dom[k])}${dom[k].quotes.length ? '\n   ' + dom[k].quotes.join('\n   ') : ''}`);
+        const Q = {
+          self:'내가 스스로를 설명하는 말과 남이 나를 보는 말은 얼마나 닮았을까요?',
+          family:'어린 시절과 가족에서 지금의 나에게 이어진 것은 무엇일까요?',
+          relation:'가까운 사람과 있을 때 나는 어떤 모습이 되나요?',
+          work:'일(학교)에서 내가 가장 힘을 얻는 순간은 언제인가요?',
+          emotion:'힘들 때 나를 가장 잘 돌보는 방법은 무엇인가요?',
+          future:'5년 뒤의 나에게 오늘 해줄 수 있는 작은 한 가지는 무엇일까요?'
+        };
+        const heavy = Object.keys(DOMS).filter(k => dom[k].cnt > 0 && dom[k].n > dom[k].p);
+        const empty = Object.keys(DOMS).filter(k => dom[k].cnt === 0);
+        const askKeys = heavy.concat(empty).concat(Object.keys(DOMS)).filter((k,i,arr) => arr.indexOf(k) === i).slice(0,3);
+        const score = Math.max(55, Math.min(92, Math.round(58 + filled * 2 + (pos >= neg ? 6 : 2))));
+        return R(score, `SCT 문장완성 — ${filled}/12문장 응답`,
+          `영역별 표현 톤을 키워드로 살펴본 참고 결과입니다. (밝은 표현 ${pos} / 무거운 표현 ${neg})`,
+          `영역별 표현 톤 (키워드 기반 규칙 분석, 참고용)\n${lines.join('\n')}\n\n스스로 돌아볼 질문\n${askKeys.map((k,i) => `${i+1}. ${Q[k]}`).join('\n')}\n\n점수는 응답 충실도와 표현 균형을 반영한 참고 지표이며 좋고 나쁨이나 정상·비정상을 판정하지 않습니다.\n정식 출시 후에는 AI가 문장의 맥락까지 읽어 해석합니다.\n\n※ 임상 심리평가를 대체하지 않는 자기탐색 체험입니다. 마음이 많이 힘들다면 전문가 상담을 권합니다.`,
+          ['SCT', '자기탐색', `${filled}문장`]);
+      }
       case 'mmpi': {
         const mt=mi.mmpi;
         const avg=mt?mt.avg:3;
@@ -1803,7 +2813,7 @@ const RULE = {
         return R(SC(seed,60,82),`${zodiac}띠 · ${f.blood||'혈액형 미입력'}`,
           `${zodiac}띠: ${zt.t} / ${f.blood||'--'}: ${bloodDesc[f.blood]||'미입력'}`,
           `띠: ${zodiac}띠\n특성: ${zt.t}\n올해 운세: ${zt.f}\n천직: ${zt.c}\n\n`+
-          `혈액형: ${f.blood||'미입력'}\n${bloodDesc[f.blood]||'혈액형을 입력하면 더 자세한 분석이 가능합니다.'}\n\n`+
+          `혈액형: ${escHtml(f.blood||'미입력')}\n${bloodDesc[f.blood]||'혈액형을 입력하면 더 자세한 분석이 가능합니다.'}\n\n`+
           `⚠ 띠·혈액형 분석은 민속문화적 참고 내용입니다.`,
           [zodiac+'띠',f.blood||'']);
       }
@@ -1862,13 +2872,13 @@ const RULE = {
           `AI 심층 해석은 PRODUCTION 모드에서 제공됩니다.`,[card]);
       }
       case 'fengshui': {
-        const dir={'木':'동방(東)','Fire':'남방(南)','土':'중앙(中央)','金':'서방(西)','Water':'북방(北)'};
-        const plant={'木':'식물·나무 가구','Fire':'빨강 소품·채광','土':'황토색·도자기','金':'흰색·금속 소품','Water':'파랑·수족관'};
+        const dir={'木':'동방(東)','火':'남방(南)','土':'중앙(中央)','金':'서방(西)','水':'북방(北)'};
+        const plant={'木':'식물·나무 가구','火':'빨강 소품·채광','土':'황토색·도자기','金':'흰색·금속 소품','水':'파랑·수족관'};
         return R(SC(seed,60,85),`${f.birthplace||'출생지'} 풍수 분석`,
           `${el}행 기운에 최적화된 주거 방향: ${dir[el]||'동방'}`,
           `주요 방위: ${dir[el]||'동방'}\n강화 인테리어: ${plant[el]||'자연 소품'}\n`+
           `거주지 에너지 지수: ${SC(seed+(f.location||''),62,88)}/100\n`+
-          `이사·창업 방향: ${el==='木'?'북동쪽':el==='Fire'?'남쪽':el==='土'?'중심':el==='金'?'서북쪽':'북쪽'} 방향이 유리`,[el+'행']);
+          `이사·창업 방향: ${el==='木'?'북동쪽':el==='火'?'남쪽':el==='土'?'중심':el==='金'?'서북쪽':'북쪽'} 방향이 유리`,[el+'행']);
       }
       case 'name_study': {
         const name=f.name||''; if(!name) return R(65,'성명학: 이름 미입력','이름을 입력하면 분석됩니다.','이름 입력 필요',['이름 필요']);
@@ -1944,7 +2954,7 @@ const RULE = {
       case 'startup':
         return R(SC(seed,62,88),'사업·창업 적합도',`창업 준비도와 추천 업종 분석`,
           `창업 적합도: ${SC(seed+'startup',62,88)}/100\n\n`+
-          `추천 사업 유형: ${el==='木'?'교육·컨설팅·온라인 플랫폼':el==='Fire'?'마케팅·F&B·엔터테인먼트':el==='土'?'부동산·금융·안정형 서비스':el==='金'?'IT·제조·정밀 서비스':'데이터·물류·온라인 유통'}\n`+
+          `추천 사업 유형: ${el==='木'?'교육·컨설팅·온라인 플랫폼':el==='火'?'마케팅·F&B·엔터테인먼트':el==='土'?'부동산·금융·안정형 서비스':el==='金'?'IT·제조·정밀 서비스':'데이터·물류·온라인 유통'}\n`+
           `강점: ${mbti[0]==='E'?'네트워킹·홍보':'전략적 계획·품질 관리'}\n`+
           `주의: ${mbti[3]==='P'?'실행 계획·일정 관리':'과도한 완벽주의 경계'}\n\n`+
           `다음 단계: AI ItemZone에서 사업 아이디어를 구체화하세요.\n🔗 /itemzone`,
@@ -1957,20 +2967,20 @@ const RULE = {
           ['생애주기']);
       case 'environment':
         return R(SC(seed,62,85),'환경학 분석',`성장환경이 형성한 특성`,
-          `출생지 ${f.birthplace||'미입력'} → 현재 ${f.location||'미입력'}\n\n`+
+          `출생지 ${escHtml(f.birthplace||'미입력')} → 현재 ${escHtml(f.location||'미입력')}\n\n`+
           `지역 문화 영향: ${f.birthplace==='서울'?'글로벌 감각·빠른 적응력':f.birthplace==='부산'?'강인한 의지·역동성':f.birthplace==='경기'?'실용적 사고·균형':f.birthplace==='제주'?'창의·자연친화':'지역 고유 특성'}\n`+
-          `최적 생활 환경: ${el==='木'?'녹지 풍부한 곳':el==='Water'?'해변·호수 인근':'도심 근처 자연환경'}\n`+
+          `최적 생활 환경: ${el==='木'?'녹지 풍부한 곳':el==='水'?'해변·호수 인근':'도심 근처 자연환경'}\n`+
           `환경 에너지: ${SC(seed+f.location,62,88)}/100`,['환경학']);
       case 'genetics':
         return R(SC(seed,60,82),'유전학·DNA 탐색 (참고용)',`선천적 특성과 체질 탐구`,
-          `체질 특성 (${el}행 기반):\n강점 신체: ${el==='木'?'간·담낭·눈':el==='Fire'?'심장·소장':el==='土'?'비장·위장':el==='金'?'폐·대장':'신장·방광'}\n`+
-          `건강 주의: ${el==='木'?'스트레스성 간 기능':el==='Fire'?'혈압·혈액순환':el==='土'?'소화기계':el==='金'?'호흡기·피부':'신장·허리'}\n`+
-          `권장 생활: ${el==='木'?'숲길 걷기·스트레칭':el==='Fire'?'수분 충분·명상':el==='土'?'규칙적 식사·걷기':el==='金'?'유산소·깨끗한 공기':'충분한 수면·수영'}\n\n`+
+          `체질 특성 (${el}행 기반):\n강점 신체: ${el==='木'?'간·담낭·눈':el==='火'?'심장·소장':el==='土'?'비장·위장':el==='金'?'폐·대장':'신장·방광'}\n`+
+          `건강 주의: ${el==='木'?'스트레스성 간 기능':el==='火'?'혈압·혈액순환':el==='土'?'소화기계':el==='金'?'호흡기·피부':'신장·허리'}\n`+
+          `권장 생활: ${el==='木'?'숲길 걷기·스트레칭':el==='火'?'수분 충분·명상':el==='土'?'규칙적 식사·걷기':el==='金'?'유산소·깨끗한 공기':'충분한 수면·수영'}\n\n`+
           `⚠ 의료 진단 아님 — 자기탐색 목적의 참고 정보입니다.`,['참고용','체질']);
       case 'physiognomy':
         return R(SC(seed,60,80),'관상·수상·족상 (기본)',`전통 관상학 기반 탐구`,
           `${el}행 기운의 관상 특성:\n`+
-          `${el==='木'?'긴 얼굴형, 맑은 눈, 총명하고 강직한 인상':el==='Fire'?'날카로운 이목구비, 빛나는 눈빛, 카리스마':el==='土'?'둥글고 후덕한 얼굴, 신뢰감 있는 인상':el==='金'?'각진 윤곽, 뚜렷한 의지력 강한 인상':'부드럽고 눈이 깊은, 내면 지혜가 느껴지는 인상'}\n\n`+
+          `${el==='木'?'긴 얼굴형, 맑은 눈, 총명하고 강직한 인상':el==='火'?'날카로운 이목구비, 빛나는 눈빛, 카리스마':el==='土'?'둥글고 후덕한 얼굴, 신뢰감 있는 인상':el==='金'?'각진 윤곽, 뚜렷한 의지력 강한 인상':'부드럽고 눈이 깊은, 내면 지혜가 느껴지는 인상'}\n\n`+
           `손금 특성: ${mbti[1]==='N'?'두뇌선이 길고 창의적 사고':'실용적이고 직선적인 두뇌선'}\n\n`+
           `🔭 향후 이미지 업로드(Vision AI) 연동 시 얼굴·손·발 사진 기반 정밀 분석이 가능합니다.`,['관상·수상']);
       default:
@@ -1990,6 +3000,7 @@ async function runAnalysis() {
   badge.textContent = LM.MODE==='PREVIEW' ? '⚙ PREVIEW — 규칙기반 분석' : '🤖 AI 분석 중';
 
   const selIds = [...ST.selectedDiscs];
+  const ltx = document.getElementById('loading-txt'); if (ltx) ltx.textContent = `${selIds.length}개 학문 분야 분석 중...`;
   loadTags.innerHTML = selIds.map(id =>
     `<span class="ltag" id="lt-${id}">${DISCS[id]?.icon||'◦'} ${DISCS[id]?.name||id}</span>`
   ).join('');
@@ -2028,6 +3039,7 @@ async function runAnalysis() {
 
   ST.results = results;
   ST.fusionScore = apiResult?.fusionScore || calcFusion(results, selIds);
+  lmSaveHistory();
   renderResults();
   showScreen('results');
 }
@@ -2035,7 +3047,7 @@ async function runAnalysis() {
 /* ── 11. Fusion Score ──────────────────────────────────────── */
 function calcFusion(results, selIds) {
   const cats = {
-    psychology:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi'],
+    psychology:['mbti','big5','tci','disc','enneagram','via','mi','holland','mmpi','sct'],
     selfexplore:['character','potential','creativity','interest','aptitude','values'],
     career:['leadership','learning','jobOntology','startup','lifecycle'],
     eastern:['saju','ohang','sasang','fengshui','name_study'],
@@ -2090,8 +3102,8 @@ function renderResults() {
         <span class="fusion-max">/ 100</span>
         <span class="fusion-grade">등급 ${F.grade}</span>
       </div>
-      <div class="fusion-dir">🎯 ${F.direction}</div>
-      <div class="fusion-sum">${F.summary}</div>
+      <div class="fusion-dir">🎯 ${escHtml(F.direction)}</div>
+      <div class="fusion-sum">${escHtml(F.summary)}</div>
       <div class="fusion-bars">
         ${Object.entries(F.categories).map(([c,s])=>`
         <div class="fbar-row">
@@ -2101,7 +3113,7 @@ function renderResults() {
         </div>`).join('')}
       </div>
       <div style="margin-top:12px;font-size:.72rem;color:var(--t3)">
-        추천 직업: ${F.topCareers.slice(0,3).join(' · ')}
+        추천 직업: ${escHtml(F.topCareers.slice(0,3).join(' · '))}
       </div>
       ${LM.MODE==='PREVIEW'?'<div style="margin-top:8px;font-size:.67rem;color:var(--t3)">⚙ PREVIEW 규칙기반 분석 — 정식 출시 후 AI 심층 분석 활성화</div>':''}
     </div>`;
@@ -2112,7 +3124,7 @@ function renderResults() {
       ${F.actionPlan.map((a,i)=>`
       <div class="ap-item">
         <span class="ap-num">${i+1}</span>
-        <span>${a}</span>
+        <span>${escHtml(a)}</span>
       </div>`).join('')}
     </div>`;
   // 카테고리 탭
@@ -2179,14 +3191,14 @@ function renderDiscResults(cat) {
         <span class="dr-icon">${d.icon}</span>
         <div class="dr-info">
           <div class="dr-name">${d.name}</div>
-          <div class="dr-tagline">${r.title||d.short}</div>
+          <div class="dr-tagline">${escHtml(r.title||d.short)}</div>
         </div>
         <span class="dr-score" style="${scStyle}">${sc}점</span>
         <span class="dr-chevron">▼</span>
       </div>
       <div class="dr-detail">
-        <div class="dr-text">${(r.detail||'').replace(/\n/g,'<br>')}</div>
-        ${r.tags?.length?`<div class="dr-tags">${r.tags.map(t=>`<span class="dr-tag">${t}</span>`).join('')}</div>`:''}
+        <div class="dr-text">${escHtml(r.detail||'').replace(/\n/g,'<br>')}</div>
+        ${r.tags?.length?`<div class="dr-tags">${r.tags.map(t=>`<span class="dr-tag">${escHtml(t)}</span>`).join('')}</div>`:''}
         <span class="dr-engine">분석엔진: ${engMap[r.engine]||r.engine}</span>
       </div>
     </div>`;
@@ -2211,19 +3223,25 @@ function switchCat(cat) {
 /* ── 13. Preview 회원가입 ─────────────────────────────────── */
 async function submitSignup() {
   const email=document.getElementById('su-email')?.value?.trim();
-  if(!email||!email.includes('@')){alert('이메일 주소를 입력해 주세요.');return;}
+  if(!email||!email.includes('@')){toast('이메일 주소를 입력해 주세요.');return;}
   const interests=[...document.querySelectorAll('.su-check input:checked')].map(el=>el.value);
   const opinion=document.getElementById('su-opinion')?.value||'';
   const name2=document.getElementById('su-name')?.value||'';
-  // Firestore 저장 (간단 fetch — 실제 API 추가 필요)
+  let saved = false;
   try {
-    await fetch('/api/lifemap-preview-signup',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email,name:name2,interests,opinion,
-        ts:new Date().toISOString(),mode:LM.MODE}),
+    const resp = await fetch('/api/lifemap-preview-signup', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email, name:name2, interests, opinion, ts:new Date().toISOString(), mode:LM.MODE}),
     });
+    saved = resp.ok;
   } catch {}
-  alert(`✅ "${email}" 주소로 사전 참여 신청이 완료됐습니다!\n정식 출시 즉시 알림을 보내드립니다. 감사합니다 🙏`);
+  if (!saved) {   // 서버 저장 실패 시 '완료'로 속이지 않고, 이 기기에 임시 저장 후 안내
+    const q = LMSTORE.get('lm_signup_pending', []); q.push({email, name:name2, interests, opinion, ts:new Date().toISOString()});
+    LMSTORE.set('lm_signup_pending', q.slice(-5));
+    toast('서버에 연결하지 못해 이 기기에 임시 저장했어요. 잠시 후 다시 신청해 주세요.');
+    return;
+  }
+  toast('✅ 사전 참여 신청이 완료되었습니다. 정식 출시 때 알려드릴게요 🙏');
   showScreen('results');
 }
 
@@ -2237,35 +3255,585 @@ function shareResult(){
   const F=ST.fusionScore;
   const txt=`[AI LifeMap] ${ST.form.name||''}님의 인생·진로 Fusion 분석\n\n🎯 ${F.direction}\n📊 Fusion Score: ${F.total}/100 (등급 ${F.grade})\n${F.summary}\n\n무료 체험: aiplatmarket.com/lifemap`;
   if(navigator.share){navigator.share({title:'AI LifeMap 분석 결과',text:txt}).catch(()=>{});}
-  else{navigator.clipboard?.writeText(txt).then(()=>alert('결과가 클립보드에 복사됐습니다!'));}
+  else{navigator.clipboard?.writeText(txt).then(()=>toast('결과가 클립보드에 복사됐습니다!'));}
 }
 
-/* ── 15. 자유 질문 (PREVIEW: rule/FAQ, PRODUCTION: AI Core) ── */
-// 향후 질문 입력창 연동 시 아래 함수 활용
-function classifyQuestion(q) {
-  const aiNeeded=['분석','추천','종합','비교','왜','어떻게','창업','직업','진로','사업'];
-  return aiNeeded.some(k=>q.includes(k)) ? 'ai' : 'rule';
-}
-async function askQuestion(q) {
-  if (LM.MODE==='PREVIEW') {
-    return '현재 사전 체험 모드입니다. 해당 질문은 정식 서비스에서 AI 기반 개인화 분석으로 제공될 예정입니다.';
-  }
-  const type=classifyQuestion(q);
-  if(type==='rule') return '서비스 안내 및 FAQ는 곧 업데이트될 예정입니다.';
-  const res=await LM.callAPI({module:'lifeai',task:'freeQuestion',
-    question:q,userInput:ST.form,manseok:ST.manseok});
-  return res?.answer || '답변을 준비 중입니다.';
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.LIFEMAP_READY) return;
-    init();
-  });
-} else {
+/* ── 앱 시작 ── */
+function lmBoot() {
   if (!window.LIFEMAP_READY) init();
+  lmShellInit();
 }
-</script>
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lmBoot);
+else lmBoot();
 
+/* ════════════════════════════════════════════════════════════════════
+   LifeMap Shell v2 — 타이틀박스 · 검색 · 자체 GNB · 좌우 패널 · 질문바
+   · 질문바는 AI를 직접 호출하지 않습니다. 개인화 분석이 필요한 질문만
+     LM.callAPI() → 챗도우미 AI Core 로 전달 (PREVIEW 는 항상 0회)
+   · 커뮤니티/Q&A/나의 결과는 MVP 단계라 localStorage 저장
+     (Firestore 이전 스키마: lifemap_posts, lifemap_qna, lifemap_history)
+════════════════════════════════════════════════════════════════════ */
+function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+const LMS = { mq: window.matchMedia('(min-width:900px)'), qIdx: 0, cmTab: 'all', askBusy: false, searchSel: -1, searchItems: null, lastCompact: false };
+const LMSTORE = {
+  get: function(k, def){ try{ const v = JSON.parse(localStorage.getItem(k)); return v == null ? def : v; }catch(e){ return def; } },
+  set: function(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ toast('저장 공간을 사용할 수 없습니다.'); return false; } }
+};
+function lmDesk(){ return LMS.mq.matches; }
+function lmFmtDate(ts){ return new Date(ts).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+/* ── 자체 GNB 메뉴 ── */
+const LM_NAV = [
+  {k:'home',    icon:'🏠', label:'홈',        go:function(){ showScreen('landing'); }},
+  {k:'ai',      icon:'🤖', label:'AI 추천',    go:function(){ openCourse('ai_recommended'); }},
+  {k:'psych',   icon:'🧠', label:'심리·성격',  go:function(){ openCourse('psychology'); }},
+  {k:'self',    icon:'🔍', label:'자기탐색',   go:function(){ openCourse('selfexplore'); }},
+  {k:'career',  icon:'💼', label:'진로·직업',  go:function(){ openCourse('career'); }},
+  {k:'startup', icon:'🏢', label:'사업·창업',  go:function(){ openCourse('startup'); }},
+  {k:'east',    icon:'☯️', label:'동양전통',   go:function(){ openCourse('eastern'); }},
+  {k:'west',    icon:'⭐', label:'서양·민속',  go:function(){ openCourse('western'); }},
+  {k:'fusion',  icon:'🔮', label:'통합 Fusion', go:function(){ openCourse('comprehensive'); }},
+  {k:'history', icon:'📋', label:'나의 결과',  go:function(){ lmShowHistory(); }},
+  {k:'balance', icon:'⚖️', label:'삶의 균형',  badge:'준비중', go:function(){ showScreen('balance'); }},
+  {k:'growth',  icon:'🌱', label:'성장경로',   go:function(){ showScreen('growth'); }},
+  {k:'community',icon:'💬',label:'커뮤니티',   go:function(){ lmShowCommunity(); }},
+  {k:'qna',     icon:'❓', label:'Q&A',       go:function(){ lmShowQna(); }},
+  {k:'help',    icon:'🙋', label:'이용안내',   go:function(){ showScreen('help'); }}
+];
+const LM_COURSE_NAV = {ai_recommended:'ai', psychology:'psych', selfexplore:'self', career:'career', startup:'startup', eastern:'east', western:'west', comprehensive:'fusion'};
+const LM_SCREEN_NAV = {landing:'home', community:'community', qna:'qna', history:'history', growth:'growth', help:'help', balance:'balance', results:'history', signup:'home'};
+
+function lmNavSync(id){
+  let k = LM_SCREEN_NAV[id];
+  if(!k && (id === 'course' || id === 'form' || id === 'loading')) k = LM_COURSE_NAV[ST.course] || 'home';
+  const sc = document.getElementById('lm-nav-scroll'); if(!sc) return;
+  sc.querySelectorAll('.lm-nav-item').forEach(function(b){
+    const on = b.dataset.k === k; b.classList.toggle('active', on);
+    if(on){ b.setAttribute('aria-current','page');
+      const l = b.offsetLeft, r = l + b.offsetWidth;
+      if(l < sc.scrollLeft + 8) sc.scrollLeft = Math.max(0, l - 8);
+      else if(r > sc.scrollLeft + sc.clientWidth - 8) sc.scrollLeft = r - sc.clientWidth + 8;
+    } else b.removeAttribute('aria-current');
+  });
+}
+function lmScrollTop(){
+  if(lmDesk()){ const c = document.getElementById('lm-center'); if(c) c.scrollTo({top:0}); return; }
+  const c = document.getElementById('lm-center'), h = document.getElementById('lm-head');
+  if(!c || !h) return;
+  const target = Math.max(0, c.getBoundingClientRect().top + window.scrollY - (h.offsetHeight || 0));
+  if(window.scrollY > target) window.scrollTo(0, target);
+}
+function lmAfterShow(id){ lmNavSync(id); lmScrollTop(); lmClosePanels(); }
+function lmScrollToEl(el, offset){
+  if(!el) return; offset = offset || 90;
+  if(lmDesk()){ const c = document.getElementById('lm-center'), S = window.fwScale ? window.fwScale() : 1;
+    c.scrollTo({top: c.scrollTop + (el.getBoundingClientRect().top - c.getBoundingClientRect().top) / S - offset, behavior:'smooth'});
+  } else { const h = document.getElementById('lm-head');
+    window.scrollTo({top: window.scrollY + el.getBoundingClientRect().top - ((h ? h.offsetHeight : 0) + offset), behavior:'smooth'}); }
+}
+function lmFocusDisc(id){
+  const c = Object.values(COURSES).find(function(x){ return x.id !== 'comprehensive' && x.discs.indexOf(id) >= 0; }) || COURSES.comprehensive;
+  openCourse(c.id);
+  setTimeout(function(){
+    const el = document.getElementById('di-' + id); if(!el) return;
+    el.classList.add('open','lm-flash'); lmScrollToEl(el, 100);
+    setTimeout(function(){ el.classList.remove('lm-flash'); }, 1800);
+  }, 80);
+}
+
+/* ── 패널 / 레이아웃 ── */
+function lmTogglePanel(side, force){
+  const body = document.getElementById('lm-body'), p = document.getElementById('lm-panel-' + side), hb = document.getElementById('lm-hb-' + side);
+  if(!body || !p || !hb) return;
+  if(lmDesk()){
+    const open = force !== undefined ? force : body.classList.contains('no-' + side);
+    body.classList.toggle('no-' + side, !open);
+    hb.setAttribute('aria-expanded', String(open));
+    try{ localStorage.setItem('lm_panel_' + side, open ? '1' : '0'); }catch(e){}
+  } else {
+    const other = side === 'left' ? 'right' : 'left';
+    const open = force !== undefined ? force : !p.classList.contains('open');
+    if(open){ document.getElementById('lm-panel-' + other).classList.remove('open'); document.getElementById('lm-hb-' + other).setAttribute('aria-expanded','false'); }
+    p.classList.toggle('open', open); hb.setAttribute('aria-expanded', String(open));
+    document.getElementById('lm-backdrop').classList.toggle('show', open);
+  }
+}
+function lmClosePanels(){
+  if(lmDesk()) return;
+  ['left','right'].forEach(function(s){ const p = document.getElementById('lm-panel-' + s); if(p && p.classList.contains('open')) lmTogglePanel(s, false); });
+  const bd = document.getElementById('lm-backdrop'); if(bd) bd.classList.remove('show');
+}
+function lmApplyScale(){
+  const v = lmDesk() ? (parseFloat(localStorage.getItem('lm_scale')) || 0.8) : 1;
+  document.documentElement.style.setProperty('--lm-scale', String(v));
+}
+function lmSetScale(v){
+  try{ localStorage.setItem('lm_scale', String(v)); }catch(e){}
+  lmApplyScale(); lmMeasure(); lmRenderLeft();
+}
+function lmMeasure(){
+  const st = document.documentElement.style, head = document.getElementById('lm-head'), ask = document.getElementById('lm-askbar'), cw = document.getElementById('lm-center-wrap');
+  if(lmDesk()){
+    st.setProperty('--lm-stick','0px'); st.setProperty('--lm-ask-h','0px');
+    st.setProperty('--lm-sheet-max', Math.max(180, Math.round((cw ? cw.clientHeight : 500) * 0.6)) + 'px');
+  } else {
+    st.setProperty('--lm-stick', (head ? head.offsetHeight : 0) + 'px');
+    st.setProperty('--lm-ask-h', (ask ? ask.offsetHeight : 76) + 'px');
+    st.setProperty('--lm-sheet-max', Math.round(window.innerHeight * 0.55) + 'px');
+  }
+}
+function lmLayoutSync(){
+  const body = document.getElementById('lm-body'); if(!body) return;
+  lmApplyScale();
+  ['left','right'].forEach(function(s){
+    const p = document.getElementById('lm-panel-' + s), hb = document.getElementById('lm-hb-' + s); p.classList.remove('open');
+    if(lmDesk()){ const open = localStorage.getItem('lm_panel_' + s) !== '0'; body.classList.toggle('no-' + s, !open); hb.setAttribute('aria-expanded', String(open)); }
+    else { body.classList.remove('no-' + s); hb.setAttribute('aria-expanded','false'); }
+  });
+  document.getElementById('lm-backdrop').classList.remove('show');
+  lmMeasure(); lmRenderLeft();
+}
+
+/* ── 좌/우 패널 내용 ── */
+const LM_QUESTIONS = [
+  {q:'내 인생지도, 한번 직접 그려볼까?', c:'ai_recommended'},
+  {q:'나는 지금 인생의 어느쯤 와 있을까?', c:'selfexplore'},
+  {q:'내 인생의 다음 목적지는 어디일까?', c:'career'},
+  {q:'내가 아직 발견하지 못한 가능성은 뭐지?', c:'selfexplore'},
+  {q:'내 사주, 아는 것보다 더 자세히 볼 수 있을까?', c:'eastern'},
+  {q:'내 띠는 올해 어떤 이야기를 들려줄까?', c:'eastern'},
+  {q:'내 사주와 성격·적성을 함께 보면 어떨까?', c:'ai_recommended'},
+  {q:'사주로 보는 나와 실제 나는 얼마나 다를까?', c:'ai_recommended'},
+  {q:'내 생년월일에 숨은 이야기를 찾아볼까?', c:'eastern'},
+  {q:'나는 내가 생각하는 나와 얼마나 비슷할까?', c:'psychology'},
+  {q:'MBTI 다음에는 뭘 해볼까?', c:'psychology'},
+  {q:'MMPI? 이름은 많이 들었는데, 정확히 뭐지?', d:'mmpi'},
+  {q:'TCI는 MBTI와 뭐가 다를까?', d:'tci'},
+  {q:'문장을 이어 쓰면 내 마음이 보일까?', d:'sct'},
+  {q:'내 성격에는 내가 모르는 강점도 있을까?', c:'psychology'},
+  {q:'내 연애 스타일, 생각보다 쉽게 알 수 있을까?', c:'psychology'},
+  {q:'나는 어떤 사람과 있을 때 가장 나다울까?', c:'psychology'},
+  {q:'내가 잘하는 일과 좋아하는 일은 정말 같을까?', c:'selfexplore'},
+  {q:'내가 아직 만나지 못한 정말 좋아하는 일은 무엇일까?', c:'selfexplore'},
+  {q:'내가 좋아하는 일, 정말 직업이 될 수 있을까?', c:'career'},
+  {q:'내 경험을 다른 기회로 바꿀 수 있을까?', c:'career'},
+  {q:'지금의 나에게 필요한 다음 선택은 뭘까?', c:'career'},
+  {q:'새로운 일을 시작한다면, 나에게 맞는 분야는 어디일까?', c:'startup'},
+  {q:'내 강점으로 새로운 기회를 만들 수 있을까?', c:'startup'}
+];
+const LM_CURATED = [
+  {ico:'🧩', label:'내 성격 유형 알아보기', sub:'MBTI · 3분', act:'disc', v:'mbti'},
+  {ico:'🗺️', label:'나에게 맞는 진로 흥미', sub:'홀랜드 RIASEC · 5분', act:'disc', v:'holland'},
+  {ico:'☯️', label:'만세력으로 사주 보기', sub:'규칙 기반 · 즉시', act:'disc', v:'saju', badge:'무료'},
+  {ico:'✍️', label:'문장으로 보는 내면', sub:'SCT 문장완성검사', act:'disc', v:'sct'},
+  {ico:'🏢', label:'창업, 나에게 맞을까?', sub:'사업·창업 진단 코스', act:'course', v:'startup'}
+];
+const LM_ECO = [
+  {ico:'🎯', label:'AI통합홍보센터', sub:'홍보·고객 확보', link:'/promo', on:true},
+  {ico:'📦', label:'AI아이템존', sub:'사업 코파일럿', link:'/itemzone', on:true},
+  {ico:'🌱', label:'AI성장플랫존', sub:'함께 배우고 교류', soon:true},
+  {ico:'🎓', label:'AI인생성장사관학교', sub:'체계적 성장·실천', soon:true},
+  {ico:'🌐', label:'AI MetaZone', sub:'삶과 미래를 체험', soon:true}
+];
+
+function lmRenderLeft(){
+  const el = document.getElementById('lm-left-body'); if(!el) return;
+  const u = window.FWAuth ? FWAuth.user() : null, hist = LMSTORE.get('lm_history_v1', []);
+  const sc = parseFloat(localStorage.getItem('lm_scale')) || 0.8;
+  let h = '<div class="pn-sec"><div class="pn-card pn-profile">';
+  if(u){
+    h += '<div class="pn-ava">' + escHtml((u.name || '회').charAt(0)) + '</div><div class="pn-name">' + escHtml(u.name) + '님</div>'
+      + '<div class="pn-sub">' + ({kakao:'카카오',naver:'네이버',google:'Google',phone:'휴대폰'}[u.provider] || '회원') + ' 로그인 중</div>'
+      + '<button type="button" class="pn-btn ghost" data-act="logout">로그아웃</button>';
+  } else {
+    h += '<div class="pn-ava">?</div><div class="pn-name">로그인하고 이어보기</div>'
+      + '<div class="pn-sub">카카오 · 네이버 · 구글 · 휴대폰<br>로그인 없이도 체험할 수 있어요</div>'
+      + '<button type="button" class="pn-btn" data-act="login">🔐 로그인</button>';
+  }
+  h += '</div></div>';
+  h += '<div class="pn-sec"><div class="pn-h">체험 코스</div>';
+  Object.values(COURSES).forEach(function(c){
+    h += '<button type="button" class="pn-item" data-act="course" data-v="' + c.id + '"><span class="pi-ico">' + c.icon + '</span><span class="pi-tx">' + escHtml(c.name) + '<span class="pi-s">' + c.discs.length + '개 학문 · ' + escHtml(c.time) + '</span></span></button>';
+  });
+  h += '</div><div class="pn-sec"><div class="pn-h">내 활동</div>'
+    + '<button type="button" class="pn-item" data-act="nav" data-v="history"><span class="pi-ico">📋</span><span class="pi-tx">나의 결과<span class="pi-s">최근 분석 다시 보기</span></span><span class="pi-b' + (hist.length ? ' on' : '') + '">' + hist.length + '</span></button>'
+    + '<button type="button" class="pn-item" data-act="nav" data-v="community"><span class="pi-ico">💬</span><span class="pi-tx">커뮤니티</span></button>'
+    + '<button type="button" class="pn-item" data-act="nav" data-v="qna"><span class="pi-ico">❓</span><span class="pi-tx">Q&amp;A</span></button>'
+    + '<button type="button" class="pn-item" data-act="nav" data-v="help"><span class="pi-ico">🙋</span><span class="pi-tx">이용안내 · FAQ</span></button></div>';
+  h += '<div class="pn-sec desk-only"><div class="pn-h">화면 크기</div><div class="pn-seg">'
+    + '<button type="button" data-act="scale" data-v="0.8" class="' + (sc < 0.9 ? 'on' : '') + '">80%</button>'
+    + '<button type="button" data-act="scale" data-v="1" class="' + (sc >= 0.9 ? 'on' : '') + '">100%</button></div></div>';
+  el.innerHTML = h;
+}
+function lmRenderRight(){
+  const el = document.getElementById('lm-right-body'); if(!el) return;
+  const q = LM_QUESTIONS[LMS.qIdx % LM_QUESTIONS.length];
+  let h = '<div class="pn-sec"><div class="pn-h">오늘의 질문</div><div class="pn-card"><p class="pn-q">“' + escHtml(q.q) + '”</p>'
+    + '<div class="pn-q-row"><button type="button" class="pri" data-act="q-go">체험하기</button><button type="button" data-act="q-ask">질문창에</button><button type="button" data-act="q-next" aria-label="다른 질문">↻</button></div></div></div>';
+  h += '<div class="pn-sec"><div class="pn-h">처음이라면 이렇게</div>';
+  LM_CURATED.forEach(function(c){
+    h += '<button type="button" class="pn-item" data-act="' + c.act + '" data-v="' + c.v + '"><span class="pi-ico">' + c.ico + '</span><span class="pi-tx">' + escHtml(c.label) + '<span class="pi-s">' + escHtml(c.sub) + '</span></span>' + (c.badge ? '<span class="pi-b on">' + c.badge + '</span>' : '') + '</button>';
+  });
+  h += '</div><div class="pn-sec"><div class="pn-h">AI플랫마켓 성장 생태계</div>';
+  LM_ECO.forEach(function(c){
+    if(c.on) h += '<button type="button" class="pn-item" data-act="link" data-v="' + c.link + '"><span class="pi-ico">' + c.ico + '</span><span class="pi-tx">' + escHtml(c.label) + '<span class="pi-s">' + escHtml(c.sub) + '</span></span><span class="pi-b on">운영중</span></button>';
+    else h += '<button type="button" class="pn-item" data-act="signup"><span class="pi-ico">' + c.ico + '</span><span class="pi-tx">' + escHtml(c.label) + '<span class="pi-s">' + escHtml(c.sub) + '</span></span><span class="pi-b">준비중</span></button>';
+  });
+  h += '<button type="button" class="pn-item" data-act="nav" data-v="growth"><span class="pi-ico">🧭</span><span class="pi-tx">나의 성장 경로 보기</span></button></div>';
+  h += '<div class="pn-sec"><div class="pn-card"><div class="pn-name">🤝 초기 성장파트너 모집</div><div class="pn-sub">당신의 영향력으로 누군가의 새로운 가능성을 연결해 주세요.</div><button type="button" class="pn-btn ghost" data-act="link" data-v="/promo">참여 알아보기</button></div></div>';
+  h += '<div class="pn-sec"><div class="pn-note">분석 결과는 자기이해를 위한 참고 정보이며 정답이나 진단이 아닙니다. 의료·법률·재무 결정은 전문가와 상의하세요.</div></div>';
+  el.innerHTML = h;
+}
+function lmNextQuestion(){ LMS.qIdx = (LMS.qIdx + 1 + Math.floor(Math.random() * 5)) % LM_QUESTIONS.length; lmRenderRight(); }
+function lmGoQuestion(){ const q = LM_QUESTIONS[LMS.qIdx % LM_QUESTIONS.length]; if(q.d) lmFocusDisc(q.d); else openCourse(q.c); }
+function lmFillAsk(text){ const i = document.getElementById('lm-ask-input'); if(i){ i.value = text; i.focus(); } }
+function lmPanelAction(el){
+  const act = el.dataset.act, v = el.dataset.v;
+  switch(act){
+    case 'course': openCourse(v); break;
+    case 'disc': lmFocusDisc(v); break;
+    case 'nav': { const n = LM_NAV.find(function(x){ return x.k === v; }); if(n) n.go(); break; }
+    case 'login': FWAuth.open(); break;
+    case 'logout': FWAuth.logout(); break;
+    case 'signup': showScreen('signup'); break;
+    case 'link': window.open(v, '_blank', 'noopener'); break;
+    case 'scale': lmSetScale(parseFloat(v)); return;
+    case 'q-next': lmNextQuestion(); return;
+    case 'q-go': lmGoQuestion(); break;
+    case 'q-ask': lmFillAsk(LM_QUESTIONS[LMS.qIdx % LM_QUESTIONS.length].q); break;
+  }
+  lmClosePanels();
+}
+
+/* ── 검색 ── */
+const LM_FAQ = [
+  {q:'AI LifeMap은 무엇인가요?', a:'심리학·동양철학·서양 전통·진로·환경 등 여러 관점으로 나를 살펴보고, 결과를 하나의 Fusion 리포트로 정리해 주는 자기탐색 플랫폼입니다. 정답을 알려주는 곳이 아니라 다양한 관점을 비교하며 스스로 판단하도록 돕습니다.'},
+  {q:'지금 AI가 분석하나요?', a:'아니요. 현재는 사전 체험(PREVIEW) 모드로 AI 호출 없이 규칙 기반으로 결과를 만들어요. 정식 출시 후에는 챗도우미 AI Core(Gemini → GPT → Claude 순)가 더 깊이 있는 개인화 분석을 제공합니다.'},
+  {q:'무료인가요, 유료인가요?', a:'사전 체험 기간에는 모든 코스가 무료입니다. 정식 출시 후에는 규칙 기반 학문(사주·오행·별자리·띠·수비학·생체리듬·풍수·성명학·타로 기본)은 계속 무료이고, AI 분석이 필요한 검사는 학문별 AP로 이용하며 코스로 묶으면 할인됩니다. AP는 AI플랫마켓 통합 포인트 정책을 따릅니다.'},
+  {q:'결과를 그대로 믿어도 되나요?', a:'참고용입니다. 학문마다 과학적 근거 수준이 다르고(심리검사 vs 전통·문화 분야), 어떤 결과도 미래를 확정하지 않습니다. 의료·법률·재무 등 중요한 결정은 반드시 전문가와 상의하세요.'},
+  {q:'MMPI · SCT · 사상체질 · 유전학은 진단인가요?', a:'아닙니다. 모두 자기탐색을 위한 간략 체험이며 임상 진단·치료·검사를 대체하지 않습니다. 마음이 많이 힘들거나 건강이 걱정된다면 정신건강의학과 등 전문 기관을 찾아 주세요.'},
+  {q:'입력한 정보는 어디에 저장되나요?', a:'사전 체험 기간의 분석은 이 브라우저 안에서 처리되고, 최근 결과·커뮤니티·Q&A는 이 기기에만 저장됩니다. 서버로 전송되는 것은 사전 참여 신청(이메일·관심 분야)뿐입니다. 정식 출시 후 AI 분석 시에는 입력 정보가 챗도우미 AI Core로 전달되며, 그 시점에 별도로 안내해 드립니다. 실명·연락처 등은 자유 입력란에 적지 마세요.'},
+  {q:'로그인이 꼭 필요한가요?', a:'아니요. 로그인 없이도 체험할 수 있습니다. 로그인하면 이름이 표시되고, 정식 서비스에서 결과 기록을 계정으로 이어볼 수 있습니다. 카카오·네이버·구글·휴대폰 번호 중 서비스에서 열려 있는 방법으로 로그인할 수 있어요.'},
+  {q:'만세력(사주) 계산은 어떻게 하나요?', a:'생년월일시를 입력하면 규칙 기반 계산 엔진이 연·월·일·시 간지와 오행 분포를 계산합니다. 절기(입춘 등) 경계일 전후에 태어났거나 출생 시간을 모르면 ±1일/±1주 오차가 있을 수 있어요. 해석은 정식 출시 후 AI가 보완합니다.'},
+  {q:'어디서부터 시작하면 좋을까요?', a:'처음이라면 「AI 추천 코스」(약 20분)를 권해요. 시간이 짧다면 「동양 전통」이나 「서양·타로」 코스(무료, 약 10분)로 가볍게 시작해 보세요.'}
+];
+function lmBuildSearchIndex(){
+  const items = [];
+  Object.values(DISCS).forEach(function(d){ items.push({t:'검사', icon:d.icon, label:d.name, sub:d.short, kw:(d.name + ' ' + d.short + ' ' + d.what + ' ' + d.id).toLowerCase(), go:function(){ lmFocusDisc(d.id); }}); });
+  Object.values(COURSES).forEach(function(c){ items.push({t:'코스', icon:c.icon, label:c.name, sub:c.desc, kw:(c.name + ' ' + c.desc).toLowerCase(), go:function(){ openCourse(c.id); }}); });
+  LM_NAV.forEach(function(n){ if(n.k !== 'home') items.push({t:'메뉴', icon:n.icon, label:n.label, sub:'AI인생진로탐색 메뉴', kw:n.label.toLowerCase(), go:n.go}); });
+  LM_FAQ.forEach(function(f, i){ items.push({t:'안내', icon:'🙋', label:f.q, sub:f.a.slice(0, 40) + '…', kw:(f.q + ' ' + f.a).toLowerCase(), go:function(){ showScreen('help'); setTimeout(function(){ const d = document.querySelectorAll('#faq-list details')[i]; if(d){ d.open = true; lmScrollToEl(d, 90); } }, 60); }}); });
+  return items;
+}
+function lmSearch(raw){
+  const box = document.getElementById('lm-search-results'), clr = document.getElementById('lm-search-clear');
+  const q = (raw || '').trim().toLowerCase(); clr.style.display = raw ? 'block' : 'none';
+  if(!q){ box.classList.remove('open'); box.innerHTML = ''; return; }
+  if(!LMS.searchItems) LMS.searchItems = lmBuildSearchIndex();
+  const terms = q.split(/\s+/);
+  const res = LMS.searchItems.filter(function(it){ return terms.every(function(t){ return it.kw.indexOf(t) >= 0; }); }).slice(0, 12);
+  LMS.searchSel = res.length ? 0 : -1; LMS.searchRes = res;
+  if(!res.length){ box.innerHTML = '<div class="lm-sr-empty">검색 결과가 없어요. 다른 단어로 찾아보거나 아래 질문창에 물어보세요.</div>'; }
+  else box.innerHTML = res.map(function(it, i){
+    return '<button type="button" role="option" class="lm-sr-item' + (i === 0 ? ' sel' : '') + '" data-i="' + i + '"><span class="lm-sr-ico">' + it.icon + '</span><span class="lm-sr-tx"><div class="lm-sr-l">' + escHtml(it.label) + '</div><div class="lm-sr-s">' + escHtml(it.sub) + '</div></span><span class="lm-sr-t">' + it.t + '</span></button>';
+  }).join('');
+  box.classList.add('open');
+}
+function lmSearchPick(i){
+  const it = (LMS.searchRes || [])[i]; if(!it) return;
+  document.getElementById('lm-search-results').classList.remove('open');
+  document.getElementById('lm-search-input').blur(); it.go(); lmClosePanels();
+}
+function lmSearchMove(dir){
+  const items = document.querySelectorAll('#lm-search-results .lm-sr-item'); if(!items.length) return;
+  LMS.searchSel = (LMS.searchSel + dir + items.length) % items.length;
+  items.forEach(function(b, i){ b.classList.toggle('sel', i === LMS.searchSel); });
+  items[LMS.searchSel].scrollIntoView({block:'nearest'});
+}
+
+/* ── 질문바: 규칙·FAQ 우선 → 필요할 때만 AI Core ── */
+const LM_ALIAS = {sct:['문장완성'], mbti:['엠비티아이'], saju:['사주','명리','만세력','팔자'], ohang:['오행'], sasang:['사상','체질'], fengshui:['풍수'], name_study:['성명','작명','이름풀이'], astrology:['점성','별자리'], tarot:['타로'], numerology:['수비학'], zodiac:['띠별','혈액형'], physiognomy:['관상','수상','손금','족상'], genetics:['유전','dna'], biorhythm:['바이오리듬','생체리듬'], jobOntology:['직업온톨로지','직업매칭'], startup:['창업적합','사업적합'], mmpi:['미네소타'], tci:['기질'], big5:['빅파이브','오션','성격5요인'], enneagram:['에니어'], via:['강점검사'], mi:['다중지능'], holland:['홀랜드','riasec','리아섹'], aptitude:['적성검사'], values:['가치관'], leadership:['리더십'], learning:['학습유형'], lifecycle:['생애주기'], environment:['환경학'], character:['인성'], potential:['잠재력'], creativity:['창의력'], interest:['관심도']};
+function lmFindDisc(raw){
+  const low = raw.toLowerCase(), compact = low.replace(/\s+/g, '');
+  let best = null;
+  Object.values(DISCS).forEach(function(d){
+    const toks = {}; toks[d.id.toLowerCase()] = 1;
+    d.name.toLowerCase().split(/[\s·()\/]+/).forEach(function(t){ if(t) toks[t] = 1; });
+    (LM_ALIAS[d.id] || []).forEach(function(t){ toks[t] = 1; });
+    Object.keys(toks).forEach(function(t){
+      if(t.length < 2) return;
+      const latin = /^[a-z0-9_]+$/.test(t);
+      const hit = latin ? new RegExp('(^|[^a-z0-9])' + t + '([^a-z0-9]|$)').test(low) : compact.indexOf(t) >= 0;
+      if(hit && (!best || t.length > best.len)) best = {d:d, len:t.length};
+    });
+  });
+  return best ? best.d : null;
+}
+function lmAct(label, run){ return {label:label, run:run}; }
+function lmCourseAct(id){ const c = COURSES[id]; return lmAct(c.icon + ' ' + c.name + ' 열기', function(){ openCourse(id); }); }
+function lmRuleAnswer(raw){
+  const t = raw.toLowerCase().replace(/\s+/g, '');
+  if(/(죽고싶|자살|자해|죽을까|살기싫|사라지고싶|삶을끝)/.test(t)){
+    return {kind:'safety', text:'많이 힘드신 것 같아요. 지금 혼자 견디지 않으셔도 괜찮아요.\n\n위급하거나 안전이 걱정되면 112·119, 자살예방 상담전화 109(24시간), 정신건강 위기상담 1577-0199로 바로 연락해 보세요. 가까운 사람에게 지금 마음을 털어놓는 것도 큰 도움이 됩니다.\n\nAI LifeMap의 검사는 진단 도구가 아니에요. 마음이 힘들 때는 전문가의 도움이 가장 좋습니다.', actions:[]};
+  }
+  const d = lmFindDisc(raw);
+  if(d){
+    const price = d.free ? '규칙 기반 분석으로 무료' : (LM.MODE === 'PREVIEW' ? '사전 체험 기간 무료 (정식 출시 후 ' + d.price + 'AP)' : d.price + 'AP');
+    let tx = d.icon + ' ' + d.name + ' — ' + d.short + '\n\n📖 ' + d.what + '\n💡 알 수 있는 것: ' + d.gain.join(' · ') + '\n⏱ 소요시간: ' + d.time + '\n💰 ' + price;
+    if(d.disclaimer) tx += '\n\n⚠ ' + d.note.replace(/^⚠\s*/, '');
+    return {kind:'faq', text:tx, actions:[lmAct('이 검사 체험하기', function(){ lmFocusDisc(d.id); })]};
+  }
+  if(/(요금|가격|얼마|유료|무료|포인트|\bap\b|결제)/.test(raw.toLowerCase()) || /(요금|가격|얼마|유료|무료|포인트|결제)/.test(t)){
+    const free = Object.values(DISCS).filter(function(x){ return x.free; }).map(function(x){ return x.name; }).join(', ');
+    return {kind:'faq', text:(LM.MODE === 'PREVIEW' ? '지금은 사전 체험 기간이라 모든 코스가 무료예요.\n\n' : '') + '정식 출시 후에는 규칙 기반 학문은 계속 무료, AI 분석이 필요한 검사는 학문별 AP로 이용하고 코스로 묶으면 할인돼요. AP는 AI플랫마켓 통합 포인트 정책을 따릅니다.\n\n🆓 무료 학문: ' + free, actions:[lmCourseAct('ai_recommended')]};
+  }
+  if(/(로그인|가입|회원)/.test(t)) return {kind:'faq', text:'화면 위쪽 오른쪽의 [로그인]에서 카카오·네이버로 로그인할 수 있어요(구글·휴대폰은 순차 오픈). 로그인 없이도 모든 체험을 이용할 수 있습니다.', actions:[lmAct('🔐 로그인', function(){ FWAuth.open(); })]};
+  if(/(개인정보|저장|보안|정보수집|삭제)/.test(t)) return {kind:'faq', text:'사전 체험 기간의 분석은 이 브라우저 안에서 처리되고, 최근 결과·커뮤니티·Q&A는 이 기기에만 저장돼요. 서버로 전송되는 것은 사전 참여 신청(이메일·관심 분야)뿐입니다. 기기에 저장된 기록은 브라우저의 사이트 데이터를 지우면 삭제돼요.', actions:[]};
+  if(/(사용법|이용방법|이용법|시작하는|처음)/.test(t)) return {kind:'faq', text:'1) 위쪽 메뉴나 코스 카드에서 코스를 고르고\n2) 기본 정보(생년월일 등)를 입력한 뒤\n3) 분석 시작을 누르면 학문별 결과와 Fusion Score가 나와요.\n\n처음이라면 「AI 추천 코스」(약 20분)를 권해요.', actions:[lmCourseAct('ai_recommended')]};
+  if(/(연애|궁합|결혼|부부|가족|친구|인간관계|동료|상사|이상형)/.test(t)) return {kind:'route', text:'연애·가족·친구·직장 관계 코스는 아직 준비 중이에요(정식 서비스에서 “관계별 LifeMap”으로 제공 예정). 궁합 몇 %처럼 단정하지 않고 서로의 차이와 조정 방법을 살펴보는 방식으로 만들 예정입니다.\n\n지금은 성격·가치관 검사로 나의 관계 스타일을 먼저 살펴볼 수 있어요.', actions:[lmCourseAct('psychology'), lmAct('🚀 출시 알림 신청', function(){ showScreen('signup'); })]};
+  if(/(돈|재테크|투자|자산|저축|경제|월급)/.test(t)) return {kind:'route', text:'경제·자산 탐색은 준비 중이에요. 금융상품·투자 추천은 제공하지 않고, 소비·저축 습관과 목표를 스스로 정리하는 용도로 만들 예정입니다.\n\n지금은 가치관 분석(일·돈에 대한 태도 포함)을 해볼 수 있어요.', actions:[lmAct('⚖️ 가치관 분석 보기', function(){ lmFocusDisc('values'); })]};
+  if(/(건강|식단|음식|다이어트|운동|수면)/.test(t)) return {kind:'route', text:'건강·생활습관 탐색은 진단이 아닌 자기관리 참고용으로 준비 중이에요. 지금은 사상체질(참고용)과 생체리듬 체험을 해보실 수 있어요. 증상이 있다면 의료기관 상담이 우선입니다.', actions:[lmAct('🏥 사상체질', function(){ lmFocusDisc('sasang'); }), lmAct('📈 생체리듬', function(){ lmFocusDisc('biorhythm'); })]};
+  if(/(창업|사업|아이템|자영업|가게|장사)/.test(t)) return {kind:'route', text:'창업 방향은 「사업·창업 진단」 코스로 규칙 기반 체험을 해볼 수 있어요. 창업 적합도·추천 업종·준비 로드맵을 보여드리고, 정식 출시 후에는 AI가 내 데이터를 종합해 더 깊이 분석해요.\n\n실제 사업 설계는 AI아이템존으로 이어갈 수 있어요.', actions:[lmCourseAct('startup'), lmAct('📦 AI아이템존', function(){ window.open('/itemzone', '_blank', 'noopener'); })]};
+  if(/(직업|진로|취업|이직|전직|커리어|적성|일이|직장)/.test(t)) return {kind:'route', text:'진로·직업은 「진로·직업 코스」(홀랜드·적성·가치관·리더십·학습유형·직업 Ontology)로 살펴볼 수 있어요. 여러 결과가 같은 방향을 가리키는지 Fusion 화면에서 함께 보여드려요.', actions:[lmCourseAct('career')]};
+  if(/(성격|심리|내면|마음)/.test(t)) return {kind:'route', text:'성격·심리는 「심리학 코스」(MBTI·BIG5·TCI·DISC·에니어그램·VIA·다중지능·홀랜드·MMPI·SCT)로 여러 관점에서 비교해 볼 수 있어요.', actions:[lmCourseAct('psychology')]};
+  if(/(운세|운명|띠|별자리|타로|궁금)/.test(t)) return {kind:'route', text:'사주·오행·별자리·타로는 재미와 문화적 관점으로 가볍게 살펴보는 무료 코스가 있어요.', actions:[lmCourseAct('eastern'), lmCourseAct('western')]};
+  if(/(안녕|하이|hello|^hi$)/.test(t)) return {kind:'faq', text:'안녕하세요! 궁금한 검사 이름(예: MBTI, SCT)이나 고민(예: 창업, 진로)을 적어 주시면 알맞은 체험을 안내해 드릴게요.', actions:[lmCourseAct('ai_recommended')]};
+  return {kind:'none', text:'', actions:[lmCourseAct('ai_recommended')]};
+}
+function classifyQuestion(q){
+  const aiNeeded = ['분석','추천','종합','비교','왜','어떻게','창업','직업','진로','사업','맞을까','좋을까'];
+  return aiNeeded.some(function(k){ return q.indexOf(k) >= 0; }) ? 'ai' : 'rule';
+}
+async function askQuestion(q){
+  const rule = lmRuleAnswer(q);                           // 1) AI 호출 없이 먼저 판단
+  if(rule.kind === 'safety' || rule.kind === 'faq') return rule;
+  if(LM.MODE === 'PREVIEW'){                              // 2) PREVIEW: 항상 AI 0회
+    if(rule.kind === 'route') return rule;
+    return {kind:'preview', text:'지금은 사전 체험 모드라 개인화 AI 분석은 제공되지 않아요. 이런 질문은 정식 출시 후 AI(Gemini → GPT → Claude)가 내 검사 결과를 종합해 답해 드릴 예정입니다.\n\n지금은 아래 코스로 규칙 기반 체험을 해보실 수 있어요.', actions:rule.actions.concat([lmAct('🚀 출시 알림 신청', function(){ showScreen('signup'); })])};
+  }
+  if(classifyQuestion(q) === 'rule' && rule.kind !== 'none') return rule;
+  const res = await LM.callAPI({module:'lifeai', task:'freeQuestion', question:q, userInput:ST.form, manseok:ST.manseok}); // 3) 챗도우미 AI Core 경유
+  const text = typeof res === 'string' ? res : (res && (res.answer || res.text || res.summary)) || '';
+  if(text) return {kind:'ai', text:text, actions:rule.actions};
+  return rule.kind === 'none' ? {kind:'fallback', text:'지금은 AI 분석을 불러오지 못했어요. 잠시 후 다시 시도하거나, 아래 코스로 기본 분석을 체험해 보세요.', actions:rule.actions} : rule;
+}
+const LM_KIND_TAG = {faq:'안내 · AI 아님', route:'추천 · AI 아님', preview:'사전 체험 안내', ai:'AI 분석', fallback:'기본 안내', safety:'안전 안내'};
+function lmOpenSheet(){ document.getElementById('lm-asksheet').classList.add('open'); lmMeasure(); }
+function lmCloseSheet(){ document.getElementById('lm-asksheet').classList.remove('open'); }
+function lmAddMsg(role, text, opt){
+  opt = opt || {};
+  const box = document.getElementById('as-msgs'), m = document.createElement('div');
+  m.className = 'as-m ' + role;
+  if(role === 'bot' && opt.kind && LM_KIND_TAG[opt.kind]){
+    const tg = document.createElement('div'); tg.className = 'as-tag ' + (opt.kind === 'ai' ? 'ai' : opt.kind === 'safety' ? 'safety' : '');
+    tg.textContent = LM_KIND_TAG[opt.kind]; m.appendChild(tg);
+  }
+  const tx = document.createElement('div'); tx.textContent = text; m.appendChild(tx);
+  if(opt.actions && opt.actions.length){
+    const a = document.createElement('div'); a.className = 'as-acts';
+    opt.actions.forEach(function(x){ const b = document.createElement('button'); b.type = 'button'; b.textContent = x.label; b.addEventListener('click', function(){ x.run(); lmCloseSheet(); }); a.appendChild(b); });
+    m.appendChild(a);
+  }
+  box.appendChild(m);
+  while(box.children.length > 24) box.removeChild(box.firstChild);
+  box.scrollTop = box.scrollHeight; return m;
+}
+async function lmAsk(){
+  if(LMS.askBusy) return;
+  const input = document.getElementById('lm-ask-input'), q = input.value.trim();
+  if(!q) return;
+  LMS.askBusy = true; document.getElementById('lm-ask-send').disabled = true;
+  lmOpenSheet(); lmAddMsg('user', q); input.value = '';
+  const wait = lmAddMsg('bot', '답변을 찾는 중…');
+  let res;
+  try{ res = await askQuestion(q); }
+  catch(e){ res = {kind:'fallback', text:'답변을 가져오는 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.', actions:[]}; }
+  wait.remove(); lmAddMsg('bot', res.text, res);
+  LMS.askBusy = false; document.getElementById('lm-ask-send').disabled = false;
+}
+
+/* ── 나의 결과(기록) ── */
+function lmSaveHistory(){
+  try{
+    const list = LMSTORE.get('lm_history_v1', []);
+    list.unshift({id:Date.now().toString(36), ts:Date.now(), course:ST.course, selected:[...ST.selectedDiscs], name:ST.form.name || '', results:ST.results, fusion:ST.fusionScore, mode:LM.MODE});
+    LMSTORE.set('lm_history_v1', list.slice(0, 5)); lmRenderLeft();
+  }catch(e){}
+}
+function lmShowHistory(){ showScreen('history'); lmRenderHistory(); }
+function lmRenderHistory(){
+  const list = LMSTORE.get('lm_history_v1', []), box = document.getElementById('hs-list');
+  document.getElementById('hs-count').textContent = list.length ? list.length + '건' : '';
+  if(!list.length){ box.innerHTML = '<div class="lm-empty">아직 분석 기록이 없어요.<br><br><button type="button" class="lm-btn" data-act="start">AI 추천 코스로 시작하기</button></div>'; return; }
+  box.innerHTML = list.map(function(it){
+    const c = COURSES[it.course], f = it.fusion || {};
+    return '<div class="lm-hist"><div class="lm-hist-g">' + escHtml(f.grade || '-') + '</div><div class="lm-hist-b"><div class="lm-hist-t">' + escHtml(c ? c.name : '분석') + ' · ' + (it.selected || []).length + '개 학문</div>'
+      + '<div class="lm-hist-s">' + lmFmtDate(it.ts) + ' · Fusion ' + escHtml(f.total) + '점 · ' + escHtml(f.direction || '') + (it.mode === 'PREVIEW' ? ' · 규칙기반' : '') + '</div></div>'
+      + '<div style="display:flex;flex-direction:column;gap:5px"><button type="button" class="lm-btn sm" data-act="open" data-id="' + escHtml(it.id) + '">다시 보기</button><button type="button" class="lm-btn ghost sm" data-act="del" data-id="' + escHtml(it.id) + '">삭제</button></div></div>';
+  }).join('');
+}
+function lmRestoreHistory(id){
+  const it = LMSTORE.get('lm_history_v1', []).find(function(x){ return x.id === id; }); if(!it) return;
+  ST.course = it.course; ST.selectedDiscs = new Set(it.selected); ST.results = it.results; ST.fusionScore = it.fusion;
+  if(it.name) ST.form.name = it.name;
+  renderResults(); showScreen('results');
+}
+
+/* ── 커뮤니티 ── */
+const CM_CATS = {review:'⭐ 후기', free:'📌 자유', info:'🤝 정보'};
+function lmShowCommunity(){ showScreen('community'); lmRenderCommunity(); }
+function lmRenderCommunity(){
+  const posts = LMSTORE.get('lm_community_v1', []);
+  document.getElementById('cm-count').textContent = posts.length ? posts.length + '개' : '';
+  const tabs = [['all','전체'],['review','⭐ 후기'],['free','📌 자유'],['info','🤝 정보']];
+  document.getElementById('cm-tabs').innerHTML = tabs.map(function(t){ return '<button type="button" data-tab="' + t[0] + '" class="' + (LMS.cmTab === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; }).join('');
+  const rows = posts.filter(function(p){ return LMS.cmTab === 'all' || p.cat === LMS.cmTab; });
+  document.getElementById('cm-list').innerHTML = rows.length ? rows.map(function(p){
+    return '<div class="lm-post"><div class="lm-post-h"><span class="lm-chip">' + (CM_CATS[p.cat] || '') + '</span><span class="lm-post-t">' + escHtml(p.title) + '</span></div>'
+      + '<div class="lm-post-b">' + escHtml(p.body) + '</div>'
+      + '<div class="lm-post-f"><span>' + escHtml(p.nick) + '</span><span>' + lmFmtDate(p.ts) + '</span><span style="flex:1"></span>'
+      + '<button type="button" data-act="like" data-id="' + escHtml(p.id) + '">' + (p.liked ? '❤️' : '🤍') + ' ' + (p.likes || 0) + '</button>'
+      + '<button type="button" data-act="del" data-id="' + escHtml(p.id) + '">삭제</button></div></div>';
+  }).join('') : '<div class="lm-empty">아직 글이 없어요. 첫 글을 남겨 보세요 🙂</div>';
+}
+function lmCommunitySubmit(){
+  const g = function(id){ return (document.getElementById(id).value || '').trim(); };
+  const title = g('cm-title'), body = g('cm-body'), u = window.FWAuth ? FWAuth.user() : null;
+  if(title.length < 2) return toast('제목을 2자 이상 입력해 주세요.');
+  if(body.length < 5) return toast('내용을 5자 이상 입력해 주세요.');
+  const posts = LMSTORE.get('lm_community_v1', []);
+  posts.unshift({id:Date.now().toString(36) + Math.random().toString(36).slice(2, 5), ts:Date.now(), cat:document.getElementById('cm-cat').value, nick:g('cm-nick') || (u ? u.name : '익명'), title:title, body:body, likes:0, liked:false});
+  if(!LMSTORE.set('lm_community_v1', posts.slice(0, 200))) return;
+  ['cm-title','cm-body'].forEach(function(id){ document.getElementById(id).value = ''; });
+  LMS.searchItems = null; lmRenderCommunity(); toast('등록되었습니다.');
+}
+
+/* ── Q&A ── */
+function lmShowQna(){ showScreen('qna'); lmRenderQna(); }
+function lmRenderQna(){
+  const list = LMSTORE.get('lm_qna_v1', []);
+  document.getElementById('qa-count').textContent = list.length ? list.length + '개' : '';
+  document.getElementById('qa-list').innerHTML = list.length ? list.map(function(p){
+    return '<div class="lm-post"><div class="lm-post-h"><span class="lm-chip w">운영자 답변 대기</span><span class="lm-post-t">' + escHtml(p.title) + '</span></div>'
+      + (p.body ? '<div class="lm-post-b">' + escHtml(p.body) + '</div>' : '')
+      + '<div class="lm-auto"><b>🤖 자동 안내 (AI 아님)</b>\n' + escHtml(p.auto) + '</div>'
+      + '<div class="lm-post-f"><span>' + lmFmtDate(p.ts) + '</span><span style="flex:1"></span><button type="button" data-act="del" data-id="' + escHtml(p.id) + '">삭제</button></div></div>';
+  }).join('') : '<div class="lm-empty">등록된 질문이 없어요. 궁금한 점을 남겨 보세요.</div>';
+}
+function lmQnaSubmit(){
+  const title = (document.getElementById('qa-title').value || '').trim(), body = (document.getElementById('qa-body').value || '').trim();
+  if(title.length < 2) return toast('질문 제목을 2자 이상 입력해 주세요.');
+  const r = lmRuleAnswer(title + ' ' + body);
+  const auto = r.kind === 'none' ? '비슷한 FAQ를 찾지 못했어요. 운영자 답변을 기다려 주시고, 급한 내용은 「이용안내」의 FAQ도 확인해 보세요.' : r.text;
+  const list = LMSTORE.get('lm_qna_v1', []);
+  list.unshift({id:Date.now().toString(36) + Math.random().toString(36).slice(2, 5), ts:Date.now(), title:title, body:body, auto:auto});
+  if(!LMSTORE.set('lm_qna_v1', list.slice(0, 100))) return;
+  ['qa-title','qa-body'].forEach(function(id){ document.getElementById(id).value = ''; });
+  lmRenderQna(); toast('질문이 등록되었습니다.');
+}
+
+/* ── 이용안내 / 성장경로 ── */
+function lmRenderFaq(){
+  document.getElementById('faq-list').innerHTML = LM_FAQ.map(function(f){ return '<details><summary>' + escHtml(f.q) + '</summary><div class="fa">' + escHtml(f.a) + '</div></details>'; }).join('');
+}
+function lmRenderGrowth(){
+  const steps = [
+    {t:'나를 이해한다', d:'AI LifeMap에서 성향·강점·관심 분야를 점검하고 Fusion 결과로 정리합니다.', st:'now', b:[['체험하기', function(){ openCourse('ai_recommended'); }]]},
+    {t:'사업·창업 방향 찾기', d:'나에게 맞는 업종·사업 형태·준비사항을 참고용으로 탐색합니다.', st:'now', b:[['창업 진단', function(){ openCourse('startup'); }]]},
+    {t:'사업을 설계한다', d:'AI아이템존에서 아이디어를 시장분석·사업계획으로 구체화합니다.', st:'live', b:[['AI아이템존 열기', function(){ window.open('/itemzone', '_blank', 'noopener'); }]]},
+    {t:'경영 문제를 진단한다', d:'운영 중인 사업은 챗도우미 경영진단·AI 비서로 오늘 할 일을 점검합니다.', st:'live', b:[['챗도우미 열기', function(){ window.open('https://chatdoumi.com', '_blank', 'noopener'); }]]},
+    {t:'홍보하고 고객을 확보한다', d:'AI통합홍보센터에서 콘텐츠·캠페인으로 고객을 만납니다.', st:'live', b:[['통합홍보센터 열기', function(){ window.open('/promo', '_blank', 'noopener'); }]]},
+    {t:'판매하고 성장한다', d:'AI성장+마켓몰에서 상품·서비스를 판매하고 성장 기록을 쌓습니다.', st:'live', b:[['성장+마켓몰 열기', function(){ window.open('https://aiplatmarket.com/#growthmall', '_blank', 'noopener'); }]]},
+    {t:'함께 배우고 체험한다', d:'AI성장플랫존 · AI인생성장사관학교 · AI MetaZone은 준비 중입니다. 오픈 소식을 받아보세요.', st:'soon', b:[['출시 알림 신청', function(){ showScreen('signup'); }]]}
+  ];
+  const box = document.getElementById('gr-steps'); box.innerHTML = '';
+  steps.forEach(function(s, i){
+    const wrap = document.createElement('div'); wrap.className = 'lm-step' + (i === 0 ? ' now' : '');
+    wrap.innerHTML = '<div class="lm-step-n">' + (i + 1) + '</div><div class="lm-step-b"><div class="lm-step-t">' + escHtml(s.t) + '<span class="lm-chip ' + (s.st === 'live' ? 'g' : s.st === 'soon' ? 'w' : '') + '">' + (s.st === 'live' ? '운영 중' : s.st === 'soon' ? '준비 중' : 'AI LifeMap') + '</span></div><div class="lm-step-d">' + escHtml(s.d) + '</div><div class="lm-sbtns"></div></div>';
+    s.b.forEach(function(x){ const b = document.createElement('button'); b.type = 'button'; b.className = 'lm-btn sm'; b.textContent = x[0]; b.addEventListener('click', x[1]); wrap.querySelector('.lm-sbtns').appendChild(b); });
+    box.appendChild(wrap);
+  });
+}
+
+/* ── 홈 히어로 수치(실제 학문 수 기준) ── */
+function lmRenderHero(){
+  const total = Object.keys(DISCS).length, cnt = {};
+  Object.values(DISCS).forEach(function(d){ cnt[d.g] = (cnt[d.g] || 0) + 1; });
+  const t = document.getElementById('disc-total'); if(t) t.textContent = total;
+  const hb = document.getElementById('hero-badges');
+  if(hb) hb.innerHTML = CAT_ORDER.filter(function(g){ return cnt[g]; }).map(function(g){ return '<span class="hbadge">' + CAT_META[g].label + ' ' + cnt[g] + '종</span>'; }).join('');
+}
+
+/* ── 초기화 ── */
+function lmShellInit(){
+  // 자체 GNB
+  const sc = document.getElementById('lm-nav-scroll');
+  sc.innerHTML = LM_NAV.map(function(n){ return '<button type="button" class="lm-nav-item" data-k="' + n.k + '">' + n.icon + ' ' + n.label + (n.badge ? ' <span class="nb">' + n.badge + '</span>' : '') + '</button>'; }).join('');
+  sc.addEventListener('click', function(e){ const b = e.target.closest('.lm-nav-item'); if(!b) return; const n = LM_NAV.find(function(x){ return x.k === b.dataset.k; }); if(n){ n.go(); } });
+  // 패널
+  lmRenderLeft(); lmRenderRight();
+  ['lm-panel-left','lm-panel-right'].forEach(function(id){ document.getElementById(id).addEventListener('click', function(e){ const b = e.target.closest('[data-act]'); if(b) lmPanelAction(b); }); });
+  // 검색
+  const si = document.getElementById('lm-search-input'), sr = document.getElementById('lm-search-results');
+  si.addEventListener('input', function(){ lmSearch(si.value); });
+  si.addEventListener('focus', function(){ if(si.value) lmSearch(si.value); });
+  si.addEventListener('keydown', function(e){
+    if(e.isComposing) return;
+    if(e.key === 'ArrowDown'){ e.preventDefault(); lmSearchMove(1); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); lmSearchMove(-1); }
+    else if(e.key === 'Enter'){ e.preventDefault(); if(LMS.searchSel >= 0) lmSearchPick(LMS.searchSel); }
+    else if(e.key === 'Escape'){ sr.classList.remove('open'); }
+  });
+  sr.addEventListener('click', function(e){ const b = e.target.closest('.lm-sr-item'); if(b) lmSearchPick(parseInt(b.dataset.i, 10)); });
+  document.getElementById('lm-search-clear').addEventListener('click', function(){ si.value = ''; lmSearch(''); si.focus(); });
+  document.addEventListener('click', function(e){ if(!e.target.closest('#lm-search')) sr.classList.remove('open'); });
+  // 질문바
+  const ai = document.getElementById('lm-ask-input');
+  ai.addEventListener('keydown', function(e){ if(e.key === 'Enter' && !e.isComposing && e.keyCode !== 229){ e.preventDefault(); lmAsk(); } });
+  document.getElementById('lm-ask-send').addEventListener('click', lmAsk);
+  document.getElementById('lm-ask-hint').textContent = LM.MODE === 'PREVIEW' ? '사전 체험 모드 · AI 호출 없이 규칙·FAQ로 답변해요' : LM.MODE === 'BETA' ? '베타 · 개인화 분석이 필요한 질문만 AI가 답변해요' : '개인화 분석이 필요한 질문은 AI가 답변해요';
+  // 커뮤니티 / Q&A / 기록 (이벤트 위임)
+  document.getElementById('cm-tabs').addEventListener('click', function(e){ const b = e.target.closest('[data-tab]'); if(b){ LMS.cmTab = b.dataset.tab; lmRenderCommunity(); } });
+  document.getElementById('cm-list').addEventListener('click', function(e){
+    const b = e.target.closest('[data-act]'); if(!b) return;
+    let posts = LMSTORE.get('lm_community_v1', []);
+    if(b.dataset.act === 'like'){ posts.forEach(function(p){ if(p.id === b.dataset.id){ p.liked = !p.liked; p.likes = Math.max(0, (p.likes || 0) + (p.liked ? 1 : -1)); } }); }
+    if(b.dataset.act === 'del'){ if(!confirm('이 글을 삭제할까요?')) return; posts = posts.filter(function(p){ return p.id !== b.dataset.id; }); }
+    LMSTORE.set('lm_community_v1', posts); LMS.searchItems = null; lmRenderCommunity();
+  });
+  document.getElementById('qa-list').addEventListener('click', function(e){
+    const b = e.target.closest('[data-act="del"]'); if(!b) return;
+    if(!confirm('이 질문을 삭제할까요?')) return;
+    LMSTORE.set('lm_qna_v1', LMSTORE.get('lm_qna_v1', []).filter(function(p){ return p.id !== b.dataset.id; })); lmRenderQna();
+  });
+  document.getElementById('hs-list').addEventListener('click', function(e){
+    const b = e.target.closest('[data-act]'); if(!b) return;
+    if(b.dataset.act === 'start') openCourse('ai_recommended');
+    if(b.dataset.act === 'open') lmRestoreHistory(b.dataset.id);
+    if(b.dataset.act === 'del'){ if(!confirm('이 기록을 삭제할까요?')) return; LMSTORE.set('lm_history_v1', LMSTORE.get('lm_history_v1', []).filter(function(p){ return p.id !== b.dataset.id; })); lmRenderHistory(); lmRenderLeft(); }
+  });
+  lmRenderFaq(); lmRenderGrowth(); lmRenderHero();
+  // 로그인 상태 연동
+  if(window.FWAuth) FWAuth.onChange(function(u){ lmRenderLeft(); const n = document.getElementById('f-name'); if(u && n && !n.value) n.value = u.name; });
+  // 레이아웃
+  LMS.mq.addEventListener('change', lmLayoutSync);
+  window.addEventListener('resize', lmMeasure);
+  lmLayoutSync();
+  const head = document.getElementById('lm-head');
+  if(window.ResizeObserver){ new ResizeObserver(lmMeasure).observe(head); new ResizeObserver(lmMeasure).observe(document.getElementById('lm-askbar')); }
+  window.addEventListener('scroll', function(){
+    if(lmDesk()) return;
+    const y = window.scrollY;
+    if(!LMS.lastCompact && y > 120){ LMS.lastCompact = true; head.classList.add('lm-compact'); }
+    else if(LMS.lastCompact && y < 50){ LMS.lastCompact = false; head.classList.remove('lm-compact'); }
+  }, {passive:true});
+  // 해시 딥링크 (#community, #qna, #history, #help, #growth, #balance)
+  const hash = (location.hash || '').slice(1), deep = {community:lmShowCommunity, qna:lmShowQna, history:lmShowHistory, help:function(){ showScreen('help'); }, growth:function(){ showScreen('growth'); }, balance:function(){ showScreen('balance'); }};
+  if(deep[hash]) deep[hash]();
+  lmNavSync('landing');
+}
+
+</script>
 </body>
 </html>
