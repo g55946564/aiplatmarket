@@ -534,7 +534,7 @@ textarea.fc{resize:none;line-height:1.6}
    PC(≥900px): 전체 80% 배율 + 3분할, 좌/중/우 각각 스크롤, 질문바는 중앙 하단 고정
    모바일(<900px): 일반 스크롤 + 좌우 서랍(☰) + 질문바 하단 고정
 ══════════════════════════════════════════════════════════════════════ */
-:root{--lm-scale:1;--lm-stick:0px;--lm-ask-h:0px;--lm-sheet-max:360px}
+:root{--lm-width:80%;--lm-stick:0px;--lm-ask-h:0px;--lm-sheet-max:360px;--sec-rgb:201,168,76}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;min-height:0;overflow-x:hidden}
 #lm-viewport{position:relative}
@@ -698,14 +698,15 @@ button{-webkit-tap-highlight-color:transparent}
 .lm-center .qs-section,.lm-center .course-section{max-width:860px}
 .lm-center .lm-hero{max-width:720px}
 
-/* ════════ PC (≥900px): 전체 80% 배율 + 3분할 + 독립 스크롤 ════════ */
+/* ════════ PC (≥900px): 브라우저 폭의 80%만 사용(중앙 정렬) · 3분할(20/60/20) · 독립 스크롤 ════════ */
 @media (min-width:900px){
-  :root{--lm-scale:.8}
   html,body{height:100%;overflow:hidden}
-  #lm-viewport{position:fixed;left:0;top:0;width:calc(100vw / var(--lm-scale));height:100vh;height:calc(100vh / var(--lm-scale));transform:scale(var(--lm-scale));transform-origin:0 0;overflow:hidden}
-  @supports (height:100dvh){#lm-viewport{height:calc(100dvh / var(--lm-scale))}}
-  #lm-app{height:100%;min-height:0}
+  body{background:#040a12}
+  #lm-viewport{position:fixed;inset:0;overflow:hidden;display:flex;justify-content:center;background:radial-gradient(ellipse at 50% 0,#10305a 0,#050c16 72%)}
+  #lm-app{width:var(--lm-width);height:100%;min-height:0;min-width:0;overflow:hidden;box-shadow:0 0 0 1px rgba(201,168,76,.22),0 0 90px rgba(0,0,0,.7)}
   .lm-body{overflow:hidden}
+  .lm-hbtn{display:none}          /* 햄버거는 모바일 전용 — PC는 좌우 패널을 항상 펼쳐 둠 */
+  .lm-title-row{justify-content:center}
 }
 
 /* ════════ 모바일/태블릿 (<900px): 일반 스크롤 + 서랍 + 하단 질문바 ════════ */
@@ -737,6 +738,111 @@ button{-webkit-tap-highlight-color:transparent}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+/* ══════════ 색상 v2 — 타이틀 / 메뉴 바 / 본문 / 패널을 서로 다른 계열로 분리 ══════════ */
+:root{--bg:#0b1b30;--card:rgba(32,62,100,.52);--glass-b:rgba(201,168,76,.26);--t2:#a9b8cc;--t3:#7a8fab}
+body{background:var(--bg)}
+#lm-app{background:#0b1b30}
+#lm-app[data-sec="home"]{--sec-rgb:201,168,76}
+#lm-app[data-sec="ai"]{--sec-rgb:99,102,241}
+#lm-app[data-sec="psych"]{--sec-rgb:167,139,250}
+#lm-app[data-sec="self"]{--sec-rgb:59,130,246}
+#lm-app[data-sec="career"]{--sec-rgb:16,185,129}
+#lm-app[data-sec="startup"]{--sec-rgb:245,158,11}
+#lm-app[data-sec="east"]{--sec-rgb:234,88,12}
+#lm-app[data-sec="west"]{--sec-rgb:236,72,153}
+#lm-app[data-sec="fusion"]{--sec-rgb:234,196,90}
+#lm-app[data-sec="history"]{--sec-rgb:148,163,184}
+#lm-app[data-sec="balance"]{--sec-rgb:120,134,156}
+#lm-app[data-sec="growth"]{--sec-rgb:34,197,94}
+#lm-app[data-sec="community"]{--sec-rgb:20,184,166}
+#lm-app[data-sec="qna"]{--sec-rgb:56,189,248}
+#lm-app[data-sec="help"]{--sec-rgb:96,165,250}
+/* 타이틀 박스: 밝은 브랜드 블루→틸 */
+.lm-head{background:linear-gradient(115deg,#1f4a86 0%,#17627a 58%,#127184 100%);border-bottom:0}
+.lm-head::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 18% 0,rgba(255,255,255,.16),transparent 55%);pointer-events:none}
+.lm-titlebox{position:relative;z-index:1}
+.lm-title{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.lm-title b{color:#ffe08a}
+.lm-title-link{color:inherit;text-decoration:none;cursor:pointer;display:inline-block;border-radius:8px;padding:2px 8px;transition:background .15s}
+.lm-title-link:hover{background:rgba(255,255,255,.14)}
+.lm-title-link:focus-visible{outline:2px solid #ffe08a;outline-offset:2px}
+.lm-title-sub{color:rgba(255,255,255,.82)}
+.mode-indicator{background:rgba(6,16,30,.38);border-color:rgba(255,224,138,.6);color:#ffe9a8}
+.lm-hbtn{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff}
+.lm-hbtn:hover{background:rgba(255,255,255,.24)}
+.lm-hbtn[aria-expanded="true"]{background:rgba(255,224,138,.28);border-color:#ffe08a}
+.lm-search input{background:rgba(6,16,30,.5);border-color:rgba(255,255,255,.28);color:#fff}
+.lm-search input::placeholder{color:rgba(255,255,255,.62)}
+.lm-search input:focus{border-color:#ffe08a;box-shadow:0 0 0 3px rgba(255,224,138,.2)}
+.lm-search-ico{opacity:.85}
+.lm-search-clear{color:#fff}
+/* 메뉴 바: 중간 톤 + 섹션 색상 하단선 */
+.lm-nav{background:#14304f;border-top:0;border-bottom:3px solid rgba(var(--sec-rgb),.85);position:relative;z-index:1}
+.lm-nav-item{color:#bcd0e8}
+.lm-nav-item:hover{color:#fff;background:rgba(255,255,255,.09)}
+.lm-nav-item.active{background:rgba(var(--sec-rgb),.28);border-color:rgba(var(--sec-rgb),.95);color:#fff}
+.lm-nav-scroll{scrollbar-color:rgba(var(--sec-rgb),.9) rgba(255,255,255,.08)}
+.lm-nav-scroll::-webkit-scrollbar-thumb{background:rgba(var(--sec-rgb),.9)}
+/* 좌/우 패널: 본문보다 한 단계 어둡게 */
+.lm-panel{background:#091524}
+.lm-panel-left{border-right:1px solid rgba(255,255,255,.07)}
+.lm-panel-right{border-left:1px solid rgba(255,255,255,.07)}
+.pn-card,.pn-item{background:rgba(255,255,255,.05)}
+/* 본문: 메뉴(섹션)별 색상 틴트 */
+.lm-center{background:linear-gradient(180deg,rgba(var(--sec-rgb),.2) 0,rgba(var(--sec-rgb),0) 320px),#0f2440}
+#lm-center .lm-screen{background:transparent}
+.lm-topbar{background:linear-gradient(rgba(var(--sec-rgb),.24),rgba(var(--sec-rgb),.24)),#0f2440;border-bottom:1px solid rgba(var(--sec-rgb),.55)}
+.course-footer,.form-footer{background:#0a1a30;border-top:1px solid rgba(var(--sec-rgb),.6)}
+.lm-askbar{background:#0a1a30;border-top:2px solid rgba(var(--sec-rgb),.7)}
+.lm-page h2{border-left:4px solid rgb(var(--sec-rgb));padding-left:10px}
+.lm-chip{background:rgba(var(--sec-rgb),.25);color:#fff}
+.lm-tabs button.on,.pn-seg button.on{background:rgba(var(--sec-rgb),.28);border-color:rgba(var(--sec-rgb),.95);color:#fff}
+.lm-center .course-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.lm-center .qs-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.lm-center .hero-sub,.lm-center .cc-desc{color:#b4c3d8}
+
+/* ══════════ 이용안내: 요금제 · 이용 가능 정도 · AP ══════════ */
+.pl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0 18px}
+.pl-card{position:relative;background:var(--card);border:1px solid rgba(var(--pc),.5);border-top:4px solid rgb(var(--pc));border-radius:12px;padding:16px 14px 14px}
+.pl-card.feat{box-shadow:0 0 0 1px rgba(var(--pc),.8),0 12px 30px rgba(0,0,0,.4)}
+.pl-badge{position:absolute;top:-11px;right:10px;font-size:.6rem;font-weight:800;background:rgb(var(--pc));color:#0d1f35;border-radius:10px;padding:2px 9px}
+.pl-name{font-size:.95rem;font-weight:900;color:rgb(var(--pc));letter-spacing:.3px}
+.pl-price{font-size:1.4rem;font-weight:900;color:#fff;margin:4px 0 2px}
+.pl-tag{font-size:.7rem;color:var(--t2);margin-bottom:10px}
+.pl-ul{margin:0;padding:0;list-style:none;font-size:.73rem;color:var(--t1);line-height:1.75}
+.pl-ul li::before{content:'✓ ';color:rgb(var(--pc));font-weight:900}
+.pl-tbl-wrap{overflow-x:auto;border:1px solid var(--glass-b);border-radius:12px;margin-bottom:16px;background:rgba(255,255,255,.03)}
+.pl-tbl{width:100%;border-collapse:collapse;font-size:.73rem;min-width:540px}
+.pl-tbl th,.pl-tbl td{padding:10px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07)}
+.pl-tbl tr:last-child td{border-bottom:0}
+.pl-tbl th:first-child,.pl-tbl td:first-child{text-align:left;color:var(--t1);font-weight:700}
+.pl-tbl thead th{background:rgba(255,255,255,.06);font-weight:900;font-size:.8rem}
+.lv{display:inline-block;border-radius:8px;padding:2px 9px;font-size:.64rem;font-weight:800;white-space:nowrap}
+.lv.ok{background:rgba(26,122,74,.32);color:#6ee7a0}
+.lv.ap{background:rgba(201,168,76,.24);color:#ffe08a}
+.lv.part{background:rgba(99,102,241,.3);color:#d4d8ff}
+.lv.most{background:rgba(139,92,246,.32);color:#e4dbff}
+.lv.all{background:rgba(201,168,76,.42);color:#fff6cf}
+.ap-banner{background:linear-gradient(135deg,rgba(201,168,76,.22),rgba(201,168,76,.07));border:1px solid rgba(201,168,76,.5);border-radius:12px;padding:15px 16px;margin-bottom:18px}
+.ap-h{font-size:.92rem;font-weight:900;color:#ffe08a;margin-bottom:6px}
+.ap-p{font-size:.76rem;color:var(--t1);line-height:1.75}
+.ap-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px}
+.ap-chip{font-size:.7rem;border:1px solid var(--glass-b);border-radius:14px;padding:5px 11px;color:var(--t1);background:rgba(255,255,255,.05)}
+.ap-chip b{color:#ffe08a}.ap-chip.free b{color:#6ee7a0}
+.cb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.78rem;color:var(--t1);flex-wrap:wrap}
+.cb-row:last-child{border-bottom:0}
+.cb-row small{color:var(--t2);margin-left:4px}
+.cb-r{display:flex;align-items:center;gap:7px}
+.cb-r b{color:#ffe08a}.cb-o{color:var(--t3)}
+.lm-ol{margin:0;padding-left:20px;font-size:.78rem;color:var(--t1);line-height:1.9}
+.lm-small{font-size:.74rem;color:var(--t2);line-height:1.85}
+
+/* 한글 줄바꿈 · 패널 버튼 보정 */
+.lm-panel,.lm-center,.as-m,.lm-page{word-break:keep-all;overflow-wrap:anywhere}
+.pn-q-row button{white-space:nowrap;font-size:.68rem;padding:8px 4px}
+.pl-grid{grid-template-columns:repeat(auto-fit,minmax(135px,1fr))}
+@media(max-width:480px){.pl-grid{grid-template-columns:1fr 1fr}}
+
 .lm-sbtns{display:flex;gap:6px;flex-wrap:wrap}
 nav.gnb{z-index:300}
 @media(max-width:899px){.desk-only{display:none!important}nav.gnb{position:relative;top:auto}}
@@ -744,7 +850,7 @@ nav.gnb{z-index:300}
 </style>
 </head>
 <body>
-<div id="lm-viewport" data-fw-scale>
+<div id="lm-viewport">
 <div id="lm-app">
 
 <!-- ══════════ HEADER (GNB) — AIPLATMARKET_HEADER_FOOTER v2 ══════════ -->
@@ -917,7 +1023,7 @@ nav.gnb{z-index:300}
     <div class="lm-title-row">
       <button type="button" class="lm-hbtn" id="lm-hb-left" aria-label="내 메뉴 열기/닫기" aria-controls="lm-panel-left" aria-expanded="true" onclick="lmTogglePanel('left')">☰</button>
       <div class="lm-title-center">
-        <h1 class="lm-title">🔮 AI<b>인생진로탐색</b></h1>
+        <h1 class="lm-title"><a class="lm-title-link" id="lm-title-link" href="/lifemap" title="처음으로 돌아가기">🔮 AI<b>인생진로탐색</b></a></h1>
         <div class="lm-title-sub"><span>AI LifeMap · 인생·진로 체험센터</span><span class="mode-indicator" id="mode-indicator" title="PREVIEW = AI 호출 0회(규칙 기반 체험)">⚙ PREVIEW</span></div>
       </div>
       <button type="button" class="lm-hbtn" id="lm-hb-right" aria-label="탐색 메뉴 열기/닫기" aria-controls="lm-panel-right" aria-expanded="true" onclick="lmTogglePanel('right')">☰</button>
@@ -1325,11 +1431,15 @@ nav.gnb{z-index:300}
     <div id="cm-list"></div>
   </div>
 </section>
-<!-- ══ Q&A ══ -->
+<!-- ══ Q&A (자주 묻는 질문 병합) ══ -->
 <section id="s-qna" class="lm-screen">
-  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">❓ Q&amp;A</span><span class="sub" id="qa-count"></span></div>
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">❓ Q&amp;A · 자주 묻는 질문</span><span class="sub" id="qa-count"></span></div>
   <div class="lm-page">
-    <p class="lm-lead">이용 중 궁금한 점을 남겨 주세요. 등록하면 규칙 기반 <b>자동 안내</b>가 먼저 붙고, 운영자 답변은 정식 오픈 후 이어집니다.</p>
+    <h2>자주 묻는 질문</h2>
+    <p class="lm-lead">먼저 자주 묻는 질문에서 답을 찾아보세요. 요금제는 <a href="#" onclick="showScreen('help');return false" style="color:var(--gold-lt)">이용안내</a>에서 비교할 수 있어요.</p>
+    <div class="lm-faq" id="faq-list"></div>
+    <h2 style="margin-top:26px">궁금한 점 질문하기</h2>
+    <p class="lm-lead">찾는 답이 없다면 질문을 남겨 주세요. 등록하면 규칙 기반 <b>자동 안내</b>가 먼저 붙고, 운영자 답변은 정식 오픈 후 이어집니다.</p>
     <div class="lm-note">🤖 자동 안내는 AI가 아닌 FAQ·규칙 기반입니다. 사전 체험 기간에는 이 기기에만 저장됩니다.</div>
     <div class="lm-box">
       <input id="qa-title" class="fc" type="text" maxlength="60" placeholder="질문 제목 (2자 이상)" style="margin-bottom:8px" aria-label="질문 제목">
@@ -1356,14 +1466,10 @@ nav.gnb{z-index:300}
     <div id="gr-steps"></div>
   </div>
 </section>
-<!-- ══ 이용안내 ══ -->
+<!-- ══ 이용안내 (요금제·AP) ══ -->
 <section id="s-help" class="lm-screen">
-  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">🙋 이용안내</span></div>
-  <div class="lm-page">
-    <h2>자주 묻는 질문</h2>
-    <p class="lm-lead">찾는 내용이 없으면 아래 질문 입력바나 Q&amp;A에 남겨 주세요.</p>
-    <div class="lm-faq" id="faq-list"></div>
-  </div>
+  <div class="lm-topbar"><button type="button" class="back" onclick="showScreen('landing')" aria-label="홈으로">‹</button><span class="ttl">📖 이용안내 · 이용료</span></div>
+  <div class="lm-page" id="help-body"></div>
 </section>
 <!-- ══ 삶의 균형 (준비 중) ══ -->
 <section id="s-balance" class="lm-screen">
@@ -1449,10 +1555,10 @@ nav.gnb{z-index:300}
   
   
     </div>
-  </div>
+  
     
-    </div>
-  </div>
+    
+  
 </footer>
 <!-- ══════════ /FOOTER ══════════ -->
 
@@ -3299,7 +3405,7 @@ const LM_NAV = [
   {k:'growth',  icon:'🌱', label:'성장경로',   go:function(){ showScreen('growth'); }},
   {k:'community',icon:'💬',label:'커뮤니티',   go:function(){ lmShowCommunity(); }},
   {k:'qna',     icon:'❓', label:'Q&A',       go:function(){ lmShowQna(); }},
-  {k:'help',    icon:'🙋', label:'이용안내',   go:function(){ showScreen('help'); }}
+  {k:'help',    icon:'📖', label:'이용안내',   go:function(){ showScreen('help'); }}
 ];
 const LM_COURSE_NAV = {ai_recommended:'ai', psychology:'psych', selfexplore:'self', career:'career', startup:'startup', eastern:'east', western:'west', comprehensive:'fusion'};
 const LM_SCREEN_NAV = {landing:'home', community:'community', qna:'qna', history:'history', growth:'growth', help:'help', balance:'balance', results:'history', signup:'home'};
@@ -3307,6 +3413,7 @@ const LM_SCREEN_NAV = {landing:'home', community:'community', qna:'qna', history
 function lmNavSync(id){
   let k = LM_SCREEN_NAV[id];
   if(!k && (id === 'course' || id === 'form' || id === 'loading')) k = LM_COURSE_NAV[ST.course] || 'home';
+  const app = document.getElementById('lm-app'); if(app) app.dataset.sec = k || 'home';
   const sc = document.getElementById('lm-nav-scroll'); if(!sc) return;
   sc.querySelectorAll('.lm-nav-item').forEach(function(b){
     const on = b.dataset.k === k; b.classList.toggle('active', on);
@@ -3344,33 +3451,27 @@ function lmFocusDisc(id){
 
 /* ── 패널 / 레이아웃 ── */
 function lmTogglePanel(side, force){
-  const body = document.getElementById('lm-body'), p = document.getElementById('lm-panel-' + side), hb = document.getElementById('lm-hb-' + side);
-  if(!body || !p || !hb) return;
-  if(lmDesk()){
-    const open = force !== undefined ? force : body.classList.contains('no-' + side);
-    body.classList.toggle('no-' + side, !open);
-    hb.setAttribute('aria-expanded', String(open));
-    try{ localStorage.setItem('lm_panel_' + side, open ? '1' : '0'); }catch(e){}
-  } else {
-    const other = side === 'left' ? 'right' : 'left';
-    const open = force !== undefined ? force : !p.classList.contains('open');
-    if(open){ document.getElementById('lm-panel-' + other).classList.remove('open'); document.getElementById('lm-hb-' + other).setAttribute('aria-expanded','false'); }
-    p.classList.toggle('open', open); hb.setAttribute('aria-expanded', String(open));
-    document.getElementById('lm-backdrop').classList.toggle('show', open);
-  }
+  if(lmDesk()) return;                       // PC: 좌우 패널은 항상 펼쳐 둠 (햄버거는 모바일 전용)
+  const p = document.getElementById('lm-panel-' + side), hb = document.getElementById('lm-hb-' + side);
+  if(!p || !hb) return;
+  const other = side === 'left' ? 'right' : 'left';
+  const open = force !== undefined ? force : !p.classList.contains('open');
+  if(open){ document.getElementById('lm-panel-' + other).classList.remove('open'); document.getElementById('lm-hb-' + other).setAttribute('aria-expanded','false'); }
+  p.classList.toggle('open', open); hb.setAttribute('aria-expanded', String(open));
+  document.getElementById('lm-backdrop').classList.toggle('show', open);
 }
 function lmClosePanels(){
   if(lmDesk()) return;
   ['left','right'].forEach(function(s){ const p = document.getElementById('lm-panel-' + s); if(p && p.classList.contains('open')) lmTogglePanel(s, false); });
   const bd = document.getElementById('lm-backdrop'); if(bd) bd.classList.remove('show');
 }
-function lmApplyScale(){
-  const v = lmDesk() ? (parseFloat(localStorage.getItem('lm_scale')) || 0.8) : 1;
-  document.documentElement.style.setProperty('--lm-scale', String(v));
+function lmApplyWidth(){
+  const v = parseInt(localStorage.getItem('lm_width'), 10) === 100 ? 100 : 80;     // PC 화면 폭 (기본 80%)
+  document.documentElement.style.setProperty('--lm-width', v + '%');
 }
-function lmSetScale(v){
-  try{ localStorage.setItem('lm_scale', String(v)); }catch(e){}
-  lmApplyScale(); lmMeasure(); lmRenderLeft();
+function lmSetWidth(v){
+  try{ localStorage.setItem('lm_width', String(v)); }catch(e){}
+  lmApplyWidth(); lmMeasure(); lmRenderLeft();
 }
 function lmMeasure(){
   const st = document.documentElement.style, head = document.getElementById('lm-head'), ask = document.getElementById('lm-askbar'), cw = document.getElementById('lm-center-wrap');
@@ -3385,11 +3486,11 @@ function lmMeasure(){
 }
 function lmLayoutSync(){
   const body = document.getElementById('lm-body'); if(!body) return;
-  lmApplyScale();
+  lmApplyWidth();
   ['left','right'].forEach(function(s){
-    const p = document.getElementById('lm-panel-' + s), hb = document.getElementById('lm-hb-' + s); p.classList.remove('open');
-    if(lmDesk()){ const open = localStorage.getItem('lm_panel_' + s) !== '0'; body.classList.toggle('no-' + s, !open); hb.setAttribute('aria-expanded', String(open)); }
-    else { body.classList.remove('no-' + s); hb.setAttribute('aria-expanded','false'); }
+    const p = document.getElementById('lm-panel-' + s), hb = document.getElementById('lm-hb-' + s);
+    p.classList.remove('open'); body.classList.remove('no-' + s);
+    hb.setAttribute('aria-expanded', lmDesk() ? 'true' : 'false');
   });
   document.getElementById('lm-backdrop').classList.remove('show');
   lmMeasure(); lmRenderLeft();
@@ -3440,7 +3541,7 @@ const LM_ECO = [
 function lmRenderLeft(){
   const el = document.getElementById('lm-left-body'); if(!el) return;
   const u = window.FWAuth ? FWAuth.user() : null, hist = LMSTORE.get('lm_history_v1', []);
-  const sc = parseFloat(localStorage.getItem('lm_scale')) || 0.8;
+  const wide = parseInt(localStorage.getItem('lm_width'), 10) === 100;
   let h = '<div class="pn-sec"><div class="pn-card pn-profile">';
   if(u){
     h += '<div class="pn-ava">' + escHtml((u.name || '회').charAt(0)) + '</div><div class="pn-name">' + escHtml(u.name) + '님</div>'
@@ -3459,11 +3560,11 @@ function lmRenderLeft(){
   h += '</div><div class="pn-sec"><div class="pn-h">내 활동</div>'
     + '<button type="button" class="pn-item" data-act="nav" data-v="history"><span class="pi-ico">📋</span><span class="pi-tx">나의 결과<span class="pi-s">최근 분석 다시 보기</span></span><span class="pi-b' + (hist.length ? ' on' : '') + '">' + hist.length + '</span></button>'
     + '<button type="button" class="pn-item" data-act="nav" data-v="community"><span class="pi-ico">💬</span><span class="pi-tx">커뮤니티</span></button>'
-    + '<button type="button" class="pn-item" data-act="nav" data-v="qna"><span class="pi-ico">❓</span><span class="pi-tx">Q&amp;A</span></button>'
-    + '<button type="button" class="pn-item" data-act="nav" data-v="help"><span class="pi-ico">🙋</span><span class="pi-tx">이용안내 · FAQ</span></button></div>';
-  h += '<div class="pn-sec desk-only"><div class="pn-h">화면 크기</div><div class="pn-seg">'
-    + '<button type="button" data-act="scale" data-v="0.8" class="' + (sc < 0.9 ? 'on' : '') + '">80%</button>'
-    + '<button type="button" data-act="scale" data-v="1" class="' + (sc >= 0.9 ? 'on' : '') + '">100%</button></div></div>';
+    + '<button type="button" class="pn-item" data-act="nav" data-v="qna"><span class="pi-ico">❓</span><span class="pi-tx">Q&amp;A<span class="pi-s">자주 묻는 질문 · 질문하기</span></span></button>'
+    + '<button type="button" class="pn-item" data-act="nav" data-v="help"><span class="pi-ico">🙋</span><span class="pi-tx">이용안내 · 이용료<span class="pi-s">요금제 · AP 포인트</span></span></button></div>';
+  h += '<div class="pn-sec desk-only"><div class="pn-h">화면 폭</div><div class="pn-seg">'
+    + '<button type="button" data-act="width" data-v="80" class="' + (!wide ? 'on' : '') + '">브라우저 80%</button>'
+    + '<button type="button" data-act="width" data-v="100" class="' + (wide ? 'on' : '') + '">100%</button></div></div>';
   el.innerHTML = h;
 }
 function lmRenderRight(){
@@ -3498,7 +3599,7 @@ function lmPanelAction(el){
     case 'logout': FWAuth.logout(); break;
     case 'signup': showScreen('signup'); break;
     case 'link': window.open(v, '_blank', 'noopener'); break;
-    case 'scale': lmSetScale(parseFloat(v)); return;
+    case 'width': lmSetWidth(parseInt(v, 10)); return;
     case 'q-next': lmNextQuestion(); return;
     case 'q-go': lmGoQuestion(); break;
     case 'q-ask': lmFillAsk(LM_QUESTIONS[LMS.qIdx % LM_QUESTIONS.length].q); break;
@@ -3507,23 +3608,26 @@ function lmPanelAction(el){
 }
 
 /* ── 검색 ── */
+const LM_FREE_NAMES = Object.values(DISCS).filter(function(d){ return d.free; }).map(function(d){ return d.name; }).join('·');
 const LM_FAQ = [
   {q:'AI LifeMap은 무엇인가요?', a:'심리학·동양철학·서양 전통·진로·환경 등 여러 관점으로 나를 살펴보고, 결과를 하나의 Fusion 리포트로 정리해 주는 자기탐색 플랫폼입니다. 정답을 알려주는 곳이 아니라 다양한 관점을 비교하며 스스로 판단하도록 돕습니다.'},
   {q:'지금 AI가 분석하나요?', a:'아니요. 현재는 사전 체험(PREVIEW) 모드로 AI 호출 없이 규칙 기반으로 결과를 만들어요. 정식 출시 후에는 챗도우미 AI Core(Gemini → GPT → Claude 순)가 더 깊이 있는 개인화 분석을 제공합니다.'},
-  {q:'무료인가요, 유료인가요?', a:'사전 체험 기간에는 모든 코스가 무료입니다. 정식 출시 후에는 규칙 기반 학문(사주·오행·별자리·띠·수비학·생체리듬·풍수·성명학·타로 기본)은 계속 무료이고, AI 분석이 필요한 검사는 학문별 AP로 이용하며 코스로 묶으면 할인됩니다. AP는 AI플랫마켓 통합 포인트 정책을 따릅니다.'},
+  {q:'무료인가요, 유료인가요?', a:'사전 체험 기간에는 모든 코스가 무료이고 AP도 차감되지 않습니다. 정식 출시 후에는 FREE · FREE+(9,900원) · PRO(29,000원) · GOLD(59,000원) 요금제가 있고, 요금제와 관계없이 AI 분석은 AP 포인트로도 이용할 수 있어요. 규칙 기반 학문(' + LM_FREE_NAMES + ')은 계속 무료입니다. 자세한 내용은 「이용안내」에서 확인하세요.'},
+  {q:'AP 포인트는 무엇인가요?', a:'AI플랫마켓 통합 포인트(AIPlat Point)입니다. AI 분석 검사와 코스를 이용할 때 사용하며 코스로 묶으면 묶음 가격이 적용됩니다. 플랫폼 안에서만 사용되고 현금 환전·개인 간 양도는 되지 않아요.'},
   {q:'결과를 그대로 믿어도 되나요?', a:'참고용입니다. 학문마다 과학적 근거 수준이 다르고(심리검사 vs 전통·문화 분야), 어떤 결과도 미래를 확정하지 않습니다. 의료·법률·재무 등 중요한 결정은 반드시 전문가와 상의하세요.'},
   {q:'MMPI · SCT · 사상체질 · 유전학은 진단인가요?', a:'아닙니다. 모두 자기탐색을 위한 간략 체험이며 임상 진단·치료·검사를 대체하지 않습니다. 마음이 많이 힘들거나 건강이 걱정된다면 정신건강의학과 등 전문 기관을 찾아 주세요.'},
   {q:'입력한 정보는 어디에 저장되나요?', a:'사전 체험 기간의 분석은 이 브라우저 안에서 처리되고, 최근 결과·커뮤니티·Q&A는 이 기기에만 저장됩니다. 서버로 전송되는 것은 사전 참여 신청(이메일·관심 분야)뿐입니다. 정식 출시 후 AI 분석 시에는 입력 정보가 챗도우미 AI Core로 전달되며, 그 시점에 별도로 안내해 드립니다. 실명·연락처 등은 자유 입력란에 적지 마세요.'},
   {q:'로그인이 꼭 필요한가요?', a:'아니요. 로그인 없이도 체험할 수 있습니다. 로그인하면 이름이 표시되고, 정식 서비스에서 결과 기록을 계정으로 이어볼 수 있습니다. 카카오·네이버·구글·휴대폰 번호 중 서비스에서 열려 있는 방법으로 로그인할 수 있어요.'},
-  {q:'만세력(사주) 계산은 어떻게 하나요?', a:'생년월일시를 입력하면 규칙 기반 계산 엔진이 연·월·일·시 간지와 오행 분포를 계산합니다. 절기(입춘 등) 경계일 전후에 태어났거나 출생 시간을 모르면 ±1일/±1주 오차가 있을 수 있어요. 해석은 정식 출시 후 AI가 보완합니다.'},
+  {q:'만세력(사주) 계산은 어떻게 하나요?', a:'생년월일시를 입력하면 규칙 기반 계산 엔진이 연·월·일·시 간지와 오행 분포를 계산합니다. 절기(입춘 등) 경계일 전후에 태어났거나 출생 시간을 모르면 오차가 있을 수 있어요. 해석은 정식 출시 후 AI가 보완합니다.'},
   {q:'어디서부터 시작하면 좋을까요?', a:'처음이라면 「AI 추천 코스」(약 20분)를 권해요. 시간이 짧다면 「동양 전통」이나 「서양·타로」 코스(무료, 약 10분)로 가볍게 시작해 보세요.'}
 ];
 function lmBuildSearchIndex(){
   const items = [];
   Object.values(DISCS).forEach(function(d){ items.push({t:'검사', icon:d.icon, label:d.name, sub:d.short, kw:(d.name + ' ' + d.short + ' ' + d.what + ' ' + d.id).toLowerCase(), go:function(){ lmFocusDisc(d.id); }}); });
   Object.values(COURSES).forEach(function(c){ items.push({t:'코스', icon:c.icon, label:c.name, sub:c.desc, kw:(c.name + ' ' + c.desc).toLowerCase(), go:function(){ openCourse(c.id); }}); });
+  items.push({t:'요금', icon:'💳', label:'이용료 · 요금제 (FREE · FREE+ · PRO · GOLD)', sub:'요금제별 이용 가능 정도 · AP 포인트', kw:'이용료 요금 요금제 가격 free free+ pro gold ap 포인트 결제 무료 유료', go:function(){ showScreen('help'); }});
   LM_NAV.forEach(function(n){ if(n.k !== 'home') items.push({t:'메뉴', icon:n.icon, label:n.label, sub:'AI인생진로탐색 메뉴', kw:n.label.toLowerCase(), go:n.go}); });
-  LM_FAQ.forEach(function(f, i){ items.push({t:'안내', icon:'🙋', label:f.q, sub:f.a.slice(0, 40) + '…', kw:(f.q + ' ' + f.a).toLowerCase(), go:function(){ showScreen('help'); setTimeout(function(){ const d = document.querySelectorAll('#faq-list details')[i]; if(d){ d.open = true; lmScrollToEl(d, 90); } }, 60); }}); });
+  LM_FAQ.forEach(function(f, i){ items.push({t:'FAQ', icon:'❓', label:f.q, sub:f.a.slice(0, 40) + '…', kw:(f.q + ' ' + f.a).toLowerCase(), go:function(){ lmShowQna(); setTimeout(function(){ const d = document.querySelectorAll('#faq-list details')[i]; if(d){ d.open = true; lmScrollToEl(d, 90); } }, 60); }}); });
   return items;
 }
 function lmSearch(raw){
@@ -3584,9 +3688,8 @@ function lmRuleAnswer(raw){
     if(d.disclaimer) tx += '\n\n⚠ ' + d.note.replace(/^⚠\s*/, '');
     return {kind:'faq', text:tx, actions:[lmAct('이 검사 체험하기', function(){ lmFocusDisc(d.id); })]};
   }
-  if(/(요금|가격|얼마|유료|무료|포인트|\bap\b|결제)/.test(raw.toLowerCase()) || /(요금|가격|얼마|유료|무료|포인트|결제)/.test(t)){
-    const free = Object.values(DISCS).filter(function(x){ return x.free; }).map(function(x){ return x.name; }).join(', ');
-    return {kind:'faq', text:(LM.MODE === 'PREVIEW' ? '지금은 사전 체험 기간이라 모든 코스가 무료예요.\n\n' : '') + '정식 출시 후에는 규칙 기반 학문은 계속 무료, AI 분석이 필요한 검사는 학문별 AP로 이용하고 코스로 묶으면 할인돼요. AP는 AI플랫마켓 통합 포인트 정책을 따릅니다.\n\n🆓 무료 학문: ' + free, actions:[lmCourseAct('ai_recommended')]};
+  if(/(요금|가격|얼마|유료|무료|포인트|\bap\b|결제|요금제|구독)/.test(raw.toLowerCase()) || /(요금|가격|얼마|유료|무료|포인트|결제|요금제|구독)/.test(t)){
+    return {kind:'faq', text:(LM.MODE === 'PREVIEW' ? '지금은 사전 체험 기간이라 모든 코스가 무료예요.\n\n' : '') + '정식 출시 후 요금제는 FREE · FREE+ 9,900원 · PRO 29,000원 · GOLD 59,000원이에요. 어떤 요금제에서도 AI 분석은 AP 포인트로 이용할 수 있고, 코스로 묶으면 묶음 가격이 적용됩니다.\n\n🆓 무료 학문: ' + LM_FREE_NAMES, actions:[lmAct('📖 이용안내에서 비교하기', function(){ showScreen('help'); })]};
   }
   if(/(로그인|가입|회원)/.test(t)) return {kind:'faq', text:'화면 위쪽 오른쪽의 [로그인]에서 카카오·네이버로 로그인할 수 있어요(구글·휴대폰은 순차 오픈). 로그인 없이도 모든 체험을 이용할 수 있습니다.', actions:[lmAct('🔐 로그인', function(){ FWAuth.open(); })]};
   if(/(개인정보|저장|보안|정보수집|삭제)/.test(t)) return {kind:'faq', text:'사전 체험 기간의 분석은 이 브라우저 안에서 처리되고, 최근 결과·커뮤니티·Q&A는 이 기기에만 저장돼요. 서버로 전송되는 것은 사전 참여 신청(이메일·관심 분야)뿐입니다. 기기에 저장된 기록은 브라우저의 사이트 데이터를 지우면 삭제돼요.', actions:[]};
@@ -3766,6 +3869,11 @@ function lmRenderHero(){
 }
 
 /* ── 초기화 ── */
+function lmGoHome(){            // 타이틀 클릭 → 처음 화면으로
+  const si = document.getElementById('lm-search-input'); if(si){ si.value = ''; lmSearch(''); }
+  lmCloseSheet(); lmClosePanels(); showScreen('landing');
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+}
 function lmShellInit(){
   // 자체 GNB
   const sc = document.getElementById('lm-nav-scroll');
@@ -3813,7 +3921,9 @@ function lmShellInit(){
     if(b.dataset.act === 'open') lmRestoreHistory(b.dataset.id);
     if(b.dataset.act === 'del'){ if(!confirm('이 기록을 삭제할까요?')) return; LMSTORE.set('lm_history_v1', LMSTORE.get('lm_history_v1', []).filter(function(p){ return p.id !== b.dataset.id; })); lmRenderHistory(); lmRenderLeft(); }
   });
-  lmRenderFaq(); lmRenderGrowth(); lmRenderHero();
+  lmRenderFaq(); lmRenderGrowth(); lmRenderHero(); lmRenderHelp();
+  document.getElementById('help-body').addEventListener('click', function(e){ const b = e.target.closest('[data-act]'); if(!b) return; if(b.dataset.act === 'signup') showScreen('signup'); if(b.dataset.act === 'qna') lmShowQna(); });
+  document.getElementById('lm-title-link').addEventListener('click', function(e){ e.preventDefault(); lmGoHome(); });
   // 로그인 상태 연동
   if(window.FWAuth) FWAuth.onChange(function(u){ lmRenderLeft(); const n = document.getElementById('f-name'); if(u && n && !n.value) n.value = u.name; });
   // 레이아웃
@@ -3832,6 +3942,72 @@ function lmShellInit(){
   const hash = (location.hash || '').slice(1), deep = {community:lmShowCommunity, qna:lmShowQna, history:lmShowHistory, help:function(){ showScreen('help'); }, growth:function(){ showScreen('growth'); }, balance:function(){ showScreen('balance'); }};
   if(deep[hash]) deep[hash]();
   lmNavSync('landing');
+}
+
+/* ── 이용안내: 요금제 · 이용 가능 정도 · AP 포인트 ─────────────────────────
+   요금은 아래 LM_PLANS 한 곳에서만 관리합니다. (금액 변경 시 price 만 수정)
+   ※ 이용 기간(월/연)·결제 방식·세부 혜택은 정식 출시 전 확정 후 공지 예정이라
+     화면에는 금액만 표시하고 안내 문구를 함께 둡니다.                        */
+const LM_PLANS = [
+  {id:'free',     name:'FREE',  price:0,     rgb:'148,163,184', tag:'가볍게 시작하기',
+   pts:['규칙 기반 무료 학문 이용','기본 Fusion Score · 액션플랜','커뮤니티 · Q&A 이용','AI 분석은 AP로 필요한 만큼']},
+  {id:'freeplus', name:'FREE+', price:9900,  rgb:'45,212,191',  tag:'AI 분석 맛보기',
+   pts:['FREE 혜택 전체','AI 분석 검사 일부 포함','질문바 AI 답변 일부 포함','부족분은 AP로 추가 이용']},
+  {id:'pro',      name:'PRO',   price:29000, rgb:'129,140,248', tag:'꾸준한 자기탐색', feat:'인기 추천',
+   pts:['FREE+ 혜택 전체','AI 분석 검사 대부분 포함','통합 Fusion 심층 리포트 포함','부족분은 AP로 추가 이용']},
+  {id:'gold',     name:'GOLD',  price:59000, rgb:'201,168,76',  tag:'종합 설계 · 실행',
+   pts:['PRO 혜택 전체','AI 분석 검사 전체 포함','질문바 AI 답변 · 리포트 우선 처리','필요 시 AP로 추가 이용']}
+];
+function lmMatrix(){
+  const free = Object.values(DISCS).filter(function(d){ return d.free; }).length, paid = Object.keys(DISCS).length - free;
+  const ok = ['포함','ok'];
+  return [
+    ['규칙 기반 무료 학문 ' + free + '종', [ok, ok, ok, ok]],
+    ['기본 Fusion Score · 액션플랜 (규칙 기반)', [ok, ok, ok, ok]],
+    ['AI 분석 검사 ' + paid + '종', [['AP로 개별 이용','ap'], ['일부 포함','part'], ['대부분 포함','most'], ['전체 포함','all']]],
+    ['질문바 개인화 AI 답변', [['AP로 이용','ap'], ['일부 포함','part'], ['포함','most'], ['우선 포함','all']]],
+    ['통합 Fusion 심층 AI 리포트', [['AP로 이용','ap'], ['AP로 이용','ap'], ['포함','most'], ['포함 · 우선','all']]],
+    ['AP 포인트로 추가 이용', [['가능','ok'], ['가능','ok'], ['가능','ok'], ['가능','ok']]],
+    ['커뮤니티 · Q&A', [ok, ok, ok, ok]]
+  ];
+}
+function lmRenderHelp(){
+  const box = document.getElementById('help-body'); if(!box) return;
+  const won = function(n){ return n === 0 ? '무료' : n.toLocaleString() + '원'; };
+  let h = '<h2>이용료 안내</h2>'
+    + '<div class="lm-note">🔍 사전 체험(PREVIEW) 기간에는 <b>모든 기능이 무료</b>이며 AP도 차감되지 않아요. 아래는 정식 출시 후 요금제 안내이며, 이용 기간·결제 방식·세부 혜택은 정식 출시 전에 확정해 공지합니다.</div>'
+    + '<div class="pl-grid">';
+  LM_PLANS.forEach(function(p){
+    h += '<div class="pl-card' + (p.feat ? ' feat' : '') + '" style="--pc:' + p.rgb + '">' + (p.feat ? '<span class="pl-badge">' + escHtml(p.feat) + '</span>' : '')
+      + '<div class="pl-name">' + escHtml(p.name) + '</div><div class="pl-price">' + (p.price === 0 ? '0원' : escHtml(won(p.price))) + '</div>'
+      + '<div class="pl-tag">' + escHtml(p.tag) + '</div><ul class="pl-ul">' + p.pts.map(function(x){ return '<li>' + escHtml(x) + '</li>'; }).join('') + '</ul></div>';
+  });
+  h += '</div><h2>요금제별 이용 가능 정도</h2><div class="pl-tbl-wrap"><table class="pl-tbl"><thead><tr><th>기능</th>'
+    + LM_PLANS.map(function(p){ return '<th style="color:rgb(' + p.rgb + ')">' + escHtml(p.name) + '</th>'; }).join('') + '</tr></thead><tbody>';
+  lmMatrix().forEach(function(r){
+    h += '<tr><td>' + escHtml(r[0]) + '</td>' + r[1].map(function(c){ return '<td><span class="lv ' + c[1] + '">' + escHtml(c[0]) + '</span></td>'; }).join('') + '</tr>';
+  });
+  h += '</tbody></table></div>'
+    + '<div class="ap-banner"><div class="ap-h">💎 AP 포인트로 이용할 수 있어요</div>'
+    + '<div class="ap-p">어떤 요금제에서도 AI 분석 검사와 코스를 <b>AP(AIPlat Point) 포인트</b>로 이용할 수 있어요. 요금제에 포함된 분량을 넘거나 포함되지 않은 분석은 AP로 필요한 만큼만 이용하고, 코스로 묶으면 묶음 가격이 적용됩니다.<br>AP는 AI플랫마켓 통합 포인트로 플랫폼 안에서만 사용되며 현금 환전·개인 간 양도는 되지 않아요.</div></div>'
+    + '<h2>검사별 AP</h2><div class="ap-chips">';
+  Object.values(DISCS).slice().sort(function(a, b){ return (a.free === b.free ? 0 : a.free ? 1 : -1) || a.price - b.price; }).forEach(function(d){
+    h += '<span class="ap-chip' + (d.free ? ' free' : '') + '">' + d.icon + ' ' + escHtml(d.name) + ' <b>' + (d.free ? '무료' : d.price.toLocaleString() + 'AP') + '</b></span>';
+  });
+  h += '</div><h2 style="margin-top:20px">코스 묶음 가격</h2><div class="lm-box" style="padding:6px 14px">';
+  Object.values(COURSES).forEach(function(c){
+    const orig = c.discs.reduce(function(s, id){ return s + ((DISCS[id] && DISCS[id].price) || 0); }, 0), b = LIFEAI_PRICING_BUNDLES[c.id];
+    let right;
+    if(!orig) right = '<span class="lv ok">전체 무료</span>';
+    else if(b && b.price < orig) right = '<s class="cb-o">' + orig.toLocaleString() + 'AP</s> <b>' + b.price.toLocaleString() + 'AP</b> <span class="lv ap">' + Math.round((1 - b.price / orig) * 100) + '% 할인</span>';
+    else right = '<b>' + orig.toLocaleString() + 'AP</b>';
+    h += '<div class="cb-row"><span>' + c.icon + ' ' + escHtml(c.name) + ' <small>' + c.discs.length + '개 학문</small></span><span class="cb-r">' + right + '</span></div>';
+  });
+  h += '</div><h2 style="margin-top:20px">이용 방법</h2><div class="lm-box"><ol class="lm-ol">'
+    + '<li>메뉴나 코스 카드에서 코스를 고릅니다.</li><li>기본 정보(생년월일 등)를 입력하고 검사 문항에 답합니다.</li><li>학문별 결과와 Fusion Score·액션플랜을 확인하고, 마음에 드는 관점을 비교해 보세요.</li></ol></div>'
+    + '<h2>유의사항</h2><div class="lm-box lm-small">• 모든 결과는 자기이해를 위한 <b>참고 정보</b>이며 정답이나 미래 확정이 아닙니다.<br>• MMPI · SCT · 사상체질 · 유전학은 진단이 아닌 자기탐색 체험입니다.<br>• 의료 · 법률 · 재무 결정은 반드시 전문가와 상의하세요.<br>• 실명 · 연락처 등 개인정보는 자유 입력란에 적지 마세요.</div>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button type="button" class="lm-btn" data-act="signup">🚀 정식 출시 알림 신청</button><button type="button" class="lm-btn ghost" data-act="qna">❓ 자주 묻는 질문 보기 (Q&amp;A)</button></div>';
+  box.innerHTML = h;
 }
 
 </script>
