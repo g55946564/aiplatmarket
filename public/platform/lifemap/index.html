@@ -714,7 +714,7 @@ html,body{height:100%;overflow:hidden}
 .lm-body{overflow:hidden}
 /* 자체 GNB 는 고정, 본문은 그 '뒤'로 지나가도록 본문을 GNB 높이만큼 위로 당겨 겹침 */
 .lm-head{margin-bottom:calc(-1 * var(--lm-nav-h))}
-.lm-center{padding-top:var(--lm-nav-h)}
+.lm-navgap{flex:none;height:var(--lm-nav-h)}
 .pn-head,.pn-close{display:none}
 
 /* ── PC (≥900px): 브라우저 폭의 80%만 사용(중앙 정렬) · 3분할(20/60/20) · 햄버거 없음 ── */
@@ -731,12 +731,12 @@ html,body{height:100%;overflow:hidden}
   .lm-body{display:flex;flex-direction:column}
   .lm-center-wrap{grid-column:auto;flex:1;min-height:0}
   .lm-title{font-size:1.1rem}
-  .lm-panel{position:fixed;top:var(--lm-panel-top);bottom:var(--lm-ask-real);width:min(88vw,340px);z-index:420;visibility:hidden;opacity:0;clip-path:inset(0 0 100% 0);
-    transition:clip-path .3s ease,opacity .2s ease,visibility 0s linear .3s;box-shadow:0 16px 40px rgba(13,31,53,.34);padding:0 12px 20px;border:0;border-radius:0 0 18px 0}
+  .lm-panel{position:fixed;top:var(--lm-panel-top);bottom:0;width:min(88vw,340px);z-index:420;visibility:hidden;opacity:0;clip-path:inset(0 0 100% 0);
+    transition:clip-path .3s ease,opacity .2s ease,visibility 0s linear .3s;box-shadow:0 16px 40px rgba(13,31,53,.34);padding:0 12px calc(20px + env(safe-area-inset-bottom,0px));border:0;border-radius:0 0 18px 0}
   .lm-panel-left{left:0;right:auto}
   .lm-panel-right{right:0;left:auto;border-radius:0 0 0 18px}
   .lm-panel.open{visibility:visible;opacity:1;clip-path:inset(0 0 0 0);transition:clip-path .3s ease,opacity .2s ease}
-  .lm-backdrop{position:fixed;left:0;right:0;bottom:0;top:var(--lm-panel-top);background:rgba(13,31,53,.42);z-index:410}
+  .lm-backdrop{position:fixed;left:0;right:0;bottom:0;top:var(--lm-panel-top);background:rgba(13,31,53,.42);z-index:410}   /* 서랍·배경 모두 자체 GNB 와 질문 입력바보다 앞(z-index) */
   .lm-backdrop.show{display:block}
   .pn-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:3;margin:0 -12px 12px;padding:10px 12px;background:#edf4fc;border-bottom:1px solid var(--line)}
   .pn-head-t{font-size:.82rem;font-weight:900;color:var(--t1)}
@@ -814,6 +814,12 @@ html,body{height:100%;overflow:hidden}
 .pn-q-row button{white-space:nowrap;font-size:.68rem;padding:8px 4px}
 .pl-grid{grid-template-columns:repeat(auto-fit,minmax(135px,1fr))}
 @media(max-width:480px){.pl-grid{grid-template-columns:1fr 1fr}}
+
+/* ── 오늘 날짜 표시줄 (최상단 메인 GNB 위) ── */
+.lm-datebar{flex:none;display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 12px;background:linear-gradient(90deg,#ffe9b0,#ffd27a 50%,#ffe9b0);color:#10233d;font-size:.8rem;font-weight:800;letter-spacing:.1px;border-bottom:1px solid rgba(13,31,53,.16);position:relative;z-index:310;white-space:nowrap}
+.lm-datebar .db-lbl{font-size:.64rem;font-weight:800;background:#10233d;color:#fff;border-radius:10px;padding:1px 8px}
+.lm-datebar time{font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:480px){.lm-datebar{font-size:.74rem;padding:4px 10px}}
 
 .lm-sbtns{display:flex;gap:6px;flex-wrap:wrap}
 nav.gnb{z-index:300}
@@ -910,7 +916,7 @@ body{background:var(--bg);color:var(--t1)}
 
 /* ── 본문: 밝은 바탕 + 섹션 색 틴트 + 풍경 워터마크 ── */
 .lm-center{position:relative;background:linear-gradient(180deg,rgba(var(--sec-rgb),.12) 0,rgba(var(--sec-rgb),0) 380px),#f8fbff}
-.lm-center::before{content:'';position:absolute;left:0;right:0;top:0;height:300px;background:var(--scene,none) center top/cover no-repeat;opacity:.55;-webkit-mask-image:linear-gradient(#000 52%,transparent 100%);mask-image:linear-gradient(#000 52%,transparent 100%);pointer-events:none;z-index:0}
+.lm-center::before{content:'';position:absolute;left:0;right:0;top:0;height:300px;background:var(--scene,none) center top/cover no-repeat;opacity:.36;-webkit-mask-image:linear-gradient(#000 40%,transparent 100%);mask-image:linear-gradient(#000 40%,transparent 100%);pointer-events:none;z-index:0}
 #lm-center .lm-screen,.lm-center>footer{position:relative;z-index:1}
 #lm-center .lm-screen{background:transparent}
 .lm-topbar{background:linear-gradient(rgba(var(--sec-rgb),.16),rgba(var(--sec-rgb),.16)),#fff;border-bottom:1px solid rgba(var(--sec-rgb),.55);box-shadow:0 2px 8px rgba(13,31,53,.06)}
@@ -1065,11 +1071,17 @@ body{background:var(--bg);color:var(--t1)}
 .ps-btn-sub{background:#fff;border:1px solid var(--line);color:var(--t2)}
 .hero-bg .g1{background:rgba(255,200,90,.22)}.hero-bg .g2{background:rgba(90,150,255,.18)}
 
+/* 본문 목록·폼·결과가 중앙 열 폭을 충분히 쓰도록(자동 여백이 flex 안에서 폭을 줄이던 문제 보정) */
+.lm-center .disc-list,.lm-center .results-body,.lm-center .form-body{width:100%;max-width:820px;margin-left:auto;margin-right:auto;box-sizing:border-box}
+
 </style>
 </head>
 <body>
 <div id="lm-viewport">
 <div id="lm-app">
+
+<!-- 오늘 날짜: 최상단 표시줄 (JS가 자동 갱신) -->
+<div class="lm-datebar" id="lm-datebar"><span class="db-lbl">오늘</span><span aria-hidden="true">📅</span><time id="lm-today" datetime=""></time></div>
 
 <!-- ══════════ HEADER (GNB) — AIPLATMARKET_HEADER_FOOTER v2 ══════════ -->
 <nav class="gnb">
@@ -1263,6 +1275,7 @@ body{background:var(--bg);color:var(--t1)}
 
 <div class="lm-center-wrap" id="lm-center-wrap">
 <main class="lm-center" id="lm-center">
+<div class="lm-navgap" aria-hidden="true"></div>
 
 <section id="s-landing" class="lm-screen active">
   <div class="preview-banner" id="preview-banner">
@@ -3660,9 +3673,9 @@ function lmFocusDisc(id){
 }
 
 /* ── 패널 / 레이아웃 ── */
-function lmPlacePanels(){            // 서랍 시작 위치 = 타이틀 박스·자체 GNB 의 아래 가장자리
-  const nav = document.querySelector('.lm-nav'); if(!nav) return;
-  document.documentElement.style.setProperty('--lm-panel-top', Math.round(nav.getBoundingClientRect().bottom) + 'px');
+function lmPlacePanels(){            // 서랍 시작 위치 = 타이틀 박스의 바로 아래 (자체 GNB·질문 입력바보다 앞으로 펼쳐짐)
+  const tb = document.querySelector('.lm-titlebox'); if(!tb) return;
+  document.documentElement.style.setProperty('--lm-panel-top', Math.round(tb.getBoundingClientRect().bottom) + 'px');
 }
 function lmTogglePanel(side, force){
   if(lmDesk()) return;                       // PC: 좌우 패널은 항상 펼쳐 둠 (햄버거는 모바일 전용)
@@ -3671,7 +3684,7 @@ function lmTogglePanel(side, force){
   const other = side === 'left' ? 'right' : 'left';
   const open = force !== undefined ? force : !p.classList.contains('open');
   if(open){
-    lmPlacePanels();
+    lmPlacePanels(); lmCloseSheet();
     const o = document.getElementById('lm-panel-' + other); o.classList.remove('open'); document.getElementById('lm-hb-' + other).setAttribute('aria-expanded','false');
   }
   p.classList.toggle('open', open); hb.setAttribute('aria-expanded', String(open));
@@ -4083,12 +4096,23 @@ function lmRenderHero(){
 }
 
 /* ── 초기화 ── */
+/* ── 오늘 날짜 (기기 시계 기준, 자정이 지나면 자동으로 바뀜) ── */
+function lmUpdateToday(){
+  const el = document.getElementById('lm-today'); if(!el) return;
+  const d = new Date(), key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  if(el.getAttribute('datetime') === key) return;                  // 날짜가 그대로면 건드리지 않음
+  el.setAttribute('datetime', key);
+  el.textContent = d.toLocaleDateString('ko-KR', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+}
 function lmGoHome(){            // 타이틀 클릭 → 처음 화면으로
   const si = document.getElementById('lm-search-input'); if(si){ si.value = ''; lmSearch(''); }
   lmCloseSheet(); lmClosePanels(); showScreen('landing');
   try{ history.replaceState(null, '', location.pathname); }catch(e){}
 }
 function lmShellInit(){
+  lmUpdateToday(); setInterval(lmUpdateToday, 30000);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) lmUpdateToday(); });
+  window.addEventListener('focus', lmUpdateToday);
   // 자체 GNB
   const sc = document.getElementById('lm-nav-scroll');
   sc.innerHTML = LM_NAV.map(function(n){ return '<button type="button" class="lm-nav-item" data-k="' + n.k + '">' + n.icon + ' ' + n.label + (n.badge ? ' <span class="nb">' + n.badge + '</span>' : '') + '</button>'; }).join('');
