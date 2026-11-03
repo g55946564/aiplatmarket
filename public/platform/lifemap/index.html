@@ -117,6 +117,17 @@ footer a{color:inherit;text-decoration:none}
 footer{color:rgba(255,255,255,.82)}
 .gcbtn-chat{color:#ffeab0}
 
+/* 오늘 날짜(상단바 가운데) */
+.fw-today-wrap{flex:1;display:flex;justify-content:center;min-width:0;padding:0 8px}
+.fw-today{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(201,168,76,.5);color:#ffe9a8;border-radius:14px;padding:3px 12px;font-size:.78rem;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;max-width:100%;overflow:hidden}
+.fw-today:empty{display:none}
+.fw-today::before{content:'📅';font-size:.8rem}
+.fw-d-short,.fw-d-tiny{display:none}
+@media(max-width:640px){.fw-d-full{display:none}.fw-d-short{display:inline}.fw-today{font-size:.74rem;padding:3px 9px}}
+@media(max-width:430px){.fw-today::before{display:none}.fw-today{padding:3px 8px}}
+@media(max-width:380px){.fw-d-short{display:none}.fw-d-tiny{display:inline}}
+@media(max-width:350px){.fw-top{padding:8px 10px;gap:6px}.fw-today-wrap{padding:0 2px}.fw-today{padding:2px 7px;font-size:.7rem}.fw-today::before{display:none}}
+
 </style>
 <style>
 /* ════════════════════════════════════════════════════════════
@@ -815,12 +826,6 @@ html,body{height:100%;overflow:hidden}
 .pl-grid{grid-template-columns:repeat(auto-fit,minmax(135px,1fr))}
 @media(max-width:480px){.pl-grid{grid-template-columns:1fr 1fr}}
 
-/* ── 오늘 날짜 표시줄 (최상단 메인 GNB 위) ── */
-.lm-datebar{flex:none;display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 12px;background:linear-gradient(90deg,#ffe9b0,#ffd27a 50%,#ffe9b0);color:#10233d;font-size:.8rem;font-weight:800;letter-spacing:.1px;border-bottom:1px solid rgba(13,31,53,.16);position:relative;z-index:310;white-space:nowrap}
-.lm-datebar .db-lbl{font-size:.64rem;font-weight:800;background:#10233d;color:#fff;border-radius:10px;padding:1px 8px}
-.lm-datebar time{font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:480px){.lm-datebar{font-size:.74rem;padding:4px 10px}}
-
 .lm-sbtns{display:flex;gap:6px;flex-wrap:wrap}
 nav.gnb{z-index:300}
 @media(max-width:899px){.desk-only{display:none!important}nav.gnb{position:relative;top:auto}}
@@ -1080,13 +1085,12 @@ body{background:var(--bg);color:var(--t1)}
 <div id="lm-viewport">
 <div id="lm-app">
 
-<!-- 오늘 날짜: 최상단 표시줄 (JS가 자동 갱신) -->
-<div class="lm-datebar" id="lm-datebar"><span class="db-lbl">오늘</span><span aria-hidden="true">📅</span><time id="lm-today" datetime=""></time></div>
-
 <!-- ══════════ HEADER (GNB) — AIPLATMARKET_HEADER_FOOTER v2 ══════════ -->
 <nav class="gnb">
     <div class="fw-top">
       <a class="fw-logo" href="https://aiplatmarket.com/" title="AI플랫마켓 홈으로">AI<em>PLAT</em>MARKET</a>
+      <!-- 오늘 날짜: 기기 시계 기준, 자정이 지나면 자동으로 바뀜 (FW 스크립트가 갱신) -->
+      <div class="fw-today-wrap"><time class="fw-today" id="fwToday" datetime="" title="오늘 날짜"></time></div>
       <div class="fw-top-right">
         <span class="fw-mod-label" id="fwModLabel"></span>
         <!-- 로그인 영역: 로그인 전 [로그인] 버튼 / 로그인 후 [이름님][로그아웃] (FWAuth가 자동 렌더) -->
@@ -1918,6 +1922,18 @@ body{background:var(--bg);color:var(--t1)}
     w.toggleViewModeDd(); w.toast('모바일 버전으로 표시합니다');
   };
 
+  /* 오늘 날짜: 기기 시계 기준 · 자정이 지나면 자동 갱신 (상단바 #fwToday) */
+  w.fwUpdateToday = function () {
+    var el = d.getElementById('fwToday'); if (!el) return;
+    var n = new Date(), p = function (v) { return String(v).padStart(2, '0'); };
+    var key = n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate());
+    if (el.getAttribute('datetime') === key) return;                 // 날짜가 그대로면 건드리지 않음
+    el.setAttribute('datetime', key);
+    var full = n.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+    var wd = n.toLocaleDateString('ko-KR', { weekday: 'short' });
+    el.innerHTML = '<span class="fw-d-full">' + full + '</span><span class="fw-d-short">' + (n.getMonth() + 1) + '월 ' + n.getDate() + '일 (' + wd + ')</span><span class="fw-d-tiny">' + (n.getMonth() + 1) + '/' + n.getDate() + '(' + wd + ')</span>';
+  };
+
   /* ③ toast ------------------------------------------------------------------ */
   var toastTimer;
   w.toast = function (msg) {
@@ -2070,6 +2086,9 @@ body{background:var(--bg);color:var(--t1)}
     phone: togglePhone, phoneSend: phoneSend, phoneVerify: phoneVerify
   };
   function boot() {
+    w.fwUpdateToday(); setInterval(w.fwUpdateToday, 30000);
+    d.addEventListener('visibilitychange', function () { if (!d.hidden) w.fwUpdateToday(); });
+    w.addEventListener('focus', w.fwUpdateToday);
     st.user = loadUser(); render(); handleReturn();
     if (!st.user) me(); /* 서버 세션이 있으면 자동 복원(없으면 조용히 무시) */
     ensureConfig();
@@ -4096,23 +4115,12 @@ function lmRenderHero(){
 }
 
 /* ── 초기화 ── */
-/* ── 오늘 날짜 (기기 시계 기준, 자정이 지나면 자동으로 바뀜) ── */
-function lmUpdateToday(){
-  const el = document.getElementById('lm-today'); if(!el) return;
-  const d = new Date(), key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-  if(el.getAttribute('datetime') === key) return;                  // 날짜가 그대로면 건드리지 않음
-  el.setAttribute('datetime', key);
-  el.textContent = d.toLocaleDateString('ko-KR', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
-}
 function lmGoHome(){            // 타이틀 클릭 → 처음 화면으로
   const si = document.getElementById('lm-search-input'); if(si){ si.value = ''; lmSearch(''); }
   lmCloseSheet(); lmClosePanels(); showScreen('landing');
   try{ history.replaceState(null, '', location.pathname); }catch(e){}
 }
 function lmShellInit(){
-  lmUpdateToday(); setInterval(lmUpdateToday, 30000);
-  document.addEventListener('visibilitychange', function(){ if(!document.hidden) lmUpdateToday(); });
-  window.addEventListener('focus', lmUpdateToday);
   // 자체 GNB
   const sc = document.getElementById('lm-nav-scroll');
   sc.innerHTML = LM_NAV.map(function(n){ return '<button type="button" class="lm-nav-item" data-k="' + n.k + '">' + n.icon + ' ' + n.label + (n.badge ? ' <span class="nb">' + n.badge + '</span>' : '') + '</button>'; }).join('');

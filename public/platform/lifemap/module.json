@@ -1,64 +1,135 @@
 {
   "id": "lifemap",
   "group": "platform",
-  "title": "AI 인생·진로 체험센터",
+  "title": "AI인생진로탐색",
   "brand": "AI LifeMap",
   "icon": "🔮",
-  "description": "심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼",
+  "description": "심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼 (AI 인생·진로 체험센터)",
   "tagline": "나를 이해하고, 삶을 탐색하고, 방향을 찾다",
-  "version": "1.0.0-preview",
+  "version": "1.1.0-preview",
   "status": "dev",
   "mode": "PREVIEW",
-  "routes": ["/lifemap", "/platform/lifemap/"],
+  "routes": [
+    "/lifemap",
+    "/platform/lifemap/"
+  ],
   "subdomain": "lifemap.aiplatmarket.com",
   "framework_version": "1.0.0",
   "ai_core": {
     "enabled": false,
     "mode": "PREVIEW",
-    "engines": ["gemini", "gpt", "claude", "rule"],
+    "engines": [
+      "gemini",
+      "gpt",
+      "claude",
+      "rule"
+    ],
     "fallback": "rule",
     "endpoint": "/api/life-analysis",
-    "note": "PREVIEW MODE에서는 AI Core 호출 0회. PRODUCTION 전환 시 활성화."
+    "note": "PREVIEW 에서는 AI Core 호출 0회(프론트 LM.callAPI 차단 + 서버에서도 mode 로 차단 필요). PRODUCTION 전환 시 활성화. 호출 순서: Gemini → GPT → Claude → Rule."
   },
   "disciplines": {
     "psychology": [
-      "mbti","big5","tci","disc","enneagram","via","mi","holland","mmpi"
+      "mbti",
+      "big5",
+      "tci",
+      "disc",
+      "enneagram",
+      "via",
+      "mi",
+      "holland",
+      "mmpi",
+      "sct"
     ],
     "selfexplore": [
-      "character","potential","creativity","interest","aptitude","values"
+      "character",
+      "potential",
+      "creativity",
+      "interest",
+      "aptitude",
+      "values"
     ],
     "career": [
-      "leadership","learning","jobOntology","startup","lifecycle"
+      "leadership",
+      "learning",
+      "jobOntology",
+      "startup",
+      "lifecycle"
     ],
     "eastern": [
-      "saju","ohang","sasang","fengshui","name_study"
+      "saju",
+      "ohang",
+      "sasang",
+      "fengshui",
+      "name_study"
     ],
     "western": [
-      "astrology","tarot","numerology","zodiac","physiognomy"
+      "astrology",
+      "tarot",
+      "numerology",
+      "zodiac",
+      "physiognomy"
     ],
     "envbio": [
-      "environment","genetics","biorhythm"
+      "environment",
+      "genetics",
+      "biorhythm"
     ]
   },
   "courses": [
-    "ai_recommended","psychology","selfexplore","career","startup",
-    "eastern","western","comprehensive"
+    "ai_recommended",
+    "psychology",
+    "selfexplore",
+    "career",
+    "startup",
+    "eastern",
+    "western",
+    "comprehensive"
   ],
   "pricing": {
-    "model": "freemium",
-    "currency": "AI포인트(AP)",
-    "free_disciplines": [
-      "saju","ohang","astrology","zodiac","numerology","biorhythm",
-      "fengshui","tarot_basic","name_study"
+    "model": "plans+ap",
+    "plans": [
+      {
+        "id": "free",
+        "name": "FREE",
+        "price": 0
+      },
+      {
+        "id": "freeplus",
+        "name": "FREE+",
+        "price": 9900
+      },
+      {
+        "id": "pro",
+        "name": "PRO",
+        "price": 29000
+      },
+      {
+        "id": "gold",
+        "name": "GOLD",
+        "price": 59000
+      }
     ],
-    "preview_mode": "rule-based only, no AI calls",
-    "note": "1 AI포인트 = 1원, AI플랫마켓 통합 포인트 정책 적용"
+    "plans_note": "요금 단위(월/연)·결제 방식·세부 혜택은 정식 출시 전 확정. 화면 표시 금액은 index.html 의 LM_PLANS 한 곳에서 관리",
+    "points": "AP(AIPlat Point) — AI플랫마켓 통합 포인트 정책 적용(플랫폼 내 사용, 현금 환전·개인 간 양도 불가)",
+    "preview_mode": "사전 체험(PREVIEW) 기간에는 전 기능 무료 · AP 미차감 · 규칙 기반 분석만"
   },
   "features": {
     "manseok": true,
-    "image_upload": "planned",
     "free_question_input": true,
     "preview_signup": true,
+    "login": [
+      "kakao",
+      "naver",
+      "google",
+      "phone"
+    ],
+    "login_note": "서버 계약은 AIPLATMARKET_HEADER_FOOTER.html 상단 주석 참조 (관리자 설정/키 등록 기준으로 활성화)",
+    "community": "localStorage(MVP)",
+    "qna": "localStorage(MVP)",
+    "history": "localStorage(MVP, 최근 5건)",
+    "image_upload": "planned",
+    "life_balance_map": "planned",
     "lifemap_metazone_link": "planned"
   },
   "preview": {
@@ -68,5 +139,5 @@
   },
   "owner": "형식",
   "created": "2026-06-18",
-  "updated": "2026-07-22"
+  "updated": "2026-11-03"
 }
