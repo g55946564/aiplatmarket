@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI통합홍보센터 · AI플랫마켓</title>
-
+<!-- 표준 헤더/푸터: AIPLATMARKET_HEADER_FOOTER (모듈판 v2) 원문 + 이 모듈 본문 -->
 <style>
-/* ══════════ 표준 GNB/Footer 변수 + 스타일 (AIPLATMARKET_HEADER_FOOTER.html 원본 그대로) ══════════ */
 :root{
   --navy:#0d1f35; --navy2:#1a3556; --red:#c0392b; --gold:#c9a84c;
   --grn:#1a7a4a; --grn2:#0d5c36; --gnb-grn:#15603e; --gnb-grn2:#0e4a30;
   --g1:#f5f6f8; --g2:#e8eaed; --g3:#c4c8cd; --g4:#8a8f98;
-  --bd:1px solid var(--g2); --r:10px; --fs:'Pretendard','Noto Sans KR',sans-serif;
+  --bd:1px solid var(--g2); --r:10px; --fs:'Pretendard','Noto Sans KR','Malgun Gothic',sans-serif;
 }
+
 nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(13,31,53,.06)}
 .gnb-top{display:flex;align-items:stretch;border-bottom:2px solid var(--g2);padding:0;position:relative;overflow:visible}
 .gnb-top-scroll{padding-left:0px}
@@ -22,12 +19,11 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gnb-sub::-webkit-scrollbar{display:none}
 .gnb-sub::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
 .gnb-sub::-webkit-scrollbar-thumb:hover{background:var(--navy)}
-.gnb-cat-bar-wrap{position:relative;min-width:0;width:100%;max-width:100vw;overflow:hidden}
-.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-width:0;max-width:100%}
+.gnb-cat-bar-wrap{position:relative}
+.gnb-cat-bar{display:flex;align-items:center;background:linear-gradient(135deg,var(--gnb-grn),var(--gnb-grn2));min-height:38px;position:relative;z-index:250;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent;-webkit-overflow-scrolling:touch}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
 .gnb-scroll-hint{display:none;position:absolute;right:0;top:0;bottom:0;width:30px;background:linear-gradient(to right,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);pointer-events:none;align-items:center;justify-content:flex-end;color:var(--gold);font-size:.95rem;font-weight:900;padding-right:4px;animation:gnbHintPulse 1.6s ease-in-out infinite}
-.gnb-scroll-hint.show{display:flex}
 .gnb-scroll-hint.left{right:auto;left:0;background:linear-gradient(to left,rgba(14,74,48,0),rgba(14,74,48,.95) 55%);justify-content:flex-start;padding-left:4px;padding-right:0}
-.gnb-cat-bar::-webkit-scrollbar{display:none}
 .gcat{position:relative;flex-shrink:0}
 .gcbtn{display:flex;align-items:center;gap:4px;padding:9px 13px;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s;font-family:inherit}
 .gcbtn:hover,.gcat.open .gcbtn{background:rgba(255,255,255,.13);color:#fff}
@@ -43,7 +39,7 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcdi-txt{display:flex;flex-direction:column;min-width:0}
 .gcdi.platform b{display:block;font-size:.76rem;font-weight:700;color:var(--navy);line-height:1.35;white-space:normal}
 .gcdi-desc{display:block;font-size:.62rem;color:var(--g4);margin-top:1px;line-height:1.3;white-space:normal}
-.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center}
+.gcdi-badge{font-size:.58rem;padding:1px 5px;border-radius:3px;font-weight:700;background:#e8f0fe;color:#1a56a0;margin-left:4px;flex-shrink:0;white-space:nowrap;display:inline-block;vertical-align:middle}
 .gcdi-badge.ext{background:#fce8e6;color:var(--red)}
 .gcdi-sep{padding:7px 10px 3px;font-size:.63rem;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;border-top:0.5px solid var(--g2);margin-top:4px;cursor:default}
 .gcat-div{width:1px;height:14px;background:rgba(255,255,255,.18);align-self:center;flex-shrink:0}
@@ -54,257 +50,496 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
 .gcbtn-fb{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:rgba(255,255,255,.85);padding:5px 11px;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap}
 .gcbtn-fb:hover{background:rgba(201,168,76,.25);color:#fff}
 footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-shrink:0}
-.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box} .ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ft-outer{max-width:1200px;margin:0 auto;padding:28px 24px;box-sizing:border-box}
+.ft{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .ft-logo{font-family:var(--fs);font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:3px}
 .ft-copy{font-size:.7rem}
 .ft-links{display:flex;gap:12px;flex-wrap:wrap}
-.ft-links a,.ft-links a:visited{font-size:.73rem;color:rgba(255,255,255,.78);text-decoration:none;transition:color .2s}
+.ft-links a{font-size:.73rem;transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
+
+/* ═══════════ v2 추가분 — 모듈 상단바 · 로그인 · 모달 · 토스트 ═══════════ */
+.fw-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px;background:var(--navy);min-height:44px;box-sizing:border-box}
+.fw-logo{font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs);white-space:nowrap}
+.fw-logo em{color:var(--gold);font-style:normal}
+.fw-top-right{display:flex;align-items:center;gap:8px;min-width:0}
+.fw-mod-label{font-size:.72rem;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+#fwAuthArea{display:flex;align-items:center;gap:6px}
+.fw-login-btn{display:inline-flex;align-items:center;gap:5px;background:var(--gold);color:var(--navy);border:1px solid var(--gold);border-radius:6px;padding:6px 14px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap;transition:filter .15s}
+.fw-login-btn:hover{filter:brightness(1.08)}
+.fw-login-btn.ghost{background:transparent;color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);font-weight:600;padding:5px 10px}
+.fw-user{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:.76rem;font-weight:700;max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fw-user-ico{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:.62rem;font-weight:900}
+.fw-user-ico.kakao{background:#FEE500;color:#191919}.fw-user-ico.naver{background:#03C75A;color:#fff}
+.fw-user-ico.google{background:#fff;color:#4285F4}.fw-user-ico.phone{background:var(--gold);color:var(--navy)}
+/* GNB 가로 스크롤 막대(메뉴가 많을 때 표시) */
+.gnb-cat-bar{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.45) transparent}
+.gnb-cat-bar::-webkit-scrollbar{height:5px}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4);border-radius:4px}
+.gnb-scroll-hint.show{display:flex}
+
+/* 로그인 모달 */
+.fw-modal{display:none;position:fixed;inset:0;z-index:10000;background:rgba(5,12,22,.62);align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.fw-modal.open{display:flex}
+.fw-modal-box{position:relative;width:100%;max-width:380px;max-height:92%;overflow-y:auto;background:#fff;color:var(--navy);border-radius:14px;padding:26px 22px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-family:var(--fs)}
+.fw-modal-x{position:absolute;top:10px;right:12px;background:none;border:none;font-size:1.3rem;line-height:1;color:var(--g4);cursor:pointer;padding:4px 8px}
+.fw-modal-ttl{font-size:1.1rem;font-weight:900;margin:0 0 4px}
+.fw-modal-sub{font-size:.76rem;color:#4d5a6b;line-height:1.55;margin:0 0 16px}
+.fw-prov{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid var(--g2);font-size:.86rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:8px;position:relative}
+.fw-prov.kakao{background:#FEE500;border-color:#FEE500;color:#191919}
+.fw-prov.naver{background:#03C75A;border-color:#03C75A;color:#052e16}
+.fw-prov.google{background:#fff;color:#3c4043;border-color:#dadce0}
+.fw-prov.phone{background:var(--navy);border-color:var(--navy);color:#fff}
+.fw-prov.is-off{opacity:.78;cursor:not-allowed;filter:grayscale(.55)}
+.fw-prov .fw-soon{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.6rem;font-weight:800;background:#10233d;border-radius:10px;padding:2px 8px;color:#fff}
+.fw-phone-box{display:none;border:1px solid var(--g2);border-radius:8px;padding:12px;margin:2px 0 8px;background:var(--g1)}
+.fw-phone-box.open{display:block}
+.fw-phone-box input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--g3);border-radius:6px;font-size:.88rem;font-family:inherit;margin-bottom:8px;color:var(--navy);background:#fff}
+.fw-phone-box button{width:100%;padding:10px;border:none;border-radius:6px;background:var(--gold);color:var(--navy);font-weight:800;font-size:.84rem;cursor:pointer;font-family:inherit}
+.fw-modal-note{font-size:.66rem;color:#4d5a6b;line-height:1.6;margin:12px 0 0;text-align:center}
+.fw-modal-note a{color:var(--navy);text-decoration:underline;cursor:pointer}
+.fw-modal-skip{display:block;text-align:center;font-size:.74rem;color:#4d5a6b;margin-top:10px;cursor:pointer;text-decoration:underline;background:none;border:none;width:100%;font-family:inherit}
+
+/* 토스트 */
+.fw-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(10px);background:rgba(13,31,53,.95);color:#fff;border:1px solid rgba(201,168,76,.5);padding:10px 18px;border-radius:24px;font-size:.78rem;z-index:10001;opacity:0;pointer-events:none;transition:all .25s;max-width:86%;text-align:center;line-height:1.5}
+.fw-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* [v2 버그 수정] 푸터 링크: 메인 사이트의 a{color:inherit} 규칙이 참조 파일에 없어 기본 파란색이 남색 배경에 표시되던 문제 */
+footer a{color:inherit;text-decoration:none}
+.ft-links a{color:rgba(255,255,255,.9)}
 .ft-links a:hover{color:var(--gold);text-decoration:underline}
-@keyframes gnbHintPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
+footer{color:rgba(255,255,255,.82)}
+.gcbtn-chat{color:#ffeab0}
 
-/* ══════════ 이 프로젝트(AI통합홍보센터) 전용 스타일 — 본문 영역만 ══════════ */
+/* 오늘 날짜(상단바 가운데) */
+.fw-today-wrap{flex:1;display:flex;justify-content:center;min-width:0;padding:0 8px}
+.fw-today{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(201,168,76,.5);color:#ffe9a8;border-radius:14px;padding:3px 12px;font-size:.78rem;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;max-width:100%;overflow:hidden}
+.fw-today:empty{display:none}
+.fw-today::before{content:'📅';font-size:.8rem}
+.fw-d-short,.fw-d-tiny{display:none}
+@media(max-width:640px){.fw-d-full{display:none}.fw-d-short{display:inline}.fw-today{font-size:.74rem;padding:3px 9px}}
+@media(max-width:430px){.fw-today::before{display:none}.fw-today{padding:3px 8px}}
+@media(max-width:380px){.fw-d-short{display:none}.fw-d-tiny{display:inline}}
+@media(max-width:350px){.fw-top{padding:8px 10px;gap:6px}.fw-today-wrap{padding:0 2px}.fw-today{padding:2px 7px;font-size:.7rem}.fw-today::before{display:none}}
+
+
+/* ═══════════ AI통합홍보센터 전용 스타일 (표준 GNB/Footer 아래, 본문 영역만) ═══════════ */
 *{box-sizing:border-box}
-body{margin:0;font-family:var(--fs);background:var(--g1);color:var(--navy);display:flex;flex-direction:column;min-height:100vh}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:36px 0 30px}
-.hero h1{margin:0 0 8px;font-size:1.6rem;font-weight:900}
-.hero p{margin:0;color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.6;max-width:640px}
+html{scroll-behavior:smooth}
+:root{--headH:190px;--panelTop:190px}
+body{margin:0;font-family:var(--fs);background:#dfe5ee;color:var(--navy)}
 
-.tabs{display:flex;gap:6px;margin:22px 0 18px;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;border-bottom:2px solid var(--g2);padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
-.tabs::-webkit-scrollbar{height:6px}
-.tabs::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
-.tab{padding:10px 16px;border-radius:8px 8px 0 0;font-size:.82rem;font-weight:700;color:var(--g4);cursor:pointer;border:1px solid transparent;border-bottom:none;background:transparent;white-space:nowrap;flex-shrink:0}
-.tab.active{color:var(--navy);background:#fff;border-color:var(--g2)}
-.tab .n{display:inline-block;background:var(--navy);color:#fff;font-size:.62rem;border-radius:8px;padding:1px 6px;margin-right:5px}
-.tab.soon{color:var(--g3)}
+/* 브라우저 너비 80%만 사용 (헤더·푸터 포함). 좁은 화면은 자동으로 넓힘 */
+#frame{width:80%;margin:0 auto;background:var(--g1);min-height:100vh;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(13,31,53,.08)}
+@media(max-width:1199px){#frame{width:94%}}
+@media(max-width:900px){#frame{width:100%}}
 
-.panel{display:none;background:#fff;border-radius:var(--r);padding:24px;box-shadow:0 4px 16px rgba(13,31,53,.05);margin-bottom:24px}
+/* 헤더 + 타이틀 + 자체 GNB 고정 */
+#stickyHead{position:sticky;top:0;z-index:300;background:#fff}
+#stickyHead nav.gnb{position:relative;top:auto;box-shadow:none}
+
+/* GNB 가로 스크롤 막대: 넘치지 않아도 항상 표시 */
+.gnb-cat-bar-wrap{min-width:0;width:100%;max-width:100%;overflow:hidden}
+.gnb-cat-bar{min-width:0;max-width:100%;overflow-x:scroll;overflow-y:visible;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.55) rgba(0,0,0,.18)}
+.gnb-cat-bar::-webkit-scrollbar{height:8px}
+.gnb-cat-bar::-webkit-scrollbar-track{background:rgba(0,0,0,.18)}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.55);border-radius:4px}
+
+/* 타이틀 박스 (밝고 희망찬 톤) */
+.titlebox{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(120deg,#eaf4ff 0%,#fff8e3 100%);border-bottom:1px solid var(--g2)}
+.tb-center{flex:1;min-width:0;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}
+.tb-title{margin:0;font-size:1.25rem;font-weight:900;color:var(--navy);cursor:pointer;white-space:nowrap;user-select:none}
+.tb-title small{font-size:.68rem;font-weight:700;color:var(--grn2);margin-left:6px;background:#e3f5ea;border-radius:10px;padding:2px 8px;vertical-align:middle}
+.searchbar{position:relative;flex:1;min-width:200px;max-width:520px}
+.searchbar input{width:100%;padding:9px 14px 9px 36px;border:1px solid var(--g3);border-radius:22px;font-size:.84rem;font-family:inherit;background:#fff;color:var(--navy)}
+.searchbar input:focus{outline:2px solid rgba(21,96,62,.35);border-color:var(--gnb-grn)}
+.searchbar .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.9rem;pointer-events:none}
+.search-res{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--g2);border-radius:10px;box-shadow:0 12px 28px rgba(13,31,53,.16);max-height:300px;overflow-y:auto;z-index:50}
+.search-res.open{display:block}
+.sr-item{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;font-family:inherit;cursor:pointer;border-bottom:1px solid var(--g1)}
+.sr-item:hover{background:#f0f4ff}
+.sr-item b{display:block;font-size:.8rem;color:var(--navy)}
+.sr-item span{display:block;font-size:.7rem;color:var(--g4);margin-top:1px}
+.sr-empty{padding:12px;font-size:.78rem;color:var(--g4);text-align:center}
+.hb{display:none;flex-shrink:0;width:44px;height:44px;border-radius:10px;border:1px solid var(--g3);background:#fff;font-size:1.25rem;line-height:1;cursor:pointer;color:var(--navy)}
+.hb:active{background:var(--g2)}
+
+/* 자체 GNB(빠른 메뉴탭): 한 줄 + 가로 스크롤 막대 항상 표시 */
+.tabs{display:flex;gap:6px;margin:0;padding:6px 12px 0;flex-wrap:nowrap;overflow-x:scroll;overflow-y:hidden;background:#fff;border-bottom:2px solid var(--g2);scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar,.chipbar::-webkit-scrollbar{height:7px}
+.tabs::-webkit-scrollbar-thumb,.chipbar::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+.tabs::-webkit-scrollbar-track,.chipbar::-webkit-scrollbar-track{background:var(--g1)}
+.tab{padding:10px 16px;border-radius:8px 8px 0 0;font-size:.82rem;font-weight:700;color:var(--g4);cursor:pointer;border:1px solid transparent;border-bottom:none;background:transparent;white-space:nowrap;flex-shrink:0;font-family:inherit}
+.tab.active{color:var(--navy);background:var(--g1);border-color:var(--g2)}
+.tab.soon{color:#a9aeb6}
+
+/* 3단: 좌 20% · 중앙 60% · 우 20% */
+.cols{display:grid;grid-template-columns:20% 60% 20%;align-items:start;flex:1}
+.side{position:sticky;top:var(--headH);height:calc(100vh - var(--headH));height:calc(100dvh - var(--headH));overflow-y:auto;background:#fff;padding:14px 12px 24px;scrollbar-width:thin}
+.side-left{border-right:1px solid var(--g2)}
+.side-right{border-left:1px solid var(--g2)}
+.side-h{font-size:.82rem;font-weight:900;margin:0 0 10px;color:var(--navy)}
+.side-x{display:none;width:100%;margin:0 0 10px;padding:9px;border:1px solid var(--g3);border-radius:8px;background:var(--g1);font-weight:800;font-size:.8rem;cursor:pointer;font-family:inherit;color:var(--navy)}
+.qm{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:10px 10px;margin-bottom:4px;border:1px solid transparent;border-radius:8px;background:none;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--navy);cursor:pointer}
+.qm:hover{background:#f0f4ff;border-color:#d9e4fb}
+.qm .ico{font-size:1rem;flex-shrink:0}
+.qm .cnt{margin-left:auto;background:var(--navy);color:#fff;border-radius:10px;font-size:.62rem;padding:1px 7px;font-weight:800}
+.qm-sep{font-size:.64rem;font-weight:800;color:var(--g4);margin:12px 4px 6px;letter-spacing:.04em}
+.center{min-width:0;padding:18px 20px 96px}
+.center-top{scroll-margin-top:calc(var(--headH) + 10px)}
+
+/* 우측 추천 메뉴: 칩 가로 스크롤 */
+.chipbar{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:scroll;overflow-y:hidden;padding-bottom:6px;margin-bottom:10px;scrollbar-width:thin}
+.chip{flex-shrink:0;white-space:nowrap;padding:6px 12px;border-radius:16px;border:1px solid var(--g3);background:#fff;font-size:.74rem;font-weight:800;cursor:pointer;font-family:inherit;color:var(--navy)}
+.chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip-panel{display:none;font-size:.78rem;line-height:1.65;color:var(--navy2)}
+.chip-panel.active{display:block}
+.chip-panel h4{margin:0 0 6px;font-size:.84rem;color:var(--navy)}
+.chip-panel p{margin:0 0 10px}
+.rec{display:block;width:100%;text-align:left;border:1px solid var(--g2);border-radius:8px;padding:10px;margin-bottom:8px;background:var(--g1);cursor:pointer;font-family:inherit}
+.rec:hover{border-color:#b9cdf5;background:#f0f4ff}
+.rec b{display:block;font-size:.78rem;color:var(--navy)}
+.rec span{display:block;font-size:.7rem;color:var(--g4);margin-top:2px;line-height:1.5}
+.plan{border:1px solid var(--g2);border-radius:8px;padding:9px 10px;margin-bottom:6px;background:var(--g1)}
+.plan b{font-size:.8rem}.plan em{float:right;font-style:normal;font-weight:800;color:var(--grn2);font-size:.78rem}
+.plan span{display:block;font-size:.7rem;color:var(--g4);margin-top:3px;clear:both}
+.faq-q{display:block;width:100%;text-align:left;border:1px solid var(--g2);background:#fff;border-radius:8px;padding:9px 10px;margin-bottom:6px;font-size:.76rem;font-weight:800;cursor:pointer;font-family:inherit;color:var(--navy)}
+.faq-q:hover{background:#f0f4ff}
+
+/* 중앙 패널 공통 */
+.panel{display:none;background:#fff;border-radius:var(--r);padding:22px;box-shadow:0 4px 16px rgba(13,31,53,.05);margin-bottom:18px}
 .panel.active{display:block}
 .panel h2{margin:0 0 6px;font-size:1.15rem}
-.panel .lead{color:var(--g4);font-size:.84rem;line-height:1.6;margin:0 0 20px}
-
-.tone-strip{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.panel .lead{color:var(--g4);font-size:.84rem;line-height:1.6;margin:0 0 18px}
+.tone-strip{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:12px}
 .tone-strip.paid{background:#fce8e6;color:var(--red)}
 .tone-strip.volunteer{background:#e8f6ee;color:var(--grn2)}
 .tone-strip.admin{background:#eef1f6;color:var(--navy)}
-
-.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
-@media(max-width:800px){.grid2{grid-template-columns:1fr}}
-
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px}
 .fgroup{margin-bottom:14px}
 .fgroup label{display:block;font-size:.78rem;font-weight:700;margin-bottom:6px;color:var(--navy)}
-.fgroup input,.fgroup select,.fgroup textarea{width:100%;padding:10px 12px;border:var(--bd);border-radius:8px;font-size:.83rem;font-family:inherit;color:var(--navy)}
+.fgroup input,.fgroup select,.fgroup textarea{width:100%;padding:10px 12px;border:var(--bd);border-radius:8px;font-size:.83rem;font-family:inherit;color:var(--navy);background:#fff}
 .fgroup textarea{min-height:80px;resize:vertical}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
 @media(max-width:520px){.fgrid{grid-template-columns:1fr}}
 .btn{border:0;border-radius:8px;padding:11px 18px;font-weight:700;font-size:.83rem;cursor:pointer;font-family:inherit}
 .btn-primary{background:var(--navy);color:#fff}
 .btn-primary:hover{background:var(--navy2)}
-.help{font-size:.7rem;color:var(--g4);margin-top:4px;line-height:1.5}
-
+.btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--g3)}
+.help{font-size:.7rem;color:var(--g4);margin-top:6px;line-height:1.55}
 .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.item{border:var(--bd);border-radius:8px;padding:12px 14px}
+.item{border:var(--bd);border-radius:8px;padding:12px 14px;background:#fff}
 .item-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
 .item-title{font-weight:700;font-size:.85rem}
 .item-meta{font-size:.72rem;color:var(--g4)}
-.status{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:10px}
+.status{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
 .status.pending{background:#fff4de;color:#a06a00}
 .status.approved{background:#e8f6ee;color:var(--grn2)}
 .status.rejected{background:#fce8e6;color:var(--red)}
 .empty{color:var(--g4);font-size:.8rem;padding:16px 0;text-align:center}
-
-.price-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:10px}
-.price-table th,.price-table td{border:var(--bd);padding:8px 10px;text-align:left}
-.price-table th{background:var(--g1);font-size:.72rem;color:var(--g4)}
-.price-src{font-size:.68rem;color:var(--g4);margin-top:8px}
-.price-src.live{color:var(--grn2)}
-
 .lockbox{border:2px dashed var(--g3);border-radius:var(--r);padding:26px;text-align:center;color:var(--g4)}
 .lockbox .ico{font-size:1.8rem;margin-bottom:8px}
 .admin-only{display:none}
 body.is-admin .admin-only{display:block}
 body.is-admin .locked-view{display:none}
-
-.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:800px){.roadmap-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.roadmap-grid{grid-template-columns:1fr}}
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .rcard{border:var(--bd);border-radius:8px;padding:16px;background:var(--g1)}
 .rcard .ico{font-size:1.4rem;margin-bottom:6px}
 .rcard h3{margin:0 0 4px;font-size:.86rem}
 .rcard p{margin:0 0 8px;font-size:.72rem;color:var(--g4);line-height:1.5}
-.rcard .soon{font-size:.62rem;font-weight:700;color:var(--gold);background:#fbf3e3;padding:2px 7px;border-radius:8px}
+.rcard .soon{font-size:.62rem;font-weight:700;color:#8a6a10;background:#fbf3e3;padding:2px 7px;border-radius:8px}
 .note-box{background:#eef4ff;border:1px solid #d3e2fb;border-radius:8px;padding:14px 16px;font-size:.78rem;color:var(--navy2);line-height:1.6;margin-top:16px}
+.steps{margin:0;padding:0;list-style:none}
+.steps li{border:var(--bd);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:.78rem;line-height:1.55;color:var(--navy2)}
+.steps li b{color:var(--navy)}
 
+/* 판촉물 카드 (메인 사이트 .sp-* 구조 그대로 병합) */
+.sp-page .sh{margin-bottom:12px}
+.sp-page .sh-t{font-size:1.05rem;font-weight:900}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.sp-card{border:var(--bd);border-radius:10px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.sp-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(13,31,53,.1)}
+.sp-thumb{height:90px;display:flex;align-items:center;justify-content:center;font-size:2.2rem}
+.sp-body{padding:12px}
+.sp-tag{display:inline-block;font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:8px;margin-bottom:6px}
+.sp-ttl{font-size:.86rem;font-weight:800;margin-bottom:3px}
+.sp-sub{font-size:.72rem;color:var(--g4);line-height:1.5}
+
+/* 질문 입력바 (중앙 하단 고정 — 위치는 JS가 중앙 컬럼에 맞춤) */
+.qbar{position:fixed;bottom:0;left:0;width:100%;z-index:400;background:rgba(255,255,255,.97);border-top:1px solid var(--g2);box-shadow:0 -6px 18px rgba(13,31,53,.08);padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.qbar-in{display:flex;gap:8px;max-width:100%}
+.qbar input{flex:1;min-width:0;padding:11px 14px;border:1px solid var(--g3);border-radius:22px;font-size:.86rem;font-family:inherit;color:var(--navy)}
+.qbar input:focus{outline:2px solid rgba(21,96,62,.35);border-color:var(--gnb-grn)}
+.qbar .btn{border-radius:22px;padding:0 20px;flex-shrink:0}
+.answer-box{display:none;background:#fff;border:1px solid #cfe3d6;border-left:4px solid var(--gnb-grn);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:.82rem;line-height:1.65}
+.answer-box.open{display:block}
+.answer-box .q{font-weight:800;margin-bottom:6px;color:var(--navy)}
+.answer-box .a{color:var(--navy2);white-space:pre-wrap}
+.answer-box .meta{font-size:.66rem;color:var(--g4);margin-top:8px}
+.answer-box .x{float:right;border:0;background:none;font-size:1rem;cursor:pointer;color:var(--g4)}
+.ft-pad{height:76px;background:var(--navy)}
+
+/* 소개 모달 */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,31,53,.55);z-index:5000;align-items:center;justify-content:center;padding:20px}
-.modal-box{background:#fff;border-radius:var(--r);max-width:520px;width:100%;padding:26px;max-height:85vh;overflow:auto}
+.modal-box{background:#fff;border-radius:var(--r);max-width:540px;width:100%;padding:26px;max-height:85vh;overflow:auto}
 .modal-box h2{margin:0 0 14px;font-size:1.1rem}
 .modal-box .close{float:right;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--g4)}
 .modal-box ul{margin:0 0 12px;padding-left:20px;font-size:.82rem;line-height:1.8;color:var(--navy2)}
-</style>
-</head>
 
-<body>
+/* 모바일: 1단 + 햄버거 + 좌/우 사이드바는 타이틀 박스 바로 아래로 펼침 */
+@media(max-width:900px){
+  .hb{display:inline-flex;align-items:center;justify-content:center}
+  .cols{display:block}
+  .center{padding:14px 12px 96px}
+  .side{display:none;position:fixed;top:var(--panelTop);bottom:0;height:auto;width:min(88vw,340px);z-index:450;box-shadow:0 12px 32px rgba(13,31,53,.3)}
+  .side.open{display:block}
+  .side-left{left:0;border-right:1px solid var(--g2)}
+  .side-right{right:0;border-left:1px solid var(--g2)}
+  .side-x{display:block}
+  .tb-center{justify-content:flex-start}
+  .tb-title{font-size:1.05rem}
+  .searchbar{min-width:150px;flex-basis:100%;max-width:none}
+}
 
-<!-- ══════════ HEADER (GNB) — 원본 그대로, 수정 금지 ══════════ -->
-<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy)">
-  <a href="https://aiplatmarket.com/" style="font-weight:900;font-size:1.05rem;color:#fff;text-decoration:none;font-family:var(--fs)">AI<em style="color:var(--gold);font-style:normal">PLAT</em>MARKET</a>
-  <a href="https://aiplatmarket.com/" style="font-size:.76rem;color:rgba(255,255,255,.7);text-decoration:none">← AI플랫마켓 홈으로</a>
-</div>
+</style></head><body>
+
+<div id="frame">
+<div id="stickyHead">
+<!-- ══════════ HEADER (GNB) — 표준 v2 그대로 ══════════ -->
+<nav class="gnb">
+    <div class="fw-top">
+      <a class="fw-logo" href="https://aiplatmarket.com/" title="AI플랫마켓 홈으로">AI<em>PLAT</em>MARKET</a>
+      <!-- 오늘 날짜: 기기 시계 기준, 자정이 지나면 자동으로 바뀜 (FW 스크립트가 갱신) -->
+      <div class="fw-today-wrap"><time class="fw-today" id="fwToday" datetime="" title="오늘 날짜"></time></div>
+      <div class="fw-top-right">
+        <span class="fw-mod-label" id="fwModLabel"></span>
+        <!-- 로그인 영역: 로그인 전 [로그인] 버튼 / 로그인 후 [이름님][로그아웃] (FWAuth가 자동 렌더) -->
+        <div id="fwAuthArea"><button type="button" class="fw-login-btn" onclick="FWAuth.open()">🔐 로그인</button></div>
+      </div>
+    </div>
+
 <div class="gnb-cat-bar-wrap">
-<div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
+    <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
 
-  <div class="gcat" id="gcat-ai">
-    <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-ai">
-      <div class="gcdrop-grid">
-        <a class="gcdi platform" href="/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
-        <a class="gcdi platform" href="/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
-        <a class="gcdi platform" href="/promo" target="_blank" rel="noopener" onclick="closeCats()" style="background:#f0f4ff"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">마케팅 자동화 (현재 페이지)</span></span></a>
-        <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 체험존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        <a class="gcdi platform" onclick="window.open('https://aiplatmarket.com/#videocenter','_blank');closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
-        <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+      <!-- 1. AI 플랫폼 -->
+      <div class="gcat" id="gcat-ai">
+        <button class="gcbtn" onclick="toggleCat('ai',event)">🤖 AI 플랫폼 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-ai">
+          <div class="gcdrop-grid">
+            <a class="gcdi platform" href="/lifemap" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔮</span><span class="gcdi-txt"><b>AI인생·진로 탐색존 <span class="gcdi-badge" style="background:var(--red);color:#fff">인기</span></b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/metazone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌐</span><span class="gcdi-txt"><b>AI메타플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/growth" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌱</span><span class="gcdi-txt"><b>AI성장플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/academy" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎓</span><span class="gcdi-txt"><b>AI인생성장사관학교</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/aird" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>AIR&amp;D</b><span class="gcdi-desc">연구·개발 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🧪</span><span class="gcdi-txt"><b>AI시뮬레이션</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/trading" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📈</span><span class="gcdi-txt"><b>AI매매추천·검증시스템</b><span class="gcdi-desc">추천 검증 · 투자 참고용</span></span></a>
+            <a class="gcdi platform" href="/eduzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📚</span><span class="gcdi-txt"><b>AI교육존</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>            
+            <a class="gcdi platform" href="/promo" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎯</span><span class="gcdi-txt"><b>AI통합홍보센터</b><span class="gcdi-desc">독립 Platform</span></span></a>
+            <a class="gcdi platform" href="/video" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎬</span><span class="gcdi-txt"><b>AI영상생성</b><span class="gcdi-desc">독립 Platform</span></span></a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <div class="gcat" id="gcat-comm">
-    <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-comm">
-      <div class="gcdrop-list">
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#growthmall','_blank');closeCats()">📈 AI성장+마켓몰 <span class="gcdi-badge">준독립</span></a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#local-products','_blank');closeCats()">🌾 지역특산품관</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#good','_blank');closeCats()">💚 더착한가게</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#newprod','_blank');closeCats()">🆕 더착한상품</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#recipe','_blank');closeCats()">👨‍🍳 뉴레시피</a>
-        <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
-        <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+      <!-- AI Hub: 외부 AI 서비스 탐색 + 내부 챗도우미 -->
+      <div class="gcat" id="gcat-aihub">
+        <button class="gcbtn" onclick="toggleCat('aihub',event)">🧠 AI Hub <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-aihub">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('ai-assistant');closeCats()"><span class="gcdi-ico">🤖</span><span class="gcdi-txt"><b>AI플랫마켓 챗도우미</b><span class="gcdi-desc">플랫폼 안내 · 일반 AI 상담</span></span></a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" onclick="showPage('ai-hub');closeCats()"><span class="gcdi-ico">🧭</span><span class="gcdi-txt"><b>AI 서비스 전체보기</b><span class="gcdi-desc">대화·이미지·디자인·영상·코딩 등</span></span></a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <!-- 3. Business -->
-  <div class="gcat" id="gcat-biz">
-    <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-biz">
-      <div class="gcdrop-list">
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#startup','_blank');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#localcenter','_blank');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
-        <div class="gcdi-sep">🤝 전국소상공인회</div>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#create-sanglife','_blank');closeCats()">🌱 상생회 만들기</a>
-        <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
-        <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+      <!-- 2. Commerce -->
+      <div class="gcat" id="gcat-comm">
+        <button class="gcbtn" onclick="toggleCat('comm',event)">🛍 Commerce <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-comm">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/shop" target="_blank" rel="noopener" onclick="closeCats()">🛍️ AI더착한쇼핑(몰) <span class="gcdi-badge">독립</span></a>
+            <a class="gcdi" onclick="showPage('local-products');closeCats()">🌾 지역특산품관</a>
+            <a class="gcdi" onclick="showPage('good');closeCats()">💚 더착한가게</a>
+            <a class="gcdi" onclick="showPage('newprod');closeCats()">🆕 더착한상품</a>
+            <a class="gcdi" onclick="showPage('recipe');closeCats()">👨‍🍳 뉴레시피</a>
+            <a class="gcdi" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank');closeCats()">🎁 판촉물 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <!-- 4. Community -->
-  <div class="gcat" id="gcat-cmt">
-    <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-cmt">
-      <div class="gcdrop-list">
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">📌 자유게시판</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🤝 정보공유</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#community','_blank');closeCats()">🛒 공동구매</a>
+      <!-- 3. Business -->
+      <div class="gcat" id="gcat-biz">
+        <button class="gcbtn" onclick="toggleCat('biz',event)">💼 Business <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-biz">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('startup');closeCats()">🚀 사업창업 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('localcenter');closeCats()">🏛 AI지역경제센터 <span class="gcdi-badge">준독립</span></a>
+            <div class="gcdi-sep">🤝 전국소상공인회</div>
+            <a class="gcdi" onclick="showPage('create-sanglife');closeCats()">🌱 상생회 만들기</a>
+            <a class="gcdi" onclick="window.open('https://www.kfme.or.kr','_blank');closeCats()">🏢 소상공인연합회</a>
+            <a class="gcdi" onclick="window.open('https://www.semas.or.kr','_blank');closeCats()">🏛 소상공인시장진흥공단 <span class="gcdi-badge ext">외부</span></a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <!-- 5. Media -->
-  <div class="gcat" id="gcat-media">
-    <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-media">
-      <div class="gcdrop-list">
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#live','_blank');closeCats()">📺 LIVE 홈쇼핑</a>
-        <div class="gcdi-sep">📡 인터넷TV</div>
-        <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
-        <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
-        <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
-        <div class="gcdi-sep">🎵 뮤직</div>
-        <a class="gcdi" onclick="setGenre(0);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">K-POP</a>
-        <a class="gcdi" onclick="setGenre(1);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">트롯</a>
-        <a class="gcdi" onclick="setGenre(2);window.open('https://aiplatmarket.com/#home','_blank');closeCats()">발라드</a>
+      <!-- 4. Community -->
+      <div class="gcat" id="gcat-cmt">
+        <button class="gcbtn" onclick="toggleCat('cmt',event)">💬 Community <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-cmt">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('community');closeCats()">💬 커뮤니티 <span class="gcdi-badge">준독립</span></a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">📌 자유게시판</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🤝 정보공유</a>
+            <a class="gcdi" onclick="showPage('community');closeCats()">🛒 공동구매</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <!-- 6. Lifestyle -->
-  <div class="gcat" id="gcat-life">
-    <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-life">
-      <div class="gcdrop-list">
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#sports','_blank');closeCats()">⚽ 스포츠&amp;건강</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#travel','_blank');closeCats()">✈️ 여행</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#incident','_blank');closeCats()">🚨 사건사고</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#news','_blank');closeCats()">📰 지역경제뉴스</a>
-        <a class="gcdi" onclick="window.open('https://aiplatmarket.com/#global','_blank');closeCats()">🌐 글로벌경제</a>
+      <!-- 5. Media -->
+      <div class="gcat" id="gcat-media">
+        <button class="gcbtn" onclick="toggleCat('media',event)">📺 Media <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-media">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('live');closeCats()">📺 LIVE 홈쇼핑</a>
+            <div class="gcdi-sep">📡 인터넷TV</div>
+            <a class="gcdi" onclick="quickReg('서울');closeCats()">서울 경제TV</a>
+            <a class="gcdi" onclick="quickReg('인천');closeCats()">인천 경제TV</a>
+            <a class="gcdi" onclick="quickReg('경기');closeCats()">경기 경제TV</a>
+            <div class="gcdi-sep">🎵 뮤직</div>
+            <a class="gcdi" onclick="setGenre(0);showPage('home');closeCats()">K-POP</a>
+            <a class="gcdi" onclick="setGenre(1);showPage('home');closeCats()">트롯</a>
+            <a class="gcdi" onclick="setGenre(2);showPage('home');closeCats()">발라드</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="gcat-div"></div>
+      <div class="gcat-div"></div>
 
-  <!-- 7. 디지털신문 -->
-  <div class="gcat" id="gcat-paper">
-    <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
-    <div class="gcdrop" id="gcdrop-paper">
-      <div class="gcdrop-list">
-        <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+      <!-- 6. Lifestyle -->
+      <div class="gcat" id="gcat-life">
+        <button class="gcbtn" onclick="toggleCat('life',event)">🌿 Lifestyle <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-life">
+          <div class="gcdrop-list">
+            <a class="gcdi" onclick="showPage('sports');closeCats()">⚽ 스포츠&amp;건강</a>
+            <a class="gcdi" onclick="showPage('travel');closeCats()">✈️ 여행</a>
+            <a class="gcdi" onclick="showPage('incident');closeCats()">🚨 사건사고</a>
+            <a class="gcdi" onclick="showPage('news');closeCats()">📰 지역경제뉴스</a>
+            <a class="gcdi" onclick="showPage('global');closeCats()">🌐 글로벌경제</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
-    <button class="gcbtn-reg" onclick="window.open('https://aiplatmarket.com/#register','_blank')">✅ 입점신청</button>
-    <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
-    <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
-  </div>
+      <div class="gcat-div"></div>
 
-</div>
-<div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
-<div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
-</div>
+      <!-- 7. 디지털신문 -->
+      <div class="gcat" id="gcat-paper">
+        <button class="gcbtn" onclick="toggleCat('paper',event)">📰 디지털신문 <span class="caret">▾</span></button>
+        <div class="gcdrop" id="gcdrop-paper">
+          <div class="gcdrop-list">
+            <a class="gcdi" href="/newspaper" target="_blank" rel="noopener" onclick="closeCats()">🗞️ 국민경제㊉ 신문</a>
+            <a class="gcdi" href="/newspaper#welfare" target="_blank" rel="noopener" onclick="closeCats()">🤝 복지신문</a>
+            <a class="gcdi" href="/newspaper#local" target="_blank" rel="noopener" onclick="closeCats()">🏘️ 내고장뉴스</a>
+            <div class="gcdi-sep"></div>
+            <a class="gcdi" href="/paper" target="_blank" rel="noopener" onclick="closeCats()">📄 종이신문 그대로 보기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 입점신청 고정 -->
+      <div style="margin-left:auto;display:flex;align-items:center;gap:6px;padding:0 10px;flex-shrink:0">
+        <button class="gcbtn-reg" onclick="showPage('register')">✅ 입점신청</button>
+        <button class="gcbtn-fb" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}">💡 의견 보내기</button>
+        <button class="gcbtn-chat" onclick="window.open('https://chatdoumi.com','_blank')">🤖 챗도우미</button>
+      </div>
+
+    </div><!-- /gnb-cat-bar -->
+    <div class="gnb-scroll-hint left" id="gnbScrollHintLeft">‹</div>
+    <div class="gnb-scroll-hint" id="gnbScrollHint">›</div>
+    </div><!-- /gnb-cat-bar-wrap -->
+</nav>
 <!-- ══════════ /HEADER ══════════ -->
 
-<main style="flex:1">
-  <div class="hero">
-    <div class="wrap">
-      <h1>🎯 AI통합홍보센터</h1>
-      <p>광고주 홍보 신청, 서포터즈 참여형 홍보, 플랫폼 자체 마케팅을 한 공간에서 관리합니다.
-        AI 호출이 필요한 기능은 AI플랫마켓 공통 AI Core(ChatDoumi)를 통해서만 처리하며,
-        이 프로젝트가 직접 AI 모델을 호출하지 않습니다.</p>
+  <!-- 타이틀 박스: 좌우 끝 햄버거(모바일 전용) · 타이틀 · 검색바 -->
+  <div class="titlebox" id="titleBox">
+    <button type="button" class="hb" id="hbLeft" aria-label="좌측 메뉴 열기" onclick="togglePanel('left')">☰</button>
+    <div class="tb-center">
+      <h1 class="tb-title" onclick="goHome()" title="처음 화면으로">🎯 AI통합홍보센터<small>광고·서포터즈·홍보</small></h1>
+      <div class="searchbar">
+        <span class="si">🔍</span>
+        <input id="siteSearch" type="search" autocomplete="off" placeholder="메뉴·질문·커뮤니티 글 검색 (예: 전단지, 서포터즈, 이용료)" oninput="runSearch(this.value)" onkeydown="searchKey(event)">
+        <div class="search-res" id="searchRes"></div>
+      </div>
     </div>
+    <button type="button" class="hb" id="hbRight" aria-label="우측 메뉴 열기" onclick="togglePanel('right')">☰</button>
   </div>
 
-  <div class="wrap">
-    <div class="tabs">
-      <button class="tab active" data-tab="advertiser" onclick="switchTab('advertiser')">🏪 광고주 서비스</button>
-      <button class="tab" data-tab="supporter" onclick="switchTab('supporter')">🙌 서포터즈 참여</button>
-      <button class="tab" data-tab="platform" onclick="switchTab('platform')">🏢 플랫폼 자체 홍보</button>
-      <button class="tab" data-tab="community" onclick="switchTab('community')">💬 커뮤니티</button>
-      <button class="tab soon" data-tab="strategy" onclick="switchTab('strategy')">🚀 통합 마케팅 전략본부 <span style="font-size:.6rem">· 예정</span></button>
-    </div>
+  <!-- 자체 GNB (빠른 메뉴탭: 한 줄 · 가로 스크롤) -->
+  <div class="tabs" id="modGnb">
+    <button class="tab active" data-tab="advertiser" onclick="switchView('advertiser')">🏪 광고주 서비스</button>
+    <button class="tab" data-tab="supporter" onclick="switchView('supporter')">🙌 서포터즈 참여</button>
+    <button class="tab" data-tab="platform" onclick="switchView('platform')">🏢 플랫폼 자체 홍보</button>
+    <button class="tab" data-tab="promo" onclick="switchView('promo')">🎁 판촉물</button>
+    <button class="tab" data-tab="community" onclick="switchView('community')">💬 커뮤니티</button>
+    <button class="tab soon" data-tab="strategy" onclick="switchView('strategy')">🚀 통합 마케팅 전략본부 <span style="font-size:.6rem">· 예정</span></button>
+  </div>
 
-    <!-- ① 광고주 서비스 (외부 이용자 홍보 요청) -->
+</div>
+
+
+<div class="cols" id="cols">
+
+  <!-- ═════ 좌측 20%: 필요 메뉴 (바로가기) ═════ -->
+  <aside class="side side-left" id="sideLeft" aria-label="빠른 메뉴">
+    <button type="button" class="side-x" onclick="closePanels()">✕ 닫기</button>
+    <div class="side-h">📌 빠른 메뉴</div>
+
+    <div class="qm-sep">홍보 신청</div>
+    <button class="qm" onclick="goAdvertiser()"><span class="ico">📝</span>광고 신청하기</button>
+    <button class="qm" onclick="jumpTo('advertiser','adv-list')"><span class="ico">📋</span>내 신청 내역<span class="cnt" id="cnt-adv">0</span></button>
+    <button class="qm" onclick="goAdvertiser('판촉물')"><span class="ico">🎁</span>판촉물 주문 문의</button>
+
+    <div class="qm-sep">서포터즈</div>
+    <button class="qm" onclick="jumpTo('supporter','sup-name')"><span class="ico">🙌</span>활동 등록하기</button>
+    <button class="qm" onclick="jumpTo('supporter','sup-list')"><span class="ico">🗂</span>내 활동 내역<span class="cnt" id="cnt-sup">0</span></button>
+
+    <div class="qm-sep">커뮤니티 · 문의</div>
+    <button class="qm" onclick="jumpTo('community','cmt-name')"><span class="ico">✏️</span>커뮤니티 글쓰기</button>
+    <button class="qm" onclick="jumpTo('community','cmt-list')"><span class="ico">💬</span>최근 글 보기<span class="cnt" id="cnt-cmt">0</span></button>
+    <button class="qm" onclick="focusQuestion()"><span class="ico">❓</span>질문하기</button>
+
+    <div class="qm-sep">안내</div>
+    <button class="qm" onclick="showAbout()"><span class="ico">ℹ️</span>서비스 소개</button>
+    <button class="qm" onclick="openRight('fee')"><span class="ico">💳</span>이용료 보기</button>
+    <button class="qm" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank','noopener')"><span class="ico">🛒</span>판촉물몰 바로가기 <span style="font-size:.6rem;color:var(--red);font-weight:800">외부</span></button>
+  </aside>
+
+  <!-- ═════ 중앙 60%: 본문 ═════ -->
+  <main class="center" id="center">
+    <div class="center-top" id="centerTop"></div>
+
+    <!-- 질문 답변 표시 (하단 질문바에서 질문하면 여기에 표시) -->
+    <div class="answer-box" id="answerBox"></div>
+
+    <!-- ② 광고주 서비스 (외부 이용자 홍보 요청) -->
     <section class="panel active" id="panel-advertiser">
       <span class="tone-strip paid">💳 유료 서비스 · 신청→검토→승인→진행→리포트</span>
       <h2>내 가게 · 상품을 홍보하고 싶어요</h2>
       <p class="lead">소상공인 등 외부 이용자가 자신의 서비스/상품 홍보를 신청하는 영역입니다.
         신청서를 제출하면 <b>대기(pending)</b> 상태로 접수되고, 운영자 검토 후 승인/반려됩니다.
-        가격은 이 프로젝트가 임의로 정하지 않고 ChatDoumi AI Core 중앙 정책을 조회해 표시합니다.</p>
+        가격은 이 프로젝트가 임의로 정하지 않고 ChatDoumi AI Core 중앙 정책을 조회해 표시합니다 (우측 <b>이용료</b> 메뉴).</p>
 
       <div class="grid2">
         <div>
@@ -349,6 +584,7 @@ body.is-admin .locked-view{display:none}
                 <option>라이브 영상</option>
                 <option>우수업체 인증</option>
                 <option>전단지/명함</option>
+                <option>판촉물</option>
                 <option>지역 광고</option>
                 <option>SNS 콘텐츠</option>
               </select>
@@ -357,7 +593,7 @@ body.is-admin .locked-view{display:none}
           <div class="fgrid">
             <div class="fgroup">
               <label>희망 기간</label>
-              <input id="adv-period" placeholder="예: 2026-10-01 ~ 2026-10-31">
+              <input id="adv-period" placeholder="예: 2026-12-01 ~ 2026-12-31">
             </div>
             <div class="fgroup">
               <label>예산 (AI Point 또는 원)</label>
@@ -369,20 +605,26 @@ body.is-admin .locked-view{display:none}
             <textarea id="adv-memo" placeholder="홍보하고 싶은 내용을 자유롭게 적어주세요."></textarea>
           </div>
           <button class="btn btn-primary" onclick="submitAdvertiser()">신청서 제출</button>
-          <div class="help">개인정보는 연락 목적 외 사용되지 않으며 최소한만 수집합니다. 이번 MVP는 신규 서버 API 없이 이 브라우저에 임시 저장되며(localStorage), 추후 Firestore <code>promotionAdvertisers</code> 컬렉션 연동 시 자동으로 서버 저장으로 전환됩니다.</div>
-
-          <h3 style="font-size:.9rem;margin-top:22px">내 신청 내역</h3>
-          <div class="list" id="adv-list"></div>
+          <div class="help">개인정보는 연락 목적 외 사용되지 않으며 최소한만 수집합니다. 이번 MVP는 신규 서버 API 없이 이 브라우저에 임시 저장되며(localStorage), 추후 Firestore <code>promotionAdvertisers</code> 컬렉션 연동 시 서버 저장으로 전환됩니다.</div>
         </div>
 
         <div>
-          <h3 style="font-size:.9rem;margin-top:0">공식 가격 안내</h3>
-          <div id="price-box"><div class="empty">가격 정보를 불러오는 중...</div></div>
+          <h3 style="font-size:.9rem;margin:0 0 8px">진행 단계</h3>
+          <ol class="steps">
+            <li><b>① 신청</b> — 왼쪽 양식을 제출하면 <b>검토 대기</b>로 접수됩니다.</li>
+            <li><b>② 검토·승인</b> — 운영자가 내용을 확인하고 승인/반려합니다.</li>
+            <li><b>③ 진행</b> — 승인된 홍보가 진행됩니다.</li>
+            <li><b>④ 결과 리포트</b> — 진행 결과를 안내해 드립니다.</li>
+          </ol>
+          <button class="btn btn-ghost" style="margin-top:4px" onclick="openRight('fee')">💳 이용료·요금제 보기</button>
+
+          <h3 style="font-size:.9rem;margin:20px 0 0" id="adv-list-h">내 신청 내역</h3>
+          <div class="list" id="adv-list"></div>
         </div>
       </div>
     </section>
 
-    <!-- ② 서포터즈 참여형 홍보 -->
+    <!-- ③ 서포터즈 참여형 홍보 -->
     <section class="panel" id="panel-supporter">
       <span class="tone-strip volunteer">🙌 무보수 자발적 참여 · 일부 활동은 향후 AI Point 보상 연동 예정</span>
       <h2>서포터즈 · 앰버서더 활동 기록</h2>
@@ -420,29 +662,21 @@ body.is-admin .locked-view{display:none}
           <button class="btn btn-primary" onclick="submitSupporter()">활동 등록</button>
           <div class="help">등록 즉시 상태는 <b>검토 대기</b>이며, 보상/지급 로직은 이번 MVP 범위가 아닙니다.
             이 데이터도 localStorage 임시 저장이며 추후 <code>promotionSupporterActivities</code> 컬렉션으로 전환됩니다.</div>
-
-          <h3 style="font-size:.9rem;margin-top:22px">내 활동 내역</h3>
-          <div class="list" id="sup-list"></div>
         </div>
         <div>
-          <h3 style="font-size:.9rem;margin-top:0">참여 방법 안내</h3>
-          <div class="item">
-            <div class="item-title">1. 활동하기</div>
-            <div class="item-meta">후기 작성, SNS 공유, 추천 링크 배포, 커뮤니티 홍보 중 하나를 진행합니다.</div>
-          </div>
-          <div class="item" style="margin-top:8px">
-            <div class="item-title">2. 여기에 기록</div>
-            <div class="item-meta">활동 내용을 왼쪽 양식으로 등록해 주세요. 링크가 있다면 함께 남겨주세요.</div>
-          </div>
-          <div class="item" style="margin-top:8px">
-            <div class="item-title">3. 운영자 확인</div>
-            <div class="item-meta">운영자가 활동을 확인하고, 향후 공정기여도 · AI Point 정책이 확정되면 소급 반영을 검토합니다.</div>
-          </div>
+          <h3 style="font-size:.9rem;margin:0 0 8px">참여 방법</h3>
+          <ol class="steps">
+            <li><b>1. 활동하기</b> — 후기 작성, SNS 공유, 추천 링크 배포, 커뮤니티 홍보 중 하나를 진행합니다.</li>
+            <li><b>2. 여기에 기록</b> — 활동 내용을 왼쪽 양식으로 등록해 주세요.</li>
+            <li><b>3. 운영자 확인</b> — 향후 공정기여도 · AI Point 정책이 확정되면 소급 반영을 검토합니다.</li>
+          </ol>
+          <h3 style="font-size:.9rem;margin:20px 0 0" id="sup-list-h">내 활동 내역</h3>
+          <div class="list" id="sup-list"></div>
         </div>
       </div>
     </section>
 
-    <!-- ③ 플랫폼 자체 홍보 전략 -->
+    <!-- ① 플랫폼 자체 홍보 전략 -->
     <section class="panel" id="panel-platform">
       <span class="tone-strip admin">🔒 운영자 주도 · 일반 이용자는 열람만 가능</span>
       <h2>AI플랫마켓 자체 홍보 콘텐츠</h2>
@@ -468,7 +702,20 @@ body.is-admin .locked-view{display:none}
       </div>
     </section>
 
-    <!-- ④ 자체 커뮤니티 -->
+    <!-- 🎁 판촉물 (메인 사이트 #page-promo 내용 병합) -->
+    <section class="panel" id="panel-promo">
+      <span class="tone-strip paid">🎁 인쇄·사인·답례품 · 신청은 광고주 서비스로 접수</span>
+      <div class="sp-page"><div class="sh"><div class="sh-t">🎁 판촉물</div></div><div class="sp-grid">
+        <div class="sp-card" onclick="goAdvertiser('판촉물')"><div class="sp-thumb" style="background:#e8f0fe">🖨️</div><div class="sp-body"><span class="sp-tag" style="background:#e8f0fe;color:#1a56a0">인쇄물</span><div class="sp-ttl">전단지·리플렛 인쇄</div><div class="sp-sub">1,000장 15,000원 · 당일 제작</div></div></div>
+        <div class="sp-card" onclick="goAdvertiser('판촉물')"><div class="sp-thumb" style="background:#fff3e0">🎀</div><div class="sp-body"><span class="sp-tag" style="background:#fff3e0;color:#e65100">포장재</span><div class="sp-ttl">로고 쇼핑백·포장지</div><div class="sp-sub">최소 100개 · 맞춤 디자인</div></div></div>
+        <div class="sp-card" onclick="goAdvertiser('판촉물')"><div class="sp-thumb" style="background:#e8f5e9">📌</div><div class="sp-body"><span class="sp-tag" style="background:#e8f5e9;color:#2e7d32">사인물</span><div class="sp-ttl">현수막·배너·간판</div><div class="sp-sub">현수막 3,500원/m² · 빠른제작</div></div></div>
+        <div class="sp-card" onclick="goAdvertiser('판촉물')"><div class="sp-thumb" style="background:#fce4ec">🎁</div><div class="sp-body"><span class="sp-tag" style="background:#fce4ec;color:#c62828">답례품</span><div class="sp-ttl">로고 인쇄 답례품</div><div class="sp-sub">볼펜·머그컵·에코백 · 50개~</div></div></div>
+      </div></div>
+      <p class="help" style="margin-top:14px">카드를 누르면 광고주 서비스 신청서(광고 유형: 판촉물)로 이동합니다. 표시된 금액은 안내용 예시이며 최종 견적은 신청 후 확정됩니다.</p>
+      <button class="btn btn-ghost" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank','noopener')">🛒 판촉물몰 전체 보기 (외부 사이트)</button>
+    </section>
+
+    <!-- 💬 자체 커뮤니티 -->
     <section class="panel" id="panel-community">
       <span class="tone-strip volunteer">💬 AI통합홍보센터 이용자 게시판</span>
       <h2>커뮤니티</h2>
@@ -496,13 +743,13 @@ body.is-admin .locked-view{display:none}
             추후 서버 API/Firestore 연동이 필요합니다 — 메인 개발창에 요청해 주세요.</div>
         </div>
         <div>
-          <h3 style="font-size:.9rem;margin-top:0">최근 글</h3>
+          <h3 style="font-size:.9rem;margin:0">최근 글</h3>
           <div class="list" id="cmt-list"></div>
         </div>
       </div>
     </section>
 
-    <!-- ⑤ 통합 마케팅 전략본부 (로드맵) -->
+    <!-- 🚀 통합 마케팅 전략본부 (로드맵) -->
     <section class="panel" id="panel-strategy">
       <span class="tone-strip admin">🚀 로드맵 · 이번 MVP 범위 아님</span>
       <h2>통합 마케팅 전략본부 (예정)</h2>
@@ -519,68 +766,177 @@ body.is-admin .locked-view{display:none}
       </div>
 
       <div class="note-box">
-        <b>제안 사항 전달용 메모</b> — "공정기여도"를 이 프로젝트 안에 개별 구현하지 말고,
-        AI Core 공통 엔진(Fair Contribution Engine)으로 두면 더착한쇼핑·LifeMap·ItemZone·Community·EduZone 등
-        모든 프로젝트가 같은 기준을 공유할 수 있습니다. 이 판단과 실제 엔진 설계는 <b>메인 개발창</b>에서
-        진행하는 것을 추천드립니다 (이 창은 개별 모듈만 담당).
+        <b>메인 개발창 전달 메모</b> — "공정기여도"를 이 프로젝트 안에 개별 구현하지 말고
+        AI Core 공통 엔진(Fair Contribution Engine)으로 두는 방안은 메인 개발창에서 검토해 주세요.
       </div>
     </section>
-  </div>
-</main>
+  </main>
 
-<!-- ══════════ FOOTER — 원본 그대로, 수정 금지 ══════════ -->
+  <!-- ═════ 우측 20%: 추천 메뉴 (칩 가로 스크롤) ═════ -->
+  <aside class="side side-right" id="sideRight" aria-label="추천 메뉴">
+    <button type="button" class="side-x" onclick="closePanels()">✕ 닫기</button>
+    <div class="side-h">⭐ 추천 메뉴</div>
+    <div class="chipbar" id="chipBar">
+      <button class="chip active" data-chip="all" onclick="setChip('all')">전체</button>
+      <button class="chip" data-chip="guide" onclick="setChip('guide')">이용안내</button>
+      <button class="chip" data-chip="fee" onclick="setChip('fee')">이용료</button>
+      <button class="chip" data-chip="promo" onclick="setChip('promo')">판촉물</button>
+      <button class="chip" data-chip="supporter" onclick="setChip('supporter')">서포터즈 혜택</button>
+      <button class="chip" data-chip="faq" onclick="setChip('faq')">Q&amp;A</button>
+    </div>
+
+    <!-- 전체 -->
+    <div class="chip-panel active" id="chip-all">
+      <h4>지금 많이 찾는 메뉴</h4>
+      <button class="rec" onclick="goAdvertiser()"><b>🏪 광고 신청하기</b><span>내 가게·상품 홍보를 신청하세요</span></button>
+      <button class="rec" onclick="switchView('supporter',true)"><b>🙌 서포터즈 참여</b><span>후기·공유 활동을 기록하세요</span></button>
+      <button class="rec" onclick="goAdvertiser('판촉물')"><b>🎁 판촉물 제작</b><span>전단지·현수막·답례품</span></button>
+      <button class="rec" onclick="setChip('fee')"><b>💳 이용료 확인</b><span>요금제와 AI Point 안내</span></button>
+      <button class="rec" onclick="switchView('community',true)"><b>💬 커뮤니티</b><span>후기와 노하우를 나눠요</span></button>
+    </div>
+
+    <!-- 이용안내 (타이틀 박스에서 옮겨온 소개 글 포함) -->
+    <div class="chip-panel" id="chip-guide">
+      <h4>🎯 AI통합홍보센터 이용안내</h4>
+      <p>광고주 홍보 신청, 서포터즈 참여형 홍보, 플랫폼 자체 마케팅을 한 공간에서 관리합니다.</p>
+      <p>AI 호출이 필요한 기능은 AI플랫마켓 공통 AI Core(ChatDoumi)를 통해서만 처리하며, 이 프로젝트가 직접 AI 모델을 호출하지 않습니다.</p>
+      <p><b>🏪 광고주 서비스</b> — 유료 홍보 신청<br><b>🙌 서포터즈</b> — 무보수 자발적 홍보 활동 기록<br><b>🏢 플랫폼 자체 홍보</b> — 운영자 전용 콘텐츠<br><b>💬 커뮤니티</b> — 이용자 게시판</p>
+      <button class="rec" onclick="showAbout()"><b>ℹ️ 서비스 소개 자세히</b><span>영역별 설명 보기</span></button>
+    </div>
+
+    <!-- 이용료 -->
+    <div class="chip-panel" id="chip-fee">
+      <h4>💳 이용료 · 요금제</h4>
+      <div id="price-box"><div class="empty">가격 정보를 불러오는 중...</div></div>
+    </div>
+
+    <!-- 판촉물 -->
+    <div class="chip-panel" id="chip-promo">
+      <h4>🎁 판촉물 안내</h4>
+      <p>전단지·리플렛, 로고 쇼핑백, 현수막·배너·간판, 로고 인쇄 답례품을 제작할 수 있습니다.</p>
+      <button class="rec" onclick="switchView('promo',true)"><b>판촉물 카드 보기</b><span>가격 예시와 제작 안내</span></button>
+      <button class="rec" onclick="window.open('http://www.xn--pr3b17ziqe.com/front/index/f_main.asp','_blank','noopener')"><b>🛒 판촉물몰 (외부)</b><span>새 창으로 열립니다</span></button>
+    </div>
+
+    <!-- 서포터즈 혜택 -->
+    <div class="chip-panel" id="chip-supporter">
+      <h4>🙌 서포터즈 혜택</h4>
+      <p>지금은 무보수 자발적 참여이며, 활동 기록이 쌓이면 향후 공정기여도 · AI Point 보상과 연결하는 방안을 검토합니다. (정산은 아직 구현되지 않았습니다.)</p>
+      <button class="rec" onclick="jumpTo('supporter','sup-name')"><b>활동 등록하러 가기</b><span>누가·언제·무엇을 했는지 기록</span></button>
+    </div>
+
+    <!-- Q&A -->
+    <div class="chip-panel" id="chip-faq">
+      <h4>❓ 자주 묻는 질문</h4>
+      <div id="faqList"></div>
+      <p class="help">궁금한 점은 화면 아래 질문 입력바에 바로 물어보세요.</p>
+    </div>
+  </aside>
+
+</div>
+
+
+<!-- ══════════ FOOTER — 표준 v2 (서비스 소개·광고문의·커뮤니티 이동 대상만 이 모듈용) ══════════ -->
 <footer>
   <div class="ft-outer">
     <div class="ft">
+<!-- 좌: 브랜드 + 사업자 정보 -->
     <div style="min-width:240px">
       <div class="ft-logo">AI PLATMARKET · 월간 국민경제㊉</div>
-      <div class="ft-copy" style="color:rgba(255,255,255,.5);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
-      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.45)">
-        © 2026 <strong style="color:rgba(255,255,255,.65)">22세기대한</strong>. All rights reserved.<br>
+      <div class="ft-copy" style="color:rgba(255,255,255,.8);margin:2px 0 8px">소상공인+소비자 상생 플랫폼</div>
+      <div style="font-size:.7rem;line-height:2;color:rgba(255,255,255,.8)">
+        © 2026 <strong style="color:rgba(255,255,255,.8)">22세기대한</strong>. All rights reserved.<br>
         대표: 김형식 &nbsp;|&nbsp; 발행인 겸 편집인: 김형식 &nbsp;|&nbsp; 월간지 등록번호:부평, 라00025<br>
         사업자등록번호: 227-18-34338<br>
         주소: 인천광역시 부평구 항동로 33번길 36-11 1층<br>
         TEL: 0505-505-9000<br>
+        <!-- 이메일 드롭다운 -->
         <span style="position:relative;display:inline-block">
           <span id="ftEmailBtn" onclick="toggleFtEmail()" style="cursor:pointer;color:var(--gold);text-decoration:underline;font-size:.7rem">📧 이메일 문의 ▾</span>
           <div id="ftEmailDd" style="display:none;position:absolute;bottom:100%;left:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;min-width:210px;overflow:hidden;margin-bottom:4px">
-            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee">📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span></a>
-            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600">📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span></a>
+            <a href="mailto:newstar114@naver.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;border-bottom:1px solid #eee;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 newstar114@naver.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">네이버 메일</span>
+            </a>
+            <a href="mailto:a55946564@gmail.com" style="display:block;padding:9px 14px;font-size:.8rem;color:var(--navy);font-weight:600;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+              📮 a55946564@gmail.com<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">Gmail</span>
+            </a>
           </div>
         </span>
       </div>
     </div>
+
+    <!-- 우: 링크 + 관리자 -->
     <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:14px">
       <div class="ft-links">
         <a href="#" onclick="showAbout();return false">서비스 소개</a>
         <a href="#" onclick="if(typeof PopupManager!=='undefined'){PopupManager.show('intro',{force:true});}return false">🚀 프리뷰 보기</a>
-        <a href="#" onclick="window.open('https://aiplatmarket.com/#terms','_blank');return false">이용약관</a>
-        <a href="#" onclick="window.open('https://aiplatmarket.com/#privacy','_blank');return false">개인정보처리방침</a>
-        <a href="#" onclick="window.open('https://aiplatmarket.com/#adcontact','_blank');return false">광고문의</a>
-        <a href="#" onclick="window.open('https://aiplatmarket.com/#register','_blank');return false">입점문의</a>
-        <a href="#" onclick="switchTab('community');document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});return false">커뮤니티</a>
+        <a href="#" onclick="showPage('terms');return false">이용약관</a>
+        <a href="#" onclick="showPage('privacy');return false">개인정보처리방침</a>
+        <a href="#" onclick="goAdvertiser();return false">광고문의</a>
+        <a href="#" onclick="showPage('register');return false">입점문의</a>
+        <a href="#" onclick="switchView('community');return false">커뮤니티</a>
         <a href="#" onclick="if(typeof FeedbackManager!=='undefined'){FeedbackManager.open('general');}else{toast('잠시 후 다시 시도해 주세요');}return false">💡 불편사항·개선 제안</a>
       </div>
-      <a href="/admin" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;text-decoration:none" title="관리자 대시보드">⚙️ 관리자 대시보드</a>
-    </div>
+      <!-- 관리자 버튼 (푸터 우측 하단) -->
+      <a href="/admin" target="_blank"
+         style="display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.5);color:var(--gold);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;transition:all .2s;text-decoration:none"
+         onmouseover="this.style.background='rgba(201,168,76,.3)'" onmouseout="this.style.background='rgba(201,168,76,.15)'"
+         title="관리자 대시보드">
+        ⚙️ 관리자 대시보드
+      </a>
+      <!-- PC/모바일 버전 전환 (드롭다운) -->
+      <div style="position:relative" id="viewModeDdw">
+        <button onclick="toggleViewModeDd()"
+           style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);padding:5px 14px;border-radius:4px;font-size:.74rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px"
+           id="viewModeBtn">
+          <span id="viewModeIco">🖥</span> <span id="viewModeLbl">화면 전환</span> ▾
+        </button>
+        <div id="viewModeDd" style="display:none;position:absolute;bottom:100%;right:0;background:#fff;border:1px solid #dde2ea;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:200;min-width:180px;overflow:hidden;margin-bottom:4px">
+          <div onclick="switchToPcMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            🖥 PC 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">데스크탑 레이아웃</span>
+          </div>
+          <div onclick="switchToMobileMode()" style="padding:10px 14px;font-size:.82rem;color:var(--navy);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s" onmouseover="this.style.background='#fce8e6'" onmouseout="this.style.background=''">
+            📱 모바일 버전으로 보기<br><span style="font-size:.68rem;color:var(--g4);font-weight:400">최적화된 모바일 화면</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  
+  
+    </div>
+  
+    
+    
+  
 </footer>
 <!-- ══════════ /FOOTER ══════════ -->
+<div class="ft-pad"></div>
+</div>
+
+
+<!-- 중앙 하단 질문 입력바 (고정) — 위치/너비는 스크립트가 중앙 60% 컬럼에 맞춥니다 -->
+<div class="qbar" id="qbar">
+  <div class="qbar-in">
+    <input id="qInput" type="text" autocomplete="off" placeholder="궁금한 점을 물어보세요 (예: 전단지 가격, 서포터즈 보상, 신청 방법)" onkeydown="if(event.key==='Enter')askQuestion()">
+    <button type="button" class="btn btn-primary" onclick="askQuestion()">질문</button>
+  </div>
+</div>
 
 <!-- "서비스 소개" 모달 — 메인 사이트로 나가지 않고 이 모듈 자체를 설명 -->
 <div class="modal-overlay" id="aboutModal" onclick="if(event.target===this)hideAbout()">
   <div class="modal-box">
-    <button class="close" onclick="hideAbout()">✕</button>
+    <button class="close" onclick="hideAbout()" aria-label="닫기">✕</button>
     <h2>🎯 AI통합홍보센터 소개</h2>
     <p style="font-size:.83rem;color:var(--navy2);line-height:1.6">
-      AI플랫마켓 전체의 홍보·마케팅을 한 곳에서 관리하는 모듈입니다. 성격이 다른 3가지 영역을
+      AI플랫마켓 전체의 홍보·마케팅을 한 곳에서 관리하는 모듈입니다. 성격이 다른 영역을
       명확히 구분해서 운영합니다.
     </p>
     <ul>
       <li><b>🏪 광고주 서비스</b> — 소상공인 등 외부 이용자가 유료로 홍보를 신청 (신청→검토→승인→진행→리포트)</li>
       <li><b>🙌 서포터즈 참여</b> — 이용자가 무보수로 자발적 홍보 활동을 하고 기록을 남기는 영역 (향후 공정기여도·AI Point 연동 검토)</li>
       <li><b>🏢 플랫폼 자체 홍보</b> — AI플랫마켓 자신을 알리는 콘텐츠, 운영자 전용</li>
+      <li><b>🎁 판촉물</b> — 전단지·쇼핑백·현수막·답례품 제작 안내</li>
       <li><b>💬 커뮤니티</b> — 이용자끼리 질문·후기·노하우를 나누는 자체 게시판</li>
     </ul>
     <p style="font-size:.78rem;color:var(--g4);line-height:1.6">
@@ -591,242 +947,639 @@ body.is-admin .locked-view{display:none}
   </div>
 </div>
 
+
+<!-- ══════════ LOGIN MODAL — </body> 직전, 스크립트 앞 ══════════ -->
+<div class="fw-modal" id="fwLoginModal" role="dialog" aria-modal="true" aria-labelledby="fwLoginTtl" onclick="if(event.target===this)FWAuth.close()">
+  <div class="fw-modal-box">
+    <button type="button" class="fw-modal-x" aria-label="닫기" onclick="FWAuth.close()">×</button>
+    <h2 class="fw-modal-ttl" id="fwLoginTtl">로그인</h2>
+    <p class="fw-modal-sub">로그인하면 분석 결과와 활동 기록을 안전하게 이어서 볼 수 있어요.<br>이 모듈에서 바로 로그인할 수 있습니다.</p>
+    <button type="button" class="fw-prov kakao" id="fwProv-kakao" onclick="FWAuth.kakao()"><b>K</b> 카카오로 계속하기<span class="fw-soon" style="display:none">준비 중</span></button>
+    <button type="button" class="fw-prov naver" id="fwProv-naver" onclick="FWAuth.naver()"><b>N</b> 네이버로 계속하기<span class="fw-soon" style="display:none">준비 중</span></button>
+    <button type="button" class="fw-prov google" id="fwProv-google" onclick="FWAuth.google()"><b style="color:#1a56c4">G</b> Google로 계속하기<span class="fw-soon">준비 중</span></button>
+    <button type="button" class="fw-prov phone" id="fwProv-phone" onclick="FWAuth.phone()"><b>☎</b> 휴대폰 번호로 로그인<span class="fw-soon">준비 중</span></button>
+    <div class="fw-phone-box" id="fwPhoneBox">
+      <input id="fwPhoneNo" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" placeholder="휴대폰 번호 (예: 01012345678)">
+      <button type="button" onclick="FWAuth.phoneSend()">인증번호 받기</button>
+      <div id="fwPhoneCodeRow" style="display:none;margin-top:8px">
+        <input id="fwPhoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="인증번호 입력">
+        <button type="button" onclick="FWAuth.phoneVerify()">확인</button>
+      </div>
+    </div>
+    <p class="fw-modal-note">로그인 시 <a onclick="showPage('terms')">이용약관</a> 및 <a onclick="showPage('privacy')">개인정보처리방침</a>에 동의한 것으로 봅니다.<br>휴대폰 번호는 인증 목적으로만 사용되며 이 기기에 저장하지 않습니다.</p>
+    <button type="button" class="fw-modal-skip" onclick="FWAuth.close()">로그인 없이 계속 둘러보기</button>
+  </div>
+</div>
+
+<!-- ══════════ /LOGIN MODAL ══════════ -->
+
 <script>
-/* ── AI플랫마켓 표준 GNB/Footer가 필요로 하는 함수 (원본 그대로) ── */
-function toggleCat(id, e) {
-  if (e) e.stopPropagation();
-  const cat = document.getElementById('gcat-' + id);
-  if (!cat) return;
-  const isOpen = cat.classList.contains('open');
-  closeCats();
-  if (isOpen) return;
-  cat.classList.add('open');
-  const btn = cat.querySelector('.gcbtn'), drop = cat.querySelector('.gcdrop');
-  if (!btn || !drop) return;
-  const r = btn.getBoundingClientRect();
-  drop.style.top = (r.bottom + 1) + 'px'; drop.style.left = r.left + 'px'; drop.style.right = 'auto';
-  requestAnimationFrame(() => {
-    const dr = drop.getBoundingClientRect();
-    if (dr.right > window.innerWidth - 8) { drop.style.left = 'auto'; drop.style.right = '8px'; }
-    if (dr.bottom > window.innerHeight - 8) { drop.style.top = (r.top - dr.height - 1) + 'px'; }
-  });
+/* ══════════════════════════════════════════════════════════════════════
+   AI플랫마켓 표준 GNB/Footer 스크립트 (모듈판 v2) — 그대로 </body> 직전에 붙여넣기
+   포함: ① GNB/Footer 기본 함수  ② 메인 SPA 전용 함수 shim  ③ toast  ④ FWAuth(로그인)
+   ──────────────────────────────────────────────────────────────────────
+   【로그인 서버 계약】 필요한 경우에만 아래 FW_AUTH_ENDPOINTS 로 경로를 바꾸세요.
+     GET  /api/config                → 관리자 설정·키 전달 (카카오 JS 키 등)
+     GET  /api/auth/me               → 현재 로그인 사용자 {user:{id,name,provider,avatar}}
+     POST /api/auth/kakao            → {code,redirectUri} 교환 → {user:{...}}
+     GET  /api/auth/naver?returnTo=  → 네이버 OAuth 시작(서버가 NAVER_CLIENT_ID/SECRET 사용)
+     GET  /api/auth/google?returnTo= → 구글 OAuth 시작
+     POST /api/auth/phone/send       → {phone} 인증번호 발송
+     POST /api/auth/phone/verify     → {phone,code} → {user:{...}}
+     POST /api/auth/logout           → 세션 종료
+   서버 경로가 아직 없으면 버튼은 동작하되 "서버 연동 준비 중" 안내만 표시됩니다(오류 없음).
+══════════════════════════════════════════════════════════════════════ */
+(function (w, d) {
+  'use strict';
+  var FW_MAIN = 'https://aiplatmarket.com/';
+
+  /* ① GNB / Footer 기본 함수 ------------------------------------------------ */
+  w.toggleFtEmail = function () {
+    var dd = d.getElementById('ftEmailDd'); if (!dd) return;
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+  w.updateGnbScrollHint = function (bar) {
+    var hint = d.getElementById('gnbScrollHint'), hintL = d.getElementById('gnbScrollHintLeft');
+    if (!bar || !hint) return;
+    hint.classList.toggle('show', bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4);
+    if (hintL) hintL.classList.toggle('show', bar.scrollLeft > 4);
+  };
+  /* 화면 배율(80% 등 transform:scale 적용 시) — [data-fw-scale] 요소로 실제 배율을 측정 */
+  w.fwScale = function () {
+    var el = d.querySelector('[data-fw-scale]');
+    if (!el || !el.offsetWidth) return 1;
+    var s = el.getBoundingClientRect().width / el.offsetWidth;
+    return (s > 0.2 && s < 3) ? s : 1;
+  };
+  w.toggleCat = function (id, e) {
+    if (e) e.stopPropagation();
+    var cat = d.getElementById('gcat-' + id); if (!cat) return;
+    var wasOpen = cat.classList.contains('open');
+    w.closeCats(); if (wasOpen) return;
+    cat.classList.add('open');
+    var btn = cat.querySelector('.gcbtn'), drop = cat.querySelector('.gcdrop');
+    if (!btn || !drop) return;
+    var S = w.fwScale(), r = btn.getBoundingClientRect(), vw = w.innerWidth / S, vh = w.innerHeight / S;
+    drop.style.top = ((r.bottom / S) + 1) + 'px';
+    drop.style.left = (r.left / S) + 'px'; drop.style.right = 'auto';
+    w.requestAnimationFrame(function () {
+      var dr = drop.getBoundingClientRect(), dw = dr.width / S, dh = dr.height / S;
+      if ((dr.left / S) + dw > vw - 8) { drop.style.left = 'auto'; drop.style.right = '8px'; }
+      if ((dr.top / S) + dh > vh - 8) { drop.style.top = Math.max(8, (r.top / S) - dh - 1) + 'px'; }
+    });
+  };
+  w.closeCats = function () {
+    d.querySelectorAll('.gcat.open').forEach(function (c) { c.classList.remove('open'); });
+  };
+  d.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.gcat')) w.closeCats(); });
+  d.addEventListener('keydown', function (e) { if (e.key === 'Escape') { w.closeCats(); if (w.FWAuth) w.FWAuth.close(); } });
+
+  /* ② 메인 SPA 전용 함수 shim — 모듈 페이지에는 없으므로 메인 사이트로 연결 --------- */
+  var go = function (hash) { w.open(FW_MAIN + (hash ? '#' + encodeURIComponent(hash) : ''), '_blank', 'noopener'); };
+  if (typeof w.showPage !== 'function') w.showPage = function (id) { go(id); };
+  if (typeof w.quickReg !== 'function') w.quickReg = function () { go('tv'); };
+  if (typeof w.setGenre !== 'function') w.setGenre = function () {};
+  if (typeof w.toggleDd !== 'function') w.toggleDd = function () {};
+  if (typeof w.closeDds !== 'function') w.closeDds = function () {};
+  ['gnbCat', 'gnbSort', 'gnbKw'].forEach(function (n) { if (typeof w[n] !== 'function') w[n] = function () { go('news'); }; });
+  w.toggleViewModeDd = function () {
+    var dd = d.getElementById('viewModeDd'); if (dd) dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+  w.switchToPcMode = function () {
+    var m = d.querySelector('meta[name=viewport]'); if (m) m.setAttribute('content', 'width=1280');
+    w.toggleViewModeDd(); w.toast('PC 버전으로 표시합니다');
+  };
+  w.switchToMobileMode = function () {
+    var m = d.querySelector('meta[name=viewport]'); if (m) m.setAttribute('content', 'width=device-width,initial-scale=1');
+    w.toggleViewModeDd(); w.toast('모바일 버전으로 표시합니다');
+  };
+
+  /* 오늘 날짜: 기기 시계 기준 · 자정이 지나면 자동 갱신 (상단바 #fwToday) */
+  w.fwUpdateToday = function () {
+    var el = d.getElementById('fwToday'); if (!el) return;
+    var n = new Date(), p = function (v) { return String(v).padStart(2, '0'); };
+    var key = n.getFullYear() + '-' + p(n.getMonth() + 1) + '-' + p(n.getDate());
+    if (el.getAttribute('datetime') === key) return;                 // 날짜가 그대로면 건드리지 않음
+    el.setAttribute('datetime', key);
+    var full = n.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+    var wd = n.toLocaleDateString('ko-KR', { weekday: 'short' });
+    el.innerHTML = '<span class="fw-d-full">' + full + '</span><span class="fw-d-short">' + (n.getMonth() + 1) + '월 ' + n.getDate() + '일 (' + wd + ')</span><span class="fw-d-tiny">' + (n.getMonth() + 1) + '/' + n.getDate() + '(' + wd + ')</span>';
+  };
+
+  /* ③ toast ------------------------------------------------------------------ */
+  var toastTimer;
+  w.toast = function (msg) {
+    var t = d.getElementById('fwToast');
+    if (!t) { t = d.createElement('div'); t.id = 'fwToast'; t.className = 'fw-toast'; t.setAttribute('role', 'status'); d.body.appendChild(t); }
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  };
+
+  /* ④ FWAuth — 모듈 자체 로그인 (메인 연동과 무관하게 단독 동작) ------------------- */
+  var EP = {
+    config: '/api/config', me: '/api/auth/me', logout: '/api/auth/logout',
+    kakaoExchange: '/api/auth/kakao', naverStart: '/api/auth/naver', googleStart: '/api/auth/google',
+    phoneSend: '/api/auth/phone/send', phoneVerify: '/api/auth/phone/verify'
+  };
+  if (w.FW_AUTH_ENDPOINTS) for (var k in w.FW_AUTH_ENDPOINTS) EP[k] = w.FW_AUTH_ENDPOINTS[k];
+
+  var LS = 'fw_user_v1';
+  /* 기본값: 관리자에 키가 등록된 카카오·네이버는 켬, 구글·휴대폰은 관리자 설정이 켜질 때까지 "준비 중" */
+  var st = { on: { kakao: true, naver: true, google: false, phone: false }, kakaoKey: '', cfgLoaded: false, user: null, cbs: [], phone: '' };
+  var KAKAO_KEYS = ['kakaoJsKey', 'kakaoJsApiKey', 'kakaoAppKey', 'kakaoKey', 'kakao_js_key', 'KAKAO_JS_KEY'];
+  var GOOGLE_KEYS = ['googleClientId', 'GOOGLE_CLIENT_ID', 'google_client_id'];
+
+  function $(id) { return d.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pick(o, names) { if (!o) return ''; for (var i = 0; i < names.length; i++) if (o[names[i]]) return o[names[i]]; return ''; }
+  function fetchJSON(url, opt, ms) {
+    opt = opt || {}; opt.credentials = 'include';
+    var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    if (ctl) opt.signal = ctl.signal;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, ms || 8000) : null;
+    return fetch(url, opt).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (j) { return { ok: r.ok, status: r.status, data: j }; });
+    }).catch(function () { return { ok: false, status: 0, data: null }; })
+      .then(function (x) { if (timer) clearTimeout(timer); return x; });
+  }
+  function normalize(u, provider) {
+    u = u || {};
+    return { id: String(u.id || u.uid || u.userId || u.sub || ''), name: String(u.name || u.nickname || u.displayName || '회원').slice(0, 20), provider: u.provider || provider || '', avatar: u.avatar || u.profileImage || '' };
+  }
+  function loadUser() { try { var u = JSON.parse(w.localStorage.getItem(LS) || 'null'); return u && u.id ? u : null; } catch (e) { return null; } }
+  function saveUser(u) { try { if (u) w.localStorage.setItem(LS, JSON.stringify(u)); else w.localStorage.removeItem(LS); } catch (e) {} }
+  function setUser(u) {
+    st.user = u; saveUser(u); render();
+    st.cbs.forEach(function (fn) { try { fn(u); } catch (e) {} });
+  }
+  function loadScript(src) {
+    return new Promise(function (res, rej) { var s = d.createElement('script'); s.src = src; s.async = true; s.onload = res; s.onerror = function () { rej(new Error('load')); }; d.head.appendChild(s); });
+  }
+
+  function applyConfig(c) {
+    c = c || {};
+    var flags = c.authProviders || c.loginProviders || c.auth || c.login || {};
+    ['kakao', 'naver', 'google', 'phone'].forEach(function (p) {
+      var f = flags[p];
+      if (typeof f === 'boolean') st.on[p] = f;
+      else if (f && typeof f === 'object' && typeof f.enabled === 'boolean') st.on[p] = f.enabled;
+    });
+    st.kakaoKey = pick(c, KAKAO_KEYS) || pick(c.kakao, ['jsKey', 'appKey', 'key']) || st.kakaoKey;
+    if (typeof flags.google !== 'boolean' && pick(c, GOOGLE_KEYS)) st.on.google = true;
+    if (typeof flags.phone !== 'boolean' && (c.phoneAuth === true || c.phoneLogin === true)) st.on.phone = true;
+  }
+  function ensureConfig() {
+    if (st.cfgLoaded) return Promise.resolve();
+    return fetchJSON(EP.config).then(function (r) { st.cfgLoaded = true; if (r.ok && r.data) applyConfig(r.data.config || r.data); render(); });
+  }
+
+  function provIcon(p) { return { kakao: 'K', naver: 'N', google: 'G', phone: '☎' }[p] || '●'; }
+  function render() {
+    var a = $('fwAuthArea');
+    if (a) {
+      if (st.user) a.innerHTML = '<span class="fw-user" title="' + esc(st.user.provider) + ' 로그인"><span class="fw-user-ico ' + esc(st.user.provider) + '">' + provIcon(st.user.provider) + '</span>' + esc(st.user.name) + '님</span><button type="button" class="fw-login-btn ghost" onclick="FWAuth.logout()">로그아웃</button>';
+      else a.innerHTML = '<button type="button" class="fw-login-btn" onclick="FWAuth.open()">🔐 로그인</button>';
+    }
+    ['kakao', 'naver', 'google', 'phone'].forEach(function (p) {
+      var b = $('fwProv-' + p); if (!b) return;
+      b.classList.toggle('is-off', !st.on[p]);
+      var soon = b.querySelector('.fw-soon'); if (soon) soon.style.display = st.on[p] ? 'none' : 'inline-block';
+    });
+  }
+
+  function notReady(what) { w.toast(what + ' 서버 연동이 아직 준비되지 않았습니다. 관리자에게 문의해 주세요.'); }
+
+  function loginKakao() {
+    if (!st.on.kakao) return w.toast('카카오 로그인이 현재 비활성화되어 있습니다.');
+    ensureConfig().then(function () {
+      if (!st.kakaoKey) return w.toast('카카오 키를 불러오지 못했습니다. 관리자 설정(/api/config)을 확인해 주세요.');
+      return (w.Kakao ? Promise.resolve() : loadScript('https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js')).then(function () {
+        if (!w.Kakao.isInitialized()) w.Kakao.init(st.kakaoKey);
+        w.Kakao.Auth.authorize({ redirectUri: w.location.origin + w.location.pathname, state: 'fw_kakao' });
+      });
+    }).catch(function () { w.toast('카카오 SDK를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'); });
+  }
+  function loginServer(p, url, label) {
+    if (!st.on[p]) return w.toast(label + ' 로그인은 아직 활성화되지 않았습니다.');
+    w.location.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'returnTo=' + encodeURIComponent(w.location.pathname);
+  }
+  function togglePhone() {
+    if (!st.on.phone) return w.toast('휴대폰 로그인은 관리자 설정이 활성화되면 사용할 수 있습니다.');
+    var b = $('fwPhoneBox'); if (b) b.classList.toggle('open');
+  }
+  function phoneSend() {
+    var raw = ($('fwPhoneNo') || {}).value || '', num = raw.replace(/\D/g, '');
+    if (!/^01[016789]\d{7,8}$/.test(num)) return w.toast('휴대폰 번호를 정확히 입력해 주세요. (예: 01012345678)');
+    fetchJSON(EP.phoneSend, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: num }) }).then(function (r) {
+      if (!r.ok) return notReady('휴대폰 인증');
+      st.phone = num; var c = $('fwPhoneCodeRow'); if (c) c.style.display = 'block'; w.toast('인증번호를 발송했습니다.');
+    });
+  }
+  function phoneVerify() {
+    var code = (($('fwPhoneCode') || {}).value || '').replace(/\D/g, '');
+    if (code.length < 4) return w.toast('인증번호를 입력해 주세요.');
+    fetchJSON(EP.phoneVerify, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: st.phone, code: code }) }).then(function (r) {
+      if (!r.ok || !r.data || !(r.data.user || r.data.success)) return w.toast('인증번호가 올바르지 않거나 서버 연동이 준비되지 않았습니다.');
+      var u = normalize(r.data.user || r.data, 'phone');
+      if (!u.name || u.name === '회원') u.name = st.phone.slice(0, 3) + '-****-' + st.phone.slice(-4);
+      setUser(u); close(); w.toast('로그인되었습니다.');
+    });
+  }
+  function me() {
+    return fetchJSON(EP.me).then(function (r) {
+      if (r.ok && r.data && (r.data.user || r.data.id)) { setUser(normalize(r.data.user || r.data)); return true; }
+      return false;
+    });
+  }
+  function handleReturn() {
+    var q = new URLSearchParams(w.location.search), clean = w.location.pathname + w.location.hash;
+    if (q.get('state') === 'fw_kakao' && q.get('code')) {
+      var code = q.get('code'); w.history.replaceState(null, '', clean);
+      fetchJSON(EP.kakaoExchange, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: code, redirectUri: w.location.origin + w.location.pathname }) }).then(function (r) {
+        if (r.ok && r.data && (r.data.user || r.data.success)) { setUser(normalize(r.data.user || r.data, 'kakao')); w.toast('카카오 로그인이 완료되었습니다.'); }
+        else notReady('카카오 로그인');
+      });
+    } else if (q.get('login')) {
+      w.history.replaceState(null, '', clean);
+      me().then(function (ok) { if (ok) w.toast('로그인되었습니다.'); });
+    }
+  }
+  function open() { var m = $('fwLoginModal'); if (!m) return; ensureConfig(); render(); m.classList.add('open'); var f = m.querySelector('.fw-prov'); if (f) f.focus(); }
+  function close() { var m = $('fwLoginModal'); if (m) m.classList.remove('open'); }
+  function logout() {
+    fetchJSON(EP.logout, { method: 'POST' }); setUser(null); w.toast('로그아웃되었습니다.');
+  }
+
+  w.FWAuth = {
+    open: open, close: close, logout: logout, user: function () { return st.user; },
+    onChange: function (fn) { st.cbs.push(fn); },
+    kakao: loginKakao, naver: function () { loginServer('naver', EP.naverStart, '네이버'); },
+    google: function () { loginServer('google', EP.googleStart, '구글'); },
+    phone: togglePhone, phoneSend: phoneSend, phoneVerify: phoneVerify
+  };
+  function boot() {
+    w.fwUpdateToday(); setInterval(w.fwUpdateToday, 30000);
+    d.addEventListener('visibilitychange', function () { if (!d.hidden) w.fwUpdateToday(); });
+    w.addEventListener('focus', w.fwUpdateToday);
+    st.user = loadUser(); render(); handleReturn();
+    if (!st.user) me(); /* 서버 세션이 있으면 자동 복원(없으면 조용히 무시) */
+    ensureConfig();
+  }
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', boot); else boot();
+})(window, document);
+
+</script>
+
+<script>
+/* ═══════════ AI통합홍보센터 본문 로직 (표준 GNB/Footer 스크립트 아래) ═══════════
+   원칙: AI 호출이 필요해지면 AICore.process()만 사용(직접 GPT/Claude/Gemini 호출 금지).
+   이번 MVP는 AI 호출 없이 규칙 기반 안내 + localStorage 임시 저장입니다. */
+
+function $(id) { return document.getElementById(id); }
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
 }
-window.addEventListener('scroll', () => closeCats(), { passive: true });
-window.addEventListener('resize', () => closeCats());
-function closeCats() { document.querySelectorAll('.gcat.open').forEach(c => c.classList.remove('open')); }
-document.addEventListener('click', function (e) { if (!e.target.closest('.gcat')) closeCats(); });
-function updateGnbScrollHint(bar) {
-  const hint = document.getElementById('gnbScrollHint'), hintL = document.getElementById('gnbScrollHintLeft');
-  if (!hint) return;
-  hint.classList.toggle('show', bar.scrollWidth - bar.scrollLeft - bar.clientWidth > 4);
-  if (hintL) hintL.classList.toggle('show', bar.scrollLeft > 4);
+function isMobile() { return window.matchMedia('(max-width:900px)').matches; }
+
+/* 관리자 데모 모드 (실서비스에서는 로그인 세션 기반 권한 체크로 교체 필요) */
+if (new URLSearchParams(location.search).get('admin') === '1') document.body.classList.add('is-admin');
+
+/* ── 화면(메뉴) 전환 ── */
+function switchView(name, scroll) {
+  document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('active', t.dataset.tab === name); });
+  document.querySelectorAll('.panel').forEach(function (p) { p.classList.toggle('active', p.id === 'panel-' + name); });
+  var t = document.querySelector('.tab.active'), bar = $('modGnb');
+  if (t && bar) bar.scrollLeft = t.offsetLeft - bar.clientWidth / 2 + t.clientWidth / 2;
+  closePanels();
+  if (scroll !== false) $('centerTop').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-window.addEventListener('load', () => { const bar = document.getElementById('gnbCatBar'); if (bar) updateGnbScrollHint(bar); });
-(function () {
-  const bar = document.getElementById('gnbCatBar');
-  if (!bar) return;
+function switchTab(name) { switchView(name); } /* 이전 버전 호환 */
+function goHome() {
+  switchView('advertiser', false); hideAnswer(); closePanels();
+  var s = $('siteSearch'); if (s) { s.value = ''; runSearch(''); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function jumpTo(view, id) {
+  switchView(view, false);
+  setTimeout(function () {
+    var el = $(id); if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) { try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } }
+  }, 60);
+}
+function goAdvertiser(type) {
+  if (type && $('adv-type')) $('adv-type').value = type;
+  jumpTo('advertiser', 'adv-name');
+}
+function focusQuestion() { closePanels(); var q = $('qInput'); if (q) q.focus(); }
+
+/* ── 좌/우 사이드바 (모바일: 타이틀 박스 바로 아래로 펼침 / PC: 항상 표시) ── */
+function setPanelTop() {
+  var r = $('titleBox').getBoundingClientRect();
+  document.documentElement.style.setProperty('--panelTop', Math.max(0, Math.round(r.bottom)) + 'px');
+}
+function closePanels() { ['sideLeft', 'sideRight'].forEach(function (id) { var e = $(id); if (e) e.classList.remove('open'); }); }
+function togglePanel(side) {
+  var el = $(side === 'left' ? 'sideLeft' : 'sideRight'); if (!el) return;
+  var was = el.classList.contains('open');
+  closePanels();
+  if (!was) { setPanelTop(); el.classList.add('open'); }
+}
+function setChip(name) {
+  document.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('active', c.dataset.chip === name); });
+  document.querySelectorAll('.chip-panel').forEach(function (p) { p.classList.toggle('active', p.id === 'chip-' + name); });
+  var c = document.querySelector('.chip.active'), bar = $('chipBar');
+  if (c && bar) bar.scrollLeft = c.offsetLeft - bar.clientWidth / 2 + c.clientWidth / 2;
+}
+function openRight(chip) {
+  setChip(chip);
+  if (isMobile()) { closePanels(); setPanelTop(); $('sideRight').classList.add('open'); }
+  else { $('sideRight').scrollTop = 0; }
+}
+
+/* ── 고정 헤더 높이 측정 + 질문바를 중앙 60% 컬럼에 맞춤 ── */
+function placeQbar() {
+  var q = $('qbar'); if (!q) return;
+  if (isMobile()) { q.style.left = '0'; q.style.width = '100%'; return; }
+  var r = $('center').getBoundingClientRect();
+  q.style.left = r.left + 'px'; q.style.width = r.width + 'px';
+}
+function measureHead() {
+  var h = $('stickyHead').offsetHeight;
+  document.documentElement.style.setProperty('--headH', h + 'px');
+  setPanelTop(); placeQbar();
+  if (typeof updateGnbScrollHint === 'function') updateGnbScrollHint($('gnbCatBar'));
+}
+
+/* 마우스 휠(세로)로도 가로 스크롤 막대가 움직이게 */
+function wheelToHorizontal(id) {
+  var bar = $(id); if (!bar) return;
   bar.addEventListener('wheel', function (e) {
     if (bar.scrollWidth <= bar.clientWidth) return;
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      bar.scrollLeft += e.deltaY;
-      e.preventDefault();
-    }
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { bar.scrollLeft += e.deltaY; e.preventDefault(); }
   }, { passive: false });
-})();
-function toggleFtEmail() { const dd = document.getElementById('ftEmailDd'); if (dd) dd.style.display = dd.style.display === 'none' ? 'block' : 'none'; }
-if (typeof toast === 'undefined') { window.toast = function (msg) { console.log('[toast]', msg); }; }
-/* quickReg()/setGenre()는 메인 SPA 전용 함수로, 참조 파일의 Media 카테고리 일부 항목이 아직
-   window.open()으로 치환되지 않은 상태입니다 (원본 파일 자체의 미완성 부분으로 추정).
-   독립 모듈에서 ReferenceError로 클릭이 아예 씹히는 것을 막기 위한 안전 가드입니다. */
-if (typeof quickReg === 'undefined') { window.quickReg = function (region) { window.open('https://aiplatmarket.com/#live', '_blank'); }; }
-if (typeof setGenre === 'undefined') { window.setGenre = function () {}; }
-
-/* ── AI통합홍보센터 본문 로직 ── */
-
-// 관리자 데모 모드 (실서비스에서는 로그인 세션 기반 권한 체크로 교체 필요)
-if (new URLSearchParams(location.search).get('admin') === '1') {
-  document.body.classList.add('is-admin');
 }
 
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
-}
+/* ── 소개 모달 ── */
+function showAbout() { closePanels(); $('aboutModal').style.display = 'flex'; }
+function hideAbout() { $('aboutModal').style.display = 'none'; }
 
-// ── localStorage 저장소 (추후 서버 API 연동 시 이 함수들만 fetch()로 교체) ──
-const STORE_KEY_ADV = 'promotionAdvertisers';
-const STORE_KEY_SUP = 'promotionSupporterActivities';
-const STORE_KEY_CMT = 'promotionCommunityPosts';
-
-function loadList(key) {
-  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
-}
-function saveList(key, arr) { localStorage.setItem(key, JSON.stringify(arr)); }
+/* ── localStorage 저장소 (추후 서버 API 연동 시 이 함수들만 fetch()로 교체) ── */
+var STORE_KEY_ADV = 'promotionAdvertisers';
+var STORE_KEY_SUP = 'promotionSupporterActivities';
+var STORE_KEY_CMT = 'promotionCommunityPosts';
+var STORE_KEY_Q = 'promotionQuestions';
+function loadList(key) { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; } }
+function saveList(key, arr) { try { localStorage.setItem(key, JSON.stringify(arr)); } catch (e) { toast('브라우저 저장공간을 사용할 수 없습니다'); } }
 
 function submitAdvertiser() {
-  const name = document.getElementById('adv-name').value.trim();
-  const phone = document.getElementById('adv-phone').value.trim();
-  const target = document.getElementById('adv-target').value;
-  const type = document.getElementById('adv-type').value;
+  var name = $('adv-name').value.trim(), phone = $('adv-phone').value.trim();
+  var target = $('adv-target').value, type = $('adv-type').value;
   if (!name || !phone || !target || !type) { toast('필수 항목(*)을 입력해 주세요'); return; }
-
-  const record = {
-    id: 'adv_' + Date.now(),
-    name, phone,
-    email: document.getElementById('adv-email').value.trim(),
-    bizInfo: document.getElementById('adv-biz').value.trim(),
-    target, type,
-    period: document.getElementById('adv-period').value.trim(),
-    budget: document.getElementById('adv-budget').value.trim(),
-    memo: document.getElementById('adv-memo').value.trim(),
-    createdAt: new Date().toISOString(),
-    status: 'pending',
-    adminMemo: ''
+  var user = (window.FWAuth && FWAuth.user && FWAuth.user()) || null;
+  var record = {
+    id: 'adv_' + Date.now(), memberId: user ? user.id : '',
+    name: name, phone: phone,
+    email: $('adv-email').value.trim(), bizInfo: $('adv-biz').value.trim(),
+    target: target, type: type,
+    period: $('adv-period').value.trim(), budget: $('adv-budget').value.trim(), memo: $('adv-memo').value.trim(),
+    createdAt: new Date().toISOString(), status: 'pending', adminMemo: ''
   };
-  const list = loadList(STORE_KEY_ADV);
-  list.unshift(record);
-  saveList(STORE_KEY_ADV, list);
+  var list = loadList(STORE_KEY_ADV); list.unshift(record); saveList(STORE_KEY_ADV, list);
   renderAdvList();
-  ['adv-name','adv-phone','adv-email','adv-biz','adv-period','adv-budget','adv-memo'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('adv-target').value = '';
-  document.getElementById('adv-type').value = '';
+  ['adv-name', 'adv-phone', 'adv-email', 'adv-biz', 'adv-period', 'adv-budget', 'adv-memo'].forEach(function (id) { $(id).value = ''; });
+  $('adv-target').value = ''; $('adv-type').value = '';
+  prefillFromUser(user);
   toast('신청이 접수되었습니다 (검토 대기)');
 }
-
 function submitSupporter() {
-  const name = document.getElementById('sup-name').value.trim();
-  const type = document.getElementById('sup-type').value;
-  const link = document.getElementById('sup-link').value.trim();
+  var name = $('sup-name').value.trim(), type = $('sup-type').value, link = $('sup-link').value.trim();
   if (!name || !type || !link) { toast('필수 항목(*)을 입력해 주세요'); return; }
-
-  const record = {
-    id: 'sup_' + Date.now(),
-    memberName: name,
-    activityType: type,
-    activityLink: link,
-    memo: document.getElementById('sup-memo').value.trim(),
-    activityDate: new Date().toISOString(),
-    status: 'pending',
-    approved: false,
-    reward: null
+  var user = (window.FWAuth && FWAuth.user && FWAuth.user()) || null;
+  var record = {
+    id: 'sup_' + Date.now(), memberId: user ? user.id : '', memberName: name,
+    activityType: type, activityLink: link, memo: $('sup-memo').value.trim(),
+    activityDate: new Date().toISOString(), status: 'pending', approved: false, reward: null
   };
-  const list = loadList(STORE_KEY_SUP);
-  list.unshift(record);
-  saveList(STORE_KEY_SUP, list);
+  var list = loadList(STORE_KEY_SUP); list.unshift(record); saveList(STORE_KEY_SUP, list);
   renderSupList();
-  ['sup-name','sup-link','sup-memo'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('sup-type').value = '';
+  ['sup-link', 'sup-memo'].forEach(function (id) { $(id).value = ''; });
+  $('sup-type').value = '';
   toast('활동이 등록되었습니다 (검토 대기)');
 }
-
 function submitCommunityPost() {
-  const name = document.getElementById('cmt-name').value.trim();
-  const title = document.getElementById('cmt-title').value.trim();
-  const body = document.getElementById('cmt-body').value.trim();
+  var name = $('cmt-name').value.trim(), title = $('cmt-title').value.trim(), body = $('cmt-body').value.trim();
   if (!name || !title || !body) { toast('필수 항목(*)을 입력해 주세요'); return; }
-
-  const record = {
-    id: 'cmt_' + Date.now(),
-    author: name, title, body,
-    createdAt: new Date().toISOString()
-  };
-  const list = loadList(STORE_KEY_CMT);
-  list.unshift(record);
+  var list = loadList(STORE_KEY_CMT);
+  list.unshift({ id: 'cmt_' + Date.now(), author: name, title: title, body: body, createdAt: new Date().toISOString() });
   saveList(STORE_KEY_CMT, list);
   renderCmtList();
-  ['cmt-name','cmt-title','cmt-body'].forEach(id => document.getElementById(id).value = '');
+  ['cmt-title', 'cmt-body'].forEach(function (id) { $(id).value = ''; });
   toast('글이 등록되었습니다');
 }
 
-function renderCmtList() {
-  const list = loadList(STORE_KEY_CMT);
-  const el = document.getElementById('cmt-list');
-  if (!list.length) { el.innerHTML = '<div class="empty">아직 등록된 글이 없습니다. 첫 글을 남겨보세요!</div>'; return; }
-  el.innerHTML = list.map(r => `
-    <div class="item">
-      <div class="item-top"><span class="item-title">${escapeHtml(r.title)}</span><span class="item-meta">${escapeHtml(r.author)}</span></div>
-      <div style="font-size:.8rem;color:var(--navy2);margin:4px 0;white-space:pre-wrap">${escapeHtml(r.body)}</div>
-      <div class="item-meta">${new Date(r.createdAt).toLocaleString('ko-KR')}</div>
-    </div>`).join('');
+function statusBadge(s) {
+  var label = { pending: '검토 대기', approved: '승인', rejected: '반려' }[s] || s;
+  return '<span class="status ' + escapeHtml(s) + '">' + escapeHtml(label) + '</span>';
 }
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-// ── "서비스 소개" 안내 모달 (메인 사이트로 나가지 않고 이 모듈 안에서 바로 설명) ──
-function showAbout() {
-  document.getElementById('aboutModal').style.display = 'flex';
-}
-function hideAbout() {
-  document.getElementById('aboutModal').style.display = 'none';
-}
-  const label = { pending: '검토 대기', approved: '승인', rejected: '반려' }[s] || s;
-  return `<span class="status ${s}">${label}</span>`;
-}
-
+function setCount(id, n) { var e = $(id); if (e) e.textContent = n; }
 function renderAdvList() {
-  const list = loadList(STORE_KEY_ADV);
-  const el = document.getElementById('adv-list');
+  var list = loadList(STORE_KEY_ADV), el = $('adv-list');
+  setCount('cnt-adv', list.length);
   if (!list.length) { el.innerHTML = '<div class="empty">아직 신청 내역이 없습니다.</div>'; return; }
-  el.innerHTML = list.map(r => `
-    <div class="item">
-      <div class="item-top"><span class="item-title">${r.target} · ${r.type}</span>${statusBadge(r.status)}</div>
-      <div class="item-meta">${r.name} · ${r.phone} · ${new Date(r.createdAt).toLocaleString('ko-KR')}</div>
-    </div>`).join('');
+  el.innerHTML = list.map(function (r) {
+    return '<div class="item"><div class="item-top"><span class="item-title">' + escapeHtml(r.target) + ' · ' + escapeHtml(r.type) + '</span>' + statusBadge(r.status) + '</div>' +
+      '<div class="item-meta">' + escapeHtml(r.name) + ' · ' + escapeHtml(r.phone) + ' · ' + new Date(r.createdAt).toLocaleString('ko-KR') + '</div></div>';
+  }).join('');
 }
-
 function renderSupList() {
-  const list = loadList(STORE_KEY_SUP);
-  const el = document.getElementById('sup-list');
+  var list = loadList(STORE_KEY_SUP), el = $('sup-list');
+  setCount('cnt-sup', list.length);
   if (!list.length) { el.innerHTML = '<div class="empty">아직 활동 내역이 없습니다.</div>'; return; }
-  el.innerHTML = list.map(r => `
-    <div class="item">
-      <div class="item-top"><span class="item-title">${r.activityType}</span>${statusBadge(r.status)}</div>
-      <div class="item-meta">${r.memberName} · ${new Date(r.activityDate).toLocaleString('ko-KR')}</div>
-    </div>`).join('');
+  el.innerHTML = list.map(function (r) {
+    return '<div class="item"><div class="item-top"><span class="item-title">' + escapeHtml(r.activityType) + '</span>' + statusBadge(r.status) + '</div>' +
+      '<div class="item-meta">' + escapeHtml(r.memberName) + ' · ' + new Date(r.activityDate).toLocaleString('ko-KR') + '</div></div>';
+  }).join('');
+}
+function renderCmtList() {
+  var list = loadList(STORE_KEY_CMT), el = $('cmt-list');
+  setCount('cnt-cmt', list.length);
+  if (!list.length) { el.innerHTML = '<div class="empty">아직 등록된 글이 없습니다. 첫 글을 남겨보세요!</div>'; return; }
+  el.innerHTML = list.map(function (r) {
+    return '<div class="item"><div class="item-top"><span class="item-title">' + escapeHtml(r.title) + '</span><span class="item-meta">' + escapeHtml(r.author) + '</span></div>' +
+      '<div style="font-size:.8rem;color:var(--navy2);margin:4px 0;white-space:pre-wrap">' + escapeHtml(r.body) + '</div>' +
+      '<div class="item-meta">' + new Date(r.createdAt).toLocaleString('ko-KR') + '</div></div>';
+  }).join('');
 }
 
-// ── AI Point 가격 정책 표시: ChatDoumi AI Core 실시간 조회 → 실패 시 price.md 기준값 폴백 ──
-const STATIC_PLANS = [
+/* 로그인하면 닉네임/신청자명 자동 입력 (비어 있을 때만) */
+function prefillFromUser(u) {
+  if (!u || !u.name) return;
+  ['adv-name', 'sup-name', 'cmt-name'].forEach(function (id) { var el = $(id); if (el && !el.value) el.value = u.name; });
+}
+
+/* ── 자주 묻는 질문 + 규칙 기반 답변 (AI Core 연동 전) ── */
+var FAQ = [
+  { q: '광고는 어떻게 신청하나요?', k: ['신청', '광고', '홍보', '접수', '의뢰', '방법', '어떻게'],
+    a: '「광고주 서비스」 화면의 신청서를 작성해 제출하면 검토 대기로 접수됩니다. 이후 운영자 검토·승인 → 진행 → 결과 리포트 순서로 진행됩니다.', go: function () { goAdvertiser(); } },
+  { q: '이용료(가격)는 얼마인가요?', k: ['이용료', '가격', '요금', '얼마', '비용', '요금제', '포인트', 'ap', '결제'],
+    a: '요금제는 FREE 0원, FREE+ 월 9,900원, PRO 월 29,000원, GOLD 월 59,000원이며 AI Point(AP)로도 이용할 수 있습니다(1AP=1원). 최종 기준은 ChatDoumi AI Core 중앙 정책이며 우측 「이용료」 메뉴에서 확인할 수 있습니다.', go: function () { openRight('fee'); } },
+  { q: '서포터즈는 보상이 있나요?', k: ['서포터즈', '앰버서더', '보상', '활동', '참여', '후기', '공유', '적립'],
+    a: '지금은 무보수 자발적 참여이며 활동 기록만 남깁니다. 기록이 쌓이면 향후 공정기여도 · AI Point 보상과 연결하는 방안을 검토합니다(정산은 아직 구현되지 않았습니다).', go: function () { jumpTo('supporter', 'sup-name'); } },
+  { q: '판촉물은 어떤 걸 제작할 수 있나요?', k: ['판촉물', '전단지', '리플렛', '쇼핑백', '현수막', '배너', '간판', '답례품', '인쇄', '명함'],
+    a: '전단지·리플렛 인쇄(1,000장 15,000원~), 로고 쇼핑백·포장지(최소 100개), 현수막·배너·간판(현수막 3,500원/m²), 로고 인쇄 답례품(50개~)을 안내하고 있습니다(금액은 안내용 예시이며 최종 견적은 신청 후 확정). 「판촉물」 화면의 카드를 누르면 신청서(광고 유형: 판촉물)로 이동합니다. 판촉물몰(외부)에서 직접 주문할 수도 있습니다.', go: function () { switchView('promo'); } },
+  { q: '로그인은 어떻게 하나요?', k: ['로그인', '가입', '카카오', '네이버', '구글', '휴대폰', '회원'],
+    a: '화면 맨 위 오른쪽 「🔐 로그인」 버튼에서 카카오·네이버·Google·휴대폰 번호로 로그인할 수 있습니다. 로그인하지 않아도 둘러볼 수 있습니다.', go: function () { if (window.FWAuth) FWAuth.open(); } },
+  { q: 'AI가 홍보 콘텐츠를 만들어 주나요?', k: ['ai', '인공지능', '콘텐츠', '자동', '생성', '블로그', 'sns', '카드뉴스'],
+    a: 'AI 콘텐츠 제작은 「통합 마케팅 전략본부」에서 개발 예정입니다. 이 모듈은 AI 모델을 직접 호출하지 않고, 필요해지면 AI플랫마켓 공통 AI Core(ChatDoumi)를 통해서만 처리합니다.', go: function () { switchView('strategy'); } },
+  { q: '내가 쓴 신청·글은 어디에 저장되나요?', k: ['저장', '데이터', '내역', '기록', '개인정보', '보관'],
+    a: '이번 MVP는 이 브라우저(localStorage)에만 임시 저장됩니다. 서버 저장(Firestore 컬렉션) 연동은 메인 개발창에서 API가 준비되면 전환됩니다. 개인정보는 연락에 필요한 최소 항목만 받습니다.', go: null }
+];
+
+function renderFaq() {
+  var el = $('faqList'); if (!el) return;
+  el.innerHTML = FAQ.map(function (f, i) { return '<button class="faq-q" onclick="showFaqIdx(' + i + ')">Q. ' + escapeHtml(f.q) + '</button>'; }).join('');
+}
+function showAnswer(q, a, meta, actions) {
+  var box = $('answerBox');
+  var btns = (actions || []).map(function (b) { return '<button class="btn btn-ghost" style="margin:8px 6px 0 0;padding:8px 12px" onclick="' + b.fn + '">' + escapeHtml(b.label) + '</button>'; }).join('');
+  box.innerHTML = '<button class="x" onclick="hideAnswer()" aria-label="닫기">✕</button><div class="q">Q. ' + escapeHtml(q) + '</div><div class="a">' + escapeHtml(a) + '</div>' + btns +
+    '<div class="meta">' + escapeHtml(meta) + '</div>';
+  box.classList.add('open');
+  closePanels();
+  $('centerTop').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function hideAnswer() { var b = $('answerBox'); if (b) { b.classList.remove('open'); b.innerHTML = ''; } }
+function showFaqIdx(i) {
+  var f = FAQ[i]; if (!f) return;
+  var actions = f.go ? [{ label: '관련 화면으로 이동', fn: 'FAQ[' + i + '].go()' }] : [];
+  showAnswer(f.q, f.a, '규칙 기반 안내 · AI Core 연동 전', actions);
+}
+function bestFaq(q) {
+  var text = q.toLowerCase(), best = -1, score = 0;
+  FAQ.forEach(function (f, i) {
+    var s = 0;
+    f.k.forEach(function (kw) { if (text.indexOf(kw) >= 0) s += kw.length * kw.length; });
+    if (s > score) { score = s; best = i; }
+  });
+  return score > 0 ? best : -1;
+}
+var _pendingQ = '';
+function askQuestion() {
+  var inp = $('qInput'), q = (inp.value || '').trim();
+  if (!q) { toast('궁금한 점을 입력해 주세요'); return; }
+  var idx = bestFaq(q);
+  var list = loadList(STORE_KEY_Q);
+  list.unshift({ id: 'q_' + Date.now(), question: q, matched: idx >= 0 ? FAQ[idx].q : '', createdAt: new Date().toISOString() });
+  saveList(STORE_KEY_Q, list.slice(0, 100));
+  inp.value = ''; _pendingQ = q;
+  /* TODO(AI Core 연동 시): 이 자리에서 메인 서버의 AI Core 경유 엔드포인트를 호출 (AICore.process()만 사용) */
+  if (idx >= 0) {
+    var f = FAQ[idx];
+    showAnswer(q, f.a, '규칙 기반 안내 · AI Core 연동 전', f.go ? [{ label: '관련 화면으로 이동', fn: 'FAQ[' + idx + '].go()' }] : []);
+  } else {
+    showAnswer(q, '아직 준비된 답변이 없는 질문입니다. 질문은 접수되었고, 커뮤니티에 올려 다른 이용자·운영자에게 물어볼 수 있어요.', '규칙 기반 안내 · AI Core 연동 전', [
+      { label: '커뮤니티에 올리기', fn: 'postQuestionToCommunity(_pendingQ)' }
+    ]);
+  }
+}
+function postQuestionToCommunity(q) {
+  switchView('community', false);
+  setTimeout(function () {
+    $('cmt-title').value = String(q).slice(0, 40); $('cmt-body').value = q;
+    var u = (window.FWAuth && FWAuth.user && FWAuth.user()) || null; prefillFromUser(u);
+    $('cmt-name').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    toast('제목·내용이 채워졌습니다. 닉네임을 확인하고 등록해 주세요');
+  }, 60);
+}
+
+/* ── 검색 (메뉴 · 질문 · 커뮤니티 글) ── */
+function searchIndex() {
+  var items = [
+    { t: '🏪 광고주 서비스', d: '광고 신청 · 진행 단계', kw: '광고 신청 홍보 유료 소상공인', run: function () { switchView('advertiser'); } },
+    { t: '🙌 서포터즈 참여', d: '무보수 자발적 홍보 활동 기록', kw: '서포터즈 앰버서더 후기 공유 활동', run: function () { switchView('supporter'); } },
+    { t: '🏢 플랫폼 자체 홍보', d: '운영자 전용 홍보 콘텐츠', kw: '플랫폼 보도자료 배너 카드뉴스', run: function () { switchView('platform'); } },
+    { t: '🎁 판촉물', d: '전단지 · 쇼핑백 · 현수막 · 답례품', kw: '판촉물 전단지 리플렛 쇼핑백 현수막 배너 간판 답례품 인쇄', run: function () { switchView('promo'); } },
+    { t: '💬 커뮤니티', d: '이용자 게시판', kw: '커뮤니티 게시판 후기 질문', run: function () { switchView('community'); } },
+    { t: '🚀 통합 마케팅 전략본부 (예정)', d: 'AEO·SEO · 콘텐츠 · 브랜드 · 광고 · 분석', kw: '전략본부 aeo seo 브랜드 분석 대시보드 로드맵', run: function () { switchView('strategy'); } },
+    { t: '💳 이용료 · 요금제', d: 'FREE · FREE+ · PRO · GOLD · AI Point', kw: '이용료 가격 요금 요금제 포인트 ap', run: function () { openRight('fee'); } },
+    { t: '🎯 이용안내', d: 'AI통합홍보센터 소개', kw: '이용안내 소개 안내', run: function () { openRight('guide'); } }
+  ];
+  FAQ.forEach(function (f, i) { items.push({ t: 'Q. ' + f.q, d: f.a.slice(0, 46) + '…', kw: f.k.join(' '), run: function () { showFaqIdx(i); } }); });
+  loadList(STORE_KEY_CMT).slice(0, 30).forEach(function (r) { items.push({ t: '💬 ' + r.title, d: r.author + ' · 커뮤니티 글', kw: r.body, run: function () { jumpTo('community', 'cmt-list'); } }); });
+  return items;
+}
+var _sr = [];
+function runSearch(v) {
+  var box = $('searchRes'), q = (v || '').trim().toLowerCase();
+  if (!q) { box.classList.remove('open'); box.innerHTML = ''; _sr = []; return; }
+  var tokens = q.split(/\s+/);
+  _sr = searchIndex().filter(function (it) {
+    var hay = (it.t + ' ' + it.d + ' ' + (it.kw || '')).toLowerCase();
+    return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+  }).slice(0, 8);
+  box.innerHTML = _sr.length
+    ? _sr.map(function (it, i) { return '<button class="sr-item" onclick="pickSearch(' + i + ')"><b>' + escapeHtml(it.t) + '</b><span>' + escapeHtml(it.d) + '</span></button>'; }).join('')
+    : '<div class="sr-empty">검색 결과가 없습니다. 아래 질문바에 물어보세요.</div>';
+  box.classList.add('open');
+}
+function pickSearch(i) {
+  var it = _sr[i]; if (!it) return;
+  $('searchRes').classList.remove('open');
+  it.run();
+}
+function searchKey(e) {
+  if (e.key === 'Enter') { e.preventDefault(); if (_sr.length) pickSearch(0); }
+  else if (e.key === 'Escape') { $('siteSearch').value = ''; runSearch(''); }
+}
+document.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.searchbar')) { var b = $('searchRes'); if (b) b.classList.remove('open'); } });
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePanels(); hideAbout(); } });
+
+/* ── AI Point 가격 정책: ChatDoumi AI Core 실시간 조회 → 실패 시 price.md 기준값 폴백 ── */
+var STATIC_PLANS = [
   { name: 'FREE', price: '0원', desc: '기본 기능 제공, 필요 시 AI Point 별도 충전' },
   { name: 'FREE+', price: '9,900원/월', desc: 'AI 기능 확대, 월 기본 AI Point 제공' },
   { name: 'PRO', price: '29,000원/월', desc: '소상공인·개인사업자용 AI 기능 확대' },
   { name: 'GOLD', price: '59,000원/월', desc: '고급 AI 기능 및 프리미엄 기능' }
 ];
-
-async function loadPricing() {
-  const box = document.getElementById('price-box');
-  try {
-    const res = await fetch('/api/pricing/plans');
-    if (!res.ok) throw new Error('bad status');
-    const data = await res.json();
-    const plans = Array.isArray(data) ? data : (data.plans || []);
+function fmtPrice(v) {
+  if (typeof v === 'number') return v === 0 ? '0원' : v.toLocaleString('ko-KR') + '원/월';
+  return String(v == null ? '' : v);
+}
+function renderPriceList(plans, isLive) {
+  var rows = plans.map(function (p) {
+    return '<div class="plan"><em>' + escapeHtml(fmtPrice(p.price != null ? p.price : p.monthlyPrice)) + '</em><b>' + escapeHtml(p.name || p.plan || p.id || '') + '</b><span>' + escapeHtml(p.desc || p.description || '') + '</span></div>';
+  }).join('');
+  return rows +
+    '<div class="help" style="color:' + (isLive ? 'var(--grn2)' : 'var(--g4)') + '">' +
+    (isLive ? '✅ 출처: ChatDoumi AI Core 실시간 정책 (GET /api/pricing/plans)' : '⚠️ 출처: /price.md 기준값 (실시간 API 연결 전 폴백)') + '</div>' +
+    '<div class="help">1 AI Point(AP) = 1원. 서비스 이용 시 AP 차감량은 요청 유형(BASIC/STANDARD/ADVANCED/EXPERT)에 따라 다르며, 최종 기준은 항상 ChatDoumi AI Core 정책입니다.</div>';
+}
+function loadPricing() {
+  var box = $('price-box'); if (!box) return;
+  if (typeof fetch !== 'function') { box.innerHTML = renderPriceList(STATIC_PLANS, false); return; }
+  fetch('/api/pricing/plans', { credentials: 'include' }).then(function (res) {
+    if (!res.ok) throw new Error('status');
+    return res.json();
+  }).then(function (data) {
+    var plans = Array.isArray(data) ? data : (data.plans || []);
     if (!plans.length) throw new Error('empty');
-    box.innerHTML = renderPriceTable(plans, true);
-  } catch (e) {
-    box.innerHTML = renderPriceTable(STATIC_PLANS, false);
-  }
+    box.innerHTML = renderPriceList(plans, true);
+  }).catch(function () { box.innerHTML = renderPriceList(STATIC_PLANS, false); });
 }
 
-function renderPriceTable(plans, isLive) {
-  const rows = plans.map(p => `<tr><td><b>${p.name || p.plan}</b></td><td>${p.price || p.monthlyPrice || ''}</td><td>${p.desc || p.description || ''}</td></tr>`).join('');
-  return `
-    <table class="price-table">
-      <tr><th>요금제</th><th>가격</th><th>설명</th></tr>
-      ${rows}
-    </table>
-    <div class="price-src ${isLive ? 'live' : ''}">
-      ${isLive ? '✅ 출처: ChatDoumi AI Core 실시간 정책 (GET /api/pricing/plans)' : '⚠️ 출처: /price.md 기준값 (오프라인 폴백 — 실시간 API 연결 전)'}
-    </div>
-    <div class="help">1 AI Point(AP) = 1원. 실제 서비스 이용 시 AI Point 차감량은 요청 유형(BASIC/STANDARD/ADVANCED/EXPERT)에 따라 다르며, 최종 기준은 항상 ChatDoumi AI Core 정책입니다.</div>`;
+/* ── 초기화 ── */
+function initPromoPage() {
+  var lbl = $('fwModLabel'); if (lbl) lbl.textContent = '🎯 AI통합홍보센터';
+  renderAdvList(); renderSupList(); renderCmtList(); renderFaq(); loadPricing();
+  ['gnbCatBar', 'modGnb', 'chipBar'].forEach(wheelToHorizontal);
+  if (window.FWAuth) { prefillFromUser(FWAuth.user()); FWAuth.onChange(prefillFromUser); }
+  measureHead();
+  if (window.ResizeObserver) new ResizeObserver(measureHead).observe($('stickyHead'));
+  window.addEventListener('resize', function () { if (!isMobile()) closePanels(); measureHead(); });
+  window.addEventListener('load', measureHead);
 }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPromoPage); else initPromoPage();
 
-renderAdvList();
-renderSupList();
-renderCmtList();
-loadPricing();
 </script>
-
-</body>
-</html>
+</body></html>

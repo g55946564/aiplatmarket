@@ -3,16 +3,41 @@
   "group": "platform",
   "title": "AI통합홍보센터",
   "icon": "🎯",
-  "description": "AI 마케팅 자동화",
-  "version": "0.0.1",
-  "status": "planned",
+  "description": "광고주 홍보 신청 · 서포터즈 참여형 홍보 · 플랫폼 자체 마케팅 · 판촉물 · 커뮤니티를 한 곳에서 관리하는 AI플랫마켓 마케팅 자동화 센터",
+  "version": "0.2.0",
+  "status": "dev",
   "routes": [
     "/promo",
     "/platform/promo/"
   ],
   "subdomain": "aiplatmarket.com/promo",
-  "framework_version": "1.0.0",
-  "ai_features": [],
+  "framework_version": "header-footer-v2",
+  "layout": "브라우저 80% 폭 · 좌20/중60/우20 · 헤더·GNB 고정 · 중앙 하단 질문바",
+  "ai_features": [
+    "AI 직접 호출 없음 — 규칙 기반 FAQ 안내(트라이얼). AI 호출이 필요해지면 AICore.process()만 사용"
+  ],
+  "data_collections": [
+    "promotionAdvertisers (MVP: localStorage — 추후 Firestore 컬렉션으로 전환, 메인 개발창 API 필요)",
+    "promotionSupporterActivities (MVP: localStorage — 추후 Firestore 컬렉션으로 전환, 메인 개발창 API 필요)",
+    "promotionCommunityPosts (MVP: localStorage)",
+    "promotionQuestions (MVP: localStorage)"
+  ],
+  "pricing_source": "ChatDoumi AI Core 중앙 정책 (GET /api/pricing/plans) — 실패 시 /price.md 기준값으로 폴백",
+  "auth": "표준 헤더 v2 FWAuth(카카오·네이버·Google·휴대폰) — 모듈 자체 로그인, /api/config·/api/auth/* 계약 사용",
+  "external_links": {
+    "판촉물몰": "http://www.xn--pr3b17ziqe.com/front/index/f_main.asp"
+  },
+  "roadmap": [
+    "통합 마케팅 전략본부",
+    "AEO+SEO 전략센터",
+    "AI콘텐츠 제작센터",
+    "AI브랜드센터",
+    "AI광고센터",
+    "AI분석센터",
+    "통합 경영 대시보드 (GDI · Project Health Score)"
+  ],
   "owner": "형식",
-  "created": "2026-06-18"
+  "created": "2026-06-18",
+  "updated": "2026-11-04",
+  "note": "명칭은 AI통합홍보센터, 폴더·서브도메인은 promo로 통일. 판촉물 GNB 링크는 외부 URL(window.open)로 직접 연결되어 /promo 라우트와 충돌 없음."
 }
