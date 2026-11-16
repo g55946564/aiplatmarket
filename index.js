@@ -1,4 +1,4 @@
-// 최종 수정: 2026.10.30 13:47 (KST)
+// 최종 수정: 2026.11.16 13:57 (KST)
 /** 2026-09-22
  * ============================================================
  * AI PLATMARKET index.js — 통합 완전판 v4
@@ -508,20 +508,31 @@ async function googleNews(keyword, edition) {
 const KEYWORD_MAP={전체:'소상공인',경제:'소상공인 경제 매출',창업:'소상공인 창업 지원',IT:'소상공인 AI IT 디지털',농수산:'로컬푸드 농수산 직거래',지방자치:'지방자치 소상공인',사회:'소상공인 사회 지역',교육:'소상공인 교육','Job뉴스':'소상공인 채용 일자리',부동산:'소상공인 임차료 상가',생활:'지역 생활 소상공인',생활과학:'생활과학 과학향기 kisti',글로벌:'글로벌 경제 국제 비즈니스 소상공인',스포츠:'국내 스포츠 소식',건강:'건강 웰빙 소상공인'};
 
 app.get('/api/news', async (req, res) => {
-  const { cat='전체', source='all', display=10 } = req.query;
+  const { cat='전체', source='all', display=10, region } = req.query;
   const keyword=KEYWORD_MAP[cat]||cat;
   const result={cat,items:[],sources:[],warnings:[]};
   // 글로벌 카테고리: 한국어 키워드로 국내 기사가 섞여 나오던 문제 → 영문 키워드 + 구글 글로벌판 우선.
   // 영문 조회가 비면 해외 소식 중심의 한국어 키워드로 대체한다 ('소상공인' 등 국내 키워드는 쓰지 않음).
   // 응답의 edition 값: 'global-en'(영문) / 'world-ko-fallback'(한국어 대체) — 어느 경로인지 확인용.
   if (cat === '글로벌') {
+    // 지역 이름표 → 검색 키워드. 사용자가 보낸 값은 이름표 선택에만 쓰고 검색어로는 쓰지 않는다.
+    const REGION_KW = {
+      all:   { en: ['world economy business', 'global trade finance markets', 'small business economy international'], ko: ['세계 경제 해외 증시', '국제 정세 글로벌 무역'] },
+      us:    { en: ['US economy Federal Reserve', 'Wall Street stocks earnings'],        ko: ['미국 경제 연준 증시'] },
+      cn:    { en: ['China economy', 'China exports trade'],                               ko: ['중국 경제 수출'] },
+      asia:  { en: ['Asia economy markets', 'Japan India Southeast Asia economy'],         ko: ['아시아 경제 일본 인도 동남아'] },
+      eu:    { en: ['Europe economy ECB', 'European Union trade economy'],                 ko: ['유럽 경제 ECB 유럽연합'] },
+      fx:    { en: ['currency exchange rates dollar', 'oil gold commodity prices'],        ko: ['환율 국제유가 금값'] },
+    };
+    const rk = REGION_KW[region] || REGION_KW.all;
+    result.region = REGION_KW[region] ? region : 'all';
     const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('시간 초과')), ms))]);
     const want = Number(display) || 10;
     const addItems = (list) => {
       const seen = new Set(result.items.map(n => n.title));
       for (const n of list) { if (!seen.has(n.title)) { seen.add(n.title); result.items.push(n); } }
     };
-    for (const kw of ['world economy business', 'global trade finance markets', 'small business economy international']) {
+    for (const kw of rk.en) {
       try {
         addItems(await withTimeout(googleNews(kw, 'global'), 8000));
         if (!result.sources.includes('google-global')) result.sources.push('google-global');
@@ -530,7 +541,7 @@ app.get('/api/news', async (req, res) => {
     }
     if (result.items.length) result.edition = 'global-en';
     if (!result.items.length) {
-      for (const kw of ['세계 경제 해외 증시', '국제 정세 글로벌 무역']) {
+      for (const kw of rk.ko) {
         try { addItems(await withTimeout(naverNews(kw, want), 8000)); if (!result.sources.includes('naver')) result.sources.push('naver'); }
         catch (e) { result.warnings.push('naver-world:' + e.message); }
         try { addItems(await withTimeout(googleNews(kw), 8000)); if (!result.sources.includes('google')) result.sources.push('google'); }
