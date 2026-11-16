@@ -1,4 +1,4 @@
-<!-- 최종 수정: 2026.10.30 13:47 (KST) -->
+<!-- 최종 수정: 2026.11.16 13:57 (KST) -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -523,6 +523,23 @@ nav.gnb{background:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px r
   .tn-list{font-size:.72rem}
   .tn-item{padding:7px 8px;gap:4px}
 }
+/* ── 글로벌 경제 화면 ── */
+.gl-intro{font-size:.78rem;color:var(--g4);margin:2px 0 12px}
+.gl-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
+.gl-tabs::-webkit-scrollbar{display:none}
+.gl-tab{flex-shrink:0;border:var(--bd);background:#fff;border-radius:999px;padding:6px 13px;font-size:.78rem;font-weight:700;color:var(--text);cursor:pointer;font-family:inherit;white-space:nowrap}
+.gl-tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.gl-note{display:none;background:#fff8e1;border:1px solid #ffe08a;color:#7a5c00;border-radius:8px;padding:8px 12px;font-size:.74rem;margin-bottom:10px}
+.gl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.gl-card{display:flex;flex-direction:column;gap:6px;padding:13px 14px;border:var(--bd);border-radius:var(--r);background:#fff;text-decoration:none;color:var(--text);transition:border-color .15s,box-shadow .15s}
+.gl-card:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(13,31,53,.08)}
+.gl-src{align-self:flex-start;font-size:.66rem;font-weight:800;color:#1565c0;background:#e8f0fe;padding:2px 8px;border-radius:4px}
+.gl-ttl{font-size:.88rem;font-weight:700;line-height:1.5;color:var(--navy);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.gl-meta{font-size:.68rem;color:var(--g4)}
+.gl-empty{grid-column:1/-1;text-align:center;padding:36px 12px;color:var(--g4);font-size:.82rem;line-height:1.8}
+.gl-retry{color:var(--navy);font-weight:700;text-decoration:underline;cursor:pointer}
+.gl-foot{margin-top:14px;font-size:.68rem;color:var(--g4);line-height:1.7}
+@media(max-width:700px){ .gl-list{grid-template-columns:1fr} .gl-card{padding:12px} }
 .sp-page{padding:22px var(--pad)}
 
 /* ══════════ AI플랫마켓 챗도우미 (내부 대화) — 뷰포트 고정 3단 레이아웃 ══════════ */
@@ -2058,14 +2075,25 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 </div>
 
 <!-- ==================== 글로벌 경제 ==================== -->
-<div id="page-global" class="pg">
-  <div class="sp-page"><div class="sh"><div class="sh-t">🌐 글로벌 경제</div></div>
-  <div class="sp-grid">
-    <div class="sp-card"><div class="sp-thumb" style="background:#e3f2fd">🇺🇸</div><div class="sp-body"><span class="sp-tag" style="background:#e3f2fd;color:#1565c0">미국</span><div class="sp-ttl">美 연준 금리 동결 결정</div><div class="sp-sub">소상공인 수출 환경 영향 분석 · 2026.04.13</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#fff3e0">🇨🇳</div><div class="sp-body"><span class="sp-tag" style="background:#fff3e0;color:#e65100">중국</span><div class="sp-ttl">중국 내수 소비 회복세</div><div class="sp-sub">K-푸드·K-뷰티 수출 기회 확대</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#e8f5e9">🌏</div><div class="sp-body"><span class="sp-tag" style="background:#e8f5e9;color:#2e7d32">아시아</span><div class="sp-ttl">동남아 한국 소상공인 진출</div><div class="sp-sub">베트남·태국 진출 성공 사례 특집</div></div></div>
-    <div class="sp-card"><div class="sp-thumb" style="background:#fce4ec">🌍</div><div class="sp-body"><span class="sp-tag" style="background:#fce4ec;color:#c62828">유럽</span><div class="sp-ttl">K-컬처 유럽 확산</div><div class="sp-sub">한국 문화 콘텐츠 수출 통한 비즈니스 기회</div></div></div>
-  </div></div>
+<div id="page-global" class="pg">
+  <div class="sp-page" style="max-width:960px;margin:0 auto;padding-bottom:30px">
+    <div class="tn-title-row">
+      <div class="tn-title">
+        <span style="display:inline-block;width:3px;height:13px;background:var(--red);border-radius:2px"></span>
+        <b style="font-size:1rem">🌐 글로벌 경제</b>
+        <span id="glTime" class="tn-time" style="display:none"></span>
+      </div>
+      <span class="sh-m tn-all" onclick="loadGlobalEconomy(_glRegion, true)">🔄 새로고침</span>
+    </div>
+    <p class="gl-intro">해외 주요 언론의 최신 경제 기사를 지역별로 모아 보여드립니다.</p>
+    <div class="gl-tabs" id="glTabs"></div>
+    <div class="gl-note" id="glNote"></div>
+    <div class="gl-list" id="glList"><div class="gl-empty">불러오는 중...</div></div>
+    <div class="gl-foot">
+      · 구글 뉴스(글로벌판)에서 가져온 해외 언론 기사이며, 제목은 원문(영문)입니다. 누르면 해당 언론사 기사로 이동합니다.<br>
+      · 경제 뉴스는 참고용 정보이며 투자 판단의 근거가 될 수 없습니다. 중요한 결정은 직접 확인하고 판단하세요.
+    </div>
+  </div>
 </div>
 
 <!-- ==================== 사업/창업 ==================== -->
@@ -5234,6 +5262,10 @@ function showPage(id) {
   if (id === 'ai-hub') {
     setTimeout(() => { renderAiHub(); }, 30);
   }
+  if (id === 'global') {
+    _glRenderTabs();
+    setTimeout(() => { loadGlobalEconomy(_glRegion); }, 30);
+  }
   if (id === 'ai-assistant') {
     // 챗 화면은 속보바 하단을 기준으로 바로 맞춰야 하므로 부드러운 문서 스크롤을 기다리지 않는다.
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -5294,6 +5326,11 @@ const ADMIN_PW_KEY = 'apm_pw';
 let adminPw = localStorage.getItem(ADMIN_PW_KEY) || '비밀번호 변경';
 
 function openLoginModal() {
+  const _u = _apmLoggedUser();
+  if (_u) {                                   // 이미 로그인한 상태에서 누르면 로그아웃 확인
+    if (confirm((_u.name || '회원') + '님, 로그아웃 하시겠습니까?')) apmMainLogout();
+    return;
+  }
   const m = document.getElementById('loginModal');
   m.style.display = 'flex';
   document.getElementById('lgId').value = '';
@@ -5303,6 +5340,57 @@ function openLoginModal() {
 function closeLoginModal() {
   document.getElementById('loginModal').style.display = 'none';
 }
+
+/* ── 로그인 상태 표시·로그아웃 ──
+   각 독립 프로젝트의 표준 헤더와 같은 저장 키(kakao_user / apm_user)를 쓰므로,
+   같은 주소(aiplatmarket.com) 아래 프로젝트에서 로그인하면 메인에도 로그인 상태로 보인다. */
+function _apmLoggedUser() {
+  try { return JSON.parse(localStorage.getItem('kakao_user') || localStorage.getItem('apm_user') || 'null'); } catch (e) { return null; }
+}
+function apmMainRenderLogin() {
+  const b = document.getElementById('loginBtn');
+  if (!b) return;
+  const u = _apmLoggedUser();
+  b.textContent = u ? '👤 ' + (u.name || '회원') : '로그인';   // textContent: 이름에 포함된 태그가 실행되지 않음
+}
+function apmMainLogout() {
+  localStorage.removeItem('kakao_user');
+  localStorage.removeItem('apm_user');
+  try { if (window.Kakao && Kakao.Auth && Kakao.Auth.getAccessToken && Kakao.Auth.getAccessToken()) Kakao.Auth.logout(function () {}); } catch (e) {}
+  apmMainRenderLogin();
+  toast('로그아웃되었습니다');
+}
+window.addEventListener('storage', function (e) { if (e.key === 'kakao_user' || e.key === 'apm_user') apmMainRenderLogin(); });
+apmMainRenderLogin();                           // 새로고침 후에도 로그인 상태 복원
+
+/* ── 주소의 # 로 화면 열기 ──
+   독립 프로젝트의 표준 헤더/Footer 링크(예: aiplatmarket.com/#about)가 메인 첫 화면이 아니라
+   해당 화면을 열도록 한다. 영문·숫자·하이픈과 허용 목록의 지역·장르만 받고, 실제 있는 화면 id 만 연다. */
+function applyHashRoute() {
+  let raw = '';
+  try { raw = decodeURIComponent((location.hash || '').replace(/^#\/?/, '')); } catch (e) { return false; }
+  const reg = /^region-(서울|인천|경기)$/.exec(raw), gen = /^genre-([0-2])$/.exec(raw);   // 허용 목록에 있는 값만
+  if (!raw || (!reg && !gen && !/^[a-z0-9\-]+$/i.test(raw))) return false;
+  let done = true;
+  if (reg) {
+    quickReg(reg[1]);
+  } else if (gen) {
+    showPage('home'); setGenre(Number(gen[1]));
+  } else if (raw === 'preview') {
+    if (typeof PopupManager !== 'undefined') PopupManager.show('intro', { force: true });
+    else setTimeout(function () { if (typeof PopupManager !== 'undefined') PopupManager.show('intro', { force: true }); }, 1000);
+  } else if (raw === 'feedback') {
+    if (typeof FeedbackManager !== 'undefined') FeedbackManager.open('general');
+  } else if (raw === 'login') {
+    if (!_apmLoggedUser()) openLoginModal();
+  } else if (raw === 'home' || _UPGRADE_MAP[raw] || document.getElementById('page-' + raw)) {
+    showPage(raw);
+  } else { done = false; }
+  if (done && window.history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);  // 주소를 깔끔하게
+  return done;
+}
+window.addEventListener('hashchange', applyHashRoute);
+window.addEventListener('load', function () { setTimeout(applyHashRoute, 600); });
 function doLogin() {
   const id = document.getElementById('lgId').value.trim();
   const pw = document.getElementById('lgPw').value;
@@ -5541,6 +5629,100 @@ document.addEventListener('DOMContentLoaded', function () {
     if (home && home.classList.contains('act')) initTodayNewsPanel();
   }, 600);
 });
+
+/* ══ 글로벌 경제 화면: 해외 주요 언론 기사를 지역별로 표시 ══
+   서버(/api/news?cat=글로벌&region=…)가 가져온 실제 기사만 보여주며 고정 샘플은 쓰지 않는다.
+   조회에 실패하면 안내 문구만 표시한다. 외부 기사 제목은 텍스트로만 넣고(innerHTML 미사용),
+   링크는 http(s) 주소만 허용한다. */
+const GL_REGIONS = [
+  { id: 'all',  label: '전체' },
+  { id: 'us',   label: '🇺🇸 미국' },
+  { id: 'cn',   label: '🇨🇳 중국' },
+  { id: 'asia', label: '🌏 아시아' },
+  { id: 'eu',   label: '🌍 유럽' },
+  { id: 'fx',   label: '💱 환율·원자재' },
+];
+let _glRegion = 'all';
+const _glCache = {};                       // 지역별 5분 캐시 (서버 호출·대역폭 절약)
+const GL_TTL = 5 * 60 * 1000;
+
+function _glDecode(str) { const t = document.createElement('textarea'); t.innerHTML = String(str || ''); return t.value; }
+function _glAgo(dateStr) {
+  const t = new Date(dateStr).getTime();
+  if (!t) return '';
+  const min = Math.round((Date.now() - t) / 60000);
+  if (min < 1) return '방금 전';
+  if (min < 60) return min + '분 전';
+  if (min < 1440) return Math.floor(min / 60) + '시간 전';
+  if (min < 10080) return Math.floor(min / 1440) + '일 전';
+  const d = new Date(t);
+  return (d.getMonth() + 1) + '월 ' + d.getDate() + '일';
+}
+function _glSetTime(ts) {
+  const el = document.getElementById('glTime');
+  if (!el) return;
+  const n = new Date(ts);
+  el.textContent = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0') + ' 기준';
+  el.style.display = '';
+}
+function _glRenderTabs() {
+  const box = document.getElementById('glTabs');
+  if (!box) return;
+  box.innerHTML = '';
+  GL_REGIONS.forEach(r => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'gl-tab' + (r.id === _glRegion ? ' on' : '');
+    b.textContent = r.label;
+    b.onclick = () => { _glRegion = r.id; _glRenderTabs(); loadGlobalEconomy(r.id); };
+    box.appendChild(b);
+  });
+}
+function _glRenderList(data) {
+  const list = document.getElementById('glList'), note = document.getElementById('glNote');
+  if (!list) return;
+  list.innerHTML = '';
+  if (note) {
+    note.style.display = data.edition === 'world-ko-fallback' ? 'block' : 'none';
+    note.textContent = '영문 해외 뉴스 연결이 원활하지 않아 해외 소식(한국어 기사)으로 대신 표시하고 있습니다.';
+  }
+  (data.items || []).slice(0, 12).forEach(it => {
+    const url = String(it.link || '');
+    if (!/^https?:\/\//i.test(url)) return;
+    const source = _glDecode(it.source || '');
+    let title = _glDecode(it.title || '').trim();
+    if (source && title.endsWith(' - ' + source)) title = title.slice(0, -(source.length + 3)).trim();   // 끝에 붙는 "- 언론사명" 제거
+    if (!title) return;
+    const a = document.createElement('a');
+    a.className = 'gl-card'; a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    const tag = document.createElement('span'); tag.className = 'gl-src'; tag.textContent = source || '해외 뉴스';
+    const ttl = document.createElement('span'); ttl.className = 'gl-ttl'; ttl.textContent = title;
+    const meta = document.createElement('span'); meta.className = 'gl-meta'; meta.textContent = _glAgo(it.date);
+    a.append(tag, ttl, meta);
+    list.appendChild(a);
+  });
+  if (!list.children.length) throw new Error('표시할 기사 없음');
+}
+async function loadGlobalEconomy(region, force) {
+  region = region || _glRegion;
+  const list = document.getElementById('glList');
+  if (!list) return;
+  const hit = _glCache[region];
+  if (!force && hit && Date.now() - hit.ts < GL_TTL) { _glRenderList(hit.data); _glSetTime(hit.ts); return; }
+  list.innerHTML = '<div class="gl-empty">불러오는 중...</div>';
+  try {
+    const res = await fetch('/api/news?cat=' + encodeURIComponent('글로벌') + '&region=' + encodeURIComponent(region) + '&display=12');
+    const data = await res.json();
+    if (!data.items || !data.items.length) throw new Error('empty');
+    _glCache[region] = { ts: Date.now(), data };
+    if (region !== _glRegion) return;      // 그 사이 다른 탭으로 바뀌었으면 현재 화면은 건드리지 않는다
+    _glRenderList(data);
+    _glSetTime(Date.now());
+  } catch (e) {
+    if (region !== _glRegion) return;
+    list.innerHTML = '<div class="gl-empty">🌐 글로벌 경제 뉴스를 불러오지 못했습니다.<br><span class="gl-retry" onclick="loadGlobalEconomy(_glRegion, true)">다시 시도</span></div>';
+  }
+}
 
 /* ══════════════════════════════════════════
    스포츠 & 건강 뉴스
