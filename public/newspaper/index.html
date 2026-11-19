@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/framework/assets/css/common.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 /* ⚠ "아시아폰트 각헤드 B"는 상업용 폰트라 Google Fonts에 없어 웹에 바로 불러올 수 없습니다.
    타이틀은 요청하신 스펙대로 'Noto Sans KR' Black(900)을 사용합니다.
    위 @import가 900 두께를 함께 불러오므로 별도 @font-face 없이 바로 적용됩니다.
@@ -40,6 +40,8 @@
   --g4:#8a8f98;
   --bd:1px solid var(--g2);
   --r:10px;
+  --page-w:80%;
+  --f:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 
   /* ── 신문 지면 전용 톤 (플랫폼 토큰과 충돌하지 않는 추가 변수) ── */
   --paper:#ffffff;
@@ -79,7 +81,7 @@ button{ font-family:inherit; }
 
 /* ══════════════════════════ 공통 상단 크롬 (홈/지난호 화면) ══════════════════════════ */
 #appChrome{
-  max-width:1040px;
+  width:var(--page-w);
   margin:0 auto;
   background:var(--paper);
   border:1px solid var(--line);
@@ -89,7 +91,7 @@ button{ font-family:inherit; }
 .utility-bar{
   display:flex;
   align-items:center;
-  font-family:'Nanum Gothic Coding', monospace;
+  font-family:'Noto Sans KR', sans-serif;
   font-size:11.5px;
   letter-spacing:.02em;
   color:#cfd8d2;
@@ -111,7 +113,7 @@ button{ font-family:inherit; }
   display:inline-flex; white-space:nowrap; position:absolute; left:0; top:0;
   animation:marquee-rtl 42s linear infinite;
 }
-.marquee-track span{ padding-right:70px; color:#cfe8d4; font-family:'Noto Sans KR', sans-serif; font-style:italic; }
+.marquee-track span{ padding-right:70px; color:#cfe8d4; font-family:'Noto Sans KR', sans-serif; font-style:normal; }
 @keyframes marquee-rtl{ from{ transform:translateX(0%); } to{ transform:translateX(-50%); } }
 
 /* ── 상단 브랜드바 (좌: 메뉴 햄버거 / 중: 타이틀 / 우: 실시간소식 햄버거) ── */
@@ -229,7 +231,7 @@ button{ font-family:inherit; }
 
 /* ══════════════════════════ 홈 화면 (신문 1면) ══════════════════════════ */
 #view-home{
-  max-width:1040px; margin:0 auto; background:var(--paper);
+  width:var(--page-w); margin:0 auto; background:var(--paper);
   border:1px solid var(--line); border-top:none; padding:0 34px 30px;
 }
 .layout4{ display:grid; grid-template-columns:1fr 2fr 1fr; gap:24px; margin-top:22px; align-items:start; }
@@ -238,7 +240,7 @@ button{ font-family:inherit; }
 .lead-kicker{ font-size:12px; font-weight:700; color:var(--stamp); letter-spacing:.12em; margin-bottom:6px; }
 .lead h2{ font-family:'Noto Sans KR', sans-serif; font-size:28px; line-height:1.28; margin:0 0 10px; font-weight:700; }
 .lead .dek{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:14px; font-family:'Noto Sans KR', sans-serif; }
-.byline{ font-family:'Nanum Gothic Coding', monospace; font-size:11px; color:var(--ink-soft); }
+.byline{ font-family:'Noto Sans KR', sans-serif; font-size:11px; color:var(--ink-soft); }
 .lead-more-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line); }
 
 .lead-figure{
@@ -247,7 +249,7 @@ button{ font-family:inherit; }
 }
 .lead-figure svg{ position:absolute; inset:0; width:100%; height:100%; }
 .lead-figure .cap-badge{ position:absolute; bottom:10px; left:10px; background:var(--acc-deep); color:var(--paper); font-size:11px; font-weight:700; padding:4px 10px; }
-.figcaption{ font-size:11.5px; color:var(--ink-soft); margin-bottom:20px; font-style:italic; }
+.figcaption{ font-size:11.5px; color:var(--ink-soft); margin-bottom:20px; font-style:normal; }
 
 /* 본문 세부내용 더보기 (기본 접힘) */
 .lead-more-btn{
@@ -275,7 +277,7 @@ button{ font-family:inherit; }
 .brief-text{ min-width:0; }
 .brief-text .b-title{ font-size:12px; font-weight:700; color:var(--ink); line-height:1.4; margin:0 0 2px; }
 .brief-text .b-summary{ font-size:11px; color:var(--ink-soft); line-height:1.5; }
-.brief-text .b-source{ font-size:10px; color:var(--acc-deep); font-family:monospace; margin-top:2px; }
+.brief-text .b-source{ font-size:10px; color:var(--acc-deep); font-family:'Noto Sans KR', sans-serif; margin-top:2px; }
 .brief-item a{ color:inherit; text-decoration:none; }
 .brief-item a:hover .b-title{ color:var(--acc-deep); text-decoration:underline; }
 
@@ -292,7 +294,7 @@ button{ font-family:inherit; }
 .opinion-item:last-child{ border-bottom:none; }
 .opinion-item .op-title{ font-size:12.5px; font-weight:700; color:var(--ink); line-height:1.4; }
 .opinion-item:hover .op-title{ color:var(--acc-deep); }
-.opinion-item .op-byline{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; font-family:monospace; }
+.opinion-item .op-byline{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; font-family:'Noto Sans KR', sans-serif; }
 .op-body{ display:none; font-size:12px; line-height:1.7; color:var(--ink); margin-top:8px; padding:8px 10px; background:var(--paper-deep); white-space:pre-wrap; }
 .op-body.open{ display:block; }
 .theme-item:hover{ background:var(--paper-deep); }
@@ -346,14 +348,14 @@ button{ font-family:inherit; }
 .coupon-box .box-title{ background:var(--acc-deep); }
 .coupon-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px dashed var(--line); font-size:12px; }
 .coupon-row:last-child{ border-bottom:none; }
-.coupon-code{ font-family:'Nanum Gothic Coding', monospace; background:var(--paper-deep); border:1px dashed var(--ink-soft); padding:2px 6px; font-weight:700; color:var(--stamp); }
+.coupon-code{ font-family:'Noto Sans KR', sans-serif; background:var(--paper-deep); border:1px dashed var(--ink-soft); padding:2px 6px; font-weight:700; color:var(--stamp); }
 
-.weather-strip{ border:1px solid var(--line-strong); padding:12px 14px; font-size:11.5px; color:var(--ink-soft); line-height:1.7; font-family:'Nanum Gothic Coding', monospace; }
+.weather-strip{ border:1px solid var(--line-strong); padding:12px 14px; font-size:11.5px; color:var(--ink-soft); line-height:1.7; font-family:'Noto Sans KR', sans-serif; }
 .weather-strip strong{ color:var(--ink); }
 .quick-body-extra{ padding:16px; border-top:1px solid var(--line); }
 
 /* ══════════════════════════ 지난 신문 보기 화면 ══════════════════════════ */
-#view-archive{ max-width:1040px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
+#view-archive{ width:var(--page-w); margin:0 auto; background:var(--paper); border:1px solid var(--line); border-top:none; }
 .archive-toolbar{ padding:16px 24px 0; }
 .archive-toolbar .row{ display:flex; align-items:center; gap:10px; }
 .search-box{ flex:1; display:flex; background:#fff; border-radius:22px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); max-width:520px; }
@@ -381,7 +383,7 @@ button{ font-family:inherit; }
 .issue-thumb .badge{ position:absolute; top:8px; left:8px; background:var(--stamp); color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:2px; }
 .issue-meta{ padding:9px 11px 11px; }
 .issue-meta .issue-title{ font-size:12.5px; font-weight:700; margin:0 0 3px; line-height:1.35; }
-.issue-meta .issue-date{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+.issue-meta .issue-date{ font-size:11px; color:var(--ink-soft); font-family:'Noto Sans KR', sans-serif; }
 .empty-state{ padding:50px 20px; text-align:center; color:var(--ink-soft); font-size:13.5px; }
 
 /* ── 기사 올리기 화면 ── */
@@ -408,7 +410,7 @@ button{ font-family:inherit; }
 .board-post:hover .p-title{ color:var(--acc-deep); }
 .board-post .p-body{ margin-top:8px; padding:10px 12px; background:var(--paper-deep); font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; }
 .board-post .p-title{ font-weight:700; margin-bottom:3px; }
-.board-post .p-meta{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+.board-post .p-meta{ font-size:11px; color:var(--ink-soft); font-family:'Noto Sans KR', sans-serif; }
 
 /* ── 정보 모달 (신문사소개/이용약관/개인정보처리방침/광고문의) ── */
 .info-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(13,20,17,.55); z-index:2050; align-items:center; justify-content:center; padding:20px; }
@@ -430,7 +432,7 @@ button{ font-family:inherit; }
 
 /* ══════════════════════════ 사이트 푸터 ══════════════════════════ */
 #siteFooter{ background:var(--navy-deep); color:#e6d8bd; padding:26px 20px; font-size:12px; line-height:1.9; }
-#siteFooter .foot-inner{ max-width:1040px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
+#siteFooter .foot-inner{ width:var(--page-w); margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:18px; }
 #siteFooter .foot-col{ flex:1; min-width:260px; }
 #siteFooter .foot-col-right{ text-align:right; }
 #siteFooter .foot-brand{ font-family:'Noto Sans KR', sans-serif; color:#fff; font-size:15px; margin-bottom:6px; }
@@ -471,7 +473,7 @@ button{ font-family:inherit; }
 .feed-item:last-child{ border-bottom:none; }
 .feed-item .tag{ font-size:10.5px; font-weight:700; color:var(--acc); margin-bottom:4px; display:block; }
 .feed-item .ttl{ font-size:13px; font-weight:700; margin:0 0 3px; line-height:1.4; }
-.feed-item .time{ font-size:11px; color:var(--ink-soft); font-family:monospace; }
+.feed-item .time{ font-size:11px; color:var(--ink-soft); font-family:'Noto Sans KR', sans-serif; }
 
 /* ── 좌측 내비게이션 드로어 (AIPLATMARKET / 로그인 / 회원가입 / 지역별 보기 / 사이트맵) ── */
 .left-nav-drawer{ left:0; right:auto; transform:translateX(-100%); box-shadow:6px 0 24px rgba(0,0,0,.2); }
@@ -617,6 +619,12 @@ button{ font-family:inherit; }
   #siteFooter .foot-col-right{ text-align:left; }
   #siteFooter .foot-col-right .foot-dd-menu{ left:0; right:auto; }
 }
+
+/* ══ 폭·배율 보정 (paper 모듈 공통) ══ */
+@media(max-width:1100px){ :root{ --page-w:100%; } }
+@media(min-width:2200px){ :root{ --page-w:70%; } }
+@media(min-width:1100px){ html{ zoom:1.1; } }
+body{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 </style>
 </head>
 <body>
@@ -794,7 +802,7 @@ button{ font-family:inherit; }
 
     <button data-tab="community" class="community-mode">💬 커뮤니티</button>
     <button data-tab="submit" class="submit-mode">✍ 기사 올리기</button>
-    <button data-tab="archive" class="paper-mode">지면보기</button>
+    <button data-tab="archive" class="paper-mode" onclick="location.href='/paper'">지면보기</button>
   </div>
 </div>
 
@@ -1936,6 +1944,7 @@ function toggleUserArticle(i){
 let currentTab = 'headline';
 
 function switchTab(tab){
+  if(tab === 'archive'){ location.href = '/paper'; return; }  // 지면보기는 별도 페이지(aiplatmarket.com/paper)
   document.querySelectorAll('#sectionBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
 
   // 그룹 드롭다운 메뉴는 선택 후 항상 닫고, 그 안에 활성 항목이 있으면 상위 그룹 버튼도 강조
@@ -2128,6 +2137,7 @@ function popKw(keyword){
 
 /* 신문 내부 카테고리로 바로 이동 */
 function popPage(tabKey){
+  if(tabKey === 'archive'){ location.href = '/paper'; return; }
   closeSearchPop();
   switchTab(tabKey);
 }
