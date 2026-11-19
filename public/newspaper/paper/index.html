@@ -2,338 +2,285 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>국민경제㊉ | 지면보기</title>
-<meta name="description" content="국민경제㊉ 디지털신문 지면보기 임시 화면">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+<title>국민경제㊉ 지면보기</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --brand:#0756a8;
-  --brand-dark:#063c76;
-  --line:#d9dee6;
-  --muted:#687385;
-  --bg:#f5f7fa;
-  --paper:#fff;
-  --shadow:0 8px 28px rgba(24,43,67,.12);
-}
+/* 공개 URL: aiplatmarket.com/paper  (실제 파일: public/newspaper/paper/index.html) — 모든 글꼴은 고딕 고정 */
+:root{--acc:#2e7d32;--deep:#1b4332;--stamp:#14532d;--ink:#221f1a;--soft:#5a5448;--line:#c9bfa8;--cream:#f6f3ea;--page-w:80%;
+  --f:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif}
+@media(max-width:1100px){:root{--page-w:100%}}
+@media(min-width:2200px){:root{--page-w:70%}}
+@media(min-width:1100px){html{zoom:1.1}}   /* 100% 배율에서도 110%처럼 또렷하게 */
+html.reading{zoom:1}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;color:#1c2430;background:var(--bg)}
-button,a{font:inherit}
+html,body{margin:0}
+body{font-family:var(--f);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,a{font-family:inherit}
 button{cursor:pointer}
-.top{
-  height:58px;background:#fff;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:20
-}
-.top-inner{width:min(1180px,94%);display:flex;align-items:center;gap:26px}
-.logo{font-size:24px;font-weight:900;color:var(--brand);letter-spacing:-1.5px}
-.logo small{display:block;font-size:10px;letter-spacing:0;color:#8993a0;margin-top:-2px}
-.nav{display:flex;gap:18px;font-size:14px;font-weight:700}
-.nav a{color:#333;text-decoration:none}
-.nav a:hover{color:var(--brand)}
-.top-right{margin-left:auto;display:flex;gap:12px;color:#77808c;font-size:12px}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{width:var(--page-w);margin:0 auto;padding:0 16px}
 
-.container{width:min(1180px,94%);margin:24px auto 50px}
-.breadcrumb{font-size:12px;color:#89919c;margin-bottom:8px}
-.title-row{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
-h1{margin:0;font-size:28px;letter-spacing:-1.5px}
-.subtitle{font-size:13px;color:var(--muted);margin-top:7px}
-.actions{display:flex;gap:8px}
-.btn{border:1px solid #cbd3dd;background:#fff;border-radius:7px;padding:8px 13px;font-size:12px}
-.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.top{background:#111417;color:#e8ede9}
+.bar{display:flex;align-items:center;gap:22px;height:52px}
+.logo{font-weight:900;font-size:21px;letter-spacing:.12em;color:#fff}
+.logo i{font-style:normal;color:#e53935;font-size:.8em;vertical-align:.25em}
+.nav{display:flex;gap:6px;font-size:13.5px;font-weight:700}
+.nav a{padding:6px 12px;border-radius:14px;color:#cfd8d2}
+.nav a.on{background:var(--acc);color:#fff}
+.nav a:hover{color:#fff}
+.bar .r{margin-left:auto;font-size:12px;color:#aab6ad}
 
-.latest{
-  background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;
-  box-shadow:var(--shadow)
-}
-.latest-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.latest-head h2{margin:0;font-size:18px}
-.issue-info{color:var(--muted);font-size:12px}
+main.wrap{padding-top:26px;padding-bottom:44px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+h1{margin:0;font-size:26px;font-weight:900;color:var(--deep)}
+.sub{margin:6px 0 24px;font-size:13.5px;color:var(--soft)}
+h2{margin:0 0 12px;font-size:17px;font-weight:700;color:var(--deep);border-bottom:2px solid var(--ink);padding-bottom:7px;display:flex;justify-content:space-between;align-items:baseline}
+h2 small{font-size:12px;font-weight:400;color:var(--soft)}
+section{margin-bottom:34px}
 
-.latest-grid{
-  display:grid;grid-template-columns:minmax(220px,290px) 1fr;gap:28px;align-items:center
-}
-.cover{
-  aspect-ratio:3/4;border:1px solid #c9cdd3;background:#fff;
-  box-shadow:0 10px 20px rgba(0,0,0,.14);padding:13px;position:relative;overflow:hidden
-}
-.cover .mast{font-size:25px;font-weight:900;color:#0756a8;border-bottom:4px solid #0756a8;padding-bottom:7px}
-.cover .date{font-size:10px;margin:7px 0}
-.cover .hero{height:33%;background:linear-gradient(135deg,#eaf2fa,#c9dced);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#285a86}
-.cover .lines{margin-top:10px;display:grid;gap:5px}
-.cover .line{height:7px;background:#d6dbe1;border-radius:2px}
-.cover .line.big{width:85%;height:11px;background:#8da9c2}
-.cover .ad{position:absolute;bottom:12px;left:13px;right:13px;height:40px;background:#f0f2f4;border:1px solid #d3d7dc;font-size:9px;display:flex;align-items:center;justify-content:center;color:#667}
+.latest{display:flex;gap:18px;flex-wrap:wrap}
+.latest .card{width:190px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px 16px}
+.card{display:block;width:100%;padding:0;border:0;background:none;text-align:left;color:inherit}
+.th{position:relative;display:block;aspect-ratio:.72;border:1px solid var(--line);background:var(--cream);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.card:hover .th{transform:translateY(-3px);box-shadow:0 8px 18px rgba(27,67,50,.18)}
+.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.th .ph{position:absolute;inset:0;display:grid;place-items:center;padding:12px;text-align:center;font-size:14px;font-weight:700;color:var(--deep)}
+.th em{position:absolute;top:8px;left:8px;background:var(--acc);color:#fff;font-style:normal;font-size:11px;font-weight:700;padding:3px 8px}
+.th u{position:absolute;inset:auto 0 0 0;background:rgba(17,20,23,.78);color:#fff;text-decoration:none;text-align:center;font-size:12px;padding:7px}
+.card.off{cursor:default}.card.off:hover .th{transform:none;box-shadow:none}.card.off .th{border-style:dashed}
+.mt{display:block;margin-top:8px}.mt strong{display:block;font-size:13.5px}.mt small{font-size:12px;color:var(--soft)}
 
-.issue-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.issue-card{
-  border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;
-  display:flex;align-items:center;gap:14px
-}
-.issue-thumb{
-  width:92px;aspect-ratio:3/4;background:#fff;border:1px solid #cfd4da;
-  box-shadow:0 4px 9px rgba(0,0,0,.08);padding:7px;flex:none
-}
-.issue-thumb .mini-mast{font-size:9px;font-weight:900;color:var(--brand);border-bottom:2px solid var(--brand);padding-bottom:3px}
-.issue-thumb .mini-title{font-size:9px;font-weight:900;margin:8px 0 5px}
-.issue-thumb .mini-lines{display:grid;gap:3px}
-.issue-thumb .mini-lines i{display:block;height:4px;background:#dfe3e7}
-.issue-meta{min-width:0}
-.issue-meta strong{display:block;font-size:14px;margin-bottom:6px}
-.issue-meta span{display:block;color:var(--muted);font-size:11px;line-height:1.6}
-.issue-meta .btn{margin-top:8px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.tools input{flex:1;min-width:180px;max-width:360px;border:1px solid var(--line);border-radius:20px;padding:9px 16px;font-size:13.5px;outline:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:14px;padding:5px 13px;font-size:12.5px}
+.chip.on{background:var(--deep);border-color:var(--deep);color:#fff}
+.empty{padding:34px 0;text-align:center;color:var(--soft);font-size:14px}
+footer{background:#111417;color:#aab6ad;font-size:12px;padding:20px 0}
 
-.parts{margin-top:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.part{
-  border:1px solid #d7dde5;border-radius:10px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center
-}
-.part strong{font-size:14px}.part span{font-size:11px;color:var(--muted)}
-
-.archive{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.section-head h2{font-size:18px;margin:0}
-.section-head span{font-size:11px;color:var(--muted)}
-.archive-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px 14px}
-.archive-card{text-align:center;min-width:0}
-.archive-thumb{
-  width:100%;aspect-ratio:3/4;background:#fff;border:1px solid #ccd2d9;
-  box-shadow:0 5px 12px rgba(0,0,0,.08);padding:9px;margin-bottom:8px;position:relative;overflow:hidden
-}
-.archive-thumb .amast{font-size:11px;font-weight:900;color:#167451;border-bottom:2px solid #167451;padding-bottom:4px}
-.archive-thumb .ahead{font-size:9px;font-weight:800;margin:10px 0 6px;text-align:left}
-.archive-thumb .acol{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.archive-thumb .acol i{height:32px;background:#e4e8eb;display:block}
-.archive-thumb .afoot{position:absolute;bottom:8px;left:9px;right:9px;height:14px;background:#e9edf0}
-.archive-date{font-size:12px;font-weight:700}
-.archive-card .btn{padding:5px 10px;margin-top:5px;font-size:11px}
-
-.notice{
-  margin-top:18px;padding:13px 15px;border-radius:9px;background:#eef6ff;
-  border:1px solid #d2e4f8;color:#45617c;font-size:12px;line-height:1.7
-}
-
-.footer{text-align:center;color:#8a929d;font-size:11px;padding:25px 0 40px}
-
-.modal{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:50;
-  align-items:center;justify-content:center;padding:20px
-}
-.modal.open{display:flex}
-.viewer{
-  width:min(1100px,96vw);height:min(820px,92vh);background:#fff;border-radius:12px;overflow:hidden;
-  display:flex;flex-direction:column
-}
-.viewer-head{height:50px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 15px}
-.viewer-head strong{font-size:14px}.viewer-head button{margin-left:auto}
-.viewer-body{flex:1;background:#eee;display:flex;align-items:center;justify-content:center}
-.viewer-placeholder{
-  width:min(600px,85%);height:80%;background:#fff;box-shadow:0 12px 28px rgba(0,0,0,.2);
-  padding:28px;text-align:center;display:flex;flex-direction:column;justify-content:center
-}
-.viewer-placeholder h3{font-size:24px;margin:0 0 12px;color:var(--brand)}
-.viewer-placeholder p{font-size:13px;color:#667;line-height:1.8}
-.viewer-placeholder code{display:block;margin-top:12px;padding:10px;background:#f4f5f7;font-size:11px}
-
-@media(max-width:900px){
-  .nav{display:none}
-  .latest-grid{grid-template-columns:220px 1fr}
-  .archive-grid{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:650px){
-  .top{height:52px}.logo{font-size:20px}
-  .top-right{display:none}
-  .container{width:94%;margin-top:16px}
-  .title-row{display:block}.actions{margin-top:12px}
-  h1{font-size:23px}
-  .latest{padding:15px}
-  .latest-grid{grid-template-columns:1fr}
-  .cover{width:min(250px,70%);margin:auto}
-  .issue-list{grid-template-columns:1fr}
-  .parts{grid-template-columns:1fr}
-  .archive{padding:15px}
-  .archive-grid{grid-template-columns:repeat(2,1fr);gap:18px 12px}
-  .archive-card .btn{width:100%}
+/* ───── 뷰어 (전체화면) ───── */
+#vw{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#16201a;color:#fff}
+#vw[hidden]{display:none}
+.vh,.vf{flex:none;display:flex;align-items:center;gap:8px;padding:0 12px;background:#0f1713;min-height:50px}
+.vh strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sp{flex:1}
+#vw button,#vw .lnk{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:7px 11px;font-size:12.5px;white-space:nowrap}
+#vw button:disabled{opacity:.35;cursor:default}
+#vw #vzl{font-size:12px;min-width:42px;text-align:center}
+.vb{flex:1;min-height:0;position:relative;display:flex}
+#toc{display:none;flex:none;width:150px;overflow:auto;background:#f4f1e8;color:var(--ink);padding:10px;gap:6px;flex-wrap:wrap;align-content:flex-start}
+#toc.open{display:flex}
+#toc button{width:calc(50% - 3px);background:#fff;border:1px solid var(--line);color:var(--ink);padding:7px 0}
+#toc button.on{border-color:var(--acc);color:var(--acc);font-weight:700;border-width:2px}
+#stg{flex:1;min-width:0;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(#3b4a40,#1b261f);overflow:hidden}
+#spr{display:flex;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.pg{width:var(--pw);height:calc(var(--pw) / .707);background:#fff;position:relative;animation:in .22s ease-out}
+.pg iframe{width:100%;height:100%;border:0;pointer-events:none;background:#fff}
+.z #spr .pg iframe{pointer-events:auto}
+@keyframes in{from{opacity:0;transform:translateX(var(--dx,12px))}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pg{animation:none}.th{transition:none}}
+#sw{position:absolute;inset:0;z-index:2;touch-action:pan-y pinch-zoom}
+.z #sw{display:none}
+.ar{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%!important;font-size:20px!important;padding:0!important;background:rgba(15,23,19,.7)!important}
+.ar.l{left:10px}.ar.r{right:10px}
+#err{position:absolute;z-index:4;margin:0;padding:22px 26px;background:#fff;color:var(--ink);border-radius:8px;text-align:center;font-size:14.5px;line-height:1.7;max-width:80%}
+#err[hidden]{display:none}
+.vf{justify-content:center;gap:10px}
+#vi{font-size:13px;min-width:72px;text-align:center}
+#rg{width:min(240px,28vw);accent-color:#66bb6a}
+@media(max-width:700px){
+  .vh .opt{display:none}.vh{gap:6px}
+  #toc.open{position:absolute;inset:0 auto 0 0;z-index:5;width:62%}
+  .ar{width:30px;height:30px;font-size:16px!important}.ar.l{left:3px}.ar.r{right:3px}
+  .vf{gap:6px}#rg{width:22vw}
 }
 </style>
 </head>
 <body>
+<header class="top"><div class="wrap bar">
+  <a class="logo" href="/newspaper">국민경제<i>㊉</i></a>
+  <nav class="nav"><a href="/newspaper">디지털신문</a><a class="on" href="/paper">지면보기</a><a href="#past">지난신문</a></nav>
+  <a class="r" href="/">AI플랫마켓</a>
+</div></header>
 
-<header class="top">
-  <div class="top-inner">
-    <div class="logo">국민경제㊉<small>AI플랫마켓 디지털신문</small></div>
-    <nav class="nav">
-      <a href="/newspaper">디지털신문</a>
-      <a href="/newspaper">인터넷뉴스</a>
-      <a href="/paper">지면보기</a>
-      <a href="#">지난신문</a>
-    </nav>
-    <div class="top-right">
-      <span>로그인</span><span>회원가입</span><span>AI플랫마켓</span>
-    </div>
-  </div>
-</header>
-
-<main class="container">
-  <div class="breadcrumb">HOME › 디지털신문 › 지면보기</div>
-
-  <div class="title-row">
-    <div>
-      <h1>국민경제㊉ 신문 지면보기</h1>
-      <div class="subtitle">최신 발행호를 확인하고 지난 신문을 다시 볼 수 있습니다.</div>
-    </div>
-    <div class="actions">
-      <button class="btn" onclick="location.href='/newspaper'">인터넷 뉴스</button>
-      <button class="btn primary" onclick="scrollToArchive()">지난신문</button>
-    </div>
-  </div>
-
-  <section class="latest">
-    <div class="latest-head">
-      <h2>최신 신문</h2>
-      <div class="issue-info">2026년 9월호 · 최신 발행본</div>
-    </div>
-
-    <div class="latest-grid">
-      <div>
-        <div class="cover" aria-label="최신신문 표지 임시 이미지">
-          <div class="mast">국민경제㊉</div>
-          <div class="date">2026.09 · 디지털신문</div>
-          <div class="hero">주요 경제·사회 뉴스</div>
-          <div class="lines">
-            <div class="line big"></div><div class="line"></div><div class="line"></div>
-            <div class="line big"></div><div class="line"></div><div class="line"></div>
-          </div>
-          <div class="ad">최신호 표지 이미지 / PDF 연결 영역</div>
-        </div>
-      </div>
-
-      <div>
-        <div class="issue-list">
-          <div class="issue-card">
-            <div class="issue-thumb">
-              <div class="mini-mast">국민경제㊉</div>
-              <div class="mini-title">2026년 9월 최신호 1부</div>
-              <div class="mini-lines"><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="issue-meta">
-              <strong>1부</strong>
-              <span>최신 신문 지면</span>
-              <span>PDF 전체보기</span>
-              <button class="btn primary" onclick="openPdf('최신호 1부','assets/newspaper-2026-09-1.pdf')">지면보기</button>
-            </div>
-          </div>
-
-          <div class="issue-card">
-            <div class="issue-thumb">
-              <div class="mini-mast">국민경제㊉</div>
-              <div class="mini-title">2026년 9월 최신호 2부</div>
-              <div class="mini-lines"><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="issue-meta">
-              <strong>2부</strong>
-              <span>최신 신문 지면</span>
-              <span>PDF 전체보기</span>
-              <button class="btn primary" onclick="openPdf('최신호 2부','assets/newspaper-2026-09-2.pdf')">지면보기</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="parts">
-          <div class="part">
-            <div><strong>PDF 1부</strong><br><span>실제 파일: assets/...</span></div>
-            <button class="btn" onclick="openPdf('최신호 1부','assets/newspaper-2026-09-1.pdf')">PDF 보기</button>
-          </div>
-          <div class="part">
-            <div><strong>PDF 2부</strong><br><span>실제 파일: assets/...</span></div>
-            <button class="btn" onclick="openPdf('최신호 2부','assets/newspaper-2026-09-2.pdf')">PDF 보기</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="notice">
-      ※ 현재 화면은 개발용 임시 UI입니다. 실제 운영 시 <b>assets/</b>의 최신호 파일과
-      <b>archive/</b>의 지난신문 PDF를 실제 파일명에 맞춰 연결하고, 기존 모바일 지면보기/FlipBook 기능을 결합하면 됩니다.
-    </div>
-  </section>
-
-  <section class="archive" id="archive">
-    <div class="section-head">
-      <h2>지난신문</h2>
-      <span>썸네일 클릭 → 해당 PDF 보기</span>
-    </div>
-    <div class="archive-grid" id="archiveGrid"></div>
+<main class="wrap">
+  <h1>국민경제㊉ 지면보기</h1>
+  <p class="sub">종이신문 그대로, 페이지를 넘기며 읽어 보세요.</p>
+  <section><h2>최신신문 <small id="latestNote"></small></h2><div class="latest" id="latest"></div></section>
+  <section id="past"><h2>지난신문 <small id="count"></small></h2>
+    <div class="tools"><input id="q" type="search" placeholder="호수·날짜 검색 (예: 2016, 나눔)" aria-label="지난신문 검색"><div class="chips" id="chips"></div></div>
+    <div class="grid" id="grid"></div><p class="empty" id="empty" hidden>조건에 맞는 신문이 없습니다.</p>
   </section>
 </main>
+<footer><div class="wrap">© 국민경제㊉신문사 · AI플랫마켓 디지털신문</div></footer>
 
-<footer class="footer">
-  © AI플랫마켓 · 국민경제㊉ 디지털신문 · 지면보기
-</footer>
-
-<div class="modal" id="modal">
-  <div class="viewer">
-    <div class="viewer-head">
-      <strong id="viewerTitle">PDF 보기</strong>
-      <button class="btn" onclick="closePdf()">닫기</button>
-    </div>
-    <div class="viewer-body" id="viewerBody"></div>
+<div id="vw" hidden role="dialog" aria-label="지면보기 뷰어">
+  <div class="vh">
+    <button id="vx" aria-label="닫기">✕ 닫기</button><strong id="vt"></strong><span class="sp"></span>
+    <button id="vtoc">면 목록</button>
+    <button id="vzo" aria-label="축소">−</button><span id="vzl">100%</span><button id="vzi" aria-label="확대">＋</button>
+    <button id="vfs" class="opt">전체화면</button><a id="vpdf" class="lnk opt" target="_blank" rel="noopener">PDF 열기·인쇄</a>
   </div>
+  <div class="vb"><aside id="toc"></aside>
+    <div id="stg"><div id="spr"></div><div id="sw"></div>
+      <button class="ar l" id="vp" aria-label="이전 면">‹</button><button class="ar r" id="vn" aria-label="다음 면">›</button>
+      <p id="err" hidden>현재 신문을 불러오지 못했습니다.<br>잠시 후 다시 이용해 주세요.</p></div></div>
+  <div class="vf"><button id="v1" aria-label="첫 면">≪</button><button id="vpv">이전</button><span id="vi"></span>
+    <input id="rg" type="range" min="1" value="1" aria-label="면 이동"><button id="vnx">다음</button><button id="vl" aria-label="마지막 면">≫</button></div>
 </div>
 
 <script>
-/*
-  실제 운영 데이터 예시
-  - thumbnail: /assets/파일명.jpg
-  - pdf:       /archive/파일명.pdf
-  - 동일한 기본 파일명을 사용하면 관리하기 쉽습니다.
-*/
-const archiveData = [
-  { date:"2026-08-28", title:"국민경제㊉ 2026년 8월 28일", thumbnail:"assets/economy-2026-08-28.jpg", pdf:"archive/economy-2026-08-28.pdf" },
-  { date:"2026-08-21", title:"국민경제㊉ 2026년 8월 21일", thumbnail:"assets/economy-2026-08-21.jpg", pdf:"archive/economy-2026-08-21.pdf" },
-  { date:"2026-08-14", title:"국민경제㊉ 2026년 8월 14일", thumbnail:"assets/economy-2026-08-14.jpg", pdf:"archive/economy-2026-08-14.pdf" },
-  { date:"2026-08-07", title:"국민경제㊉ 2026년 8월 7일", thumbnail:"assets/economy-2026-08-07.jpg", pdf:"archive/economy-2026-08-07.pdf" },
-  { date:"2026-07-31", title:"국민경제㊉ 2026년 7월 31일", thumbnail:"assets/economy-2026-07-31.jpg", pdf:"archive/economy-2026-07-31.pdf" },
-  { date:"2026-07-24", title:"국민경제㊉ 2026년 7월 24일", thumbnail:"assets/economy-2026-07-24.jpg", pdf:"archive/economy-2026-07-24.pdf" },
-  { date:"2026-07-17", title:"국민경제㊉ 2026년 7월 17일", thumbnail:"assets/economy-2026-07-17.jpg", pdf:"archive/economy-2026-07-17.pdf" },
-  { date:"2026-07-10", title:"국민경제㊉ 2026년 7월 10일", thumbnail:"assets/economy-2026-07-10.jpg", pdf:"archive/economy-2026-07-10.pdf" },
-  { date:"2026-07-03", title:"국민경제㊉ 2026년 7월 3일", thumbnail:"assets/economy-2026-07-03.jpg", pdf:"archive/economy-2026-07-03.pdf" },
-  { date:"2026-06-26", title:"국민경제㊉ 2026년 6월 26일", thumbnail:"assets/economy-2026-06-26.jpg", pdf:"archive/economy-2026-06-26.pdf" },
-  { date:"2026-06-19", title:"국민경제㊉ 2026년 6월 19일", thumbnail:"assets/economy-2026-06-19.jpg", pdf:"archive/economy-2026-06-19.pdf" },
-  { date:"2026-06-12", title:"국민경제㊉ 2026년 6월 12일", thumbnail:"assets/economy-2026-06-12.jpg", pdf:"archive/economy-2026-06-12.pdf" }
+/* ═════ 데이터 ═════
+   BASE: 이 페이지는 /paper 로 열리므로 상대경로가 아닌 실제 파일 위치(절대경로)를 기준으로 합니다.
+   파일 추가 방법: archive/ 에 PDF, assets/ 에 JPG를 올리고 ISSUES에 한 줄 추가(썸네일은 없어도 텍스트 카드로 표시).
+   신문 종류 추가: PAPERS에 등록하고 항목에 paper:'키'를 지정 (복지신문·내고장 뉴스 등 같은 뷰어 재사용). */
+const BASE='/newspaper/paper/';
+const PAPERS={kmk:{name:'국민경제㊉'}};
+const T='assets/thumb_201605.jpg';   /* 현재 실제 존재하는 유일한 표지 — 호별 표지를 올리면 교체 */
+
+/* 최신신문: 실제 PDF/썸네일 파일명이 확정되면 pdf·thumb·pages 만 채우면 활성화됩니다 */
+const LATEST={paper:'kmk',date:'',volumes:[
+  {label:'1부',pdf:'',thumb:'',pages:0},
+  {label:'2부',pdf:'',thumb:'',pages:0}]};
+
+const one=(id,title,date,pages,pdf)=>({paper:'kmk',id,title,date,region:'인천',volumes:[{label:'',pdf,thumb:T,pages}]});
+const ISSUES=[
+ {paper:'kmk',id:'200912',title:'국민경제저널 창간호',date:'2009.12',region:'인천',volumes:[
+  {label:'1부',pdf:'archive/200912_국민경제저널_창간1부(표1~24p).pdf',thumb:T,pages:24},
+  {label:'2부',pdf:'archive/200912_국민경제저널_창간2부(25~48p,표3,4).pdf',thumb:T,pages:24}]},
+ {paper:'kmk',id:'201005',title:'국민경제저널 2010년 5월호',date:'2010.05',region:'인천',volumes:[
+  {label:'1부',pdf:'archive/201005_국민경제저널1부B5(01-26).pdf',thumb:T,pages:26},
+  {label:'2부',pdf:'archive/201005_국민경제저널2부B5(27-52).pdf',thumb:T,pages:26}]},
+ one('201404','국민경제저널 특집','2014.04',16,'archive/201404_국민경제저널특집A4(16p).pdf'),
+ one('201605','국민경제+나눔','2016.05',16,'archive/201605_국민경제+나눔A4(16p).pdf'),
+ one('201705','국민경제+Job','2017.05',16,'archive/201705_국민경제+JobA4(16p).pdf'),
+ one('201707','국민경제+아이템','2017.07',4,'archive/201707_국민경제+아이템A4(4p).pdf'),
+ one('201712','국민경제+INFO','2017.12',4,'archive/201712+국민경제+INFOA4(4p).pdf'),
+ one('201801','창업박람회','2018.01',16,'archive/201801_창업박람회(16p).pdf'),
+ one('201802','신년경제정보','2018.02',8,'archive/201802_신년경제정보(8p).pdf'),
+ one('201804','Start','2018.04',8,'archive/201804+Start(8p).pdf'),
+ one('201805','미래로','2018.05',4,'archive/201805+미래로A4(4p).pdf'),
+ one('201810','미래로','2018.10',4,'archive/201810_미래로A4(4p).pdf')
 ];
 
-function renderArchive(){
-  const grid = document.getElementById("archiveGrid");
-  grid.innerHTML = archiveData.map(item => `
-    <article class="archive-card">
-      <div class="archive-thumb">
-        <div class="amast">국민경제㊉</div>
-        <div class="ahead">${item.date}</div>
-        <div class="acol"><i></i><i></i><i></i><i></i></div>
-        <div class="afoot"></div>
-      </div>
-      <div class="archive-date">${item.date}</div>
-      <button class="btn" onclick="openPdf('${item.title}','${item.pdf}')">PDF 보기</button>
-    </article>
-  `).join("");
+/* ═════ 목록 ═════ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cards=()=>ISSUES.flatMap(i=>i.volumes.map(v=>({paper:i.paper,issue:i.id,title:`${i.title}${v.label?' '+v.label:''}`,date:i.date,region:i.region,...v})));
+function card(c,isNew){
+  const ok=!!c.pdf,b=document.createElement('button');
+  b.className='card'+(ok?'':' off');b.disabled=!ok;
+  b.innerHTML=`<span class="th">${c.thumb?`<img src="${esc(encodeURI(BASE+c.thumb))}" alt="" loading="lazy">`:''}<b class="ph">${esc(c.title)}</b>${isNew?'<em>최신호</em>':''}${ok?'':'<u>업로드 예정</u>'}</span><span class="mt"><strong>${esc(c.title)}</strong><small>${esc(c.date||'')}${c.region?' · '+esc(c.region):''}</small></span>`;
+  const im=b.querySelector('img');if(im)im.addEventListener('error',()=>im.remove());   /* 썸네일 없음 → 텍스트 카드 */
+  if(ok)b.addEventListener('click',()=>openViewer(c));
+  return b;
 }
+function renderLatest(){
+  const n=PAPERS[LATEST.paper].name,box=$('#latest');
+  LATEST.volumes.forEach(v=>box.appendChild(card({...v,title:`${n} 최신호 ${v.label}`,date:LATEST.date},true)));
+  if(LATEST.volumes.every(v=>!v.pdf))$('#latestNote').textContent='최신호는 업로드 후 열람할 수 있습니다';
+}
+let region='전체';
+function renderPast(){
+  const q=$('#q').value.trim().toLowerCase();
+  const list=cards().filter(c=>(region==='전체'||c.region===region)&&(!q||`${c.title} ${c.date} ${c.region}`.toLowerCase().includes(q)))
+    .sort((a,b)=>b.issue.localeCompare(a.issue)||a.title.localeCompare(b.title));
+  const g=$('#grid');g.innerHTML='';list.forEach(c=>g.appendChild(card(c,false)));
+  $('#empty').hidden=list.length>0;$('#count').textContent=`총 ${list.length}권`;
+}
+function renderChips(){
+  const rs=['전체',...new Set(ISSUES.map(i=>i.region))],box=$('#chips');box.innerHTML='';
+  if(rs.length<3)return;   /* 지역이 1개뿐이면 칩 생략 */
+  rs.forEach(r=>{const b=document.createElement('button');b.className='chip'+(r===region?' on':'');b.textContent=r;
+    b.onclick=()=>{region=r;renderChips();renderPast()};box.appendChild(b)});
+}
+$('#q').addEventListener('input',renderPast);
+renderLatest();renderChips();renderPast();
 
-function openPdf(title, path){
-  document.getElementById("viewerTitle").textContent = title;
-  document.getElementById("viewerBody").innerHTML = `
-    <div class="viewer-placeholder">
-      <h3>${title}</h3>
-      <p>실제 운영에서는 이 영역에 PDF 또는 기존 지면보기(FlipBook)가 연결됩니다.</p>
-      <code>${path}</code>
-      <button class="btn primary" style="margin-top:16px"
-        onclick="window.open('${path}','_blank')">실제 PDF 새 창으로 열기</button>
-    </div>`;
-  document.getElementById("modal").classList.add("open");
+/* ═════ 뷰어 ═════
+   페이지 표시는 PDF 뷰어 iframe + #page=N 방식(MVP). 화면에는 현재 면(PC 펼침 시 2면)만 만들어 메모리 사용을 최소화합니다.
+   src()/render() 한 곳만 바꾸면 PDF.js 캔버스 방식으로 교체할 수 있습니다. */
+const R=.707,ZS=[1,1.25,1.5,2,3];
+let S=null;
+const vw=$('#vw'),spr=$('#spr'),stg=$('#stg');
+const isSpread=()=>innerWidth>=900&&innerWidth>innerHeight*1.2;
+const vis=()=>{const p=S.page,n=S.v.pages;
+  if(!S.spread||p===1)return[1];
+  const f=p%2===0?p:p-1;return f+1<=n?[f,f+1]:[f]};
+const src=n=>encodeURI(BASE+S.v.pdf)+`#page=${n}&${S.z>1?'zoom='+Math.round(S.z*100):'view=Fit'}&toolbar=0&navpanes=0`;
+
+async function openViewer(c){
+  S={v:c,page:1,z:1,spread:isSpread(),dir:1};
+  $('#vt').textContent=c.title;$('#vpdf').href=encodeURI(BASE+c.pdf);
+  $('#rg').max=c.pages;
+  $('#toc').innerHTML=Array.from({length:c.pages},(_,i)=>`<button data-p="${i+1}">${i+1}면</button>`).join('');
+  document.documentElement.classList.add('reading');document.body.style.overflow='hidden';
+  vw.hidden=false;$('#err').hidden=true;
+  history.pushState({v:1},'');
+  try{
+    const r=await fetch(encodeURI(BASE+c.pdf),{method:'HEAD'});
+    if(!r.ok&&r.status!==405)throw new Error(`HTTP ${r.status} ${r.url}`);
+  }catch(e){console.error('[지면보기] PDF를 불러오지 못했습니다:',c.pdf,e);spr.innerHTML='';$('#err').hidden=false;return}
+  render();
 }
-function closePdf(){ document.getElementById("modal").classList.remove("open"); }
-function scrollToArchive(){ document.getElementById("archive").scrollIntoView({behavior:"smooth"}); }
-document.getElementById("modal").addEventListener("click", e => {
-  if(e.target.id === "modal") closePdf();
+function hide(){vw.hidden=true;spr.innerHTML='';S=null;document.documentElement.classList.remove('reading');document.body.style.overflow=''}
+function closeViewer(){if(history.state&&history.state.v)history.back();else hide()}
+addEventListener('popstate',()=>{if(!vw.hidden)hide()});
+
+function render(){
+  if(!S)return;
+  const v=vis();S.page=v[0];
+  stg.classList.toggle('z',S.z>1);vw.classList.toggle('z',S.z>1);
+  spr.style.setProperty('--dx',S.dir*14+'px');
+  spr.innerHTML=v.map(n=>`<div class="pg"><iframe title="${n}면" src="${esc(src(n))}"></iframe></div>`).join('');
+  fit();
+  const last=v[v.length-1],tot=S.v.pages;
+  $('#vi').textContent=`${v.length>1?v[0]+'–'+last:v[0]} / ${tot}`;
+  $('#rg').value=v[0];$('#vzl').textContent=Math.round(S.z*100)+'%';
+  $('#v1').disabled=$('#vpv').disabled=v[0]<=1;$('#vl').disabled=$('#vnx').disabled=last>=tot;
+  $('#vzo').disabled=S.z<=1;$('#vzi').disabled=S.z>=ZS[ZS.length-1];
+  document.querySelectorAll('#toc button').forEach(b=>b.classList.toggle('on',v.includes(+b.dataset.p)));
+}
+function fit(){
+  if(!S)return;
+  const mob=innerWidth<=700,n=vis().length;
+  const w=stg.clientWidth-(mob?8:110),h=stg.clientHeight-(mob?8:24);
+  spr.style.setProperty('--pw',Math.max(120,Math.min(w/n,h*R))+'px');
+}
+function go(p,dir){if(!S)return;S.dir=dir||(p>S.page?1:-1);S.page=Math.max(1,Math.min(S.v.pages,p));render()}
+function move(d){
+  if(!S)return;const v=vis();
+  if(d>0)go(v[v.length-1]+1,1);
+  else go(S.spread?(v[0]<=2?1:v[0]-2):S.page-1,-1);
+}
+function zoom(d){if(!S)return;const i=Math.max(0,Math.min(ZS.length-1,ZS.indexOf(S.z)+d));S.z=ZS[i];render()}
+
+$('#vx').onclick=closeViewer;$('#vp').onclick=()=>move(-1);$('#vn').onclick=()=>move(1);
+$('#vpv').onclick=()=>move(-1);$('#vnx').onclick=()=>move(1);
+$('#v1').onclick=()=>go(1,-1);$('#vl').onclick=()=>go(S.v.pages,1);
+$('#vzi').onclick=()=>zoom(1);$('#vzo').onclick=()=>zoom(-1);
+$('#rg').oninput=e=>go(+e.target.value);
+$('#vtoc').onclick=()=>$('#toc').classList.toggle('open');
+$('#toc').onclick=e=>{const b=e.target.closest('button');if(!b)return;go(+b.dataset.p);if(innerWidth<=700)$('#toc').classList.remove('open')};
+$('#vfs').onclick=()=>document.fullscreenElement?document.exitFullscreen():vw.requestFullscreen&&vw.requestFullscreen();
+
+/* 스와이프(좌→다음, 우→이전) + 가장자리 탭 이동. 확대 중에는 오버레이를 꺼서 PDF 자체 스크롤·핀치와 충돌하지 않게 함 */
+let sx=0,sy=0;const sw=$('#sw');
+sw.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});
+sw.addEventListener('pointerup',e=>{
+  const dx=e.clientX-sx,dy=e.clientY-sy;
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);
+  else if(Math.abs(dx)<8&&Math.abs(dy)<8){const r=sw.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;if(x<.25)move(-1);else if(x>.75)move(1)}
 });
-renderArchive();
+addEventListener('keydown',e=>{
+  if(!S)return;
+  if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft')move(-1);
+  else if(e.key==='Escape')closeViewer();else if(e.key==='+'||e.key==='=')zoom(1);else if(e.key==='-')zoom(-1);
+});
+function relayout(){if(!S)return;const s=isSpread();if(s!==S.spread){S.spread=s;render()}else fit()}
+addEventListener('resize',relayout);addEventListener('orientationchange',()=>setTimeout(relayout,200));
 </script>
 </body>
 </html>
