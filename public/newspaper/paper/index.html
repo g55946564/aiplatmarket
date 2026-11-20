@@ -56,6 +56,7 @@ footer{background:#111417;color:#aab6ad;font-size:12px;padding:20px 0}
 #vw{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:#16201a;color:#fff}
 #vw[hidden]{display:none}
 .vh,.vf{flex:none;display:flex;align-items:center;gap:8px;padding:0 12px;background:#0f1713;min-height:50px}
+.vh{flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
 .vh strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .sp{flex:1}
 #vw button,#vw .lnk{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:6px;padding:7px 11px;font-size:12.5px;white-space:nowrap}
@@ -110,7 +111,8 @@ footer{background:#111417;color:#aab6ad;font-size:12px;padding:20px 0}
 .rm{position:absolute;top:0;right:0;font-size:1.8cqw!important;background:#b71c1c!important;display:none}
 .editing .rm{display:block}
 .editing [contenteditable]{outline:1px dashed #66bb6a;background:#f1faf1;cursor:text}
-.edt{display:none;gap:6px;align-items:center}
+.edt{display:none;gap:6px;align-items:center;flex-wrap:wrap}
+#vgen{background:#2e7d32!important;border-color:#66bb6a!important;font-weight:700}
 #vw.edm.can .edt{display:flex}#vw.edm #vpdf{display:none}
 #vw.editing #sw{display:none}
 #vw.edm.z #stg{display:block;overflow:auto}#vw.edm.z #spr{width:max-content;margin:12px auto}
@@ -142,7 +144,7 @@ footer{background:#111417;color:#aab6ad;font-size:12px;padding:20px 0}
     <div class="grid" id="grid"></div><p class="empty" id="empty" hidden>조건에 맞는 신문이 없습니다.</p>
   </section>
 </main>
-<footer><div class="wrap">© 국민경제㊉신문사 · AI플랫마켓 디지털신문</div></footer>
+<footer><div class="wrap">© 국민경제㊉신문사 · AI플랫마켓 디지털신문 · <a href="/paper?edit=1" style="opacity:.7">편집자</a></div></footer>
 
 <div id="vw" hidden role="dialog" aria-label="지면보기 뷰어">
   <div class="vh">
@@ -220,7 +222,8 @@ async function renderLatest(){
   E=await loadEdition();
   if(E&&E.pages&&E.pages.length)box.appendChild(card({title:`${E.title} ${mLabel(E.month)}`,date:'월간 편집본',region:'',pdf:'ed',edition:1,pages:E.pages.length},true));
   LATEST.volumes.forEach(v=>box.appendChild(card({...v,title:`${n} 최신호 ${v.label}`,date:LATEST.date,thumb:v.thumb||th(v.pdf)},true)));
-  if(!box.children.length)$('#latestNote').textContent='최신호 준비 중입니다';
+  if(CAN&&E)$('#latestNote').textContent='편집자 모드 — 최신호를 열면 상단에 [새 호 생성·편집] 메뉴가 나타납니다';
+  else if(!box.children.length)$('#latestNote').textContent='최신호 준비 중입니다';
   else if(!LATEST.volumes.length)$('#latestNote').textContent='PDF 정식 발행본은 준비 중입니다';
 }
 let region='전체';
