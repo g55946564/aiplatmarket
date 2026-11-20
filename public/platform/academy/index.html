@@ -404,6 +404,34 @@ body>.acd-app{flex:1 1 auto;min-height:0}
   .acd-fbar .c{display:none}
   .acd-fbar-in{padding:0 8px;gap:6px}
 }
+
+/* 검색 바: 타이틀 바(남색 바탕) 안, 가운데 */
+.acd-titlebar{position:relative;z-index:120}
+.acd-titlebar .ttl{flex:1 1 0}
+.acd-sw{position:relative;flex:0 1 420px;min-width:0}
+.acd-sx{flex:1 1 0}
+.acd-sw .acd-sf{width:100%}
+.acd-sr{width:min(540px,92vw)}
+@media(max-width:1000px){
+  .acd-titlebar .acd-in{flex-wrap:wrap;padding-top:6px;padding-bottom:8px}
+  .acd-sx{display:none}
+  .acd-sw{order:5;flex:1 1 100%}
+  .acd-sr{width:100%}
+}
+
+/* 검색 바 폭 축소 */
+.acd-sw{flex:0 1 280px}
+.acd-sf input{padding:7px 4px 7px 14px;font-size:13.5px}
+.acd-sf button{padding:0 12px}
+.acd-sr{width:min(420px,92vw)}
+@media(max-width:1000px){.acd-sw{flex:0 1 min(300px,100%);margin:0 auto}.acd-sr{width:100%}}
+
+/* 검색 바: 타이틀 텍스트 바로 아래, 남색 바 안 가운데 (모든 화면 공통 2줄 구성) */
+.acd-titlebar .acd-in{flex-wrap:wrap;row-gap:6px;padding-top:8px;padding-bottom:10px;min-height:0}
+.acd-titlebar .ttl{flex:1 1 0}
+.acd-sx{display:block;order:4;flex:0 0 100%;height:0;margin:0}
+.acd-sw{order:5;flex:0 0 min(280px,100%);margin:0 auto}
+@media(max-width:1000px){.acd-sw{flex:0 0 min(300px,100%)}}
 </style>
 </head>
 <body>
@@ -460,7 +488,7 @@ window.APM_PROJECT = {
             <a class="gcdi platform" href="https://aiplatmarket.com/growth" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🌱</span><span class="gcdi-txt"><b>AI성장플랫존</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="https://aiplatmarket.com/academy" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎓</span><span class="gcdi-txt"><b>AI인생성장사관학교</b><span class="gcdi-desc">AI교육존 편입 · 독립 Platform</span></span></a>
             <a class="gcdi platform" href="https://aiplatmarket.com/itemzone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📦</span><span class="gcdi-txt"><b>AI아이템존</b><span class="gcdi-desc">사업 코파일럿</span></span></a>
-            <a class="gcdi platform" href="https://aiplatmarket.com/rd-simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>RD-Simul</b><span class="gcdi-desc">연구·개발·시뮬레이션 Platform</span></span></a>
+            <a class="gcdi platform" href="https://chatdoumi.com/rd-simul" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🔬</span><span class="gcdi-txt"><b>RD-Simul</b><span class="gcdi-desc">연구·개발·시뮬레이션 Platform</span></span></a>
             <a class="gcdi platform" href="https://chatdoumi.com/trading" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">📈</span><span class="gcdi-txt"><b>AI매매추천·검증시스템</b><span class="gcdi-desc">추천 검증 · 투자 참고용</span></span></a>
             <a class="gcdi platform" href="https://aiplatmarket.com/culture" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎨</span><span class="gcdi-txt"><b>AI문화예술</b><span class="gcdi-desc">독립 Platform</span></span></a>
             <a class="gcdi platform" href="https://aiplatmarket.com/gamezone" target="_blank" rel="noopener" onclick="closeCats()"><span class="gcdi-ico">🎮</span><span class="gcdi-txt"><b>AI게임존</b><span class="gcdi-desc">독립 Platform</span></span></a>            
@@ -603,9 +631,10 @@ window.APM_PROJECT = {
   <div class="acd-titlebar" id="acdTb"><div class="acd-in">
     <button class="acd-ib m" type="button" id="acdBtnL" aria-label="왼쪽 메뉴 열기" aria-expanded="false">☰</button>
     <button type="button" class="ttl" id="acdTitle" title="처음으로" aria-label="AI인생성장사관학교 처음으로 돌아가기">AI인생성장사관학교<small>AI 기반 평생성장학교·실천공동체</small></button>
-        <button class="acd-ib m" type="button" id="acdBtnR" aria-label="오른쪽 패널 열기" aria-expanded="false">☷</button>
+        <div class="acd-sw"><form class="acd-sf" id="acdSF" role="search"><input id="acdSI" type="search" placeholder="검색 (예: 입학, 모임)" aria-label="사관학교 검색" autocomplete="off"><button type="submit" aria-label="검색">🔍</button></form><div class="acd-sr" id="acdSR" hidden></div></div>
+    <span class="acd-sx"></span>
+    <button class="acd-ib m" type="button" id="acdBtnR" aria-label="오른쪽 패널 열기" aria-expanded="false">☷</button>
   </div></div>
-  <div class="acd-searchbar"><div class="acd-in"><form class="acd-sf" id="acdSF" role="search"><input id="acdSI" type="search" placeholder="사관학교 검색 (예: 입학, 모임, 자격증)" aria-label="사관학교 검색" autocomplete="off"><button type="submit" aria-label="검색">🔍</button></form><div class="acd-sr" id="acdSR" hidden></div></div></div>
   <nav class="acd-gnb" aria-label="사관학교 메뉴"><div class="acd-in"><div class="acd-gnb-s" id="acdGnb"></div></div></nav>
 
   <div class="acd-shell acd-in">
