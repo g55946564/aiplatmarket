@@ -129,6 +129,8 @@ footer{background:#111417;color:#aab6ad;font-size:12px;padding:20px 0}
 .mbar a{flex:0 0 auto;padding:11px 18px;font-size:14px;font-weight:700;color:#d6e6da;border-bottom:3px solid transparent}
 .mbar a:hover{color:#fff}.mbar a.on{color:#fff;border-bottom-color:#66bb6a}
 @media(max-width:700px){.ttl .logo{font-size:21px}.ttl2{font-size:17px}.mbar a{padding:10px 13px;font-size:13px}}
+.toc{list-style:none;margin:0 0 3cqw;padding:0;font-size:2.2cqw}.toc li{display:flex;gap:2.4cqw;padding:1cqw 0;border-bottom:1px solid var(--line)}.toc b{flex:none;width:7cqw;color:var(--acc)}.toc span{color:var(--soft);font-size:1.8cqw}
+.nt{background:var(--cream);padding:3cqw 3.4cqw;margin-bottom:3cqw}.nt h4{margin:0 0 1.4cqw;font-size:3.2cqw;color:var(--deep)}.nt p{margin:0;font-size:2.4cqw;line-height:1.7}
 </style>
 </head>
 <body>
@@ -173,7 +175,9 @@ const T='';   /* 썸네일은 PDF와 같은 이름의 assets/*.jpg 로 자동 �
 const th=pdf=>pdf?pdf.replace(/^archive\//,'assets/').replace(/\.pdf$/i,'.jpg'):'';
 
 /* 최신신문: ① 월간 편집본(edition.json, 편집자가 재편집 가능) ② 정식 PDF 1부·2부가 확정되면 아래에 추가 */
-const LATEST={paper:'kmk',date:'',volumes:[ /* {label:'1부',pdf:'assets/…pdf',thumb:'assets/…jpg',pages:16} */ ]};
+const LATEST={paper:'kmk',date:'2026.11',volumes:[
+  {label:'월간 PDF',pdf:'assets/202611_국민경제㊉월간편집본A4(16p).pdf',pages:16}   /* 매월 이 한 줄의 파일명·pages만 교체 (썸네일은 같은 이름의 .jpg 자동 연결) */
+  /* 정식 종이신문 1부·2부: {label:'1부',pdf:'assets/…pdf',pages:16} 추가 */ ]};
 let E=null,E0='';
 const CAN=/[?&]edit/.test(location.search);   /* /paper?edit=1 — 편집 버튼 노출(임시 보호, 실제 권한은 관리자 로그인 연동 필요) */
 
@@ -224,7 +228,7 @@ async function renderLatest(){
   LATEST.volumes.forEach(v=>box.appendChild(card({...v,title:`${n} 최신호 ${v.label}`,date:LATEST.date,thumb:v.thumb||th(v.pdf)},true)));
   if(CAN&&E)$('#latestNote').textContent='편집자 모드 — 최신호를 열면 상단에 [새 호 생성·편집] 메뉴가 나타납니다';
   else if(!box.children.length)$('#latestNote').textContent='최신호 준비 중입니다';
-  else if(!LATEST.volumes.length)$('#latestNote').textContent='PDF 정식 발행본은 준비 중입니다';
+  
 }
 let region='전체';
 function renderPast(){
@@ -260,7 +264,7 @@ async function openViewer(c){
   if(c.edition){c.pages=E.pages.length;vw.classList.add('edm');vw.classList.toggle('can',CAN)}
   $('#vt').textContent=c.title;if(!c.edition)$('#vpdf').href=encodeURI(BASE+c.pdf);
   $('#rg').max=c.pages;
-  $('#toc').innerHTML=Array.from({length:c.pages},(_,i)=>`<button data-p="${i+1}">${i+1}면</button>`).join('');
+  tocBuild(c.pages,c.edition);
   document.documentElement.classList.add('reading');document.body.style.overflow='hidden';
   vw.hidden=false;$('#err').hidden=true;
   history.pushState({v:1},'');
@@ -271,6 +275,7 @@ async function openViewer(c){
   }catch(e){console.error('[지면보기] PDF를 불러오지 못했습니다:',c.pdf,e);spr.innerHTML='';$('#err').hidden=false;return}
   render();
 }
+function tocBuild(n,ed){$('#toc').innerHTML=Array.from({length:n},(_,i)=>`<button data-p="${i+1}">${ed&&E.pages[i]&&E.pages[i].label?E.pages[i].label:(i+1)+'면'}</button>`).join('')}
 function hide(){vw.hidden=true;vw.classList.remove('edm','editing','can');spr.innerHTML='';S=null;document.documentElement.classList.remove('reading');document.body.style.overflow=''}
 function closeViewer(){if(history.state&&history.state.v)history.back();else hide()}
 addEventListener('popstate',()=>{if(!vw.hidden)hide()});
@@ -326,6 +331,7 @@ addEventListener('keydown',e=>{
   else if(e.key==='Escape')closeViewer();else if(e.key==='+'||e.key==='=')zoom(1);else if(e.key==='-')zoom(-1);
 });
 /* ═════ 월간 편집본: 기사 데이터(JSON) → 신문 지면 HTML ═════ */
+const lab=(i)=>(E.pages[i]&&E.pages[i].label)||(i+1)+'면';
 function pageHTML(n){
   const pg=E.pages[n-1],ed=S.edit,ce=(p,i,k)=>ed?` contenteditable="true" spellcheck="false" data-p="${n-1}" data-i="${i}" data-k="${k}"`:'';
   const items=pg.items.map((it,i)=>`<article class="at${n===1&&i===0?' lead':''}"><button class="rm" data-rm="${n-1}:${i}">✕ 기사 제외</button>
@@ -333,15 +339,18 @@ function pageHTML(n){
     <p class="dk"${ce(n,i,'dek')}>${esc(it.dek||'')}</p><p class="by"${ce(n,i,'byline')}>${esc(it.byline||'')}</p>
     <div class="bd">${(it.body||[]).map((t,b)=>`<p${ce(n,i,'b'+b)}>${esc(t)}</p>`).join('')}</div>
     ${it.subs&&it.subs.length?`<ul class="sb">${it.subs.map((s,k)=>`<li><strong${ce(n,i,'s'+k+'t')}>${esc(s.title)}</strong> <span${ce(n,i,'s'+k+'b')}>${esc(s.body||'')}</span></li>`).join('')}</ul>`:''}</article>`).join('');
+  const toc=pg.toc?`<ul class="toc">${E.pages.filter(p=>p.kind==='body').map(p=>`<li><b>${esc(p.label)}</b><div>${esc(p.sec)}<br><span>${p.items.map(x=>esc(x.title)).join(' · ')}</span></div></li>`).join('')}</ul>`:'';
+  const notes=(pg.notes||[]).map((x,k)=>`<div class="nt"><h4${ce(n,'n',k+'t')}>${esc(x.title)}</h4><p${ce(n,'n',k+'x')}>${esc(x.text)}</p></div>`).join('');
   const br=pg.briefs?`<div class="br"><h4>주요 뉴스 단신</h4>${pg.briefs.map(b=>`<p><strong>${esc(b.title)}</strong> ${esc(b.summary)} <em>${esc(b.source)}</em></p>`).join('')}</div>`:'';
-  return `<div class="pg ed"><div class="eb">${n===1?`<div class="mast">${esc(E.title.replace('㊉',''))}<i>㊉</i><small>월간 디지털신문 · ${mLabel(E.month)}${E._draft?'<span class="badge">임시저장본</span>':''}</small></div>`:''}
-    <div class="eh"><b>${esc(E.title)}</b><span${ce(n,-1,'sec')}>${esc(pg.sec)}</span><span>${n}면</span></div>${items}${br}</div></div>`;
+  return `<div class="pg ed"><div class="eb">${pg.kind==='cover1'||(!pg.kind&&n===1)?`<div class="mast">${esc(E.title.replace('㊉',''))}<i>㊉</i><small>월간 디지털신문 · ${mLabel(E.month)}${E._draft?'<span class="badge">임시저장본</span>':''}</small></div>`:''}
+    <div class="eh"><b>${esc(E.title)}</b><span${ce(n,-1,'sec')}>${esc(pg.sec)}</span><span>${esc(lab(n-1))}</span></div>${toc}${items}${br}${notes}</div></div>`;
 }
 function saveDraft(){try{localStorage.setItem('kmk-draft-'+E.month,JSON.stringify(E))}catch(e){console.error('[지면보기] 임시저장 실패',e)}}
 spr.addEventListener('input',e=>{
   const el=e.target.closest('[data-k]');if(!el)return;
   const d=el.dataset,pg=E.pages[+d.p],t=el.innerText.replace(/\s*\n+\s*/g,' ').trim(),k=d.k;
   if(d.i==='-1')pg.sec=t;
+  else if(d.i==='n'){const m=k.match(/^(\d+)([tx])$/);pg.notes[+m[1]][m[2]==='t'?'title':'text']=t}
   else{const it=pg.items[+d.i];let m;
     if(/^b\d+$/.test(k))it.body[+k.slice(1)]=t;
     else if(m=k.match(/^s(\d+)([tb])$/))it.subs[+m[1]][m[2]==='t'?'title':'body']=t;
@@ -361,17 +370,17 @@ $('#vexp').onclick=()=>{
 $('#vimp').onclick=()=>$('#vfile').click();
 $('#vfile').onchange=async e=>{
   try{const d=JSON.parse(await e.target.files[0].text());if(!d.pages||!d.pages.length)throw new Error('pages 없음');
-    E=d;E._draft=1;saveDraft();S.v.pages=E.pages.length;$('#rg').max=E.pages.length;go(1)}
+    E=d;E._draft=1;saveDraft();S.v.pages=E.pages.length;$('#rg').max=E.pages.length;tocBuild(E.pages.length,true);go(1)}
   catch(err){console.error('[지면보기] JSON 불러오기 실패',err);alert('편집본 JSON 형식이 올바르지 않습니다.')}
   e.target.value='';
 };
 $('#vrst').onclick=()=>{
   if(!E0||!confirm('임시저장한 편집 내용을 버리고 서버의 원본으로 되돌릴까요?'))return;
   try{localStorage.removeItem('kmk-draft-'+E.month)}catch(e){}
-  E=JSON.parse(E0);S.v.pages=E.pages.length;$('#rg').max=E.pages.length;go(1);
+  E=JSON.parse(E0);S.v.pages=E.pages.length;$('#rg').max=E.pages.length;tocBuild(E.pages.length,true);go(1);
 };
 /* ═════ 새 호 생성: 메인(/newspaper)의 카테고리 기사에서 발췌해 이번 달 편집본을 만든다 ═════ */
-const GROUPS=[['1면 · 헤드라인',['headline']],['소비자·상생',['store','benefit']],['사회·지역',['welfare','local']],['교육·문화',['education','culture']],['과학·스포츠',['science','sports']],['세계·사건사고',['global','incident']],['AI·식자재',['ai','ingredient']],['농수산·특산',['agrifish','localspecial']],['맛집·멋집',['matjip','meotjip']],['착한 가게·상품',['goodstore','goodproduct']],['부동산·인테리어',['realestate','interior']],['패션·모빌리티',['fashion','mobility']],['금융·환경',['finance','environment']],['사업·취업',['jobs']]];
+const GROUPS=[['소비자·상생',['store','benefit']],['사회·지역',['welfare','local']],['교육·문화',['education','culture']],['과학·스포츠',['science','sports']],['세계·사건사고',['global','incident']],['AI·식자재',['ai','ingredient']],['농수산·특산',['agrifish','localspecial']],['맛집·멋집',['matjip','meotjip']],['착한 가게·상품',['goodstore','goodproduct']],['부동산·인테리어',['realestate','interior']],['패션·모빌리티',['fashion','mobility']],['금융·환경·취업',['finance','environment','jobs']]];
 function grab(src,name){   /* 소스에서 const NAME = {…}|[…] 를 문자열 안의 괄호는 무시하고 잘라냄 */
   const i=src.indexOf('const '+name+' =');if(i<0)throw new Error(name+' 없음');
   let j=src.indexOf('=',i)+1;while(!'{['.includes(src[j]))j++;
@@ -386,16 +395,19 @@ function grab(src,name){   /* 소스에서 const NAME = {…}|[…] 를 문자�
 async function generateEdition(){
   const html=await (await fetch('/newspaper',{cache:'no-store'})).text();
   const A=grab(html,'ARTICLES'),B=grab(html,'GENERAL_BRIEFS'),now=new Date();
-  return{paper:'kmk',title:'국민경제㊉',month:`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`,
-    pages:GROUPS.map(([sec,ks],gi)=>{
-      const items=ks.filter(k=>A[k]).map(k=>{const a=A[k];return{cat:k,kicker:a.kicker||'',title:a.title||'',dek:a.dek||'',byline:a.byline||'',body:a.body||[],subs:(a.subs||[]).map(x=>({title:x.title||'',body:x.body||''}))}});
-      const pg={sec,items};if(gi===0)pg.briefs=B.map(b=>({title:b.title,summary:b.summary,source:b.source}));return pg}).filter(p=>p.items.length)};
+  const mk=ks=>ks.filter(k=>A[k]).map(k=>{const a=A[k];return{cat:k,kicker:a.kicker||'',title:a.title||'',dek:a.dek||'',byline:a.byline||'',body:a.body||[],subs:(a.subs||[]).map(x=>({title:x.title||'',body:x.body||''}))}});
+  const pages=[{kind:'cover1',label:'표1',sec:'표지 · 헤드라인',items:mk(['headline'])},
+    {kind:'cover2',label:'표2',sec:'목차 · 주요 뉴스 단신',toc:true,items:[],briefs:B.map(b=>({title:b.title,summary:b.summary,source:b.source}))},
+    ...GROUPS.map(([sec,ks],i)=>({kind:'body',label:(i+1)+'면',sec,items:mk(ks)})),
+    {kind:'cover3',label:'표3',sec:'독자 안내',items:[],notes:[{title:'제보·문의',text:'(편집자 입력) 제보 및 문의 연락처를 입력하세요.'},{title:'광고·상생 참여 안내',text:'(편집자 입력) 소상공인 홍보·광고 및 상생 스토어 입점 안내를 입력하세요.'}]},
+    {kind:'cover4',label:'표4',sec:'신문사 안내',items:[],notes:[{title:'국민경제㊉신문사',text:'소비자·소상공인 상생 디지털신문 · AI플랫마켓 디지털신문 그룹 · aiplatmarket.com/paper'},{title:'발행 정보',text:'발행인·편집인·등록번호·주소: (편집자 입력)'}]}];
+  return{paper:'kmk',title:'국민경제㊉',month:`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`,pages};
 }
 $('#vgen').onclick=async()=>{
   if(!confirm('메인 카테고리 기사에서 이번 달 새 호를 생성합니다.\n현재 편집 중인 내용은 임시저장본에서 대체됩니다. 계속할까요?'))return;
   try{E=await generateEdition();E._draft=1;saveDraft();S.v.pages=E.pages.length;$('#rg').max=E.pages.length;
     $('#vt').textContent=`${E.title} ${mLabel(E.month)}`;
-    $('#toc').innerHTML=Array.from({length:E.pages.length},(_,i)=>`<button data-p="${i+1}">${i+1}면</button>`).join('');go(1)}
+    tocBuild(E.pages.length,true);go(1)}
   catch(err){console.error('[지면보기] 새 호 생성 실패',err);alert('새 호를 생성하지 못했습니다. 잠시 후 다시 시도해 주세요.')}
 };
 function relayout(){if(!S)return;const s=isSpread();if(s!==S.spread){S.spread=s;render()}else fit()}
