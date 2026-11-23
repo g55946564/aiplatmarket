@@ -209,7 +209,11 @@ function card(c,isNew){
   const ok=!!c.pdf,b=document.createElement('button');
   b.className='card'+(ok?'':' off');b.disabled=!ok;
   b.innerHTML=`<span class="th">${c.thumb?`<img src="${esc(encodeURI(BASE+c.thumb))}" alt="" loading="lazy">`:''}<b class="ph">${esc(c.title)}</b>${isNew?'<em>최신호</em>':''}${ok?'':'<u>업로드 예정</u>'}</span><span class="mt"><strong>${esc(c.title)}</strong><small>${esc(c.date||'')}${c.region?' · '+esc(c.region):''}</small></span>`;
-  const im=b.querySelector('img');if(im)im.addEventListener('error',()=>im.remove());   /* 썸네일 없음 → 텍스트 카드 */
+  const im=b.querySelector('img');
+  if(im){   /* 썸네일 실패 시: .JPG 확장자 / 한글 NFD 이름을 차례로 시도 → 끝내 없으면 텍스트 카드 */
+    const base=c.thumb,alts=[base.replace(/\.jpe?g$/i,'.JPG'),base.normalize('NFD'),base.normalize('NFD').replace(/\.jpe?g$/i,'.JPG')].filter((v,i,a)=>v!==base&&a.indexOf(v)===i);
+    im.addEventListener('error',()=>{console.warn('[지면보기] 썸네일 로드 실패:',decodeURI(im.src));const n=alts.shift();if(n)im.src=encodeURI(BASE+n);else im.remove()});
+  }
   if(ok)b.addEventListener('click',()=>openViewer(c));
   return b;
 }
