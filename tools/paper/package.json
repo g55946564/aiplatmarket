@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "build-edition-pdf.js",
   "scripts": {
-    "build": "node build-edition-pdf.js ../../public/newspaper/paper/edition.json output"
+    "build": "node build-edition-pdf.js ../../public/newspaper/paper/edition.json output --split"
 },
   "keywords": [],
   "author": "",
