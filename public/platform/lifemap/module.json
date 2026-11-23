@@ -6,7 +6,7 @@
   "icon": "🔮",
   "description": "심리학·동양철학·AI Fusion 기반 인생·진로 종합 탐색 플랫폼 (AI 인생·진로 체험센터)",
   "tagline": "나를 이해하고, 삶을 탐색하고, 방향을 찾다",
-  "version": "1.1.0-preview",
+  "version": "1.2.0-preview",
   "status": "dev",
   "mode": "PREVIEW",
   "routes": [
@@ -17,7 +17,7 @@
   "framework_version": "1.0.0",
   "ai_core": {
     "enabled": false,
-    "mode": "PREVIEW",
+    "mode": "PREVIEW (서버 환경변수 LIFEMAP_MODE 로 결정)",
     "engines": [
       "gemini",
       "gpt",
@@ -25,8 +25,9 @@
       "rule"
     ],
     "fallback": "rule",
-    "endpoint": "/api/life-analysis",
-    "note": "PREVIEW 에서는 AI Core 호출 0회(프론트 LM.callAPI 차단 + 서버에서도 mode 로 차단 필요). PRODUCTION 전환 시 활성화. 호출 순서: Gemini → GPT → Claude → Rule."
+    "endpoint": "/api/lifemap/analyze",
+    "flow": "브라우저 → AI플랫마켓 메인 서버(lifemap-relay.js) → 챗도우미 AI Core(/api/life-analysis). API 키는 서버 환경변수에만 존재",
+    "note": "PREVIEW 는 서버에서 AI 호출을 차단(0회). BETA 는 초대 코드 필요. 호출 순서: Gemini → GPT → Claude → Rule."
   },
   "disciplines": {
     "psychology": [
@@ -139,5 +140,5 @@
   },
   "owner": "형식",
   "created": "2026-06-18",
-  "updated": "2026-11-03"
+  "updated": "2026-11-04"
 }
