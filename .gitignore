@@ -1,6 +1,6 @@
 # 1. 라이브러리 폴더 (용량이 너무 커서 제외)
 node_modules/
-
+tools/paper/output/
 # 2. 파이어베이스 보안 키 (보안상 절대 제외)
 *-firebase-adminsdk-*.json
 serviceAccountKey.json
