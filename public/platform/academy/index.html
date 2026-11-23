@@ -451,6 +451,12 @@ body>.acd-app{flex:1 1 auto;min-height:0}
 .apm-lf input{box-sizing:border-box;width:100%;min-width:0;border:1px solid #cfd6dd;border-radius:6px;padding:10px;font-size:.92rem;font-family:inherit}
 .apm-lf .apm-pri{width:100%;margin-top:12px;border:0;border-radius:6px;padding:11px;background:var(--navy);color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit}
 .apm-inrow{display:flex;gap:6px}
+.apm-pwrow{position:relative}
+.apm-pwrow input{padding-right:44px}
+.apm-eye{position:absolute;right:3px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:none;color:#6b7785;cursor:pointer;display:grid;place-items:center;border-radius:6px}
+.apm-eye:hover{color:var(--navy)}
+.apm-eye svg{width:20px;height:20px}
+.apm-eye .ev{display:none}.apm-eye.on .ev{display:block}.apm-eye.on .eh{display:none}
 .apm-sm{flex:none;border:0;border-radius:6px;padding:0 12px;background:var(--navy);color:#fff;font-size:.78rem;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap}
 .apm-lf .apm-hint{font-size:.7rem;color:var(--g4);margin:8px 0 0;line-height:1.5}
 .apm-lm button:focus-visible,.apm-lf button:focus-visible,.apm-lf input:focus-visible{outline:3px solid #c9a84c;outline-offset:2px}
@@ -463,6 +469,44 @@ body>.acd-app{flex:1 1 auto;min-height:0}
   .acd-sr{width:min(620px,92vw)}
   .acd-sf input{font-size:14.5px;padding:9px 6px 9px 18px}
 }
+
+/* ===== 공간 확보: 여백·높이 압축 ===== */
+.apm-top{padding-top:3px;padding-bottom:3px}
+.gnb-cat-bar{min-height:28px}
+.gcbtn{padding:5px 12px}
+.gnb-cat-bar::-webkit-scrollbar{height:3px}
+.gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4);border-radius:3px}
+.acd-titlebar .acd-in{row-gap:3px;padding-top:4px;padding-bottom:5px}
+.acd-titlebar .ttl{font-size:15px}
+.acd-sf input{padding:5px 6px 5px 16px;font-size:13.5px}
+.acd-sf button{padding:0 12px;font-size:14px}
+.acd-ib.m{min-height:32px}
+.acd-gnb-s{padding:2px 0 3px}
+.acd-gnb button{padding:5px 13px;font-size:13.5px}
+.acd-gnb-s::-webkit-scrollbar{height:5px}
+.acd-gnb::after{bottom:8px}
+.acd-shell.acd-in{gap:8px;padding:6px 0}
+.acd-scroll{padding:10px}
+.acd-pbody{padding:10px}
+.acd-ask{padding:6px 10px;gap:6px}
+.acd-ask input{padding:8px 12px;font-size:14px;border-radius:10px}
+.acd-send{min-height:36px;padding:0 14px;font-size:14px}
+.acd-askn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 12px 5px;font-size:11px}
+.acd-ftw{margin-top:14px;border-radius:12px;overflow:hidden}
+.acd-ftw footer{margin:0}
+@media(max-width:1000px){
+  .acd-left,.acd-right,.acd-back{bottom:0}
+  .acd-titlebar .acd-in{padding-top:4px;padding-bottom:5px}
+  .acd-scroll{padding:8px}
+}
+
+/* 줄 높이 압축 */
+.acd-titlebar,.acd-gnb button,.acd-sf input,.acd-sf button,.acd-ask input,.acd-send,.acd-ib{line-height:1.25}
+.acd-askn{line-height:1.3}
+.acd-sf input{padding-top:6px;padding-bottom:6px}
+.acd-ask input{padding-top:7px;padding-bottom:7px}
+.acd-gnb button{padding-top:4px;padding-bottom:4px}
+.acd-ib{min-height:30px;padding:0 10px}
 </style>
 </head>
 <body>
@@ -503,10 +547,10 @@ window.APM_PROJECT = {
     <div class="apm-sec" data-m="idpw">
       <div class="apm-div"><span>아이디로 로그인</span></div>
       <form class="apm-lf" id="apmIdPwForm" onsubmit="return apmIdPwLogin(event)" autocomplete="on">
-        <label for="apmIdIn">아이디</label>
-        <input id="apmIdIn" name="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="40" placeholder="아이디">
+        <label for="apmIdIn">아이디(이메일)</label>
+        <input id="apmIdIn" name="username" type="text" inputmode="email" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="80" placeholder="이메일 주소">
         <label for="apmPwIn">비밀번호</label>
-        <input id="apmPwIn" name="password" type="password" autocomplete="current-password" maxlength="64" placeholder="비밀번호">
+        <div class="apm-pwrow"><input id="apmPwIn" name="password" type="password" autocomplete="current-password" maxlength="64" placeholder="비밀번호"><button type="button" class="apm-eye" id="apmPwEye" aria-label="비밀번호 보기" aria-pressed="false" onclick="apmTogglePw()"><svg class="eh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg><svg class="ev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
         <button type="submit" class="apm-pri">로그인</button>
       </form>
     </div>
@@ -536,12 +580,6 @@ window.APM_PROJECT = {
 </div>
 
 <nav class="gnb">
-  <!-- 간단 링크 줄 (메인 전용 지역·업종별·인기순 필터는 프로젝트에서 동작하지 않아 제외) -->
-  <div class="apm-links">
-    <a href="https://aiplatmarket.com/">🏠 종합홈</a>
-    <a href="#" onclick="apmGo('news');return false">📰 지역경제</a>
-    <a href="#" onclick="apmGo('global');return false">🌐 글로벌경제<span class="apm-new">NEW</span></a>
-  </div>
     <div class="gnb-cat-bar-wrap">
     <div class="gnb-cat-bar" id="gnbCatBar" onscroll="updateGnbScrollHint(this)">
 
@@ -989,52 +1027,7 @@ window.APM_PROJECT = {
 <section class="acd-view" data-view="prep"><h2 id="acdPrepTitle">준비 중입니다</h2><p class="acd-lead">이 기능은 현재 업그레이드·준비 중입니다. 먼저 전체 구조와 이용 흐름을 갖추고 있으며, 사전 관심 등록을 해 두시면 안내받을 수 있습니다.</p><div class="acd-row"><a class="acd-btn grn" href="https://aiplatmarket.com/promo" target="_blank" rel="noopener">사전 관심 등록</a><button class="acd-btn out" type="button" data-go="home">홈으로</button></div></section>
 </div>
         <div id="acdThread" aria-live="polite"></div>
-      </div>
-      <form class="acd-ask" id="acdAskF" autocomplete="off"><input id="acdAskIn" maxlength="200" placeholder="궁금한 점을 입력하세요 (예: 입학은 어떻게 하나요?)" aria-label="질문 입력"><button class="acd-send" type="submit">질문하기</button></form>
-      <div class="acd-askn">체험 기간에는 AI 모델을 호출하지 않고 안내 문구로 답합니다. 플랫폼 공통 AI Core 연동은 준비 중입니다.</div>
-    </main>
-
-    <aside class="acd-right" id="acdR" aria-label="오른쪽 패널">
-      <div class="acd-ptabs" role="tablist"><button class="on" data-t="R1">공지</button><button data-t="R2">연결</button><button data-t="R3">자주 묻는 질문</button></div>
-      <div class="acd-pbody">
-        <div class="acd-pane on" data-pane="R1"><h4>공지 (샘플)</h4>
-          <button class="acd-li" data-go="notice">MVP 미리보기 오픈 안내<small>2026.11</small></button>
-          <button class="acd-li" data-go="notice">통합 설명회 사전 관심 등록 안내<small>AI통합홍보센터 연계</small></button>
-          <button class="acd-li" data-go="notice">지역 성장공간 기부·협력 모집 준비<small>제안 접수 준비 중</small></button></div>
-        <div class="acd-pane" data-pane="R2"><h4>AI플랫마켓 연결</h4>
-          <a class="acd-li" href="https://aiplatmarket.com/lifemap" target="_blank" rel="noopener">AI LifeMap<small>나를 점검</small></a>
-          <a class="acd-li" href="https://aiplatmarket.com/growth" target="_blank" rel="noopener">AI성장플랫존<small>배움·교류·협업</small></a>
-          <button class="acd-li" data-go="eduzone">AI교육존<small>사관학교 내 준독립 교육 영역</small></button>
-          <a class="acd-li" href="https://aiplatmarket.com/itemzone" target="_blank" rel="noopener">AI ItemZone<small>사업 아이템·창업</small></a>
-          <a class="acd-li" href="https://aiplatmarket.com/metazone" target="_blank" rel="noopener">AI MetaZone<small>체험·지역 교류</small></a>
-          <a class="acd-li" href="https://aiplatmarket.com/promo" target="_blank" rel="noopener">AI통합홍보센터<small>설명회·사전 참여·공간 제안</small></a></div>
-        <div class="acd-pane" data-pane="R3"><h4>눌러서 질문하기</h4>
-          <button class="acd-li" data-ask="입학은 어떻게 하나요?">입학은 어떻게 하나요?</button>
-          <button class="acd-li" data-ask="AI LifeMap은 시험인가요?">AI LifeMap은 시험인가요?</button>
-          <button class="acd-li" data-ask="온라인 과정은 꼭 들어야 하나요?">온라인 과정은 꼭 들어야 하나요?</button>
-          <button class="acd-li" data-ask="오프라인 캠퍼스는 어디에 있나요?">오프라인 캠퍼스는 어디에 있나요?</button>
-          <button class="acd-li" data-ask="학비와 AI Point는 어떻게 되나요?">학비와 AI Point는 어떻게 되나요?</button>
-          <button class="acd-li" data-ask="공간을 기부하고 싶어요">공간을 기부하고 싶어요</button></div>
-      </div>
-    </aside>
-  </div>
-  <footer class="acd-fbar" aria-label="푸터 링크">
-    <div class="acd-in acd-fbar-in">
-      <span class="c">© 2026 22세기대한</span>
-      <div class="ls">
-        <button type="button" data-go="intro">서비스 소개</button>
-        <button type="button" onclick="apmGo('terms')">이용약관</button>
-        <button type="button" onclick="apmGo('privacy')">개인정보처리방침</button>
-        <button type="button" onclick="apmGo('adcontact')">광고문의</button>
-        <button type="button" onclick="apmGo('register')">입점문의</button>
-        <button type="button" data-go="community">커뮤니티</button>
-        <button type="button" onclick="apmFeedback()">💡 불편사항·개선 제안</button>
-      </div>
-      <button type="button" class="more" onclick="acdFooter(true)" aria-label="사업자 정보 전체 보기">사업자 정보 ▲</button>
-    </div>
-  </footer>
-</div>
-<div class="acd-ftd" id="acdFtd"><button class="x" type="button" onclick="acdFooter(false)">닫기 ✕</button><!-- ══════════ FOOTER — 그대로 <body> 최하단(스크립트 앞)에 붙여넣기 ══════════ -->
+        <div class="acd-ftw"><!-- ══════════ FOOTER — 그대로 <body> 최하단(스크립트 앞)에 붙여넣기 ══════════ -->
 <footer>
   <div class="ft-outer">
     <div class="ft">
@@ -1088,12 +1081,42 @@ window.APM_PROJECT = {
   
   
     </div>
-  </div>
+  
     
-    </div>
-  </div>
+    
+  
 </footer>
 <!-- ══════════ /FOOTER ══════════ --></div>
+      </div>
+      <form class="acd-ask" id="acdAskF" autocomplete="off"><input id="acdAskIn" maxlength="200" placeholder="궁금한 점을 입력하세요 (예: 입학은 어떻게 하나요?)" aria-label="질문 입력"><button class="acd-send" type="submit">질문하기</button></form>
+      <div class="acd-askn">체험 기간에는 AI를 호출하지 않고 안내 문구로 답합니다.</div>
+    </main>
+
+    <aside class="acd-right" id="acdR" aria-label="오른쪽 패널">
+      <div class="acd-ptabs" role="tablist"><button class="on" data-t="R1">공지</button><button data-t="R2">연결</button><button data-t="R3">자주 묻는 질문</button></div>
+      <div class="acd-pbody">
+        <div class="acd-pane on" data-pane="R1"><h4>공지 (샘플)</h4>
+          <button class="acd-li" data-go="notice">MVP 미리보기 오픈 안내<small>2026.11</small></button>
+          <button class="acd-li" data-go="notice">통합 설명회 사전 관심 등록 안내<small>AI통합홍보센터 연계</small></button>
+          <button class="acd-li" data-go="notice">지역 성장공간 기부·협력 모집 준비<small>제안 접수 준비 중</small></button></div>
+        <div class="acd-pane" data-pane="R2"><h4>AI플랫마켓 연결</h4>
+          <a class="acd-li" href="https://aiplatmarket.com/lifemap" target="_blank" rel="noopener">AI LifeMap<small>나를 점검</small></a>
+          <a class="acd-li" href="https://aiplatmarket.com/growth" target="_blank" rel="noopener">AI성장플랫존<small>배움·교류·협업</small></a>
+          <button class="acd-li" data-go="eduzone">AI교육존<small>사관학교 내 준독립 교육 영역</small></button>
+          <a class="acd-li" href="https://aiplatmarket.com/itemzone" target="_blank" rel="noopener">AI ItemZone<small>사업 아이템·창업</small></a>
+          <a class="acd-li" href="https://aiplatmarket.com/metazone" target="_blank" rel="noopener">AI MetaZone<small>체험·지역 교류</small></a>
+          <a class="acd-li" href="https://aiplatmarket.com/promo" target="_blank" rel="noopener">AI통합홍보센터<small>설명회·사전 참여·공간 제안</small></a></div>
+        <div class="acd-pane" data-pane="R3"><h4>눌러서 질문하기</h4>
+          <button class="acd-li" data-ask="입학은 어떻게 하나요?">입학은 어떻게 하나요?</button>
+          <button class="acd-li" data-ask="AI LifeMap은 시험인가요?">AI LifeMap은 시험인가요?</button>
+          <button class="acd-li" data-ask="온라인 과정은 꼭 들어야 하나요?">온라인 과정은 꼭 들어야 하나요?</button>
+          <button class="acd-li" data-ask="오프라인 캠퍼스는 어디에 있나요?">오프라인 캠퍼스는 어디에 있나요?</button>
+          <button class="acd-li" data-ask="학비와 AI Point는 어떻게 되나요?">학비와 AI Point는 어떻게 되나요?</button>
+          <button class="acd-li" data-ask="공간을 기부하고 싶어요">공간을 기부하고 싶어요</button></div>
+      </div>
+    </aside>
+  </div>
+</div>
 
 
 <!-- 환영 프리뷰 팝업 -->
@@ -1323,7 +1346,7 @@ window.ACADEMY_CONFIG = { projectId:'life-growth-school', publicPath:'/academy/'
   };
   window.acdPrep = function(name){ if(!name) return; $('acdPrepTitle').textContent = '‘'+name+'’ 준비 중입니다'; qa('.acd-view').forEach(function(v){ v.classList.remove('on'); }); document.querySelector('.acd-view[data-view="prep"]').classList.add('on'); $('acdScroll').scrollTop = 0; closeDrawers(); };
   window.acdFeedback = function(){ if(typeof apmFeedback==='function') apmFeedback(); };
-  window.acdFooter = function(on){ $('acdFtd').classList.toggle('on', !!on); };
+  window.acdFooter = function(on){ if(on){ var f=document.querySelector('.acd-ftw'); if(f) f.scrollIntoView({block:'end'}); } };
 
   /* 모바일: 좌·우 패널 햄버거 */
   function closeDrawers(){ document.body.classList.remove('open-l','open-r'); ['acdBtnL','acdBtnR'].forEach(function(i){ var b=$(i); if(b) b.setAttribute('aria-expanded','false'); }); }
@@ -1367,7 +1390,7 @@ window.ACADEMY_CONFIG = { projectId:'life-growth-school', publicPath:'/academy/'
     var a = document.createElement('div'); a.className='acd-a';
     var p = document.createElement('div'); p.textContent = hit ? hit[2] : '아직 준비된 답변이 없는 질문입니다. 위 메뉴에서 찾아보시거나 AI통합홍보센터를 통해 문의해 주세요. 공통 AI Core 연동 후 더 자세히 답변할 예정입니다.'; a.appendChild(p);
     if(hit){ var b=document.createElement('button'); b.type='button'; b.className='acd-btn out'; b.textContent=(NAME[hit[1]]||'')+' 화면 보기'; b.addEventListener('click', function(){ acdGo(hit[1]); }); a.appendChild(b); }
-    t.appendChild(a); var s=$('acdScroll'); s.scrollTop = s.scrollHeight;
+    t.appendChild(a); qb.scrollIntoView({block:'start'});
   }
 
   /* 실천 메모 (브라우저 저장, 임시) */
@@ -1507,7 +1530,7 @@ window.APM_LOGIN_METHODS = window.APM_LOGIN_METHODS || { kakao:true, naver:true,
   window.apmLoginShow = function(){                       // 열 때마다 초기화 + 방법별 표시 설정
     err(''); var M=window.APM_LOGIN_METHODS, box=$('apmLoginMain'); if(!box) return;
     Array.prototype.forEach.call(document.querySelectorAll('#apmLoginModal [data-m]'), function(el){ el.hidden = M[el.dataset.m]===false; });
-    var c=$('apmCodeBox'); if(c) c.hidden = true; var pw=$('apmPwIn'); if(pw) pw.value='';
+    var c=$('apmCodeBox'); if(c) c.hidden = true; var pw=$('apmPwIn'); if(pw){ pw.value=''; pw.type='password'; } var eb=$('apmPwEye'); if(eb){ eb.classList.remove('on'); eb.setAttribute('aria-pressed','false'); eb.setAttribute('aria-label','비밀번호 보기'); }
   };
   function done(user, provider){
     var u={ name:(user&&user.name)||'회원', email:(user&&user.email)||'', provider:provider };
@@ -1525,9 +1548,10 @@ window.APM_LOGIN_METHODS = window.APM_LOGIN_METHODS || { kakao:true, naver:true,
   window.apmIdPwLogin = function(ev){
     if(ev) ev.preventDefault(); err('');
     var id=($('apmIdIn').value||'').trim(), pw=$('apmPwIn').value||'';
-    if(!id||!pw){ err('아이디와 비밀번호를 입력해 주세요.'); return false; }
+    if(!id||!pw){ err('아이디(이메일)와 비밀번호를 입력해 주세요.'); return false; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(id)){ err('아이디는 이메일 주소 형식으로 입력해 주세요. (예: name@email.com)'); return false; }
     if(typeof APM_AUTH.idpw!=='function'){ err('아이디 로그인은 메인 서버 연동 후 사용할 수 있습니다. 지금은 카카오로 로그인해 주세요.'); return false; }
-    run(APM_AUTH.idpw, [id,pw], 'idpw'); $('apmPwIn').value=''; return false;
+    run(APM_AUTH.idpw, [id,pw], 'idpw'); $('apmPwIn').value=''; apmLoginShowPwReset(); return false;
   };
   function phone(){ return ($('apmPhoneIn').value||'').replace(/\D/g,''); }
   function validPhone(v){ return /^01[016789]\d{7,8}$/.test(v); }
@@ -1541,6 +1565,11 @@ window.APM_LOGIN_METHODS = window.APM_LOGIN_METHODS || { kakao:true, naver:true,
     if(c.length<4){ err('인증번호를 입력해 주세요.'); return; }
     if(typeof APM_AUTH.phoneVerify!=='function'){ err('휴대폰 인증은 메인 서버 연동 후 사용할 수 있습니다.'); return; }
     run(APM_AUTH.phoneVerify, [v,c], 'phone');
+  };
+  function apmLoginShowPwReset(){ var p=$('apmPwIn'), b=$('apmPwEye'); if(p) p.type='password'; if(b){ b.classList.remove('on'); b.setAttribute('aria-pressed','false'); b.setAttribute('aria-label','비밀번호 보기'); } }
+  window.apmTogglePw = function(){                       // 비밀번호 보기/숨기기 (눈 모양 버튼)
+    var p=$('apmPwIn'), b=$('apmPwEye'), show=p.type==='password'; p.type = show ? 'text' : 'password';
+    b.classList.toggle('on', show); b.setAttribute('aria-pressed', show?'true':'false'); b.setAttribute('aria-label', show?'비밀번호 숨기기':'비밀번호 보기'); p.focus();
   };
   var _open = window.apmOpenLogin;                       // 열 때마다 처음 상태로
   window.apmOpenLogin = function(){ _open(); if(!apmUser()) apmLoginShow(); };
