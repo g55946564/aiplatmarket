@@ -507,6 +507,21 @@ body>.acd-app{flex:1 1 auto;min-height:0}
 .acd-ask input{padding-top:7px;padding-bottom:7px}
 .acd-gnb button{padding-top:4px;padding-bottom:4px}
 .acd-ib{min-height:30px;padding:0 10px}
+
+/* ===== PC: 상단(헤더·타이틀·검색·GNB) 고정 + 3분할은 화면 높이 + 푸터는 하단 전체 너비로 페이지와 함께 스크롤 ===== */
+@media(min-width:1001px){
+  html{height:auto}
+  body{display:block;height:auto;min-height:100vh;overflow-x:hidden;overflow-y:auto}
+  .acd-app{display:block;overflow:visible}
+  .apm-top{position:sticky;top:0;z-index:230}
+  nav.gnb{position:sticky;top:var(--acd-t1,24px);z-index:220}
+  .acd-titlebar{position:sticky;top:var(--acd-t2,52px);z-index:210}
+  .acd-gnb{position:sticky;top:var(--acd-t3,117px);z-index:200}
+  .acd-shell.acd-in{height:calc(100vh - var(--acd-chrome,160px));height:calc(100dvh - var(--acd-chrome,160px));min-height:420px;flex:none;grid-template-rows:minmax(0,1fr)}
+  .acd-scroll,.acd-pbody{overscroll-behavior:auto}
+  .acd-ftw{margin:0;border-radius:0;overflow:visible;width:100%}
+  .acd-ftw footer{padding-left:var(--acd-pad);padding-right:var(--acd-pad)}
+}
 </style>
 </head>
 <body>
@@ -1390,7 +1405,7 @@ window.ACADEMY_CONFIG = { projectId:'life-growth-school', publicPath:'/academy/'
     var a = document.createElement('div'); a.className='acd-a';
     var p = document.createElement('div'); p.textContent = hit ? hit[2] : '아직 준비된 답변이 없는 질문입니다. 위 메뉴에서 찾아보시거나 AI통합홍보센터를 통해 문의해 주세요. 공통 AI Core 연동 후 더 자세히 답변할 예정입니다.'; a.appendChild(p);
     if(hit){ var b=document.createElement('button'); b.type='button'; b.className='acd-btn out'; b.textContent=(NAME[hit[1]]||'')+' 화면 보기'; b.addEventListener('click', function(){ acdGo(hit[1]); }); a.appendChild(b); }
-    t.appendChild(a); qb.scrollIntoView({block:'start'});
+    t.appendChild(a); var s=$('acdScroll'); s.scrollTo({top: qb.getBoundingClientRect().top - s.getBoundingClientRect().top + s.scrollTop - 6});
   }
 
   /* 실천 메모 (브라우저 저장, 임시) */
@@ -1574,6 +1589,29 @@ window.APM_LOGIN_METHODS = window.APM_LOGIN_METHODS || { kakao:true, naver:true,
   var _open = window.apmOpenLogin;                       // 열 때마다 처음 상태로
   window.apmOpenLogin = function(){ _open(); if(!apmUser()) apmLoginShow(); };
   document.addEventListener('DOMContentLoaded', function(){ apmLoginShow(); var p=$('apmPhoneIn'); if(p) p.addEventListener('input', function(){ var d=p.value.replace(/\D/g,'').slice(0,11); p.value = d.length>7 ? d.replace(/(\d{3})(\d{3,4})(\d{0,4})/,'$1-$2-$3') : d.length>3 ? d.replace(/(\d{3})(\d+)/,'$1-$2') : d; }); });
+})();
+</script>
+<script>
+/* ===== PC 상단 고정 높이 계산 · 푸터 위치(PC: 하단 전체 너비 / 모바일: 본문 맨 아래) ===== */
+(function(){
+  var mq=window.matchMedia('(min-width:1001px)');
+  function q(s){ return document.querySelector(s); }
+  function layout(){
+    var a=q('.apm-top'), n=q('nav.gnb'), t=q('#acdTb'), g=q('.acd-gnb'); if(!a||!n||!t||!g) return;
+    var h1=a.offsetHeight, h2=n.offsetHeight, h3=t.offsetHeight, h4=g.offsetHeight, r=document.documentElement.style;
+    r.setProperty('--acd-t1',h1+'px'); r.setProperty('--acd-t2',(h1+h2)+'px'); r.setProperty('--acd-t3',(h1+h2+h3)+'px'); r.setProperty('--acd-chrome',(h1+h2+h3+h4)+'px');
+  }
+  function place(){
+    var f=q('.acd-ftw'), app=q('.acd-app'), sc=q('#acdScroll'); if(!f||!app||!sc) return;
+    if(mq.matches){ if(f.parentNode!==app) app.appendChild(f); } else if(f.parentNode!==sc){ sc.appendChild(f); }
+  }
+  function all(){ place(); layout(); }
+  document.addEventListener('DOMContentLoaded', function(){
+    all(); window.addEventListener('resize', layout); window.addEventListener('load', layout);
+    if(mq.addEventListener) mq.addEventListener('change', all);
+    if(window.ResizeObserver){ var ro=new ResizeObserver(layout); ['.apm-top','nav.gnb','#acdTb','.acd-gnb'].forEach(function(s){ var e=q(s); if(e) ro.observe(e); }); }
+    var g=window.acdGo; window.acdGo=function(id){ g(id); if(mq.matches) window.scrollTo(0,0); };   // 메뉴 이동 시 맨 위(3분할)로
+  });
 })();
 </script>
 </body>
