@@ -536,6 +536,18 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
 .tb-menu.on{display:block}
 .tb-menu a,.tb-menu button{display:block;width:100%;text-align:left;padding:10px 14px;font-size:.78rem;color:var(--navy);font-weight:600}
 .tb-menu a:hover,.tb-menu button:hover{background:var(--g1)}
+
+/* ═ v1.4 : PC 가로 스크롤 막대 — 메인 GNB·자체 GNB(쇼핑 메뉴), 넘치지 않아도 항상 표시 ═ */
+@media(hover:hover) and (pointer:fine){
+  .gnb-cat-bar{overflow-x:scroll;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.75) rgba(0,0,0,.28)}
+  .gnb-cat-bar::-webkit-scrollbar{display:block;height:9px}
+  .gnb-cat-bar::-webkit-scrollbar-track{background:rgba(0,0,0,.28)}
+  .gnb-cat-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.75);border-radius:5px}
+  .shop-cats{overflow-x:scroll;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.9) rgba(255,255,255,.14)}
+  .shop-cats::-webkit-scrollbar{display:block;height:9px}
+  .shop-cats::-webkit-scrollbar-track{background:rgba(255,255,255,.14)}
+  .shop-cats::-webkit-scrollbar-thumb{background:rgba(201,168,76,.9);border-radius:5px}
+}
 </style>
 </head>
 <body>
@@ -1216,7 +1228,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
     <div class="lg-tabs">
       <button class="lg-tab on" data-t="kakao" onclick="ShopAuth.tab('kakao')">카카오</button>
       <button class="lg-tab" data-t="phone" onclick="ShopAuth.tab('phone')">휴대폰</button>
-      <button class="lg-tab" data-t="admin" onclick="ShopAuth.tab('admin')">관리자</button>
     </div>
     <div class="lg-pane on" id="lg-p-kakao">
       <button class="lg-kakao" onclick="ShopAuth.kakao()">💬 카카오로 3초 만에 시작</button>
@@ -1227,11 +1238,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.65);margin-top:auto;flex-s
       <input class="lg-in" id="lg-code" inputmode="numeric" maxlength="6" placeholder="인증번호 6자리" autocomplete="one-time-code">
       <input class="lg-in" id="lg-name" maxlength="20" placeholder="이름 (선택, 처음 가입 시)">
       <button class="lg-btn" onclick="ShopAuth.verify()">휴대폰으로 로그인</button>
-    </div>
-    <div class="lg-pane" id="lg-p-admin">
-      <input class="lg-in" id="lg-aid" placeholder="관리자 아이디" autocomplete="username">
-      <input class="lg-in" id="lg-apw" type="password" placeholder="비밀번호" autocomplete="current-password" onkeydown="if(event.key==='Enter')ShopAuth.admin()">
-      <button class="lg-btn" onclick="ShopAuth.admin()">관리자 로그인</button>
     </div>
     <div class="lg-err" id="lg-err"></div>
     <div class="lg-note" style="margin-top:6px">로그인 시 이용약관·개인정보처리방침에 동의한 것으로 봅니다.</div>
@@ -1753,11 +1759,6 @@ const ShopAuth={
     const phone=this.$('lg-phone').value.replace(/\D/g,''),code=this.$('lg-code').value.trim(),name=this.$('lg-name').value.trim();
     if(!phone||code.length<4)return this.err('휴대폰 번호와 인증번호를 입력하세요');
     try{const d=await this.api('/phone/verify',{phone,code,name});this.set(d.user);this.close();toast('✅ '+d.user.name+'님 환영합니다');}catch(e){this.err(e.message);}
-  },
-  async admin(){
-    const id=this.$('lg-aid').value.trim(),pw=this.$('lg-apw').value;
-    if(!id||!pw)return this.err('아이디와 비밀번호를 입력하세요');
-    try{const d=await this.api('/admin',{id,pw});this.$('lg-apw').value='';this.set(d.user);this.close();toast('✅ 관리자로 로그인했습니다');}catch(e){this.err(e.message);}
   },
   async logout(){
     try{await this.api('/logout',{});}catch(e){}
